@@ -1,0 +1,70 @@
+.student-lesson-modal {
+  background-color: white;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  position: absolute;
+  right: 116px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: 0.3s;
+  z-index: 100;
+}
+
+.student-lesson-modal.active{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.student-lesson-modal .student-lesson-modal-con {
+  padding: 16px;
+}
+.student-lesson-modal
+  .student-lesson-modal-con
+  .student-lesson-modal-content
+  h2 {
+  font-size: 20px;
+  color: var(--neutrals-900);
+  font-weight: 700;
+}
+
+.student-lesson-modal
+  .student-lesson-modal-con
+  .student-lesson-modal-content
+  ul
+  li {
+  margin: 16px 0;
+}
+.student-lesson-modal
+  .student-lesson-modal-con
+  .student-lesson-modal-content
+  ul
+  li  p{
+    color: var(--neutrals-600);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+.student-lesson-modal
+  .student-lesson-modal-con
+  .student-lesson-modal-content
+  ul
+  li  p:nth-last-child(1){
+    font-size: 14px;
+  }
+.student-lesson-modal
+  .student-lesson-modal-con
+  .student-lesson-modal-content
+  ul
+  li p span{
+    color: var(--neutrals-900);
+  }
+  .student-lesson-modal
+  .student-lesson-modal-con
+  .student-lesson-modal-content
+  ul
+  li p:nth-last-child(1) span{
+    color: var(--secondary-700)
+  }
+

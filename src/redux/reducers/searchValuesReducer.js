@@ -1,0 +1,78 @@
+import { SEARCH_VALUES_ACTION_TYPES } from "../actions-type";
+
+const initialState = {
+  teachersSearchValues: "",
+  adminsSearchValues: "",
+  studentSearchValues: "",
+  tuitionFeeSearchValues: "",
+  consultationSearchValues: "",
+  coursesSearchValues: "",
+  salariesSearchValues: "",
+  bonusSearchValues: "",
+  fineSearchValues: "",
+  feedbackSearchValues: "",
+  studentFeedbackSearchValues: "",
+};
+
+export const searchValuesReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SEARCH_VALUES_ACTION_TYPES.TEACHERS_SEARCH_VALUE:
+      return {
+        ...state,
+        teachersSearchValues: action.payload,
+        // ...action.payload
+      };
+    case SEARCH_VALUES_ACTION_TYPES.STUDENTS_SEARCH_VALUE:
+      return {
+        ...state,
+        studentSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.TUITON_FEE_SEARCH_VALUE:
+      return {
+        ...state,
+        tuitionFeeSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.CONSULTATION_SEARCH_VALUE:
+      return {
+        ...state,
+        consultationSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.COURSES_SEARCH_VALUE:
+      return {
+        ...state,
+        coursesSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.SALARIES_SEARCH_VALUE:
+      return {
+        ...state,
+        salariesSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.BONUS_SEARCH_VALUE:
+      return {
+        ...state,
+        bonusSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.FINE_SEARCH_VALUE:
+      return {
+        ...state,
+        fineSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.FEEDBACK_SEARCH_VALUE:
+      return {
+        ...state,
+        feedbackSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.STUDENT_FEEDBACK_SEARCH_VALUE:
+      return {
+        ...state,
+        studentFeedbackSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.ADMINS_SEARCH_VALUE:
+      return {
+        ...state,
+        adminsSearchValues: action.payload,
+      };
+    default:
+      return state;
+  }
+};

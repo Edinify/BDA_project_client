@@ -1,0 +1,64 @@
+.student-attendance-btn {
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #f4f4f4;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  padding: 4px 8px;
+  border: 0.5px solid var(--neutrals-300);
+}
+.student-attendance-btn.left {
+  border-radius: 4px 0 0 4px;
+}
+.student-attendance-btn.right {
+  border-radius: 0 4px 4px 0;
+}
+.student-attendance-btn.active {
+  color: white;
+  background-color: var(--primary-500);
+  border-color: var(--primary-500);
+}
+.student-attendance-btn {
+  margin-top: 20px;
+}
+@media screen and (max-width: 380px) {
+  .student-attendance-btn {
+    width: 100%;
+    border-radius: 4px !important;
+  }
+  .student-attendance-btn.right {
+    margin-top: 0;
+  }
+}
+
+/* .student-attendance .student-attendance-btn {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--tertiary-700);
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+.student-attendance .student-attendance-btn.red {
+    background: var(--error-600);
+;} */
+
+
+.student-attendance .warning-message {
+    color: var(--tertiary-700);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px;
+    border-radius: 6px;
+    background-color: rgba(251, 160, 19, 0.10);
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+}
+.student-attendance .warning-message svg {
+    margin-right: 8px;
+}
