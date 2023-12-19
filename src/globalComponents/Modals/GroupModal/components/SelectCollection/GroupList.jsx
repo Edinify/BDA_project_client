@@ -20,7 +20,7 @@ const GroupList = ({ updateModalState, modalData }) => {
   return (
     <>
       <div className={`class-input`}>
-        <div className="class-field search">
+        <div className="dropdown-input search">
           <TextField
             sx={{
               "& input": {
@@ -63,7 +63,7 @@ const GroupList = ({ updateModalState, modalData }) => {
         </div>
 
         <ul
-          className={`create-update-modal-dropdown where-coming feedback ${
+          className={`dropdown-body where-coming feedback ${
             openDropdown ? "active" : ""
           }`}
         >

@@ -60,7 +60,7 @@ const StudentLists = ({
   return (
     <>
       <div className={`class-input ${disabledStudent}`}>
-        <div className="class-field search">
+        <div className="dropdown-input search">
           {!disabledStudent && <div className="search-icon" onClick={() => searchData()}><SearchIcon /></div>}
           <TextField
             sx={{
@@ -112,7 +112,7 @@ const StudentLists = ({
         </div>
 
         <ul
-          className={`create-update-modal-dropdown where-coming feedback ${
+          className={`dropdown-body where-coming feedback ${
             studentNameOpen ? "active" : ""
           }`}
         >

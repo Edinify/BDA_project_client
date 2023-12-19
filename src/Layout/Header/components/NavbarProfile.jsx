@@ -19,7 +19,6 @@ import {
 import { useDispatch } from "react-redux";
 import { ChangePasswordModal } from "../../..//globalComponents/Header/ChangePasswordModal/ChangePasswordModal";
 import HowToUse from "../../..//globalComponents/HowToUse/HowToUse";
-import StudentLessonModal from "../../..//Pages/StudentPanel/components/StudentLessonModal/StudentLessonModal";
 
 const NavbarProfile = () => {
   const dispatch = useDispatch();
@@ -203,7 +202,6 @@ const NavbarProfile = () => {
       </div>
       {howToUse && <HowToUse setHowToUse={setHowToUse} howToUse={howToUse} />}
       {openModal && <ChangePasswordModal setOpenModal={setOpenModal} />}
-      <StudentLessonModal openLessonModal={openLessonModal} />
     </>
   );
 };

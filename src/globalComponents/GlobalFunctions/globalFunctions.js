@@ -7,7 +7,6 @@ import {
   DROPDOWN_ERROR_TYPE,
 } from "../../redux/actions-type";
 
-
 export function useCustomHook() {
   const dispatch = useDispatch();
   const startWeek = new Date();
@@ -68,7 +67,6 @@ export function useCustomHook() {
     { name: "Çöl reklamı", key: "externalAds" },
     { name: "Digər", key: "other" },
   ];
-
   const tuitionFeeHeadList = [
     { key: "groupNumber", title: "Qrup Nömrəsi" },
     { key: "instructor", title: "İnstruktor" },
@@ -83,6 +81,21 @@ export function useCustomHook() {
     { key: "fin", title: "Fin kodu" },
     { key: "phone", title: "Nömrəsi" },
     { key: "startDate", title: "Dərs baş. tarixi" },
+  ];
+  const generalProfileList = [
+    { name: "Qruplar", key: "groups" },
+    { name: "Əməkdaşlar", key: "workers" },
+    { name: "Tələbələr", key: "students" },
+    { name: "Təlimçilər", key: "teachers" },
+    { name: "Fənlər", key: "courses" },
+    { name: "Təhsil haqqı", key: "tuitionFee" },
+    { name: "Karyera", key: "career" },
+    { name: "Konsultasiya", key: "consultation" },
+  ];
+  const generalProfilePowerList = [
+    { name: "Tam", key: "all" },
+    { name: "Yalnız görmək", key: "only-show" },
+    { name: "Dəyişiklik", key: "update" },
   ];
 
   const getWeeksBetweenDates = (start, end) => {
@@ -181,6 +194,8 @@ export function useCustomHook() {
     fineTypeList,
     tuitionFeeHeadList,
     whereComingList,
+    generalProfileList,
+    generalProfilePowerList,
     getWeeksBetweenDates,
     changeMainPageType,
     changeTableType,

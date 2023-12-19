@@ -102,7 +102,7 @@ const CoursesInput = ({
   return (
     <div>
       <div className="class-input">
-        <div className="class-field courses">
+        <div className="dropdown-input courses">
           <div className="left">
             <div className="input-box">
               <TextField
@@ -153,7 +153,7 @@ const CoursesInput = ({
             </div>
 
             <ul
-              className={`create-update-modal-dropdown ${
+              className={`dropdown-body ${
                 classIcon ? "active" : ""
               }`}
             >

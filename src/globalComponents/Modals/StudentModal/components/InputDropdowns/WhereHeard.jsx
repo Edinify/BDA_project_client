@@ -14,7 +14,7 @@ const WhereHeard = ({
   return (
     <>
         <div className="class-input">
-            <div className="class-field">
+            <div className="dropdown-input">
             <TextField
                 sx={{
                 "& input": {
@@ -56,7 +56,7 @@ const WhereHeard = ({
             </div>
             </div>
 
-            <ul className={`create-update-modal-dropdown where-coming ${whereComingOpen ? "active" : ""}`}>
+            <ul className={`dropdown-body where-coming ${whereComingOpen ? "active" : ""}`}>
             {whereComingList.map((item) => (
                 <li key={item.key} onClick={() => whereComingAddData(item)}>
                 <h4>{item.name}</h4>

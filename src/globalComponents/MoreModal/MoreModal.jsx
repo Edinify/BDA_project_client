@@ -19,7 +19,6 @@ import FineMoreModal from "./components/FineMoreModal/FineMoreModal";
 import FeedbackTeacherMoreModal from "./components/FeedbackTeacherMoreModal/FeedbackTeacherMoreModal";
 import FeedbackStudentMoreModal from "./components/FeedbackStudentMoreModal/FeedbackStudentMoreModal";
 import DeleteItemModal from "../Modals/DeleteItemModal/DeleteItemModal";
-import { deleteFeedbackAction } from "../../redux/actions/generalfeedbackActions";
 
 const MoreModal = ({ setOpenMoreModal, type, data }) => {
   const dispatch = useDispatch();
@@ -52,7 +51,6 @@ const MoreModal = ({ setOpenMoreModal, type, data }) => {
   };
 
   const deleteItem = () => {
-    dispatch(deleteFeedbackAction(data._id));
     dispatch({
       type: FEEDBACK_MODAL_ACTION_TYPE.GET_FEEDBACK_MODAL,
       payload: { data: {}, openModal: false },

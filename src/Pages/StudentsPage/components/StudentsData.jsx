@@ -13,11 +13,7 @@ const StudentsData = ({ studentPageNum, getPageNumber }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const tableHead = [
     "Tələbə adı",
-    "Ixtisas",
-    "Qrup",
-    "Email",
-    "Mobil nömrə",
-    "Fin kod",
+    "Qruplar",
     "Status",
     "",
     ""
@@ -31,6 +27,7 @@ const StudentsData = ({ studentPageNum, getPageNumber }) => {
     }
   }, [openMoreModal]);
 
+  console.log(students);
   return (
     <>
       {loading ? (

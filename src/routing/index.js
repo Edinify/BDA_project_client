@@ -10,9 +10,9 @@ import LoginRoute from "./LoginRoute";
 import NotFoundPage from "../Pages/NotFoundPage/NotFoundPage";
 import Sidebar from "../Layout/Sidebar/Sidebar";
 import SuperAdminPanelRoute from "./SuperAdminPanelRoute";
-import AdminPanelRoute from "./AdminPanelRoute";
-import TeacherPanelRoute from "./TeacherPanelRoute";
-import StudentPanelRoute from "./StudentPanelRoute";
+// import AdminPanelRoute from "./AdminPanelRoute";
+// import TeacherPanelRoute from "./TeacherPanelRoute";
+// import StudentPanelRoute from "./StudentPanelRoute";
 
 export const Routing = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export const Routing = () => {
       }
       if (user.role === "super-admin" && !notFound) {
         if (location.pathname.startsWith("/login")) {
-          navigate("/dashboard");
+          navigate("/groups/current");
         } else {
           return () => {};
         }
@@ -85,9 +85,9 @@ export const Routing = () => {
 
           {LoginRoute()}
           {userData?.role === "super-admin" && SuperAdminPanelRoute()}
-          {userData?.role === "admin" && AdminPanelRoute()}
+          {/* {userData?.role === "admin" && AdminPanelRoute()}
           {userData?.role === "teacher" && TeacherPanelRoute()}
-          {userData?.role === "student" && StudentPanelRoute()}
+          {userData?.role === "student" && StudentPanelRoute()} */}
         </Routes>
       </div>
     </div>

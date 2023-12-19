@@ -8,7 +8,7 @@
   border-color: #fff transparent #fff transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
-.create-update-modal-dropdown .loading-in-modal-button .lds-dual-ring:after {
+.create-update-modal-form .dropdown-input .dropdown-body .loading-in-modal-button .lds-dual-ring:after {
   width: 20px;
   height: 20px;
   border: 4px solid var(--primary-500);

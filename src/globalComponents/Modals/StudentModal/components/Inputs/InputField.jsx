@@ -9,9 +9,8 @@ export default function InputField({
   setInputValue,
   modalData,
   inputName,
-  updateModalState
+  updateModalState,
 }) {
-
   const [shrink, setShrink] = useState(false);
   const [viewPass, setViewPass] = useState(true);
   const inputData = [
@@ -24,58 +23,8 @@ export default function InputField({
       inputValue: modalData[inputName] || "",
     },
     {
-      inputName: "birthday",
-      label: "Doğum tarixi",
-      type: "date",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: (modalData[inputName] && inputName === "birthday")
-        ? moment(modalData[inputName]).format("YYYY-MM-DD")
-        : "",
-    },
-    {
-      inputName: "healthStatus",
-      label: "Sağlamlıq statusu",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "educationalInstitution",
-      label: "Təhsil aldığı müəssisə",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "educationDegree",
-      label: "Təhsil dərəcəsi / Sinif",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "motherName",
-      label: "Ana adı",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "fatherName",
-      label: "Ata adı",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
       inputName: "fin",
-      label: "FIN",
+      label: "Fin kod",
       type: "text",
       marginTop: "24px",
       marginBottom: "0",
@@ -90,33 +39,75 @@ export default function InputField({
       inputValue: modalData[inputName] || "",
     },
     {
-      inputName: "motherPhone",
-      label: "Ana telefon nömrəsi",
-      type: "tel",
+      inputName: "birthday",
+      label: "Doğum tarixi",
+      type: "date",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue:
+        modalData[inputName] && inputName === "birthday"
+          ? moment(modalData[inputName]).format("YYYY-MM-DD")
+          : "",
+    },
+    {
+      inputName: "phone",
+      label: "Mobil nömrə",
+      type: "text",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue: modalData[inputName] || "",
+    },
+
+    {
+      inputName: "degree",
+      label: "Təhsil dərəcəsi",
+      type: "text",
       marginTop: "24px",
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
     },
     {
-      inputName: "fatherPhone",
-      label: "Ata telefon nömrəsi",
-      type: "tel",
+      inputName: "contractStartDate",
+      label: "Müqavilə başlama tarixi",
+      type: "date",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue:
+        modalData[inputName] && inputName === "contractStartDate"
+          ? moment(modalData[inputName]).format("YYYY-MM-DD")
+          : "",
+    },
+    {
+      inputName: "contractEndDate",
+      label: "Müqavilə bitmə tarixi",
+      type: "date",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue:
+        modalData[inputName] && inputName === "contractEndDate"
+          ? moment(modalData[inputName]).format("YYYY-MM-DD")
+          : "",
+    },
+    {
+      inputName: "amount",
+      label: "Məbləğ",
+      type: "number",
       marginTop: "24px",
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
     },
     {
-      inputName: "emergencyPhone",
-      label: "Telefon nömrəsi / təcili",
-      type: "tel",
+      inputName: "totalAmount",
+      label: "Yekun məbləğ",
+      type: "number",
       marginTop: "24px",
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
     },
     {
-      inputName: "email",
-      label: "Email",
-      type: "email",
+      inputName: "dicount",
+      label: "Endirim %",
+      type: "number",
       marginTop: "24px",
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
@@ -127,53 +118,50 @@ export default function InputField({
       type: viewPass ? "password" : "text",
       marginTop: "24px",
       marginBottom: "0",
-      paddingRight: '50px'
-    },
-    {
-      inputName: "payment",
-      label: "1 dərsin qiyməti",
-      type: "number",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
+      paddingRight: "50px",
     },
   ];
 
-
   return (
-    <div className={inputName === 'password' ? "password-input" : ''}>
+    <div className={inputName === "password" ? "password-input" : ""}>
       <TextField
         sx={{
-          "& input": { fontSize: "12px",
-        paddingRight: inputData.find((item) => item.inputName === inputName)?.paddingRight },
-          marginTop: inputData.find((item) => item.inputName === inputName).marginTop,
+          "& input": {
+            fontSize: "12px",
+            paddingRight: inputData.find((item) => item.inputName === inputName)
+              ?.paddingRight,
+          },
+          marginTop:
+            inputData.find((item) => item.inputName === inputName)?.marginTop ||
+            "0",
         }}
         InputLabelProps={{
           shrink:
-            inputName === "birthday"
+            inputData.find((item) => item.inputName === inputName)?.type ===
+            "date"
               ? true
-              : (inputData.find((item) => item.inputName === inputName)
-                  .inputValue
+              : inputData.find((item) => item.inputName === inputName)
+                  ?.inputValue
               ? true
-              : shrink),
+              : shrink,
           style: {
             fontSize: "12px",
             color: "#3F3F3F",
             marginBottom: inputData.find((item) => item.inputName === inputName)
-              .marginBottom,
+              ?.marginBottom,
           },
         }}
         fullWidth
         id={inputName}
         name={inputName}
-        type={inputData.find((item) => item.inputName === inputName).type}
-        label={inputData.find((item) => item.inputName === inputName).label}
+        type={inputData.find((item) => item.inputName === inputName)?.type}
+        label={inputData.find((item) => item.inputName === inputName)?.label}
         value={
           inputData.find((item) => item.inputName === inputName)?.inputValue
         }
         onWheel={(e) => e.target.blur()}
         onChange={(e) => {
-          updateModalState(inputName, e.target.value)
+          updateModalState(inputName, e.target.value);
           setInputValue(inputName, e.target.value);
         }}
         onBlur={(e) => {
@@ -183,24 +171,26 @@ export default function InputField({
         onFocus={() => setShrink(true)}
       />
 
-      {(inputName === 'password' && modalData?._id) ?
-        (
-          (formik.errors[inputName] && formik.errors[inputName] !== 'Bu xana tələb olunur.') && 
-          formik.touched[inputName] && 
-          (<small className="validation-err-message">{formik.errors[inputName]}</small>)
-        ) :
-        (
-          (formik.errors[inputName]) && 
-          formik.touched[inputName] && 
-          (<small className="validation-err-message">{formik.errors[inputName]}</small>)
-        )
-      } 
+      {inputName === "password" && modalData?._id
+        ? formik.errors[inputName] &&
+          formik.errors[inputName] !== "Bu xana tələb olunur." &&
+          formik.touched[inputName] && (
+            <small className="validation-err-message">
+              {formik.errors[inputName]}
+            </small>
+          )
+        : formik.errors[inputName] &&
+          formik.touched[inputName] && (
+            <small className="validation-err-message">
+              {formik.errors[inputName]}
+            </small>
+          )}
 
-      {inputName === 'password' &&
-      <div className="modal-view-icon" onClick={() => setViewPass(!viewPass)}>
-        {viewPass ? <EyeSlash /> : <Eye />}
-      </div>
-      }
+      {inputName === "password" && (
+        <div className="modal-view-icon" onClick={() => setViewPass(!viewPass)}>
+          {viewPass ? <EyeSlash /> : <Eye />}
+        </div>
+      )}
     </div>
   );
 }

@@ -45,7 +45,7 @@ const Select = ({
   return (
     <>
       <div className="class-input">
-        <div className="class-field">
+        <div className="dropdown-input">
           <TextField
             sx={{
               "& input": {
@@ -89,7 +89,7 @@ const Select = ({
         </div>
 
         <ul
-          className={`create-update-modal-dropdown where-coming ${
+          className={`dropdown-body where-coming ${
             openDropdown ? "active" : ""
           }`}
         >

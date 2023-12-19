@@ -14,7 +14,7 @@ const RegionDropdown = ({
   return (
     <>
       <div className="class-input">
-        <div className="class-field">
+        <div className="dropdown-input">
           <TextField
             sx={{
               "& input": {
@@ -56,7 +56,7 @@ const RegionDropdown = ({
         </div>
 
         <ul
-          className={`create-update-modal-dropdown where-from ${
+          className={`dropdown-body where-from ${
             whereFromOpen ? "active" : ""
           }`}
         >

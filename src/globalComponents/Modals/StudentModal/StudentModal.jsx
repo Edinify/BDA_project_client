@@ -19,7 +19,18 @@ export const StudentModal = () => {
   const [classIcon, setClassIcon] = useState(false);
   const [selectedClassList, setSelectedClassList] = useState([]);
   const [checkedList, setCheckedList] = useState([]);
-  const inputNameArr1 = ["motherPhone", "fin"];
+  const inputNameArr1 = [
+    "fin",
+    "seria",
+    "birthday",
+    "phone",
+    "degree",
+    "contractStartDate",
+    "contractEndDate",
+    "amount",
+    "totalAmount",
+    "dicount",
+  ];
 
   // formik
   const formik = useFormik({
@@ -96,6 +107,8 @@ export const StudentModal = () => {
     }
   }, [selectedClassList]);
 
+  console.log(modalData);
+
   return (
     <div className="create-update-modal-con student-modal">
       <div className="create-update-modal">
@@ -117,13 +130,6 @@ export const StudentModal = () => {
           <div className="create-update-modal-form">
             <InputField
               inputName={"fullName"}
-              formik={formik}
-              setInputValue={setInputValue}
-              modalData={modalData}
-              updateModalState={updateModalState}
-            />
-            <InputField
-              inputName={"email"}
               formik={formik}
               setInputValue={setInputValue}
               modalData={modalData}

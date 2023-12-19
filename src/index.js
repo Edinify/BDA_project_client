@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./assets/css/utilities.css"
 import "./assets/css/globalCategoryDropdown.css"
+import "./assets/css/dropdownName.css";
 import "./assets/css/createUpdateModal.css"
 import "./assets/css/loading.css"
 import "./assets/css/pagination.css"

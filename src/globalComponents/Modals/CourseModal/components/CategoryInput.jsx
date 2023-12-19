@@ -48,7 +48,7 @@ const CategoryInput = ({
   return (
     <div>
         <div className="class-input">
-            <div className="class-field">
+            <div className="dropdown-input">
             <InputField
               setInputValue={setInputValue}
               coursesModalData={coursesModalData}

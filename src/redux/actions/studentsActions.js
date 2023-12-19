@@ -13,7 +13,7 @@ const refreshApi = axios.create({
 });
 
 const API = axios.create({
-  baseURL: `${apiRoot}/user/student`,
+  baseURL: `${apiRoot}/student`,
   withCredentials:true
 });
 const REGISTERAPI = axios.create({
@@ -301,7 +301,7 @@ export const getStudentsPaginationAction =
 export const createStudentsAction = (studentData) => async (dispatch) => {
   dispatch(studentModalLoading(true));
   try {
-    const { data } = await REGISTERAPI.post("/student/sign", studentData);
+    const { data } = await API.post("/", studentData);
     dispatch(getStudentsPaginationAction(data.lastPage, "", "all"));
     dispatch({
       type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,

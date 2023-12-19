@@ -86,7 +86,7 @@ export const getExpensesPaginationAction =
     } catch (error) {
       console.log(error);
       const originalRequest = error.config;
-      if (error.response.status === 403 && !originalRequest._retry) {
+      if (error.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
         try {
           const token = await refreshApi.get("/");
@@ -145,7 +145,7 @@ export const createExpensesAction = (expensesData) => async (dispatch) => {
   } catch (error) {
     toastError("Xəta baş verdi.");
     const originalRequest = error.config;
-    if (error.response.status === 403 && !originalRequest._retry) {
+    if (error.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const token = await refreshApi.get("/");
@@ -195,7 +195,7 @@ export const updateExpensesAction = (_id, expensesData) => async (dispatch) => {
   } catch (error) {
     toastError("Xəta baş verdi.");
     const originalRequest = error.config;
-    if (error.response.status === 403 && !originalRequest._retry) {
+    if (error.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const token = await refreshApi.get("/");
@@ -237,7 +237,7 @@ export const deleteExpensesAction = ({_id, page, startDate, endDate, monthCount,
   } catch (error) {
     toastError("Xəta baş verdi.");
     const originalRequest = error.config;
-    if (error.response.status === 403 && !originalRequest._retry) {
+    if (error.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const token = await refreshApi.get("/");

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./dropdownName.css";
 import { useLocation } from "react-router-dom";
 import { ReactComponent as CheckIcon } from "../../assets/icons/Checkbox.svg";
 import { ReactComponent as ArrowIcon } from "../../assets/icons/arrow-down-dropdown.svg";

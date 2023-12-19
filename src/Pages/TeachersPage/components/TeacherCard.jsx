@@ -10,8 +10,8 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   const { teacherStatus } = useSelector((state) => state.teacherStatus);
 
   let courses =
-    Array.isArray(data.courses) && data.courses.length > 0
-      ? data.courses
+    Array.isArray(data?.courses) && data?.courses.length > 0
+      ? data?.courses
           .map((course) => {
             return course.name;
           })
@@ -67,7 +67,7 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   const deleteItem = () => {
     const pageNumber =
       lastPage > 1 ? (teachers.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data._id;
+    const _id = data?._id;
     const searchQuery = teachersSearchValues;
     const status = teacherStatus ? teacherStatus : 'all';
     dispatch(deleteTeacherAction({_id, pageNumber, searchQuery, status}));
@@ -84,7 +84,7 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>
-              <div className="table-scroll-text">{data.fullName}</div>
+              <div className="table-scroll-text">{data?.fullName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -96,19 +96,19 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           </td>
           <td className="email">
             <div className="td-con">
-              <div className="table-scroll-text">{data.email}</div>
+              <div className="table-scroll-text">{data?.email}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone">{data.phone}</div>
+              <div className="table-scroll-text phone">{data?.phone}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td className="salary">
-            {data.salary?.value}{" "}
-            {data.salary.monthly === true ? "aylıq" : " saatlıq"}
+            {data?.salary?.value}{" "}
+            {data?.salary?.monthly === true ? "aylıq" : " saatlıq"}
           </td>
           <td className="more" onClick={() => openMoreModal()}>
             Ətraflı
@@ -124,7 +124,7 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
       ) : (
         <div className="content-box">
           <div className="left">
-            <h3>{data.fullName}</h3>
+            <h3>{data?.fullName}</h3>
             <ul>
               <li>
                 <span className="type">Fənn:</span>
@@ -132,18 +132,11 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               </li>
               <li>
                 <span className="type">Email:</span>
-                <p>{data.email ? data.email : "boş"}</p>
+                <p>{data?.email ? data?.email : "boş"}</p>
               </li>
               <li>
                 <span className="type">Telefon nömrəsi:</span>
-                <p>{data.phone ? data.phone : "boş"}</p>
-              </li>
-              <li>
-                <span className="type">Əmək haqqı:</span>
-                <p>
-                  {data.salary.value ? data.salary.value : "boş"}{" "}
-                  {data.salary.hourly === true ? "(saatlıq)" : "(aylıq)"}{" "}
-                </p>
+                <p>{data?.phone ? data?.phone : "boş"}</p>
               </li>
             </ul>
           </div>

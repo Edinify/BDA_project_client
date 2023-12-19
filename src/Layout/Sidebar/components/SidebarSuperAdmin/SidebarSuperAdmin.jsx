@@ -13,33 +13,12 @@ import { ReactComponent as FeedBacksIcon } from "../../../../assets/icons/sideba
 import { ReactComponent as AdminIcon } from "../../../../assets/icons/sidebar/users-01.svg";
 
 const SidebarSuperAdmin = ({ closeSidebar }) => {
-  const location = useLocation();
-  let nav = ["/student", "/"];
-  const isActiveRoute = (route) => {
-    return nav.includes(route);
-  };
-
-  const stimulationNav = ["/stimulations/bonus", "/stimulations/fine"];
-  const isActiveStimulationsRoute = (route) => {
-    return stimulationNav.includes(route);
-  };
-  const feedbackNav = ["/feedback/teacher", "/feedback/student"];
-  const isfeedbackRoute = (route) => {
-    return feedbackNav.includes(route);
-  };
-
-  const financeNav = ["/finance/incomes", "/finance/expenses"];
-
-  const isFinanceRoute = (route) => {
-    return financeNav.includes(route);
-  };
-
   return (
     <ul className="sidebar-nav-list">
-      {/* <li>
-        <NavLink to="/dashboard" onClick={closeSidebar}>
-          <DashboardIcon />
-          İdarəetmə paneli
+      <li>
+        <NavLink to="/workers" onClick={closeSidebar} className="admin">
+          <AdminIcon />
+          Əməkdaşlar
         </NavLink>
       </li>
       <li>
@@ -48,34 +27,6 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
           Qruplar
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/tuition-fee" onClick={closeSidebar}>
-          <SalaryIcon />
-          Təhsil xərcləri
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/consultations" onClick={closeSidebar}>
-          <SalaryIcon />
-          Konsultasiyalar
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/"
-          onClick={closeSidebar}
-          className={isActiveRoute(location.pathname) ? "active" : ""}
-        >
-          <MainPanelIcon />
-          Davamiyyət
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/courses" onClick={closeSidebar}>
-          <CoursesIcon />
-          Fənlər
-        </NavLink>
-      </li> */}
 
       <li>
         <NavLink to="/students" onClick={closeSidebar}>
@@ -83,68 +34,36 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
           Tələbələr
         </NavLink>
       </li>
-      {/* <li>
+      <li>
         <NavLink to="/teachers" onClick={closeSidebar}>
           <TeachersIcon />
-          Müəllimlər
+          Təlimçilər
         </NavLink>
       </li>
       <li>
-        <NavLink to="/table" onClick={closeSidebar}>
-          <TableIcon />
-          Cədvəl
+        <NavLink to="/courses" onClick={closeSidebar}>
+          <CoursesIcon />
+          Fənlər
         </NavLink>
       </li>
       <li>
-        <NavLink to="/salary" onClick={closeSidebar}>
+        <NavLink to="/tuition-fee" onClick={closeSidebar}>
           <SalaryIcon />
-          Əmək haqqı
+          Təhsil haqqı
         </NavLink>
       </li>
       <li>
-        <NavLink
-          to="/finance/incomes"
-          onClick={closeSidebar}
-          className={isFinanceRoute(location.pathname) ? "active" : ""}
-        >
-          <ExpensesIcon />
-          Maliyyə
+        <NavLink to="/career" onClick={closeSidebar}>
+          <SalaryIcon />
+          Karyera
         </NavLink>
       </li>
       <li>
-        <NavLink
-          to="/stimulations/bonus"
-          onClick={closeSidebar}
-          className={
-            isActiveStimulationsRoute(location.pathname) ? "active" : ""
-          }
-        >
-          <IncomesIcon />
-          Həvəsləndirmə
+        <NavLink to="/consultation" onClick={closeSidebar}>
+          <SalaryIcon />
+          Konsultasiya
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/feedback/teacher"
-          onClick={closeSidebar}
-          className={isfeedbackRoute(location.pathname) ? "active" : ""}
-        >
-          <FeedBacksIcon />
-          Rəylər
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/admins" onClick={closeSidebar} className="admin">
-          <AdminIcon />
-          Admin
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/temporary-table" onClick={closeSidebar}>
-          <TableIcon />
-          Müvəqqəti cədvəl
-        </NavLink>
-      </li> */}
     </ul>
   );
 };
