@@ -1,25 +1,25 @@
-import React from 'react'
+import React from "react";
 
-const Status = ({teachersModalData, updateModalState}) => {
+const Status = ({ modalData, updateModalState }) => {
   const getStatus = (status) => {
-    updateModalState("status", status)
+    updateModalState("status", status);
   };
   return (
     <ul className="modal-status">
-              <li
-                className={`${teachersModalData.status ? "active" : ""}`}
-                onClick={() => getStatus(true)}
-              >
-                Aktiv
-              </li>
-              <li
-                className={`${teachersModalData.status ? "" : "active"}`}
-                onClick={() => getStatus(false)}
-              >
-                Deaktiv
-              </li>
-            </ul>
-  )
-}
+      <li
+        className={`${modalData.status ? "active" : ""}`}
+        onClick={() => getStatus(true)}
+      >
+        Aktiv
+      </li>
+      <li
+        className={`${modalData.status ? "" : "active"}`}
+        onClick={() => getStatus(false)}
+      >
+        Deaktiv
+      </li>
+    </ul>
+  );
+};
 
-export default Status
+export default Status;

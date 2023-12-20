@@ -299,6 +299,7 @@ export const getStudentsPaginationAction =
   };
 
 export const createStudentsAction = (studentData) => async (dispatch) => {
+  console.log(studentData);
   dispatch(studentModalLoading(true));
   try {
     const { data } = await API.post("/", studentData);
@@ -349,6 +350,7 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
 };
 
 export const updateStudentsAction = (_id, studentData) => async (dispatch) => {
+  console.log(studentData);
   dispatch(studentModalLoading(true));
   try {
     const { data } = await API.patch(`/${_id}`, studentData);

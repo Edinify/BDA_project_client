@@ -70,7 +70,6 @@
 .main-sidebar .sidebar-head-tablet svg {
     cursor: pointer;
 }
-
 .main-sidebar .sidebar-nav-list li a {
     display: flex;
     align-items: center;
@@ -80,6 +79,13 @@
     padding: 12px 30px;
     position: relative;
     transition: .3s;
+}
+.main-sidebar .sidebar-nav-list li a svg {
+    width: 20px;
+    height: 20px;
+}
+.main-sidebar .sidebar-nav-list li a svg path {
+    fill: #fff;
 }
 .main-sidebar .sidebar-nav-list li a.active,
 .main-sidebar .sidebar-nav-list li a:hover {

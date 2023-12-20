@@ -30,6 +30,8 @@ export const Header = () => {
         return "Karyera";
       case "/consultation":
         return "Konsultasiya";
+      case "/syllabus":
+        return "Sillabus";
       default:
         return "";
     }

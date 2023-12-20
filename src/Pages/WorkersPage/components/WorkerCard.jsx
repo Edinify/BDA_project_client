@@ -4,7 +4,7 @@ import { WORKER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteWorkerAction } from "../../../redux/actions/workersActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
-const WorkerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
+const WorkerCard = ({ data, mode, cellNumber }) => {
   const { generalProfileList, generalProfilePowerList } = useCustomHook();
   const dispatch = useDispatch();
   const { workers, lastPage } = useSelector((state) => state.workersPagination);
@@ -16,7 +16,7 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             return `${
               generalProfileList.find((profile) => profile.key === item.profile)
                 .name
-            }: ${
+            } - ${
               generalProfilePowerList.find(
                 (profile) => profile.key === item.power
               ).name
@@ -25,32 +25,11 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           .join(", ")
       : "boş";
   const updateItem = (modalType) => {
-    const {
-      _id,
-      fullName,
-      birthday,
-      phone,
-      position,
-      profiles,
-      email,
-      password,
-      role,
-    } = data;
     dispatch({
       type: WORKER_MODAL_ACTION_TYPE.GET_WORKER_MODAL,
       payload: {
-        data: {
-          _id,
-          fullName,
-          birthday,
-          phone,
-          position,
-          profiles,
-          email,
-          password,
-          role,
-        },
-        openModal: modalType !== "more" ? true : false,
+        data: data,
+        openModal: true,
       },
     });
   };
@@ -60,10 +39,6 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
     const _id = data._id;
     const searchQuery = workersSearchValues;
     dispatch(deleteWorkerAction({ _id, pageNumber, searchQuery }));
-  };
-  const openMoreModal = () => {
-    updateItem("more");
-    setOpenMoreModal(true);
   };
 
   return (
@@ -91,18 +66,15 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone">{data.position}</div>
+              <div className="table-scroll-text">{data.position}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone">{profiles}</div>
+              <div className="table-scroll-text profiles">{profiles}</div>
               <div className="right-fade"></div>
             </div>
-          </td>
-          <td className="more" onClick={() => openMoreModal()}>
-            Ətraflı
           </td>
           <td>
             <UpdateDeleteModal
@@ -118,20 +90,20 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             <h3>{data.fullName}</h3>
             <ul>
               <li>
-                <span className="type">Email:</span>
+                <span>Email:</span>
                 <p>{data.email ? data.email : "boş"}</p>
               </li>
               <li>
-                <span className="type">Telefon nömrəsi:</span>
+                <span>Telefon nömrəsi:</span>
                 <p>{data.phone ? data.phone : "boş"}</p>
               </li>
               <li>
-                <span className="type">Pozisiya:</span>
+                <span>Pozisiya:</span>
                 <p>{data.position ? data.position : "boş"}</p>
               </li>
               <li>
-                <span className="type">Profil:</span>
-                <p>{profiles}</p>
+                <span>Profil:</span>
+                <p className="profiles">{profiles}</p>
               </li>
             </ul>
           </div>
@@ -141,7 +113,6 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               deleteItem={deleteItem}
               data={data}
             />
-            <span onClick={() => openMoreModal()}>Ətraflı</span>
           </div>
         </div>
       )}

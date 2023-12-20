@@ -4,7 +4,6 @@ import TeacherCard from "./TeacherCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
-import { TEACHERS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 
 const TeachersData = ({ teacherPageNum, getPageNumber }) => {
   const dispatch = useDispatch();
@@ -18,8 +17,6 @@ const TeachersData = ({ teacherPageNum, getPageNumber }) => {
     { id: 2, label: "Fənn" },
     { id: 3, label: "Email" },
     { id: 4, label: "Telefon nömrəsi" },
-    { id: 5, label: "Əmək haqqı" },
-    // { id: 5, label: "Status" },
     { id: 6, label: "" },
     { id: 7, label: "" },
   ];

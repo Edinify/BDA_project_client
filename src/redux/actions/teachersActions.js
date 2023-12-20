@@ -199,7 +199,7 @@ export const getTeachersPaginationAction =
 export const createTeacherAction = (teacherData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
-    const { data } = await REGISTERAPI.post("/teacher/sign", teacherData);
+    const { data } = await API.post("/", teacherData);
     dispatch(getTeachersPaginationAction(data.lastPage, "", "all"));
     dispatch({
       type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,

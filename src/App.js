@@ -11,6 +11,7 @@ import { ConsultationModal } from "./globalComponents/Modals/ConsultationModal/C
 import { GroupModal } from "./globalComponents/Modals/GroupModal/GroupModal";
 import WorkerModal from "./globalComponents/Modals/WorkerModal/WorkerModal";
 import CareerModal from "./globalComponents/Modals/CareerModal/CareerModal";
+import SyllabusModal from "./globalComponents/Modals/SyllabusModal/SyllabusModal";
 
 //
 function App() {
@@ -23,6 +24,7 @@ function App() {
   );
   const { teachersOpenModal } = useSelector((state) => state.teachersModal);
   const { workerOpenModal } = useSelector((state) => state.workerModal);
+  const { syllabusOpenModal } = useSelector((state) => state.syllabusModal);
   const { careerOpenModal } = useSelector((state) => state.careerModal);
 
   useEffect(() => {
@@ -59,6 +61,7 @@ function App() {
       {teachersOpenModal && <TeacherModal />}
       {groupOpenModal && <GroupModal />}
       {workerOpenModal && <WorkerModal />}
+      {syllabusOpenModal && <SyllabusModal />}
       {careerOpenModal && <CareerModal />}
       <ToastContainer />
     </div>

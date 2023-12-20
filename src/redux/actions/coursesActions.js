@@ -66,9 +66,9 @@ const courseModalOpen = (value) => ({
 });
 
 
-export const allCoursesAction = () => async (dispatch) => {
+export const getAllCoursesAction = () => async (dispatch) => {
   try {
-    const { data } = await API.get("/");
+    const { data } = await API.get("/all");
     dispatch({ type: ALL_COURSES_ACTION.GET_ALL_COURSE, payload: data });
   } catch (error) {
     console.log(error);

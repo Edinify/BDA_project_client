@@ -9,38 +9,30 @@ import { STUDENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import Status from "./components/Buttons/Status";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
-import CoursesInput from "./components/Inputs/CoursesInput";
+import WhereComing from "./components/SelectCollection/WhereComing";
+import PaymentType from "./components/SelectCollection/PaymentType";
+import CoursesList from "./components/SelectCollection/CoursesList/CoursesList";
+import DiscountReason from "./components/SelectCollection/DiscountReason";
 
 export const StudentModal = () => {
   const dispatch = useDispatch();
   const { studentsModalData: modalData } = useSelector(
     (state) => state.studentsModal
   );
-  const [classIcon, setClassIcon] = useState(false);
-  const [selectedClassList, setSelectedClassList] = useState([]);
-  const [checkedList, setCheckedList] = useState([]);
+
   const inputNameArr1 = [
     "fin",
     "seria",
     "birthday",
     "phone",
-    "degree",
     "contractStartDate",
     "contractEndDate",
-    "amount",
-    "totalAmount",
-    "dicount",
   ];
 
   // formik
   const formik = useFormik({
     initialValues: {
       fullName: modalData.fullName ? modalData.fullName : "",
-      lessonAmount: modalData?.courses
-        ? modalData?.courses?.find((item) => !item.lessonAmount)
-          ? ""
-          : 1
-        : "",
     },
     validationSchema: ValidationSchema,
   });
@@ -54,6 +46,11 @@ export const StudentModal = () => {
   );
 
   const updateModalState = (keyName, value) => {
+    if (keyName === "courses") {
+      setInputValue("courses", value.length > 0 ? "yes" : "");
+    } else {
+      setInputValue(keyName, value);
+    }
     dispatch({
       type: STUDENTS_MODAL_ACTION_TYPE.GET_STUDENTS_MODAL,
       payload: {
@@ -68,46 +65,6 @@ export const StudentModal = () => {
       payload: { data: {}, openModal: false },
     });
   };
-  const changeIcon = () => {
-    setClassIcon(!classIcon);
-  };
-
-  useEffect(() => {
-    if (modalData?._id) {
-      setSelectedClassList(modalData.courses);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (modalData?._id && selectedClassList) {
-      const coursesIdList = selectedClassList?.map((course) => {
-        return course._id
-          ? { course: course.course._id, lessonAmount: course?.lessonAmount }
-          : "";
-      });
-      const coursesId = selectedClassList.map((course) => {
-        return course?.course?._id;
-      });
-      setCheckedList([...coursesId]);
-      updateModalState("courses", [...coursesIdList]);
-    } else {
-      if (selectedClassList.length > 0) {
-        const coursesIdList = selectedClassList.map((course) => {
-          return {
-            course: course.course._id,
-            lessonAmount: course?.lessonAmount,
-          };
-        });
-        const coursesId = selectedClassList.map((course) => {
-          return course?.course?._id;
-        });
-        setCheckedList([...coursesId]);
-        updateModalState("courses", [...coursesIdList]);
-      }
-    }
-  }, [selectedClassList]);
-
-  console.log(modalData);
 
   return (
     <div className="create-update-modal-con student-modal">
@@ -147,43 +104,67 @@ export const StudentModal = () => {
                 />
               ))}
             </div>
-            <CoursesInput
+
+            <InputField
+              inputName={"degree"}
               formik={formik}
-              changeIcon={changeIcon}
-              setClassIcon={setClassIcon}
-              classIcon={classIcon}
-              checkedList={checkedList}
-              selectedClassList={selectedClassList}
-              setSelectedClassList={setSelectedClassList}
               setInputValue={setInputValue}
-              updateModalState={updateModalState}
               modalData={modalData}
+              updateModalState={updateModalState}
             />
-            <CoursesInput
-              formik={formik}
-              changeIcon={changeIcon}
-              setClassIcon={setClassIcon}
-              classIcon={classIcon}
-              checkedList={checkedList}
-              selectedClassList={selectedClassList}
-              setSelectedClassList={setSelectedClassList}
-              setInputValue={setInputValue}
-              updateModalState={updateModalState}
+            <WhereComing
               modalData={modalData}
+              updateModalState={updateModalState}
+              formik={formik}
+            />
+            <div className="input-couples">
+              <DiscountReason
+                modalData={modalData}
+                updateModalState={updateModalState}
+                formik={formik}
+              />
+              <InputField
+                inputName={"discount"}
+                formik={formik}
+                modalData={modalData}
+                updateModalState={updateModalState}
+              />
+            </div>
+            <div className="input-couples">
+              <PaymentType
+                modalData={modalData}
+                updateModalState={updateModalState}
+                formik={formik}
+              />
+              <InputField
+                inputName={"amount"}
+                formik={formik}
+                modalData={modalData}
+                updateModalState={updateModalState}
+              />
+            </div>
+            <InputField
+              inputName={"totalAmount"}
+              formik={formik}
+              modalData={modalData}
+              updateModalState={updateModalState}
+            />
+
+            <CoursesList
+              modalData={modalData}
+              updateModalState={updateModalState}
+              formik={formik}
             />
           </div>
         </Box>
 
         {modalData?._id ? (
-          <div className="create-update-modal-btn-con">
-            <Status modalData={modalData} updateModalState={updateModalState} />
-            <SubmitBtn
-              formik={formik}
-              modalData={modalData}
-              closeModal={closeModal}
-              funcType="update"
-            />
-          </div>
+          <SubmitBtn
+            formik={formik}
+            modalData={modalData}
+            closeModal={closeModal}
+            funcType="update"
+          />
         ) : (
           <SubmitBtn
             formik={formik}

@@ -1,18 +1,22 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ReactComponent as Eye } from "../../../../../assets/icons/eye.svg";
 import { ReactComponent as EyeSlash } from "../../../../../assets/icons/eye-slash.svg";
 
 export default function InputField({
   formik,
-  setInputValue,
   modalData,
   inputName,
   updateModalState,
 }) {
   const [shrink, setShrink] = useState(false);
   const [viewPass, setViewPass] = useState(true);
+  const [totalAmountValue, setTotalAmountValue] = useState(() => {
+    const amount =  modalData.amount || 0
+    const discount = modalData.discount || 0
+    return amount - ((amount * discount) / 100) 
+  })
   const inputData = [
     {
       inputName: "fullName",
@@ -90,7 +94,7 @@ export default function InputField({
     },
     {
       inputName: "amount",
-      label: "Məbləğ",
+      label: "Ödəniş",
       type: "number",
       marginTop: "24px",
       marginBottom: "0",
@@ -102,10 +106,10 @@ export default function InputField({
       type: "number",
       marginTop: "24px",
       marginBottom: "0",
-      inputValue: modalData[inputName] || "",
+      inputValue: totalAmountValue || '0'
     },
     {
-      inputName: "dicount",
+      inputName: "discount",
       label: "Endirim %",
       type: "number",
       marginTop: "24px",
@@ -121,6 +125,16 @@ export default function InputField({
       paddingRight: "50px",
     },
   ];
+
+  useEffect(() => {
+    setTotalAmountValue(() => {
+      const amount =  modalData.amount || 0
+      const discount = modalData.discount || 0
+      const result = amount - ((amount * discount) / 100) 
+      updateModalState('totalAmount', result);
+      return result
+    })
+  }, [modalData.amount, modalData.discount])
 
   return (
     <div className={inputName === "password" ? "password-input" : ""}>
@@ -159,10 +173,10 @@ export default function InputField({
         value={
           inputData.find((item) => item.inputName === inputName)?.inputValue
         }
+        disabled={inputName === 'totalAmount' ? true : false}
         onWheel={(e) => e.target.blur()}
         onChange={(e) => {
           updateModalState(inputName, e.target.value);
-          setInputValue(inputName, e.target.value);
         }}
         onBlur={(e) => {
           formik.setFieldTouched(inputName, true);

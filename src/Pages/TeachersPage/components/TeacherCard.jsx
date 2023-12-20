@@ -5,61 +5,32 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { deleteTeacherAction } from "../../../redux/actions/teachersActions";
 const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   const dispatch = useDispatch();
-  const { teachers, lastPage } = useSelector((state) => state.teachersPagination);
+  const { teachers, lastPage } = useSelector(
+    (state) => state.teachersPagination
+  );
   const { teachersSearchValues } = useSelector((state) => state.searchValues);
   const { teacherStatus } = useSelector((state) => state.teacherStatus);
-
   let courses =
-    Array.isArray(data?.courses) && data?.courses.length > 0
-      ? data?.courses
+    Array.isArray(data.courses) && data.courses.length > 0
+      ? data.courses
           .map((course) => {
-            return course.name;
+            return `${course.name}`;
           })
           .join(", ")
       : "boş";
 
+  const listData = [
+    { key: "Fənn", value: courses },
+    { key: "Email", value: data.email },
+    { key: "Telefon nömrəsi", value: data.phone },
+    { key: "Email", value: data.email },
+  ];
+
   const updateItem = (modalType) => {
-    const {
-      fullName,
-      courses,
-      email,
-      password,
-      salary,
-      status,
-      _id,
-      createdAt,
-      sector,
-      birthday,
-      fin,
-      seria,
-      phone,
-      workExperience,
-      maritalStatus,
-      disability,
-      healthStatus,
-    } = data;
     dispatch({
       type: TEACHERS_MODAL_ACTION_TYPE.GET_TEACHERS_MODAL,
       payload: {
-        data: {
-          fullName,
-          courses,
-          email,
-          password,
-          salary,
-          status,
-          _id,
-          createdAt,
-          sector,
-          birthday,
-          fin,
-          seria,
-          phone,
-          workExperience,
-          maritalStatus,
-          disability,
-          healthStatus,
-        },
+        data: data,
         openModal: modalType !== "more" ? true : false,
       },
     });
@@ -69,8 +40,8 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
       lastPage > 1 ? (teachers.length > 1 ? lastPage : lastPage - 1) : 1;
     const _id = data?._id;
     const searchQuery = teachersSearchValues;
-    const status = teacherStatus ? teacherStatus : 'all';
-    dispatch(deleteTeacherAction({_id, pageNumber, searchQuery, status}));
+    const status = teacherStatus ? teacherStatus : "all";
+    dispatch(deleteTeacherAction({ _id, pageNumber, searchQuery, status }));
   };
   const openMoreModal = () => {
     updateItem("more");
@@ -106,10 +77,6 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="salary">
-            {data?.salary?.value}{" "}
-            {data?.salary?.monthly === true ? "aylıq" : " saatlıq"}
-          </td>
           <td className="more" onClick={() => openMoreModal()}>
             Ətraflı
           </td>
@@ -126,18 +93,12 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           <div className="left">
             <h3>{data?.fullName}</h3>
             <ul>
-              <li>
-                <span className="type">Fənn:</span>
-                <p>{courses}</p>
-              </li>
-              <li>
-                <span className="type">Email:</span>
-                <p>{data?.email ? data?.email : "boş"}</p>
-              </li>
-              <li>
-                <span className="type">Telefon nömrəsi:</span>
-                <p>{data?.phone ? data?.phone : "boş"}</p>
-              </li>
+              {listData.map((item, index) => (
+                <li key={index}>
+                  <span className="type">{item.key}:</span>
+                  <p>{item.value}</p>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="right">

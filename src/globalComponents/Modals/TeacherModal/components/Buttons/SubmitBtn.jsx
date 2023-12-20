@@ -7,7 +7,7 @@ import {
 import { SEARCH_VALUES_ACTION_TYPES } from "../../../../../redux/actions-type";
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 
-const SubmitBtn = ({ formik, teachersModalData, funcType, closeModal }) => {
+const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
   const dispatch = useDispatch();
   const { teachersModalLoading } = useSelector((state) => state.teachersModal);
   const [isDisabled, setIsDisabled] = useState(() => {
@@ -18,33 +18,33 @@ const SubmitBtn = ({ formik, teachersModalData, funcType, closeModal }) => {
     }
   });
   const teacherCreate = () => {
-
     dispatch({
       type: SEARCH_VALUES_ACTION_TYPES.TEACHERS_SEARCH_VALUE,
       payload: "",
     });
-    if (teachersModalData?._id) {
-      dispatch(updateTeacherAction(teachersModalData?._id, teachersModalData));
+    if (modalData?._id) {
+      const courses = modalData?.courses.map((item) => {
+        return item._id;
+      });
+      dispatch(
+        updateTeacherAction(modalData?._id, { ...modalData, courses: courses })
+      );
     } else {
       dispatch({
         type: SEARCH_VALUES_ACTION_TYPES.TEACHERS_SEARCH_VALUE,
         payload: "",
       });
-      dispatch(
-        createTeacherAction({
-          ...teachersModalData,
-        })
-      );
+      const courses = modalData?.courses.map((item) => {
+        return item._id;
+      });
+      dispatch(createTeacherAction({ ...modalData, courses: courses }));
     }
   };
 
   useEffect(() => {
     setIsDisabled(() => {
       if (funcType === "update") {
-        if (
-          Object.keys(formik.errors).length === 0 &&
-          teachersModalData?.fullName
-        ) {
+        if (Object.keys(formik.errors).length === 0 && modalData?.fullName) {
           return false;
         } else if (
           Object.keys(formik.errors).length === 1 &&
@@ -55,7 +55,7 @@ const SubmitBtn = ({ formik, teachersModalData, funcType, closeModal }) => {
           return true;
         }
       } else {
-        if (formik.isValid && teachersModalData?.fullName) {
+        if (formik.isValid && modalData?.fullName) {
           return false;
         } else {
           return true;
@@ -63,18 +63,20 @@ const SubmitBtn = ({ formik, teachersModalData, funcType, closeModal }) => {
       }
     });
   }, [formik.errors]);
-
   return (
     <div>
       <div className="create-update-modal-btn">
-        <button disabled={isDisabled || teachersModalLoading} onClick={teacherCreate}>
-        {teachersModalLoading ? (
-          <LoadingBtn />
-        ) : funcType === "update" ? (
-          "Yenilə"
-        ) : (
-          "Yarat"
-        )}
+        <button
+          disabled={isDisabled || teachersModalLoading}
+          onClick={teacherCreate}
+        >
+          {teachersModalLoading ? (
+            <LoadingBtn />
+          ) : funcType === "update" ? (
+            "Yenilə"
+          ) : (
+            "Yarat"
+          )}
         </button>
       </div>
     </div>

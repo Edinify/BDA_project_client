@@ -79,6 +79,7 @@ const TeachersPage = () => {
       dispatch(getTeachersPaginationAction(1, "", "all"));
     }
   }, [dispatch]);
+
   return (
     <div className="details-page teachers-page ">
       <GlobalHead

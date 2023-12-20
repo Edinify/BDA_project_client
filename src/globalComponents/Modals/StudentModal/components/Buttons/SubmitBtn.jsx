@@ -4,7 +4,10 @@ import {
   updateStudentsAction,
   createStudentsAction,
 } from "../../../../../redux/actions/studentsActions";
-import { SEARCH_VALUES_ACTION_TYPES, STUDENTS_MODAL_ACTION_TYPE} from "../../../../../redux/actions-type";
+import {
+  SEARCH_VALUES_ACTION_TYPES,
+  STUDENTS_MODAL_ACTION_TYPE,
+} from "../../../../../redux/actions-type";
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 
 const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
@@ -19,32 +22,28 @@ const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
   });
   const studentCreate = () => {
     if (modalData?._id) {
-      dispatch(updateStudentsAction(modalData?._id, modalData));
+      const courses = modalData?.courses.map((item) => {
+        return item._id;
+      });
+      dispatch(
+        updateStudentsAction(modalData?._id, { ...modalData, courses: courses })
+      );
     } else {
       dispatch({
         type: SEARCH_VALUES_ACTION_TYPES.STUDENTS_SEARCH_VALUE,
         payload: "",
       });
-      dispatch(
-        createStudentsAction({
-          ...modalData,
-        })
-      );
+      const courses = modalData?.courses.map((item) => {
+        return item._id;
+      });
+      dispatch(createStudentsAction({ ...modalData, courses: courses }));
     }
   };
 
   useEffect(() => {
     setIsDisabled(() => {
       if (funcType === "update") {
-        if (
-          Object.keys(formik.errors).length === 0 &&
-          modalData?.fullName
-        ) {
-          return false;
-        } else if (
-          Object.keys(formik.errors).length === 1 &&
-          formik.errors.password === "Bu xana tələb olunur."
-        ) {
+        if (Object.keys(formik.errors).length === 0 && modalData?.fullName) {
           return false;
         } else {
           return true;
@@ -61,7 +60,10 @@ const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
 
   return (
     <div className="create-update-modal-btn">
-      <button disabled={isDisabled || studentsModalLoading} onClick={studentCreate}>
+      <button
+        disabled={isDisabled || studentsModalLoading}
+        onClick={studentCreate}
+      >
         {studentsModalLoading ? (
           <LoadingBtn />
         ) : funcType === "update" ? (

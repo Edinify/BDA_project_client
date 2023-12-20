@@ -1,61 +1,20 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import "./moreModal.css";
+import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as EditIcon } from "../../assets/icons/more-modal/edit-02.svg";
-import { ReactComponent as DeleteIcon } from "../../assets/icons/Delete button.svg";
 import { ReactComponent as CloseIcon } from "../../assets/icons/more-modal/x-close.svg";
 import {
-  BONUS_MODAL_ACTION_TYPE,
-  FEEDBACK_MODAL_ACTION_TYPE,
-  FINE_MODAL_ACTION_TYPE,
   TEACHERS_MODAL_ACTION_TYPE,
+  STUDENTS_MODAL_ACTION_TYPE,
 } from "../../redux/actions-type";
-import { STUDENTS_MODAL_ACTION_TYPE } from "../../redux/actions-type";
 import "moment/locale/az";
 import TeacherMoreModal from "./components/TeacherMoreModal/TeacherMoreModal";
 import StudentMoreModal from "./components/StudentMoreModal/StudentMoreModal";
-import BonusMoreModal from "./components/BonusMoreModal/BonusMoreModal";
-import FineMoreModal from "./components/FineMoreModal/FineMoreModal";
-import FeedbackTeacherMoreModal from "./components/FeedbackTeacherMoreModal/FeedbackTeacherMoreModal";
-import FeedbackStudentMoreModal from "./components/FeedbackStudentMoreModal/FeedbackStudentMoreModal";
-import DeleteItemModal from "../Modals/DeleteItemModal/DeleteItemModal";
-
-const MoreModal = ({ setOpenMoreModal, type, data }) => {
+const MoreModal = ({ setOpenMoreModal, type }) => {
   const dispatch = useDispatch();
   const { teachersModalData } = useSelector((state) => state.teachersModal);
   const { studentsModalData } = useSelector((state) => state.studentsModal);
-  const { bonusModalData } = useSelector((state) => state.bonusModal);
-  const { fineModalData } = useSelector((state) => state.fineModal);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  let courses =
-    type === "teacher"
-      ? Array.isArray(teachersModalData.courses) &&
-        teachersModalData.courses.length > 0
-        ? teachersModalData.courses
-            .map((course) => {
-              return course.name;
-            })
-            .join(", ")
-        : "boş"
-      : Array.isArray(studentsModalData.courses) &&
-        studentsModalData.courses.length > 0
-      ? studentsModalData.courses
-          .map((course) => {
-            return `${course.course.name} (${course.lessonAmount} dərs)`;
-          })
-          .join(", ")
-      : "boş";
 
-  const handleDeleteModal = () => {
-    setShowDeleteModal(!showDeleteModal);
-  };
-
-  const deleteItem = () => {
-    dispatch({
-      type: FEEDBACK_MODAL_ACTION_TYPE.GET_FEEDBACK_MODAL,
-      payload: { data: {}, openModal: false },
-    });
-  };
   const openUpdateModal = () => {
     if (type === "teacher") {
       dispatch({
@@ -77,26 +36,7 @@ const MoreModal = ({ setOpenMoreModal, type, data }) => {
           openModal: true,
         },
       });
-    } else if (type === "bonus") {
-      dispatch({
-        type: BONUS_MODAL_ACTION_TYPE.GET_BONUS_MODAL,
-        payload: {
-          data: {
-            ...bonusModalData,
-          },
-          openModal: true,
-        },
-      });
-    } else if (type === "fine") {
-      dispatch({
-        type: FINE_MODAL_ACTION_TYPE.GET_FINE_MODAL,
-        payload: {
-          data: { ...fineModalData },
-          openModal: true,
-        },
-      });
     }
-
     setOpenMoreModal(false);
   };
 
@@ -110,18 +50,8 @@ const MoreModal = ({ setOpenMoreModal, type, data }) => {
             ""
           )}
           <div className="more-modal-header-icons">
-            <div
-              className={
-                type === "feedback-teacher" || type === "feedback-student"
-                  ? "header-icon-delete"
-                  : "header-icon-edit"
-              }
-            >
-              {type === "feedback-teacher" || type === "feedback-student" ? (
-                <DeleteIcon onClick={handleDeleteModal} />
-              ) : (
-                <EditIcon onClick={() => openUpdateModal()} />
-              )}
+            <div className="header-icon-edit">
+              <EditIcon onClick={() => openUpdateModal()} />
             </div>
             <div className="header-icon-close">
               <CloseIcon onClick={() => setOpenMoreModal(false)} />
@@ -130,32 +60,10 @@ const MoreModal = ({ setOpenMoreModal, type, data }) => {
         </div>
 
         {type === "teacher" && (
-          <TeacherMoreModal
-            teachersModalData={teachersModalData}
-            courses={courses}
-          />
+          <TeacherMoreModal teachersModalData={teachersModalData} />
         )}
         {type === "student" && (
-          <StudentMoreModal
-            studentsModalData={studentsModalData}
-            courses={courses}
-          />
-        )}
-        {type === "bonus" && (
-          <BonusMoreModal bonusModalData={bonusModalData} data={data} />
-        )}
-        {type === "fine" && <FineMoreModal data={data} />}
-        {type === "feedback-teacher" && (
-          <FeedbackTeacherMoreModal data={data} />
-        )}
-        {type === "feedback-student" && (
-          <FeedbackStudentMoreModal data={data} />
-        )}
-        {showDeleteModal && (
-          <DeleteItemModal
-            setShowDeleteModal={setShowDeleteModal}
-            deleteItem={deleteItem}
-          />
+          <StudentMoreModal studentsModalData={studentsModalData} />
         )}
       </div>
     </div>

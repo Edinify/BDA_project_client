@@ -37,6 +37,8 @@ import { studentStatusReducer } from "./reducers/studentStatusReducer";
 import { teacherStatusReducer } from "./reducers/teacherStatusReducer";
 import { careerModalReducer } from "./reducers/careerModalReducer";
 import { careerPaginationReducer } from "./reducers/careerPaginationReducer";
+import { syllabusModalReducer } from "./reducers/syllabusModalReducer";
+import { syllabusPaginationReducer } from "./reducers/syllabusPaginationReducer";
 
 const initialState={};
 const reducers = combineReducers({
@@ -66,6 +68,8 @@ consultationModal: consultationModalReducer,
 groupModal: groupModalReducer,
 workerModal: workerModalReducer,
 workersPagination: workersPaginationReducer,
+syllabusModal: syllabusModalReducer,
+syllabusPagination: syllabusPaginationReducer,
 careerModal: careerModalReducer,
 careerPagination: careerPaginationReducer,
 financeData: financeReducer,

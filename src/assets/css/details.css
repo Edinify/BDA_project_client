@@ -127,6 +127,9 @@
 .details-table .table-scroll-text.phone {
   white-space: nowrap;
 }
+.details-table .table-scroll-text.profiles {
+ text-transform: lowercase;
+}
 .details-table .table-scroll-text::-webkit-scrollbar {
   height: 2px;
 }
@@ -220,6 +223,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: pre-wrap;
+  }
+  .details-list-tablet .content-box .left ul li p.profiles {
+    text-transform: lowercase;
   }
   .incomes-page .content-box {
     display: flex;

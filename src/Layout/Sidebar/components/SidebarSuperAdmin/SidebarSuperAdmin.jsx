@@ -11,6 +11,9 @@ import { ReactComponent as ExpensesIcon } from "../../../../assets/icons/expense
 import { ReactComponent as IncomesIcon } from "../../../../assets/icons/incomesIcon.svg";
 import { ReactComponent as FeedBacksIcon } from "../../../../assets/icons/sidebar/feedbacks-icon.svg";
 import { ReactComponent as AdminIcon } from "../../../../assets/icons/sidebar/users-01.svg";
+import { ReactComponent as GroupIcon } from "../../../../assets/icons/sidebar/group-svgrepo-com.svg";
+import { ReactComponent as CareerIcon } from "../../../../assets/icons/sidebar/work-case-filled-svgrepo-com (1).svg";
+import { ReactComponent as SyllabusIcon } from "../../../../assets/icons/sidebar/syllabus-svgrepo-com.svg";
 
 const SidebarSuperAdmin = ({ closeSidebar }) => {
   return (
@@ -23,7 +26,7 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
       </li>
       <li>
         <NavLink to="/groups/current" onClick={closeSidebar}>
-          <StudentsIcon />
+          <GroupIcon />
           Qruplar
         </NavLink>
       </li>
@@ -47,14 +50,20 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
+        <NavLink to="/syllabus" onClick={closeSidebar}>
+          <SyllabusIcon />
+          Sillabus
+        </NavLink>
+      </li>
+      <li>
         <NavLink to="/tuition-fee" onClick={closeSidebar}>
-          <SalaryIcon />
+          <ExpensesIcon />
           Təhsil haqqı
         </NavLink>
       </li>
       <li>
         <NavLink to="/career" onClick={closeSidebar}>
-          <SalaryIcon />
+          <CareerIcon />
           Karyera
         </NavLink>
       </li>

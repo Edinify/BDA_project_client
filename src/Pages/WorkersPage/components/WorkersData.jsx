@@ -10,18 +10,14 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
   const { workers, totalPages, loading } = useSelector(
     (state) => state.workersPagination
   );
-  const [openMoreModal, setOpenMoreModal] = useState(false);
   const tableHead = [
-    "Ad soyad", "Email", "Mobil nömrə", "Pozisiya", "Profil", "", "",
+    "Ad soyad",
+    "Email",
+    "Mobil nömrə",
+    "Pozisiya",
+    "Profil",
+    "",
   ];
-
-  useEffect(() => {
-    if (openMoreModal) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "overlay";
-    }
-  }, [openMoreModal]);
 
   return (
     <>
@@ -29,10 +25,7 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
         <Loading />
       ) : (
         <>
-          {openMoreModal && (
-            <MoreModal setOpenMoreModal={setOpenMoreModal} type="teacher" />
-          )}
-          <table className="details-table teacher-table">
+          <table className="details-table">
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
@@ -48,7 +41,6 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
                   data={teacher}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
-                  setOpenMoreModal={setOpenMoreModal}
                 />
               ))}
             </tbody>
@@ -61,7 +53,6 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
                 data={teacher}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
-                setOpenMoreModal={setOpenMoreModal}
               />
             ))}
           </div>

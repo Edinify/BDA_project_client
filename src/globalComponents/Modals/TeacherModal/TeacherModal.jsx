@@ -8,55 +8,33 @@ import { TEACHERS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
 import Status from "./components/Buttons/Status";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
-import SectorRadio from "./components/RadioCheckbox/SectorRadio";
 import InputField from "./components/Inputs/InputField";
-import MaritalStatusCheckbox from "./components/RadioCheckbox/MaritalStatusCheckbox";
-import CoursesInput from "./components/Inputs/CoursesInput";
-
+import CoursesList from "./components/SelectCollection/CoursesList/CoursesList";
 const TeacherModal = () => {
   const dispatch = useDispatch();
-  const { teachersModalData } = useSelector((state) => state.teachersModal);
-  const [classIcon, setClassIcon] = useState(false);
-  const [selectedClassList, setSelectedClassList] = useState([]);
-  const [checkedList, setCheckedList] = useState([]);
+  const { teachersModalData: modalData } = useSelector(
+    (state) => state.teachersModal
+  );
   const inputNameArr1 = [
-    "fullName",
-    "birthday",
     "fin",
     "seria",
+    "birthday",
     "phone",
-    "workExperience",
-  ];
-  const inputNameArr2 = [
     "email",
     "password",
   ];
-  
+
   // formik
   const formik = useFormik({
     initialValues: {
-      sector: teachersModalData?.sector ? teachersModalData?.sector : "",
-      fullName: teachersModalData.fullName ? teachersModalData.fullName : "",
-      birthday: teachersModalData?.birthday ? teachersModalData?.birthday : "",
-      fin: teachersModalData.fin ? teachersModalData.fin : "",
-      seria: teachersModalData.seria ? teachersModalData.seria : "",
-      phone: teachersModalData.phone ? teachersModalData.phone : "",
-      workExperience: teachersModalData.workExperience
-        ? teachersModalData.workExperience
-        : "",
-      maritalStatus: teachersModalData?.maritalStatus
-        ? teachersModalData?.maritalStatus
-        : "",
-      disability: teachersModalData.disability
-        ? teachersModalData.disability
-        : "",
-      course: teachersModalData?.courses ? "var" : "",
-      email: teachersModalData.email ? teachersModalData.email : "",
-      password: teachersModalData.password ? teachersModalData.password : "",
-      salary: teachersModalData.salary ? teachersModalData.salary.value : "",
-      healthStatus: teachersModalData.healthStatus
-        ? teachersModalData.healthStatus
-        : "",
+      fullName: modalData.fullName ? modalData.fullName : "",
+      fin: modalData.fin ? modalData.fin : "",
+      seria: modalData.seria ? modalData.seria : "",
+      phone: modalData.phone ? modalData.phone : "",
+      birthday: modalData?.birthday ? modalData?.birthday : "",
+      courses: modalData?.courses ? (modalData?.courses.length > 0 ? 'yes' : '') : "",
+      email: modalData?.email ? modalData?.email : "",
+      password: modalData?.password ? modalData?.password : "",
     },
     validationSchema: ValidationSchema,
   });
@@ -70,10 +48,15 @@ const TeacherModal = () => {
   );
 
   const updateModalState = (keyName, value) => {
+    if (keyName === "courses") {
+      setInputValue("courses", value.length > 0 ? "yes" : "");
+    } else {
+      setInputValue(keyName, value);
+    }
     dispatch({
       type: TEACHERS_MODAL_ACTION_TYPE.GET_TEACHERS_MODAL,
       payload: {
-        data: { ...teachersModalData, [keyName]: value },
+        data: { ...modalData, [keyName]: value },
         openModal: true,
       },
     });
@@ -84,39 +67,12 @@ const TeacherModal = () => {
       payload: { data: {}, openModal: false },
     });
   };
-  const changeIcon = () => {
-    setClassIcon(!classIcon);
-  };
-
-  useEffect(() => {
-    if (teachersModalData?._id) {
-      setSelectedClassList(teachersModalData.courses);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (teachersModalData?._id) {
-      const coursesIdList = selectedClassList.map((course) => {
-        return course._id ? course._id : "";
-      });
-      setCheckedList([...coursesIdList]);
-      updateModalState("courses", [...coursesIdList]);
-    } else {
-      if (selectedClassList.length > 0) {
-        const coursesIdList = selectedClassList.map((course) => {
-          return course._id;
-        });
-        setCheckedList([...coursesIdList]);
-        updateModalState("courses", [...coursesIdList]);
-      }
-    }
-  }, [selectedClassList]);
 
   return (
     <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal">
         <div className="create-update-modal-head">
-          <h2>{teachersModalData?._id ? "Müəllim yenilə" : "Müəllim yarat"}</h2>
+          <h2>{modalData?._id ? "Müəllim yenilə" : "Müəllim yarat"}</h2>
           <CloseBtn onClick={closeModal} />
         </div>
 
@@ -131,6 +87,13 @@ const TeacherModal = () => {
           }}
         >
           <div className="create-update-modal-form">
+            <InputField
+              inputName="fullName"
+              formik={formik}
+              setInputValue={setInputValue}
+              modalData={modalData}
+              updateModalState={updateModalState}
+            />
             <div className="input-couples">
               {inputNameArr1.map((name, index) => (
                 <InputField
@@ -138,73 +101,26 @@ const TeacherModal = () => {
                   inputName={name}
                   formik={formik}
                   setInputValue={setInputValue}
-                  teachersModalData={teachersModalData}
+                  modalData={modalData}
+                  updateModalState={updateModalState}
                 />
               ))}
             </div>
-            <InputField
-              inputName={"healthStatus"}
-              formik={formik}
-              setInputValue={setInputValue}
-              teachersModalData={teachersModalData}
-            />
-            <InputField
-              inputName={"disability"}
-              formik={formik}
-              setInputValue={setInputValue}
-              teachersModalData={teachersModalData}
-            />
-            <MaritalStatusCheckbox
-              formik={formik}
-              teachersModalData={teachersModalData}
-              setInputValue={setInputValue}
-            />
-            <SectorRadio
-              formik={formik}
-              teachersModalData={teachersModalData}
+
+            <CoursesList
+              modalData={modalData}
               updateModalState={updateModalState}
-              setInputValue={setInputValue}
-            />
-            <CoursesInput
               formik={formik}
-              changeIcon={changeIcon}
-              classIcon={classIcon}
-              checkedList={checkedList}
-              selectedClassList={selectedClassList}
-              setSelectedClassList={setSelectedClassList}
-              setInputValue={setInputValue}
-              updateModalState={updateModalState}
-              setClassIcon={setClassIcon}
             />
-            <InputField
-              inputName={"salary"}
-              formik={formik}
-              setInputValue={setInputValue}
-              teachersModalData={teachersModalData}
-            />
-            <div className="input-couples">
-              {inputNameArr2.map((name, index) => (
-                <InputField
-                  key={index}
-                  inputName={name}
-                  formik={formik}
-                  setInputValue={setInputValue}
-                  teachersModalData={teachersModalData}
-                />
-              ))}
-            </div>
           </div>
         </Box>
 
-        {teachersModalData?._id ? (
+        {modalData?._id ? (
           <div className="create-update-modal-btn-con">
-            <Status
-              teachersModalData={teachersModalData}
-              updateModalState={updateModalState}
-            />
+            <Status modalData={modalData} updateModalState={updateModalState} />
             <SubmitBtn
               formik={formik}
-              teachersModalData={teachersModalData}
+              modalData={modalData}
               funcType="update"
               closeModal={closeModal}
             />
@@ -212,15 +128,15 @@ const TeacherModal = () => {
         ) : (
           <SubmitBtn
             formik={formik}
-            teachersModalData={teachersModalData}
+            modalData={modalData}
             funcType="create"
             closeModal={closeModal}
           />
         )}
 
-        {teachersModalData?._id && (
+        {modalData?._id && (
           <div className="joined-time">
-            Qoşuldu: {moment(teachersModalData.createdAt).format("YYYY.MM.DD")}
+            Qoşuldu: {moment(modalData.createdAt).format("YYYY.MM.DD")}
           </div>
         )}
       </div>

@@ -15,86 +15,36 @@ const StudentCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
     Array.isArray(data.courses) && data.courses.length > 0
       ? data.courses
           .map((course) => {
-            return `${course.course.name} (${course.lessonAmount} dərs)`;
+            return `${course.name}`;
           })
           .join(", ")
       : "boş";
   const listData = [
     { key: "Ixtisas", value: courses , },
-    { key: "Qrup", value: courses , },
-    {
-      key: "Email",
-      value: data.email ? data.email : "boş",
-    },
+    { key: "Qrup", value: '' , },
     {
       key: "Mobil nömrə",
-      value: data.motherPhone ? data.motherPhone : "boş",
+      value: data.phone ? data.phone : "boş",
     },
     {
-      key: "Fin kod",
-      value: data.fin ? data.fin : "boş",
+      key: "Təhsil dərəcəsi",
+      value: data.degree ? data.degree : "boş",
     },
     {
-      key: "Status",
-      value: data.status ? data.status : "boş",
+      key: "Ödəniş",
+      value: data.amount ? data.amount : "0",
+    },
+    {
+      key: "Yekun ödəniş",
+      value: data.totalAmount ? data.totalAmount : "0",
     },
   ];
 
   const updateItem = (modalType) => {
-    const {
-      fullName,
-      motherName,
-      fatherName,
-      birthday,
-      motherPhone,
-      fatherPhone,
-      email,
-      password,
-      courses,
-      lessonAmount,
-      status,
-      _id,
-      createdAt,
-      payment,
-      sector,
-      whereComing,
-      educationalInstitution,
-      educationDegree,
-      healthStatus,
-      emergencyPhone,
-      whereFrom,
-      fin,
-      seria,
-    } = data;
-
     dispatch({
       type: STUDENTS_MODAL_ACTION_TYPE.GET_STUDENTS_MODAL,
       payload: {
-        data: {
-          fullName,
-          motherName,
-          fatherName,
-          birthday,
-          motherPhone,
-          fatherPhone,
-          email,
-          password,
-          courses,
-          lessonAmount,
-          status,
-          _id,
-          createdAt,
-          payment,
-          sector,
-          whereComing,
-          educationalInstitution,
-          educationDegree,
-          healthStatus,
-          emergencyPhone,
-          whereFrom,
-          fin,
-          seria,
-        },
+        data: data,
         openModal: modalType !== "more" ? true : false,
       },
     });
@@ -132,31 +82,31 @@ const StudentCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{courses}</div>
+              <div className="table-scroll-text">''</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.email}</div>
+              <div className="table-scroll-text">{data.phone}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.motherPhone}</div>
+              <div className="table-scroll-text">{data.degree}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.fin}</div>
+              <div className="table-scroll-text">{data.amount}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.status}</div>
+              <div className="table-scroll-text">{data.totalAmount}</div>
               <div className="right-fade"></div>
             </div>
           </td>

@@ -61,7 +61,6 @@ const WorkerModal = () => {
     });
   };
 
-  console.log(modalData);
   return (
     <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal">
