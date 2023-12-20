@@ -8,7 +8,7 @@ import { logoutAction } from "./auth";
 import { apiRoot } from "../../apiRoot";
 
 const API = axios.create({
-  baseURL: `${apiRoot}/user/worker`,
+  baseURL: `${apiRoot}/syllabus`,
   withCredentials: true,
 });
 
@@ -77,7 +77,7 @@ const modalLoading = (loadingValue) => ({
 });
 
 
-export const getSyllabusAction = () => async (dispatch) => {
+export const getSyllabusAction = (courseId) => async (dispatch) => {
   try {
     const { data } = await API.get("/all");
     dispatch({ type: SYLLABUS_ALL_ACTIONS_TYPE.GET_ACTIVE_SYLLABUS, payload: data });
@@ -142,12 +142,12 @@ export const getSyllabusActiveAction = () => async (dispatch) => {
 };
 
 export const getSyllabusPaginationAction =
-  (pageNumber, searchQuery) =>
+  (pageNumber, searchQuery, courseId) =>
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
-        `/?page=${pageNumber}&searchQuery=${searchQuery}`
+        `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${courseId}`
       );
       dispatch({
         type: SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_LAST_PAGE,
@@ -171,7 +171,7 @@ export const getSyllabusPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/?page=${pageNumber}&searchQuery=${searchQuery}`
+            `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${courseId}`
           );
 
           dispatch({
@@ -198,8 +198,8 @@ export const getSyllabusPaginationAction =
 export const createSyllabusAction = (syllabusData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
-    const { data } = await API.post("/create", syllabusData);
-    dispatch(getSyllabusPaginationAction(data.lastPage, ""));
+    const { data } = await API.post("/", syllabusData);
+    dispatch(getSyllabusPaginationAction(data.lastPage, "", syllabusData.courseId));
     dispatch({
       type: SYLLABUS_MODAL_ACTION_TYPE.SYLLABUS_OPEN_MODAL,
       payload: false,
@@ -217,8 +217,8 @@ export const createSyllabusAction = (syllabusData) => async (dispatch) => {
             AccessToken: token.data.accesstoken,
           })
         );
-        const { data } = await API.post("/create", syllabusData);
-        dispatch(getSyllabusPaginationAction(data.lastPage, ""));
+        const { data } = await API.post("/", syllabusData);
+        dispatch(getSyllabusPaginationAction(data.lastPage, "", syllabusData.courseId));
         dispatch({
           type: SYLLABUS_MODAL_ACTION_TYPE.SYLLABUS_OPEN_MODAL,
           payload: false,
@@ -286,10 +286,10 @@ export const updateSyllabusAction = (_id, syllabusData) => async (dispatch) => {
   }
 };
 
-export const deleteSyllabusAction = ({_id, pageNumber, searchQuery}) => async (dispatch) => {
+export const deleteSyllabusAction = ({_id, pageNumber, searchQuery, courseId}) => async (dispatch) => {
   try {
     await API.delete(`/${_id}`);
-    dispatch(getSyllabusPaginationAction(pageNumber, searchQuery));
+    dispatch(getSyllabusPaginationAction(pageNumber, searchQuery, courseId));
     dispatch({ type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS, payload: _id });
     toastSuccess("İşçi silindi");
   } catch (error) {
@@ -305,7 +305,7 @@ export const deleteSyllabusAction = ({_id, pageNumber, searchQuery}) => async (d
           })
         );
         await API.delete(`/${_id}`);
-        dispatch(getSyllabusPaginationAction(pageNumber, searchQuery));
+        dispatch(getSyllabusPaginationAction(pageNumber, searchQuery, courseId));
         dispatch({
           type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
           payload: _id,

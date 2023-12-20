@@ -8,25 +8,18 @@ import { SYLLABUS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
-import ProfileList from "./components/SelectCollection/Profiles/ProfileList";
 
 const SyllabusModal = () => {
   const dispatch = useDispatch();
   const { syllabusModalData: modalData } = useSelector(
     (state) => state.syllabusModal
   );
-  const inputNameArr1 = ["birthday", "phone", "email", "password"];
 
   // formik
   const formik = useFormik({
     initialValues: {
-      fullName: modalData.fullName ? modalData.fullName : "",
-      birthday: modalData?.birthday ? modalData?.birthday : "",
-      email: modalData.email ? modalData.email : "",
-      phone: modalData.phone ? modalData.phone : "",
-      position: modalData.position ? modalData.position : "",
-      profiles: modalData.profiles ? modalData.profiles : "",
-      password: modalData.password ? modalData.password : "",
+      name: modalData.name ? modalData.name : "",
+      orderNumber: modalData?.orderNumber ? modalData?.orderNumber : "",
     },
     validationSchema: ValidationSchema,
   });
@@ -40,12 +33,7 @@ const SyllabusModal = () => {
   );
 
   const updateModalState = (keyName, value) => {
-    if (keyName === "profiles") {
-      const formikValue = value.length > 0 ? (value?.find((item) => !item.power) ? "" : "true") : '' ;
-      setInputValue("profiles", formikValue);
-    } else {
-      setInputValue(keyName, value);
-    }
+    setInputValue(keyName, value);
     dispatch({
       type: SYLLABUS_MODAL_ACTION_TYPE.GET_SYLLABUS_MODAL,
       payload: {
@@ -81,43 +69,23 @@ const SyllabusModal = () => {
         >
           <div className="create-update-modal-form">
             <InputField
-              inputName="fullName"
+              inputName="name"
               formik={formik}
-              setInputValue={setInputValue}
               modalData={modalData}
               updateModalState={updateModalState}
             />
-            <div className="input-couples">
-              {inputNameArr1.map((name, index) => (
-                <InputField
-                  key={index}
-                  inputName={name}
-                  formik={formik}
-                  modalData={modalData}
-                  updateModalState={updateModalState}
-                />
-              ))}
-            </div>
             <InputField
-              inputName="position"
+              inputName="orderNumber"
               formik={formik}
-              setInputValue={setInputValue}
               modalData={modalData}
               updateModalState={updateModalState}
-            />
-            <ProfileList
-              formik={formik}
-              updateModalState={updateModalState}
-              modalData={modalData}
             />
           </div>
         </Box>
 
         {modalData?._id ? (
-          // <div className="create-update-modal-btn-con">
           <SubmitBtn formik={formik} modalData={modalData} funcType="update" />
         ) : (
-          // </div>
           <SubmitBtn formik={formik} modalData={modalData} funcType="create" />
         )}
 

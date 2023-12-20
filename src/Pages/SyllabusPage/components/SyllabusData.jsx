@@ -11,11 +11,8 @@ const SyllabusData = ({ pageNum, getPageNumber }) => {
     (state) => state.syllabusPagination
   );
   const tableHead = [
-    "Ad soyad",
-    "Email",
-    "Mobil nömrə",
-    "Pozisiya",
-    "Profil",
+    "No",
+    "Mövzü",
     "",
   ];
 
@@ -25,7 +22,7 @@ const SyllabusData = ({ pageNum, getPageNumber }) => {
         <Loading />
       ) : (
         <>
-          <table className="details-table">
+          <table className="details-table syllabus-table">
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
@@ -46,7 +43,7 @@ const SyllabusData = ({ pageNum, getPageNumber }) => {
             </tbody>
           </table>
 
-          <div className="details-list-tablet with-more">
+          <div className="details-list-tablet syllabus-tablet">
             {syllabusData?.map((teacher, i) => (
               <SyllabusCard
                 key={i}

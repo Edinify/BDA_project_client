@@ -54,6 +54,10 @@
   overflow: hidden;
   width: 100px;
 }
+.details-table.syllabus-table tr td:first-child,
+.details-table.syllabus-table tr th:first-child {
+  width: 80px;
+}
 .details-table tr td:first-child,
 .details-table tr th:first-child {
   padding-left: 24px;
@@ -180,8 +184,14 @@
   .details-table {
     display: none;
   }
+  .details-table.syllabus-table {
+    display: table;
+  }
   .details-list-tablet {
     display: block;
+  }
+  .details-list-tablet.syllabus-tablet {
+    display: none;
   }
   .details-list-tablet .details-list-title {
     padding: 11px 16px;

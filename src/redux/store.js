@@ -39,6 +39,7 @@ import { careerModalReducer } from "./reducers/careerModalReducer";
 import { careerPaginationReducer } from "./reducers/careerPaginationReducer";
 import { syllabusModalReducer } from "./reducers/syllabusModalReducer";
 import { syllabusPaginationReducer } from "./reducers/syllabusPaginationReducer";
+import { syllabusCourseReducer } from "./reducers/syllabusCourseReducer";
 
 const initialState={};
 const reducers = combineReducers({
@@ -70,6 +71,7 @@ workerModal: workerModalReducer,
 workersPagination: workersPaginationReducer,
 syllabusModal: syllabusModalReducer,
 syllabusPagination: syllabusPaginationReducer,
+syllabusCourse: syllabusCourseReducer,
 careerModal: careerModalReducer,
 careerPagination: careerPaginationReducer,
 financeData: financeReducer,

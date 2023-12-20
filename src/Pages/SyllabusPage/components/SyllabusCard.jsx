@@ -5,27 +5,14 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { deleteSyllabusAction } from "../../../redux/actions/syllabusActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 const SyllabusCard = ({ data, mode, cellNumber }) => {
-  const { generalProfileList, generalProfilePowerList } = useCustomHook();
   const dispatch = useDispatch();
+  const { selectedCourse } = useSelector((state) => state.syllabusCourse);
+
   const { syllabusData, lastPage } = useSelector(
     (state) => state.syllabusPagination
   );
   const { syllabusSearchValues } = useSelector((state) => state.searchValues);
-  let profiles =
-    Array.isArray(data.profiles) && data.profiles.length > 0
-      ? data.profiles
-          .map((item) => {
-            return `${
-              generalProfileList.find((profile) => profile.key === item.profile)
-                .name
-            } - ${
-              generalProfilePowerList.find(
-                (profile) => profile.key === item.power
-              ).name
-            }`;
-          })
-          .join(", ")
-      : "boş";
+
   const updateItem = () => {
     dispatch({
       type: SYLLABUS_MODAL_ACTION_TYPE.GET_SYLLABUS_MODAL,
@@ -40,7 +27,8 @@ const SyllabusCard = ({ data, mode, cellNumber }) => {
       lastPage > 1 ? (syllabusData.length > 1 ? lastPage : lastPage - 1) : 1;
     const _id = data._id;
     const searchQuery = syllabusSearchValues;
-    dispatch(deleteSyllabusAction({ _id, pageNumber, searchQuery }));
+    const courseId = selectedCourse._id
+    dispatch(deleteSyllabusAction({ _id, pageNumber, searchQuery, courseId }));
   };
 
   return (
@@ -49,38 +37,16 @@ const SyllabusCard = ({ data, mode, cellNumber }) => {
         <tr>
           <td>
             <div className="td-con">
-              <div className="cell-number">{cellNumber}.</div>
-              <div className="table-scroll-text">{data.fullName}</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td className="email">
-            <div className="td-con">
-              <div className="table-scroll-text">{data.email}</div>
+              <div className="table-scroll-text">{data.orderNumber}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone">{data.phone}</div>
+              <div className="table-scroll-text">{data.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
-          <td>
-            <div className="td-con">
-              <div className="table-scroll-text">{data.position}</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td>
-            <div className="td-con">
-              <div className="table-scroll-text profiles">{profiles}</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          {/* <td className="more" onClick={() => openMoreModal()}>
-            Ətraflı
-          </td> */}
           <td>
             <UpdateDeleteModal
               updateItem={updateItem}
@@ -95,20 +61,12 @@ const SyllabusCard = ({ data, mode, cellNumber }) => {
             <h3>{data.fullName}</h3>
             <ul>
               <li>
-                <span>Email:</span>
-                <p>{data.email ? data.email : "boş"}</p>
+                <span>No:</span>
+                <p>{data.orderNumber ? data.orderNumber : "boş"}</p>
               </li>
               <li>
-                <span>Telefon nömrəsi:</span>
-                <p>{data.phone ? data.phone : "boş"}</p>
-              </li>
-              <li>
-                <span>Pozisiya:</span>
-                <p>{data.position ? data.position : "boş"}</p>
-              </li>
-              <li>
-                <span>Profil:</span>
-                <p className="profiles">{profiles}</p>
+                <span>Mövzu:</span>
+                <p>{data.name ? data.name : "boş"}</p>
               </li>
             </ul>
           </div>

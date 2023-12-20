@@ -1,8 +1,6 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { ReactComponent as Eye } from "../../../../../assets/icons/eye.svg";
-import { ReactComponent as EyeSlash } from "../../../../../assets/icons/eye-slash.svg";
 import { useDispatch } from "react-redux";
 
 export default function InputField({
@@ -13,75 +11,29 @@ export default function InputField({
 }) {
   const dispatch = useDispatch();
   const [shrink, setShrink] = useState(false);
-  const [viewPass, setViewPass] = useState(true);
   const inputData = [
     {
-      inputName: "fullName",
-      label: "Ad soyad",
+      inputName: "name",
+      label: "Mövzu",
       type: "text",
       marginTop: "0",
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
     },
     {
-      inputName: "birthday",
-      label: "Doğum tarixi",
-      type: "date",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue:
-        modalData[inputName] && inputName === "birthday"
-          ? moment(modalData[inputName]).format("YYYY-MM-DD")
-          : "",
-      className: "birthday-input",
-    },
-    {
-      inputName: "phone",
-      label: "Telefon nömrəsi",
-      type: "tel",
+      inputName: "orderNumber",
+      label: "Sıra nömrəsi",
+      type: "number",
       marginTop: "24px",
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "position",
-      label: "Pozisiya",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "profiles",
-      label: "Profils",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "email",
-      label: "Email",
-      type: "email",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "password",
-      label: !modalData._id ? "Şifrə" : "Şifrəni dəyiş",
-      type: viewPass ? "password" : "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      paddingRight: "50px",
-      className: "password-input",
     },
   ];
 
   return (
     <div
       className={
-        inputData.find((item) => item.inputName === inputName)?.className || ''
+        inputData.find((item) => item.inputName === inputName)?.className || ""
       }
     >
       <TextField
@@ -97,13 +49,10 @@ export default function InputField({
             ?.marginBottom,
         }}
         InputLabelProps={{
-          shrink:
-            inputName === "birthday"
-              ? true
-              : inputData.find((item) => item.inputName === inputName)
-                  .inputValue
-              ? true
-              : shrink,
+          shrink: inputData.find((item) => item.inputName === inputName)
+            .inputValue
+            ? true
+            : shrink,
           style: {
             fontSize: "12px",
             color: "#3F3F3F",
@@ -128,24 +77,10 @@ export default function InputField({
         onFocus={() => setShrink(true)}
       />
 
-      {inputName === "password" && modalData?._id
-        ? formik.errors[inputName] &&
-          formik.errors[inputName] !== "Bu xana tələb olunur." &&
-          formik.touched[inputName] && (
-            <small className="validation-err-message">
-              {formik.errors[inputName]}
-            </small>
-          )
-        : formik.errors[inputName] &&
-          formik.touched[inputName] && (
-            <small className="validation-err-message">
-              {formik.errors[inputName]}
-            </small>
-          )}
-      {inputName === "password" && (
-        <div className="modal-view-icon" onClick={() => setViewPass(!viewPass)}>
-          {viewPass ? <EyeSlash /> : <Eye />}
-        </div>
+      {formik.errors[inputName] && formik.touched[inputName] && (
+        <small className="validation-err-message">
+          {formik.errors[inputName]}
+        </small>
       )}
     </div>
   );

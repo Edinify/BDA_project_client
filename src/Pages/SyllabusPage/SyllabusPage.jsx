@@ -2,19 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSyllabusPaginationAction } from "../../redux/actions/syllabusActions";
 import { SYLLABUS_MODAL_ACTION_TYPE } from "../../redux/actions-type";
-import WorkersData from "./components/SyllabusData";
+import SyllabusData from "./components/SyllabusData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const SyllabusPage = () => {
   const dispatch = useDispatch();
   const { lastPage } = useSelector((state) => state.syllabusPagination);
   const { syllabusSearchValues } = useSelector((state) => state.searchValues);
+  const { selectedCourse } = useSelector((state) => state.syllabusCourse);
 
   const getPageNumber = (pageNumber) => {
     if (syllabusSearchValues) {
-      dispatch(getSyllabusPaginationAction(pageNumber, syllabusSearchValues));
+      dispatch(getSyllabusPaginationAction(pageNumber, syllabusSearchValues, selectedCourse._id));
     } else {
-      dispatch(getSyllabusPaginationAction(pageNumber, ""));
+      dispatch(getSyllabusPaginationAction(pageNumber, "", selectedCourse._id));
     }
   };
   const openModal = () => {
@@ -25,16 +26,9 @@ const SyllabusPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getSyllabusPaginationAction(1, syllabusSearchValues));
+    dispatch(getSyllabusPaginationAction(1, syllabusSearchValues, selectedCourse._id));
   };
 
-  useEffect(() => {
-    if (syllabusSearchValues) {
-      dispatch(getSyllabusPaginationAction(1, syllabusSearchValues));
-    } else {
-      dispatch(getSyllabusPaginationAction(1, ""));
-    }
-  }, []);
   return (
     <div className="details-page teachers-page ">
       <GlobalHead
@@ -42,8 +36,9 @@ const SyllabusPage = () => {
         openModal={openModal}
         DATA_SEARCH_VALUE={"SYLLABUS_SEARCH_VALUE"}
         dataSearchValues={syllabusSearchValues}
+        statusType='syllabus'
       />
-      <WorkersData pageNum={lastPage} getPageNumber={getPageNumber} />
+      <SyllabusData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>
   );
 };

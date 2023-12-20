@@ -4,6 +4,7 @@ import { ReactComponent as PlusIcon } from "../../assets/icons/Plus.svg";
 import { useDispatch } from "react-redux";
 import { StatusDropdown } from "./StatusDropdown/StatusDropdown";
 import Search from "./Search/Search";
+import { CoursesDropdown } from "./CoursesDropdown/CoursesDropdown";
 
 const GlobalHead = ({
   searchData,
@@ -34,6 +35,9 @@ const GlobalHead = ({
               {statusType === "student" && (
                 <StatusDropdown statusType="student" deviceType="desktop" />
               )}
+              {statusType === "syllabus" && (
+                <CoursesDropdown deviceType="desktop" />
+              )}
             </div>
 
             <button className="add-detail" onClick={openModal}>
@@ -47,6 +51,7 @@ const GlobalHead = ({
           {statusType === "student" && (
             <StatusDropdown statusType="student" deviceType="mobile" />
           )}
+          {statusType === "syllabus" && <CoursesDropdown deviceType="mobile" />}
         </div>
       </div>
     </div>

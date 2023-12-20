@@ -29,7 +29,8 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
     case SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_PAGINATION:
       return {
         ...state,
-        ...action.payload,
+        syllabusData: action.payload.syllabus,
+        totalPages: action.payload.totalPages,
       };
 
     case SYLLABUS_ALL_ACTIONS_TYPE.CREATE_SYLLABUS:
