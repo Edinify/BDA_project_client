@@ -3,6 +3,7 @@ import { SEARCH_VALUES_ACTION_TYPES } from "../actions-type";
 const initialState = {
   teachersSearchValues: "",
   workersSearchValues: "",
+  groupsSearchValues: "",
   lessonTableSearchValues: "",
   syllabusSearchValues: "",
   careerSearchValues: "",
@@ -29,6 +30,11 @@ export const searchValuesReducer = (state = initialState, action) => {
       return {
         ...state,
         workersSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.GROUPS_SEARCH_VALUE:
+      return {
+        ...state,
+        groupsSearchValues: action.payload,
       };
     case SEARCH_VALUES_ACTION_TYPES.LESSON_TABLE_SEARCH_VALUE:
       return {

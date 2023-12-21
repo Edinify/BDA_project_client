@@ -1,4 +1,8 @@
-import {applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux"
+import {
+  applyMiddleware,
+  combineReducers,
+  legacy_createStore as createStore,
+} from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import authReducer from "./reducers/authReducer";
@@ -9,7 +13,7 @@ import { dropdownReducer } from "./reducers/dropdownReducer";
 import { dropdownNameErrReducer } from "./reducers/dropdownNameErrReducer";
 import { userReducer } from "./reducers/userReducer";
 import { teacherPaginationReducer } from "./reducers/teachersPaginationReducer";
-import {  searchValuesReducer } from "./reducers/searchValuesReducer";
+import { searchValuesReducer } from "./reducers/searchValuesReducer";
 import { StudentsPaginationReducer } from "./reducers/studentsPaginationReducer";
 import { coursesPaginationReducer } from "./reducers/coursesPaginationReducer";
 import forgotPasswordReducer from "./reducers/forgetPasswordReducer";
@@ -42,57 +46,59 @@ import { syllabusPaginationReducer } from "./reducers/syllabusPaginationReducer"
 import { syllabusCourseReducer } from "./reducers/syllabusCourseReducer";
 import { lessonTableModalReducer } from "./reducers/lessonTableModalReducer";
 import { lessonTablePaginationReducer } from "./reducers/lessonTablePaginationReducer";
+import { groupsPaginationReducer } from "./reducers/groupsPaginationReducer";
 
-const initialState={};
+const initialState = {};
 const reducers = combineReducers({
-teachersPagination:teacherPaginationReducer,
-coursesPagination:coursesPaginationReducer,
-studentsPagination:StudentsPaginationReducer,
-auth:authReducer,
-changePass:changePasswordReducer,
-datepicker:datePickerReducer,
-notifications:notificationsReducer,
-dropdownName:dropdownReducer,
-dropdownNameError:dropdownNameErrReducer,
-user:userReducer,
-profileImg: profileImageReducer,
-searchValues:searchValuesReducer,
-forgetPassword:forgotPasswordReducer,
-allCourses:allCoursesReducer,
-funcComponent:funcComponentReducer,
-coursesModal: coursesModalReducer,
-studentsModal: studentsModalReducer,
-teachersModal: teachersModalReducer,
-openSidebar:sidebarOpenReducer,
-tuitionFeePagination: tuitionFeeDataPaginationReducer,
-tuitionFeeModal: tuitionFeeModalReducer,
-consultationPagination: consultationPaginationReducer,
-consultationModal: consultationModalReducer,
-groupModal: groupModalReducer,
-workerModal: workerModalReducer,
-workersPagination: workersPaginationReducer,
-lessonTableModal: lessonTableModalReducer,
-lessonTablePagination: lessonTablePaginationReducer,
-syllabusModal: syllabusModalReducer,
-syllabusPagination: syllabusPaginationReducer,
-syllabusCourse: syllabusCourseReducer,
-careerModal: careerModalReducer,
-careerPagination: careerPaginationReducer,
-financeData: financeReducer,
-expensesData:expensesReducer,
-incomes:incomeReducer,
-expensesModal:expensesModalReducer,
-incomesModal:incomesModalReducer,
-financeDateFilter: financeFilterReducer,
-studentStatus:studentStatusReducer,
-teacherStatus:teacherStatusReducer,
-})
+  teachersPagination: teacherPaginationReducer,
+  coursesPagination: coursesPaginationReducer,
+  studentsPagination: StudentsPaginationReducer,
+  auth: authReducer,
+  changePass: changePasswordReducer,
+  datepicker: datePickerReducer,
+  notifications: notificationsReducer,
+  dropdownName: dropdownReducer,
+  dropdownNameError: dropdownNameErrReducer,
+  user: userReducer,
+  profileImg: profileImageReducer,
+  searchValues: searchValuesReducer,
+  forgetPassword: forgotPasswordReducer,
+  allCourses: allCoursesReducer,
+  funcComponent: funcComponentReducer,
+  coursesModal: coursesModalReducer,
+  studentsModal: studentsModalReducer,
+  teachersModal: teachersModalReducer,
+  openSidebar: sidebarOpenReducer,
+  tuitionFeePagination: tuitionFeeDataPaginationReducer,
+  tuitionFeeModal: tuitionFeeModalReducer,
+  consultationPagination: consultationPaginationReducer,
+  consultationModal: consultationModalReducer,
+  groupModal: groupModalReducer,
+  workerModal: workerModalReducer,
+  workersPagination: workersPaginationReducer,
+  groupModal: groupModalReducer,
+  groupsPagination: groupsPaginationReducer,
+  lessonTableModal: lessonTableModalReducer,
+  lessonTablePagination: lessonTablePaginationReducer,
+  syllabusModal: syllabusModalReducer,
+  syllabusPagination: syllabusPaginationReducer,
+  syllabusCourse: syllabusCourseReducer,
+  careerModal: careerModalReducer,
+  careerPagination: careerPaginationReducer,
+  financeData: financeReducer,
+  expensesData: expensesReducer,
+  incomes: incomeReducer,
+  expensesModal: expensesModalReducer,
+  incomesModal: incomesModalReducer,
+  financeDateFilter: financeFilterReducer,
+  studentStatus: studentStatusReducer,
+  teacherStatus: teacherStatusReducer,
+});
 // test
 
 const store = createStore(
-reducers,
-initialState,
-composeWithDevTools(applyMiddleware(thunk))
-
-)
+  reducers,
+  initialState,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 export default store;

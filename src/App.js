@@ -7,7 +7,7 @@ import { StudentModal } from "./globalComponents/Modals/StudentModal/StudentModa
 import { TuitionFeeModal } from "./globalComponents/Modals/TuitionFeeModal/TuitionFeeModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { GroupModal } from "./globalComponents/Modals/GroupModal/GroupModal";
+import GroupModal from "./globalComponents/Modals/GroupModal/GroupModal";
 import WorkerModal from "./globalComponents/Modals/WorkerModal/WorkerModal";
 import CareerModal from "./globalComponents/Modals/CareerModal/CareerModal";
 import SyllabusModal from "./globalComponents/Modals/SyllabusModal/SyllabusModal";
@@ -19,13 +19,15 @@ function App() {
   const { coursesOpenModal } = useSelector((state) => state.coursesModal);
   const { studentsOpenModal } = useSelector((state) => state.studentsModal);
   const { tuitionFeeOpenModal } = useSelector((state) => state.tuitionFeeModal);
-  const { groupOpenModal } = useSelector((state) => state.groupModal);
   const { consultationOpenModal } = useSelector(
     (state) => state.consultationModal
   );
   const { teachersOpenModal } = useSelector((state) => state.teachersModal);
   const { workerOpenModal } = useSelector((state) => state.workerModal);
-  const { lessonTableOpenModal } = useSelector((state) => state.lessonTableModal);
+  const { groupOpenModal } = useSelector((state) => state.groupModal);
+  const { lessonTableOpenModal } = useSelector(
+    (state) => state.lessonTableModal
+  );
   const { syllabusOpenModal } = useSelector((state) => state.syllabusModal);
   const { careerOpenModal } = useSelector((state) => state.careerModal);
 
@@ -61,11 +63,11 @@ function App() {
       {tuitionFeeOpenModal && <TuitionFeeModal />}
       {consultationOpenModal && <ConsultationModal />}
       {teachersOpenModal && <TeacherModal />}
-      {groupOpenModal && <GroupModal />}
       {workerOpenModal && <WorkerModal />}
       {syllabusOpenModal && <SyllabusModal />}
       {careerOpenModal && <CareerModal />}
       {lessonTableOpenModal && <LessonTableModal />}
+      {groupOpenModal && <GroupModal />}
       <ToastContainer />
     </div>
   );

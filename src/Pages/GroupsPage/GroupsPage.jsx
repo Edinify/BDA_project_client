@@ -1,53 +1,49 @@
-import { useEffect } from "react";
-import DateFilter from "./components/DateFilter/DateFilter";
-import FinanceData from "./components/FinanceData/FinanceData";
-import { useFinanceCustomHook } from "./utils";
-import { useSelector } from "react-redux";
-import DataHead from "./components/DataHead/DataHead";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getGroupsPaginationAction } from "../../redux/actions/groupsActions";
+import { GROUP_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import GroupsData from "./components/GroupsData";
+import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const GroupsPage = () => {
-  const { expensesActivateGet } = useSelector((state) => state.expensesModal);
-  const { incomesActivateGet } = useSelector((state) => state.incomesModal);
-  const {
-    getAllDefaultData,
-    getFinanceDataAfterUpdate,
-    getFinanceDataAfterCreate,
-  } = useFinanceCustomHook();
+  const dispatch = useDispatch();
+  const { lastPage } = useSelector((state) => state.groupsPagination);
+  const { groupsSearchValues } = useSelector((state) => state.searchValues);
 
-  useEffect(() => {
-    if (expensesActivateGet === "update") {
-      getFinanceDataAfterUpdate();
-    } else if (expensesActivateGet === "create") {
-      getFinanceDataAfterCreate("expenses");
-    } else if (expensesActivateGet === "delete") {
-      getFinanceDataAfterUpdate();
+  const getPageNumber = (pageNumber) => {
+    if (groupsSearchValues) {
+      dispatch(getGroupsPaginationAction(pageNumber, groupsSearchValues));
+    } else {
+      dispatch(getGroupsPaginationAction(pageNumber, ""));
     }
-  }, [expensesActivateGet]);
+  };
+  const openModal = () => {
+    dispatch({
+      type: GROUP_MODAL_ACTION_TYPE.GET_GROUP_MODAL,
+      payload: { data: {}, openModal: true },
+    });
+  };
+  const searchData = (e) => {
+    e.preventDefault();
+    dispatch(getGroupsPaginationAction(1, groupsSearchValues));
+  };
 
   useEffect(() => {
-    if (incomesActivateGet === "update") {
-      getFinanceDataAfterUpdate();
-    } else if (incomesActivateGet === "create") {
-      getFinanceDataAfterCreate("incomes");
-    } else if (incomesActivateGet === "delete") {
-      getFinanceDataAfterUpdate();
+    if (groupsSearchValues) {
+      dispatch(getGroupsPaginationAction(1, groupsSearchValues));
+    } else {
+      dispatch(getGroupsPaginationAction(1, ""));
     }
-  }, [incomesActivateGet]);
-
-  useEffect(() => {
-    getAllDefaultData();
   }, []);
-
   return (
-    <div className="finance-page details-page">
-      <div className="finance-top">
-        <DateFilter />
-      </div>
-
-      <div className="finance-bottom">
-        <DataHead />
-        <FinanceData />
-      </div>
+    <div className="details-page teachers-page ">
+      <GlobalHead
+        searchData={searchData}
+        openModal={openModal}
+        DATA_SEARCH_VALUE={"GROUPS_SEARCH_VALUE"}
+        dataSearchValues={groupsSearchValues}
+      />
+      <GroupsData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>
   );
 };

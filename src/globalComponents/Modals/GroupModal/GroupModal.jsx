@@ -1,30 +1,26 @@
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
+import moment from "moment";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
 import { Box } from "@mui/material";
-import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
 import { GROUP_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
+import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
-import TeacherList from "./components/SelectCollection/TeacherList";
-import GroupList from "./components/SelectCollection/GroupList";
-import LessonDaysList from "./components/SelectCollection/LessonDaysList";
-import { useLocation } from "react-router-dom";
-import LessonTimesList from "./components/SelectCollection/LessonTimesList";
+import StudentsList from "./components/SelectCollection/StudentsList/StudentsList";
 
-export const GroupModal = () => {
+const GroupModal = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
   const { groupModalData: modalData } = useSelector(
     (state) => state.groupModal
   );
-  const inputNameArr = ["startDate", "endDate"];
+  const inputNameArr1 = ["startDate", "endDate"];
 
   // formik
   const formik = useFormik({
     initialValues: {
-      fullName: modalData.fullName ? modalData.fullName : "",
+
     },
     validationSchema: ValidationSchema,
   });
@@ -38,6 +34,17 @@ export const GroupModal = () => {
   );
 
   const updateModalState = (keyName, value) => {
+    if (keyName === "profiles") {
+      const formikValue =
+        value.length > 0
+          ? value?.find((item) => !item.power)
+            ? ""
+            : "true"
+          : "";
+      setInputValue("profiles", formikValue);
+    } else {
+      setInputValue(keyName, value);
+    }
     dispatch({
       type: GROUP_MODAL_ACTION_TYPE.GET_GROUP_MODAL,
       payload: {
@@ -54,12 +61,10 @@ export const GroupModal = () => {
   };
 
   return (
-    <div className="create-update-modal-con student-modal">
+    <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal">
-        <div className="create-update-modal-head non-bottom-margin">
-          <h2>
-            {modalData?._id ? "Mövcud qrup yenilə" : "Mövcud qrup  yarat"}
-          </h2>
+        <div className="create-update-modal-head">
+          <h2>{modalData?._id ? "Qrup yenilə" : "Qrup yarat"}</h2>
           <CloseBtn onClick={closeModal} />
         </div>
 
@@ -74,56 +79,48 @@ export const GroupModal = () => {
           }}
         >
           <div className="create-update-modal-form">
-            <TeacherList
-              updateModalState={updateModalState}
-              modalData={modalData}
-            />
-            <GroupList
-              updateModalState={updateModalState}
-              modalData={modalData}
-            />
-            <LessonDaysList
-              updateModalState={updateModalState}
-              modalData={modalData}
-            />
-            <LessonTimesList
-              updateModalState={updateModalState}
-              modalData={modalData}
-            />
             <InputField
+              inputName="name"
               formik={formik}
               setInputValue={setInputValue}
               modalData={modalData}
-              inputName={"studentCount"}
               updateModalState={updateModalState}
             />
             <div className="input-couples">
-              {inputNameArr.map((name, index) => (
+              {inputNameArr1.map((name, index) => (
                 <InputField
                   key={index}
-                  formik={formik}
-                  setInputValue={setInputValue}
-                  modalData={modalData}
                   inputName={name}
+                  formik={formik}
+                  modalData={modalData}
                   updateModalState={updateModalState}
                 />
               ))}
             </div>
+            <StudentsList
+              modalData={modalData}
+              updateModalState={updateModalState}
+              formik={formik}
+            />
           </div>
         </Box>
 
         {modalData?._id ? (
-          <div className="create-update-modal-btn-con">
-            <SubmitBtn
-              formik={formik}
-              modalData={modalData}
-              funcType="update"
-            />
-          </div>
+          // <div className="create-update-modal-btn-con">
+          <SubmitBtn formik={formik} modalData={modalData} funcType="update" />
         ) : (
+          // </div>
           <SubmitBtn formik={formik} modalData={modalData} funcType="create" />
+        )}
+
+        {modalData?._id && (
+          <div className="joined-time">
+            Qoşuldu: {moment(modalData.createdAt).format("YYYY.MM.DD")}
+          </div>
         )}
       </div>
     </div>
   );
 };
+
+export default GroupModal;

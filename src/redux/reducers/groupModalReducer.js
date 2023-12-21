@@ -1,24 +1,11 @@
 import { GROUP_MODAL_ACTION_TYPE } from "../actions-type";
 
 const initialState = {
-  groupModalData: {
-    teacher: "",
-    group: "",
-    startDate: "",
-    endDate: "",
-    studentCount: "",
-    lessonDay: "",
-    lessonTime: "",
-    contractDate: "",
-    contractType: "",
-    lessonStartDate: "",
-    groupType: "",
-    fullName: "",
-    instructor: "",
-  },
-  groupModalOpen: false,
-  groupModalOpenLoading: false,
+  groupModalData: {},
+  groupOpenModal: false,
+  groupModalLoading: false,
 };
+
 export const groupModalReducer = (state = initialState, action) => {
   switch (action.type) {
     case GROUP_MODAL_ACTION_TYPE.GET_GROUP_MODAL:

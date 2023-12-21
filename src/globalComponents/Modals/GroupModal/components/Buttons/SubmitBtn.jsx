@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateConsultationAction, createConsultationAction } from "../../../../../redux/actions/consultationsActions";
-import { SEARCH_VALUES_ACTION_TYPES} from "../../../../../redux/actions-type";
+import { updateGroupAction, createGroupAction } from "../../../../../redux/actions/groupsActions";
+import { SEARCH_VALUES_ACTION_TYPES } from "../../../../../redux/actions-type";
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 
 const SubmitBtn = ({ formik, modalData, funcType }) => {
   const dispatch = useDispatch();
-  const { consultationModalLoading } = useSelector((state) => state.consultationModal);
+  const { groupModalLoading: modalLoading } = useSelector((state) => state.groupModal);
   const [isDisabled, setIsDisabled] = useState(() => {
     if (funcType === "update") {
       return false;
@@ -14,16 +14,20 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
       return true;
     }
   });
-  const studentCreate = () => {
+  const dataCreate = () => {
+    dispatch({
+      type: SEARCH_VALUES_ACTION_TYPES.GROUPS_SEARCH_VALUE,
+      payload: "",
+    });
     if (modalData?._id) {
-      dispatch(updateConsultationAction(modalData?._id, modalData));
+      dispatch(updateGroupAction(modalData?._id, modalData));
     } else {
       dispatch({
-        type: SEARCH_VALUES_ACTION_TYPES.CONSULTATION_SEARCH_VALUE,
+        type: SEARCH_VALUES_ACTION_TYPES.GROUPS_SEARCH_VALUE,
         payload: "",
       });
       dispatch(
-        createConsultationAction({
+        createGroupAction({
           ...modalData,
         })
       );
@@ -57,16 +61,18 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
   }, [formik.errors]);
 
   return (
-    <div className="create-update-modal-btn">
-      <button disabled={isDisabled || consultationModalLoading} onClick={studentCreate}>
-        {consultationModalLoading ? (
+    <div>
+      <div className="create-update-modal-btn">
+        <button disabled={isDisabled || modalLoading} onClick={dataCreate}>
+        {modalLoading ? (
           <LoadingBtn />
         ) : funcType === "update" ? (
           "Yenilə"
         ) : (
           "Yarat"
         )}
-      </button>
+        </button>
+      </div>
     </div>
   );
 };
