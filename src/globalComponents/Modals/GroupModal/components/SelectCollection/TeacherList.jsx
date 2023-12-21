@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TextField } from "@mui/material";
-import { getTeachersActiveAction } from "../../../../../redux/actions/teachersActions";
+import { getActiveTeachersAction } from "../../../../../redux/actions/teachersActions";
 
 const TeacherList = ({ updateModalState, modalData }) => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const TeacherList = ({ updateModalState, modalData }) => {
     setOpenDroddown(false);
   };
   useEffect(() => {
-    dispatch(getTeachersActiveAction());
+    dispatch(getActiveTeachersAction());
   }, []);
 
   return (

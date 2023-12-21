@@ -4,6 +4,7 @@ import { getSyllabusPaginationAction } from "../../redux/actions/syllabusActions
 import { SYLLABUS_MODAL_ACTION_TYPE } from "../../redux/actions-type";
 import SyllabusData from "./components/SyllabusData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
+import { toast } from "react-toastify";
 
 const SyllabusPage = () => {
   const dispatch = useDispatch();
@@ -13,20 +14,56 @@ const SyllabusPage = () => {
 
   const getPageNumber = (pageNumber) => {
     if (syllabusSearchValues) {
-      dispatch(getSyllabusPaginationAction(pageNumber, syllabusSearchValues, selectedCourse._id));
+      dispatch(
+        getSyllabusPaginationAction(
+          pageNumber,
+          syllabusSearchValues,
+          selectedCourse._id
+        )
+      );
     } else {
       dispatch(getSyllabusPaginationAction(pageNumber, "", selectedCourse._id));
     }
   };
   const openModal = () => {
-    dispatch({
-      type: SYLLABUS_MODAL_ACTION_TYPE.GET_SYLLABUS_MODAL,
-      payload: { data: {}, openModal: true },
-    });
+    if (selectedCourse) {
+      dispatch({
+        type: SYLLABUS_MODAL_ACTION_TYPE.GET_SYLLABUS_MODAL,
+        payload: { data: {}, openModal: true },
+      });
+    } else {
+      toast.error("Ixtisas seçməlisiniz", {
+        position: "top-right",
+        autoClose: 2000,
+        toastClassName: "custom-toast",
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   };
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getSyllabusPaginationAction(1, syllabusSearchValues, selectedCourse._id));
+    if (selectedCourse) {
+      dispatch(
+        getSyllabusPaginationAction(1, syllabusSearchValues, selectedCourse._id)
+      );
+    } else {
+      toast.error("Ixtisas seçməlisiniz", {
+        position: "top-right",
+        autoClose: 2000,
+        toastClassName: "custom-toast",
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   };
 
   return (
@@ -36,7 +73,7 @@ const SyllabusPage = () => {
         openModal={openModal}
         DATA_SEARCH_VALUE={"SYLLABUS_SEARCH_VALUE"}
         dataSearchValues={syllabusSearchValues}
-        statusType='syllabus'
+        statusType="syllabus"
       />
       <SyllabusData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>

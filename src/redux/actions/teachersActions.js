@@ -77,7 +77,7 @@ const modalLoading = (loadingValue) => ({
 });
 
 
-export const getTeachersAction = () => async (dispatch) => {
+export const getAllTeachersAction = () => async (dispatch) => {
   try {
     const { data } = await API.get("/all");
     dispatch({ type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER, payload: data });
@@ -106,11 +106,11 @@ export const getTeachersAction = () => async (dispatch) => {
   }
 };
 
-export const getTeachersActiveAction = () => async (dispatch) => {
+export const getActiveTeachersAction = () => async (dispatch) => {
   try {
     const { data } = await API.get("/active");
     dispatch({
-      type: TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHER,
+      type: TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHERS,
       payload: data,
     });
   } catch (error) {
@@ -128,7 +128,7 @@ export const getTeachersActiveAction = () => async (dispatch) => {
         );
         const { data } = await API.get("/active");
         dispatch({
-          type: TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHER,
+          type: TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHERS,
           payload: data,
         });
       } catch (error) {

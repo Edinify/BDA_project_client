@@ -7,11 +7,12 @@ import { StudentModal } from "./globalComponents/Modals/StudentModal/StudentModa
 import { TuitionFeeModal } from "./globalComponents/Modals/TuitionFeeModal/TuitionFeeModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ConsultationModal } from "./globalComponents/Modals/ConsultationModal/ConsultationModal";
 import { GroupModal } from "./globalComponents/Modals/GroupModal/GroupModal";
 import WorkerModal from "./globalComponents/Modals/WorkerModal/WorkerModal";
 import CareerModal from "./globalComponents/Modals/CareerModal/CareerModal";
 import SyllabusModal from "./globalComponents/Modals/SyllabusModal/SyllabusModal";
+import ConsultationModal from "./globalComponents/Modals/ConsultationModal/ConsultationModal";
+import LessonTableModal from "./globalComponents/Modals/LessonTableModal/LessonTableModal";
 
 //
 function App() {
@@ -24,6 +25,7 @@ function App() {
   );
   const { teachersOpenModal } = useSelector((state) => state.teachersModal);
   const { workerOpenModal } = useSelector((state) => state.workerModal);
+  const { lessonTableOpenModal } = useSelector((state) => state.lessonTableModal);
   const { syllabusOpenModal } = useSelector((state) => state.syllabusModal);
   const { careerOpenModal } = useSelector((state) => state.careerModal);
 
@@ -63,6 +65,7 @@ function App() {
       {workerOpenModal && <WorkerModal />}
       {syllabusOpenModal && <SyllabusModal />}
       {careerOpenModal && <CareerModal />}
+      {lessonTableOpenModal && <LessonTableModal />}
       <ToastContainer />
     </div>
   );

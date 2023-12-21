@@ -20,7 +20,7 @@ export const teacherPaginationReducer = (state = initialState, action) => {
         teachers: action.payload,
         // loading: false,
       };
-      case TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHER:
+      case TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHERS:
         return{
           ...state,
           teachers:action.payload,

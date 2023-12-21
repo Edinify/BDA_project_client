@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   WEEKS_BETWEEN_SELECTED_DATES_ACTION_TYPE,
   MAIN_PAGE_TYPE_ACTION_TYPE,
-  TABLE_TYPE_ACTION_TYPE,
   MODAL_LESSON_ACTION_TYPE,
   DROPDOWN_ERROR_TYPE,
 } from "../../redux/actions-type";
@@ -75,9 +74,37 @@ export function useCustomHook() {
     { name: "PROMOKOD", key: "promocode" },
     { name: "Resale", key: "resale" },
   ];
+  const personaList = [
+    { name: "Həvəsli", key: "enthusiastic" },
+    { name: "Narazı", key: "dissatisfied" },
+    { name: "Müahidəçi", key: "contractor" },
+    { name: "Demaqoq", key: "demagog" },
+    { name: "Ekstravert", key: "extrovert" },
+    { name: "İntravert", key: "introvert" },
+    { name: "Ailəcanlı", key: "familyFriendly" },
+  ];
   const discountReasonList = [
     { name: "Teknest", key: "technest" },
     { name: "Digər", key: "other" },
+  ];
+  const constStatusList = [
+    { name: "Təyin edildi", key: "appointed" },
+    { name: "Satıldı", key: "sold" },
+    { name: "Ləğv edildi", key: "cancelled" },
+    { name: "Düşünür", key: "thinks" },
+  ];
+  const cancelReasonList = [
+    { name: "Maddi", key: "financial" },
+    { name: "Vaxt Uyğunsuzluğu", key: "timeMismatch" },
+    { name: "Müəllim seçimi", key: "teacherSelection" },
+    { name: "Qərarsızlıq", key: "indecision" },
+  ];
+  const knowledgeList = [
+    { name: "Ekspert", key: "master" },
+    { name: "Yaxşı", key: "good" },
+    { name: "Orta", key: "normal" },
+    { name: "Zəif", key: "weak" },
+    { name: "Sıfır", key: "zero" },
   ];
   const paymentTypeList = [
     { name: "Tam ödəniş", key: "full" },
@@ -198,9 +225,6 @@ export function useCustomHook() {
       payload: type,
     });
   };
-  const changeTableType = (type) => {
-    dispatch({ type: TABLE_TYPE_ACTION_TYPE.GET_TABLE_TYPE, payload: type });
-  };
   const createLessonModal = (data) => {
     dispatch({
       type: MODAL_LESSON_ACTION_TYPE.SET_MODAL_LESSON,
@@ -229,9 +253,12 @@ export function useCustomHook() {
     generalProfilePowerList,
     paymentTypeList,
     discountReasonList,
+    personaList,
+    knowledgeList,
+    cancelReasonList,
+    constStatusList,
     getWeeksBetweenDates,
     changeMainPageType,
-    changeTableType,
     createLessonModal,
     clearLessonModal,
     changeDropdownNameErr,

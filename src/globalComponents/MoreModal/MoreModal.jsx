@@ -6,15 +6,19 @@ import { ReactComponent as CloseIcon } from "../../assets/icons/more-modal/x-clo
 import {
   TEACHERS_MODAL_ACTION_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
+  CONSULTATION_MODAL_ACTION_TYPE,
 } from "../../redux/actions-type";
 import "moment/locale/az";
 import TeacherMoreModal from "./components/TeacherMoreModal/TeacherMoreModal";
 import StudentMoreModal from "./components/StudentMoreModal/StudentMoreModal";
+import ConsultationMoreModal from "./components/ConsultationMoreModal/ConsultationMoreModal";
 const MoreModal = ({ setOpenMoreModal, type }) => {
   const dispatch = useDispatch();
   const { teachersModalData } = useSelector((state) => state.teachersModal);
   const { studentsModalData } = useSelector((state) => state.studentsModal);
-
+  const { consultationModalData } = useSelector(
+    (state) => state.consultationModal
+  );
   const openUpdateModal = () => {
     if (type === "teacher") {
       dispatch({
@@ -36,6 +40,16 @@ const MoreModal = ({ setOpenMoreModal, type }) => {
           openModal: true,
         },
       });
+    } else if (type === "consultation") {
+      dispatch({
+        type: CONSULTATION_MODAL_ACTION_TYPE.GET_CONSULTATION_MODAL,
+        payload: {
+          data: {
+            ...consultationModalData,
+          },
+          openModal: true,
+        },
+      });
     }
     setOpenMoreModal(false);
   };
@@ -44,7 +58,7 @@ const MoreModal = ({ setOpenMoreModal, type }) => {
     <div className="more-modal">
       <div className="more-modal-con">
         <div className="more-modal-header">
-          {type === "teacher" || type === "student" ? (
+          {type === "teacher" || type === "student" || type === "consultation" ? (
             <h2>Şəxsi məlumatlar</h2>
           ) : (
             ""
@@ -64,6 +78,9 @@ const MoreModal = ({ setOpenMoreModal, type }) => {
         )}
         {type === "student" && (
           <StudentMoreModal studentsModalData={studentsModalData} />
+        )}
+          {type === "consultation" && (
+          <ConsultationMoreModal consultationModalData={consultationModalData} />
         )}
       </div>
     </div>

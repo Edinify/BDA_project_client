@@ -40,6 +40,8 @@ import { careerPaginationReducer } from "./reducers/careerPaginationReducer";
 import { syllabusModalReducer } from "./reducers/syllabusModalReducer";
 import { syllabusPaginationReducer } from "./reducers/syllabusPaginationReducer";
 import { syllabusCourseReducer } from "./reducers/syllabusCourseReducer";
+import { lessonTableModalReducer } from "./reducers/lessonTableModalReducer";
+import { lessonTablePaginationReducer } from "./reducers/lessonTablePaginationReducer";
 
 const initialState={};
 const reducers = combineReducers({
@@ -69,6 +71,8 @@ consultationModal: consultationModalReducer,
 groupModal: groupModalReducer,
 workerModal: workerModalReducer,
 workersPagination: workersPaginationReducer,
+lessonTableModal: lessonTableModalReducer,
+lessonTablePagination: lessonTablePaginationReducer,
 syllabusModal: syllabusModalReducer,
 syllabusPagination: syllabusPaginationReducer,
 syllabusCourse: syllabusCourseReducer,
@@ -82,7 +86,6 @@ incomesModal:incomesModalReducer,
 financeDateFilter: financeFilterReducer,
 studentStatus:studentStatusReducer,
 teacherStatus:teacherStatusReducer,
-
 })
 // test
 

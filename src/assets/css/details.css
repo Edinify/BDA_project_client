@@ -132,7 +132,7 @@
   white-space: nowrap;
 }
 .details-table .table-scroll-text.profiles {
- text-transform: lowercase;
+  text-transform: lowercase;
 }
 .details-table .table-scroll-text::-webkit-scrollbar {
   height: 2px;
@@ -186,6 +186,24 @@
   }
   .details-table.syllabus-table {
     display: table;
+  }
+  .details-table tr td {
+    font-size: 14px;
+    padding: 8px;
+  }
+  .details-table tr th {
+    padding: 8px;
+  }
+  .details-table tr td:first-child,
+  .details-table tr th:first-child {
+    padding-left: 12px;
+  }
+  .details-table.syllabus-table tr td:first-child,
+  .details-table.syllabus-table tr th:first-child {
+    width: 50px;
+  }
+  .details-table tr td:last-child, .details-table tr th:last-child {
+    width: 40px;
   }
   .details-list-tablet {
     display: block;
@@ -276,13 +294,10 @@
   .details-list-tablet .content-box .right .salary-tablet-modal svg {
     cursor: pointer;
   }
-  .details-list-tablet .content-box.admin .right{
+  .details-list-tablet .content-box.admin .right {
     justify-content: center;
-
   }
 }
-
-
 
 @media screen and (max-width: 500px) {
   .details-list-tablet .content-box {

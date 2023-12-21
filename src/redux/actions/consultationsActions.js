@@ -13,7 +13,7 @@ const refreshApi = axios.create({
 });
 
 const API = axios.create({
-  baseURL: `${apiRoot}/user/student`,
+  baseURL: `${apiRoot}/consultation`,
   withCredentials: true,
 });
 const REGISTERAPI = axios.create({
@@ -137,7 +137,7 @@ export const getActiveConsultationAction = (payload) => async (dispatch) => {
 };
 
 export const getConsultationPaginationAction =
-  (pageNumber, searchQuery, status = "all") =>
+  (pageNumber, searchQuery, status = "appointed") =>
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
@@ -152,7 +152,6 @@ export const getConsultationPaginationAction =
         type: CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_PAGINATION,
         payload: data,
       });
-      
     } catch (error) {
       console.log(error);
       const originalRequest = error.config;
@@ -190,122 +189,112 @@ export const getConsultationPaginationAction =
     }
   };
 
-export const createConsultationAction = (consultationData) => async (dispatch) => {
-  dispatch(modalLoading(true));
-  try {
-    const { data } = await REGISTERAPI.post("/student/sign", consultationData);
-    dispatch(getConsultationPaginationAction(data.lastPage, "", "all"));
-    dispatch({
-      type: CONSULTATION_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
-      payload: false,
-    });
-    toastSuccess("Yeni tələbə yaradıldı");
-  } catch (error) {
-    console.log(error);
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-
-        const { data } = await REGISTERAPI.post("/student/sign", consultationData);
-        dispatch(getConsultationPaginationAction(data.lastPage, "", "all"));
-        dispatch({
-          type: CONSULTATION_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
-          payload: false,
-        });
-        toastSuccess("Yeni tələbə yaradıldı");
-      } catch (error) {
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
-        }
-      }
-    }
-    console.log(error);
-    if (error?.response?.data?.key === "email-already-exist") {
+export const createConsultationAction =
+  (consultationData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.post("/", consultationData);
+      dispatch(getConsultationPaginationAction(data.lastPage, "", 'appointed'));
       dispatch({
-        type: CONSULTATION_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
-        payload: true,
+        type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_MODAL_LOADING,
+        payload: false,
       });
-      toastError("Bu email ilə istifadəçi mövcuddur");
-    }
-  } finally {
-    dispatch(modalLoading(false));
-  }
-};
+      toastSuccess("Yeni konsultasiya yaradıldı");
+    } catch (error) {
+      console.log(error);
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
 
-export const updateConsultationAction = (_id, consultationData) => async (dispatch) => {
-  dispatch(modalLoading(true));
-  try {
-    const { data } = await API.patch(`/${_id}`, consultationData);
-    dispatch({
-      type: CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_CONSULTATION,
-      payload: data,
-    });
-    dispatch({
-      type: CONSULTATION_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
-      payload: false,
-    });
-    toastSuccess("Tələbə yeniləndi");
-  } catch (error) {
-    const originalRequest = error.config;
-
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-        const { data } = await API.patch(`/${_id}`, consultationData);
-        dispatch({
-          type: CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_CONSULTATION,
-          payload: data,
-        });
-        dispatch({
-          type: CONSULTATION_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
-          payload: false,
-        });
-        toastSuccess("Tələbə yeniləndi");
-      } catch (error) {
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
+          const { data } = await API.post("/", consultationData);
+          dispatch(getConsultationPaginationAction(data.lastPage, "", 'appointed'));
+          dispatch({
+            type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Yeni konsultasiya yaradıldı");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
         }
       }
+      console.log(error);
+    } finally {
+      dispatch(modalLoading(false));
     }
-    console.log(error);
-    if (error?.response?.data?.key === "email-already-exist") {
-      // dispatch({type:CONSULTATION_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,payload:true})
-      toastError("Bu email ilə istifadəçi mövcuddur");
+  };
+
+export const updateConsultationAction =
+  (_id, consultationData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(`/${_id}`, consultationData);
+      dispatch({
+        type: CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_CONSULTATION,
+        payload: data,
+      });
+      dispatch({
+        type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_OPEN_MODAL,
+        payload: false,
+      });
+      toastSuccess("konsultasiya yeniləndi");
+    } catch (error) {
+      const originalRequest = error.config;
+
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, consultationData);
+          dispatch({
+            type: CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_CONSULTATION,
+            payload: data,
+          });
+          dispatch({
+            type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("konsultasiya yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      console.log(error);
+    } finally {
+      dispatch(modalLoading(false));
     }
-    if (error?.response?.data?.key === "has-current-week-lessons") {
-      toastError("Cari həftədə  dərsi olan tələbə yenilənə bilməz");
-    }
-  } finally {
-    dispatch(modalLoading(false));
-  }
-};
+  };
 
 export const deleteConsultationAction =
   ({ _id, pageNumber, searchQuery, status }) =>
   async (dispatch) => {
     try {
       await API.delete(`/${_id}`);
-      dispatch(getConsultationPaginationAction(pageNumber, searchQuery, status));
+      dispatch(
+        getConsultationPaginationAction(pageNumber, searchQuery, status)
+      );
       dispatch({
         type: CONSULTATION_ALL_ACTIONS_TYPE.DELETE_CONSULTATION,
         payload: _id,
       });
-      toastSuccess("Tələbə silindi");
+      toastSuccess("konsultasiya silindi");
     } catch (error) {
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -327,7 +316,7 @@ export const deleteConsultationAction =
             type: CONSULTATION_ALL_ACTIONS_TYPE.DELETE_CONSULTATION,
             payload: _id,
           });
-          toastSuccess("Tələbə silindi");
+          toastSuccess("konsultasiya silindi");
         } catch (error) {
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
@@ -335,7 +324,7 @@ export const deleteConsultationAction =
         }
       }
       if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan tələbə silinə bilməz");
+        toastError("Cari həftədə  dərsi olan konsultasiya silinə bilməz");
       }
       console.log(error);
       toastError(error?.response?.data.message);

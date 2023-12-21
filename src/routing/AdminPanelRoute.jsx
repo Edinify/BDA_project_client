@@ -13,7 +13,7 @@ const AdminPanelRoute = () => {
     <>
       <Route path="/" element={<MainPage />} />
       <Route path="/student" element={<MainPage />} />
-      <Route path="/table" element={<TablePage />} />
+      <Route path="/lesson-table" element={<TablePage />} />
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/students" element={<StudentsPage />} />
       <Route path="/teachers" element={<TeachersPage />} />

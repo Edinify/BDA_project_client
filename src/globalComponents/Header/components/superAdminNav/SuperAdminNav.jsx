@@ -62,7 +62,7 @@ const SuperAdminNav = ({ setOpenMenu }) => {
        onClick={(e) => {
         setOpenMenu(true);
       }}
-        to="/table"
+        to="/lesson-table"
         className={({ isActive }) => (isActive ? "active" : "")}
       >
         Cədvəl

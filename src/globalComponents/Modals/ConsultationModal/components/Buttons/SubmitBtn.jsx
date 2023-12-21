@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateConsultationAction, createConsultationAction } from "../../../../../redux/actions/consultationsActions";
-import { SEARCH_VALUES_ACTION_TYPES} from "../../../../../redux/actions-type";
+import {
+  updateConsultationAction,
+  createConsultationAction,
+} from "../../../../../redux/actions/consultationsActions";
+import { SEARCH_VALUES_ACTION_TYPES } from "../../../../../redux/actions-type";
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 
 const SubmitBtn = ({ formik, modalData, funcType }) => {
   const dispatch = useDispatch();
-  const { consultationModalLoading } = useSelector((state) => state.consultationModal);
+  const { consultationModalLoading: modalLoading } = useSelector(
+    (state) => state.consultationModal
+  );
   const [isDisabled, setIsDisabled] = useState(() => {
     if (funcType === "update") {
       return false;
@@ -14,17 +19,29 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
       return true;
     }
   });
-  const studentCreate = () => {
+  const dataCreate = () => {
+    dispatch({
+      type: SEARCH_VALUES_ACTION_TYPES.WORKERS_SEARCH_VALUE,
+      payload: "",
+    });
     if (modalData?._id) {
-      dispatch(updateConsultationAction(modalData?._id, modalData));
+      dispatch(
+        updateConsultationAction(modalData?._id, {
+          ...modalData,
+          course: modalData.course._id,
+          teacher: modalData.teacher._id,
+        })
+      );
     } else {
       dispatch({
-        type: SEARCH_VALUES_ACTION_TYPES.CONSULTATION_SEARCH_VALUE,
+        type: SEARCH_VALUES_ACTION_TYPES.WORKERS_SEARCH_VALUE,
         payload: "",
       });
       dispatch(
         createConsultationAction({
           ...modalData,
+          course: modalData.course._id,
+          teacher: modalData.teacher._id,
         })
       );
     }
@@ -33,21 +50,13 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
   useEffect(() => {
     setIsDisabled(() => {
       if (funcType === "update") {
-        if (
-          Object.keys(formik.errors).length === 0 &&
-          modalData?.fullName
-        ) {
-          return false;
-        } else if (
-          Object.keys(formik.errors).length === 1 &&
-          formik.errors.password === "Bu xana tələb olunur."
-        ) {
+        if (Object.keys(formik.errors).length === 0 && modalData?.studentName) {
           return false;
         } else {
           return true;
         }
       } else {
-        if (formik.isValid && modalData?.fullName) {
+        if (formik.isValid && modalData?.studentName) {
           return false;
         } else {
           return true;
@@ -56,17 +65,20 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
     });
   }, [formik.errors]);
 
+
   return (
-    <div className="create-update-modal-btn">
-      <button disabled={isDisabled || consultationModalLoading} onClick={studentCreate}>
-        {consultationModalLoading ? (
-          <LoadingBtn />
-        ) : funcType === "update" ? (
-          "Yenilə"
-        ) : (
-          "Yarat"
-        )}
-      </button>
+    <div>
+      <div className="create-update-modal-btn">
+        <button disabled={isDisabled || modalLoading} onClick={dataCreate}>
+          {modalLoading ? (
+            <LoadingBtn />
+          ) : funcType === "update" ? (
+            "Yenilə"
+          ) : (
+            "Yarat"
+          )}
+        </button>
+      </div>
     </div>
   );
 };

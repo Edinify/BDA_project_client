@@ -4,13 +4,18 @@ import { getConsultationPaginationAction } from "../../redux/actions/consultatio
 import { CONSULTATION_MODAL_ACTION_TYPE } from "../../redux/actions-type";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import ConsultationData from "./components/ConsultationData";
+import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
+import { useLocation } from "react-router-dom";
 
 const ConsultationsPage = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { lastPage } = useSelector((state) => state.consultationPagination);
   const { consultationSearchValues } = useSelector(
     (state) => state.searchValues
   );
+  const status =
+    location.pathname === "/consultation/appointed" ? "appointed" : "completed";
 
   const getPageNumber = (pageNumber) => {
     if (consultationSearchValues) {
@@ -18,11 +23,11 @@ const ConsultationsPage = () => {
         getConsultationPaginationAction(
           pageNumber,
           consultationSearchValues,
-          "all"
+          status
         )
       );
     } else {
-      dispatch(getConsultationPaginationAction(pageNumber, "", "all"));
+      dispatch(getConsultationPaginationAction(pageNumber, "", status));
     }
   };
   const openModal = () => {
@@ -34,19 +39,29 @@ const ConsultationsPage = () => {
   const searchData = (e) => {
     e.preventDefault();
     dispatch(
-      getConsultationPaginationAction(1, consultationSearchValues, "all")
+      getConsultationPaginationAction(1, consultationSearchValues, status)
     );
   };
 
   useEffect(() => {
     if (consultationSearchValues) {
       dispatch(
-        getConsultationPaginationAction(1, consultationSearchValues, "all")
+        getConsultationPaginationAction(1, consultationSearchValues, status)
       );
     } else {
-      dispatch(getConsultationPaginationAction(1, "", ""));
+      dispatch(getConsultationPaginationAction(1, "", status));
     }
-  }, [dispatch]);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (consultationSearchValues) {
+      dispatch(
+        getConsultationPaginationAction(1, consultationSearchValues, status)
+      );
+    } else {
+      dispatch(getConsultationPaginationAction(1, "", status));
+    }
+  }, []);
 
   return (
     <div className="details-page tuition-fee-page">
@@ -55,7 +70,14 @@ const ConsultationsPage = () => {
         openModal={openModal}
         DATA_SEARCH_VALUE={"CONSULTATION_SEARCH_VALUE"}
         dataSearchValues={consultationSearchValues}
+        addBtn={status === "appointed" ? true : false}
         // statusType="student"
+      />
+      <HeadTabs
+        firstRoute={"/consultation/appointed"}
+        secondRoute={"/consultation/completed"}
+        firstPathname={"Təyin olunmuş"}
+        secondPathname={"Baş tutmuş"}
       />
       <ConsultationData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>

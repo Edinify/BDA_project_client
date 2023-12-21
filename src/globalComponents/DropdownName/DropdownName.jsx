@@ -4,7 +4,7 @@ import { ReactComponent as CheckIcon } from "../../assets/icons/Checkbox.svg";
 import { ReactComponent as ArrowIcon } from "../../assets/icons/arrow-down-dropdown.svg";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search-normal.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { getTeachersAction, getTeachersActiveAction } from "../../redux/actions/teachersActions";
+import { getAllTeachersAction, getActiveTeachersAction } from "../../redux/actions/teachersActions";
 import { getStudentsAction } from "../../redux/actions/studentsActions";
 import {
   DROPDOWN_NAME_ACTION_TYPE,
@@ -111,12 +111,12 @@ export const DropdownName = () => {
 
   useEffect(() => {
     if (location.pathname === "/") {
-      dispatch(getTeachersAction());
+      dispatch(getAllTeachersAction());
     } else if (location.pathname === "/temporary-table") {
       /* temporary table */
-      dispatch(getTeachersAction());
+      dispatch(getAllTeachersAction());
     } else {
-      dispatch(getTeachersActiveAction());
+      dispatch(getActiveTeachersAction());
     }
     dispatch(getStudentsAction({ studentsCount: 0, searchQuery: "" }));
   }, []);

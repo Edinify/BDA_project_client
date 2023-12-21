@@ -50,7 +50,7 @@ const SidebarAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/table" onClick={closeSidebar}>
+        <NavLink to="/lesson-table" onClick={closeSidebar}>
           <TableIcon />
           Cədvəl
         </NavLink>

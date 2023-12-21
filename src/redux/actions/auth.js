@@ -47,7 +47,7 @@ export const loginAction = (authData) => async (dispatch) => {
 export const logoutAction = () => async () => {
   // dispatch({ type: AUTH_ALL_ACTION_TYPE.LOGOUT });
   localStorage.clear();
-  window.location = "/login";
+  window.location.pathname = "/login";
 };
 
 export const setLoadingAction = (loadingValue) => ({

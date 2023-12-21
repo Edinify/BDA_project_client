@@ -28,10 +28,14 @@ export const Header = () => {
         return "Təhsil haqqı";
       case "/career":
         return "Karyera";
-      case "/consultation":
+      case "/consultation/appointed":
+        return "Konsultasiya";
+      case "/consultation/completed":
         return "Konsultasiya";
       case "/syllabus":
         return "Sillabus";
+      case "/lesson-table":
+        return "Dərs cədvəli";
       default:
         return "";
     }

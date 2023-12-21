@@ -13,6 +13,7 @@ const GlobalHead = ({
   dataSearchValues,
   statusType,
   search = true,
+  addBtn = true,
 }) => {
   const dispatch = useDispatch();
   return (
@@ -40,10 +41,12 @@ const GlobalHead = ({
               )}
             </div>
 
-            <button className="add-detail" onClick={openModal}>
-              <PlusIcon />
-              Əlavə et
-            </button>
+            {addBtn && (
+              <button className="add-detail" onClick={openModal}>
+                <PlusIcon />
+                Əlavə et
+              </button>
+            )}
           </div>
           {statusType === "teacher" && (
             <StatusDropdown statusType="teacher" deviceType="mobile" />

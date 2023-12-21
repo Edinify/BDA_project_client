@@ -24,7 +24,8 @@ export const consultationPaginationReducer = (state = initialState, action) => {
     case CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_PAGINATION:
       return {
         ...state,
-        ...action.payload,
+        consultationData: action.payload.consultations,
+        totalPages: action.payload.totalPages,
       };
     case CONSULTATION_ALL_ACTIONS_TYPE.CONSULTATION_LOADING:
       return {
@@ -36,26 +37,26 @@ export const consultationPaginationReducer = (state = initialState, action) => {
         ...state,
         loadingAll: action.payload,
       };
-    case CONSULTATION_ALL_ACTIONS_TYPE.CREATE_STUDENT:
+    case CONSULTATION_ALL_ACTIONS_TYPE.CREATE_CONSULTATION:
       return {
         ...state,
         consultationData: [...state.consultationData, action.payload],
       };
-    case CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_STUDENT:
+    case CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_CONSULTATION:
       return {
         ...state,
         consultationData: state.consultationData.map((student) =>
           student._id === action.payload._id ? action.payload : student
         ),
       };
-    case CONSULTATION_ALL_ACTIONS_TYPE.DELETE_STUDENT:
+    case CONSULTATION_ALL_ACTIONS_TYPE.DELETE_CONSULTATION:
       return {
         ...state,
         consultationData: state.consultationData.filter(
           (student) => student._id !== action.payload
         ),
       };
-    case CONSULTATION_ALL_ACTIONS_TYPE.GET_STUDENT_LAST_PAGE:
+    case CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_LAST_PAGE:
       return {
         // ...state,
         lastPage: action.payload,

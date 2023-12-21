@@ -27,7 +27,7 @@ const SyllabusCard = ({ data, mode, cellNumber }) => {
       lastPage > 1 ? (syllabusData.length > 1 ? lastPage : lastPage - 1) : 1;
     const _id = data._id;
     const searchQuery = syllabusSearchValues;
-    const courseId = selectedCourse._id
+    const courseId = selectedCourse._id;
     dispatch(deleteSyllabusAction({ _id, pageNumber, searchQuery, courseId }));
   };
 
@@ -35,12 +35,7 @@ const SyllabusCard = ({ data, mode, cellNumber }) => {
     <>
       {mode === "desktop" ? (
         <tr>
-          <td>
-            <div className="td-con">
-              <div className="table-scroll-text">{data.orderNumber}</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
+          <td>{data.orderNumber}</td>
           <td>
             <div className="td-con">
               <div className="table-scroll-text">{data.name}</div>

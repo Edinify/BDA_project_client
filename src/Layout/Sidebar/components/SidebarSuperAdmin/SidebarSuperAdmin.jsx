@@ -16,21 +16,20 @@ import { ReactComponent as CareerIcon } from "../../../../assets/icons/sidebar/w
 import { ReactComponent as SyllabusIcon } from "../../../../assets/icons/sidebar/syllabus-svgrepo-com.svg";
 
 const SidebarSuperAdmin = ({ closeSidebar }) => {
+  const location = useLocation();
+  const consultationNav = [
+    "/consultation/appointed",
+    "/consultation/completed",
+  ];
+
   return (
     <ul className="sidebar-nav-list">
       <li>
-        <NavLink to="/workers" onClick={closeSidebar} className="admin">
-          <AdminIcon />
-          Əməkdaşlar
+        <NavLink to="/lesson-table" onClick={closeSidebar} className="admin">
+          <TableIcon />
+          Cədvəl
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/groups/current" onClick={closeSidebar}>
-          <GroupIcon />
-          Qruplar
-        </NavLink>
-      </li>
-
       <li>
         <NavLink to="/students" onClick={closeSidebar}>
           <StudentsIcon />
@@ -56,6 +55,31 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
+        <NavLink
+          className={
+            consultationNav.includes(location.pathname) ? "active" : ""
+          }
+          to="/consultation/appointed"
+          onClick={closeSidebar}
+        >
+          <MainPanelIcon />
+          Konsultasiya
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/workers" onClick={closeSidebar} className="admin">
+          <AdminIcon />
+          Əməkdaşlar
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/groups/current" onClick={closeSidebar}>
+          <GroupIcon />
+          Qruplar
+        </NavLink>
+      </li>
+
+      <li>
         <NavLink to="/tuition-fee" onClick={closeSidebar}>
           <ExpensesIcon />
           Təhsil haqqı
@@ -65,12 +89,6 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         <NavLink to="/career" onClick={closeSidebar}>
           <CareerIcon />
           Karyera
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/consultation" onClick={closeSidebar}>
-          <SalaryIcon />
-          Konsultasiya
         </NavLink>
       </li>
     </ul>

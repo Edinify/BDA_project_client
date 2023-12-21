@@ -6,98 +6,19 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 
 const ConsultationData = ({ pageNum, getPageNumber }) => {
-  const { totalPages } = useSelector(
+  const { totalPages, loading, consultationData } = useSelector(
     (state) => state.consultationPagination
   );
-  const consultationData = [
-    {
-      firstStepData: {
-        studentName: 'Eli eliyev',
-        contactDate: '20.12.2000',
-        source: 'instagramStandart',
-        phone: 34555,
-        department: '3d',
-        constDate: '22.12.2000',
-        constTime: '15:00',
-      },
-      secondStepData: {
-        department: '3d',
-        constDate: '22.12.2000',
-        constTime: '15:00',
-        teacher: "kimse",
-        persona: "Həvəsli",
-        knowledge: "Sıfır",
-        sale: "Satış",
-        cancellReason: "Vaxt Uyğunsuzluğu",
-        saleType: "Tam ödəniş",
-        additionalInfo: ""
-      },
-      firstStepDone: true,
-      secondStepDone: true,
-    },
-    {
-      firstStepData: {
-        studentName: 'Eli eliyev',
-        contactDate: '20.12.2000',
-        source: 'instagramStandart',
-        phone: 34555,
-        department: '3d',
-        constDate: '22.12.2000',
-        constTime: '15:00',
-      },
-      secondStepData: {
-        department: '3d',
-        constDate: '22.12.2000',
-        constTime: '15:00',
-        teacher: "kimse",
-        persona: "Həvəsli",
-        knowledge: "Sıfır",
-        sale: "Satış",
-        cancellReason: "Vaxt Uyğunsuzluğu",
-        saleType: "Tam ödəniş",
-        additionalInfo: ""
-      },
-      firstStepDone: true,
-      secondStepDone: false,
-    },
-    {
-      firstStepData: {
-        studentName: 'Eli eliyev',
-        contactDate: '20.12.2000',
-        source: 'instagramStandart',
-        phone: 34555,
-        department: '3d',
-        constDate: '22.12.2000',
-        constTime: '15:00',
-      },
-      secondStepData: {
-        department: '3d',
-        constDate: '22.12.2000',
-        constTime: '15:00',
-        teacher: "kimse",
-        persona: "Həvəsli",
-        knowledge: "Sıfır",
-        sale: "Satış",
-        cancellReason: "Vaxt Uyğunsuzluğu",
-        saleType: "Tam ödəniş",
-        additionalInfo: ""
-      },
-      firstStepDone: false,
-      secondStepDone: false,
-    }
-  ]
-  const { loading } = useSelector((state) => state.consultationPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const tableHead = [
-    "Ad Soyad",
-    "Əlaqə tarixi",
-    "Mənbə",
-    "Tel No",
+    "Tələbə",
+    "Müəllim",
+    "Mobil nömrə",
     "İxtisas",
-    "Kons tarix",
-    "Kons saat",
-    "Təyin edildi",
-    "Baş tutdu",
+    "Əlaqə tarixi",
+    "Konsultasiya tarixi",
+    "Konsultasiya saatı",
+    "Status",
     "",
   ];
 
@@ -119,7 +40,7 @@ const ConsultationData = ({ pageNum, getPageNumber }) => {
             <MoreModal
               data={consultationData}
               setOpenMoreModal={setOpenMoreModal}
-              type="student"
+              type="consultation"
             />
           )}
           <div className="table-con">

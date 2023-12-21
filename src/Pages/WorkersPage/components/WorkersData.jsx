@@ -46,7 +46,7 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
             </tbody>
           </table>
 
-          <div className="details-list-tablet with-more">
+          <div className="details-list-tablet">
             {workers?.map((teacher, i) => (
               <WorkerCard
                 key={i}
