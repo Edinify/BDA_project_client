@@ -21,11 +21,12 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
     "/consultation/appointed",
     "/consultation/completed",
   ];
+  const groupsNav = ["/groups/current", "/groups/waiting"];
 
   return (
     <ul className="sidebar-nav-list">
       <li>
-        <NavLink to="/lesson-table" onClick={closeSidebar} className="admin">
+        <NavLink to="/" onClick={closeSidebar} className="admin">
           <TableIcon />
           Cədvəl
         </NavLink>
@@ -73,7 +74,11 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/groups/current" onClick={closeSidebar}>
+        <NavLink
+          className={groupsNav.includes(location.pathname) ? "active" : ""}
+          to="/groups/current"
+          onClick={closeSidebar}
+        >
           <GroupIcon />
           Qruplar
         </NavLink>

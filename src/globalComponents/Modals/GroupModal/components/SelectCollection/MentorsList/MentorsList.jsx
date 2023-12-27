@@ -3,47 +3,50 @@ import { useDispatch, useSelector } from "react-redux";
 import { TextField } from "@mui/material";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { ReactComponent as CheckIcon } from "../../../../../../assets/icons/Checkbox.svg";
-import StudentsInput from "./StudentsInput";
-import { getAllCoursesAction } from "../../../../../../redux/actions/coursesActions";
+import MentorInput from "./MentorInput";
+import { getActiveTeachersAction } from "../../../../../../redux/actions/teachersActions";
 
-const StudentsList = ({ formik, updateModalState, modalData }) => {
+const MentorsList = ({ formik, updateModalState, modalData }) => {
   const dispatch = useDispatch();
-  const { allCourses: dataList } = useSelector((state) => state.allCourses);
+  const { teachers: dataList } = useSelector(
+    (state) => state.teachersPagination
+  );
   const [openDropdown, setOpenDropdown] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [profileErrMessage, setProfileErrMessage] = useState(false);
 
-  const deleteClass = (_id) => {
-    if (modalData.courses.length === 1) {
-      updateModalState("courses", []);
+  const deleteItem = (_id) => {
+    if (modalData.mentors.length === 1) {
+      updateModalState("mentors", []);
     } else {
-      const coursesData = modalData.courses.filter((course) => course._id !== _id )
-      updateModalState("courses", coursesData);
+      const mentorsData = modalData.mentors.filter(
+        (teacher) => teacher._id !== _id
+      );
+      updateModalState("mentors", mentorsData);
     }
   };
-  const addCourse = () => {
-    if (modalData.courses) {
+  const addItem = () => {
+    if (modalData.mentors) {
       // the same element can't be added twice
-      if (modalData.courses.find((item) => item._id === selectedItem._id)) {
+      if (modalData.mentors.find((item) => item._id === selectedItem._id)) {
         setProfileErrMessage(true);
       } else {
-        const coursesData = [...modalData?.courses, selectedItem];
+        const mentorsData = [...modalData?.mentors, selectedItem];
         setProfileErrMessage(false);
-        updateModalState("courses", coursesData);
+        updateModalState("mentors", mentorsData);
       }
     } else {
-      const coursesData = [selectedItem];
+      const mentorsData = [selectedItem];
       setProfileErrMessage(false);
-      updateModalState("courses", coursesData);
+      updateModalState("mentors", mentorsData);
     }
     setSelectedItem("");
     setOpenDropdown(false);
   };
 
   useEffect(() => {
-    dispatch(getAllCoursesAction());
+    dispatch(getActiveTeachersAction());
   }, []);
-
 
   return (
     <div>
@@ -59,9 +62,9 @@ const StudentsList = ({ formik, updateModalState, modalData }) => {
                 style: { fontSize: "12px", color: "#3F3F3F" },
               }}
               fullWidth
-              label="Tələbələr"
+              label="Mentorlar"
               autoComplete="off"
-              value={selectedItem?.name || ""}
+              value={selectedItem?.fullName || ""}
               disabled
               onClick={() => setOpenDropdown(!openDropdown)}
             />
@@ -93,10 +96,10 @@ const StudentsList = ({ formik, updateModalState, modalData }) => {
           <ul className={`dropdown-body ${openDropdown ? "active" : ""}`}>
             {dataList?.map((item, index) => (
               <li key={item._id} onClick={() => setSelectedItem(item)}>
-                {modalData?.courses?.find((obj) => obj._id === item._id) ? (
+                {modalData?.mentors?.find((obj) => obj._id === item._id) ? (
                   <CheckIcon />
                 ) : null}
-                <h4>{item.name}</h4>
+                <h4>{item.fullName}</h4>
               </li>
             ))}
           </ul>
@@ -105,7 +108,7 @@ const StudentsList = ({ formik, updateModalState, modalData }) => {
         <div className="right">
           <button
             disabled={!selectedItem}
-            onClick={() => addCourse()}
+            onClick={() => addItem()}
             className="add-class"
           >
             <AiOutlinePlusCircle />
@@ -113,9 +116,9 @@ const StudentsList = ({ formik, updateModalState, modalData }) => {
         </div>
       </div>
 
-      {formik.errors.courses && formik.touched.courses && (
+      {formik.errors.mentors && formik.touched.mentors && (
         <small className="validation-err-message">
-          {formik.errors.courses}
+          {formik.errors.mentors}
         </small>
       )}
 
@@ -126,12 +129,12 @@ const StudentsList = ({ formik, updateModalState, modalData }) => {
           </small>
         ) : null}
 
-        {modalData?.courses?.map((item, index) => (
-          <StudentsInput
+        {modalData?.mentors?.map((item, index) => (
+          <MentorInput
             key={index}
             index={index}
             data={item}
-            deleteClass={deleteClass}
+            deleteItem={deleteItem}
             modalData={modalData}
             updateModalState={updateModalState}
           />
@@ -141,4 +144,4 @@ const StudentsList = ({ formik, updateModalState, modalData }) => {
   );
 };
 
-export default StudentsList;
+export default MentorsList;

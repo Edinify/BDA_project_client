@@ -35,7 +35,7 @@ const AdminNav = ({setOpenMenu}) => {
       to="/teachers"
       className={({ isActive }) => (isActive ? "active" : "")}
     >
-      Müəllimlər
+     Təlimçilər
     </NavLink>
     <NavLink
      onClick={()=>setOpenMenu(true)}

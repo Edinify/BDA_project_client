@@ -206,7 +206,7 @@ export const createTeacherAction = (teacherData) => async (dispatch) => {
       payload: false,
     });
     // dispatch({ type: TEACHER_ALL_ACTIONS_TYPE.CREATE_TEACHER, payload: data });
-    toastSuccess("Yeni müəllim yaradıldı");
+    toastSuccess("Yeni təlimçi yaradıldı");
   } catch (error) {
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -225,7 +225,7 @@ export const createTeacherAction = (teacherData) => async (dispatch) => {
           type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
           payload: false,
         });
-        toastSuccess("Yeni müəllim yaradıldı");
+        toastSuccess("Yeni təlimçi yaradıldı");
       } catch (error) {
         console.log(error);
         if (error?.response?.status === 401) {
@@ -252,7 +252,7 @@ export const updateTeacherAction = (_id, teacherData) => async (dispatch) => {
       type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
       payload: false,
     });
-    toastSuccess("Müəllim yeniləndi");
+    toastSuccess("Təlimçi yeniləndi");
   } catch (error) {
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -274,7 +274,7 @@ export const updateTeacherAction = (_id, teacherData) => async (dispatch) => {
           type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
           payload: false,
         });
-        toastSuccess("Müəllim yeniləndi");
+        toastSuccess("Təlimçi yeniləndi");
       } catch (error) {
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
@@ -285,7 +285,7 @@ export const updateTeacherAction = (_id, teacherData) => async (dispatch) => {
       toastError("Bu email ilə istifadəçi mövcuddur");
     }
     if (error?.response?.data?.key === "has-current-week-lessons") {
-      toastError("Cari həftədə  dərsi olan müəllim yenilənə bilməz");
+      toastError("Cari həftədə  dərsi olan təlimçi yenilənə bilməz");
     }
   } finally {
     dispatch(modalLoading(false));
@@ -297,7 +297,7 @@ export const deleteTeacherAction = ({_id, pageNumber, searchQuery, status}) => a
     await API.delete(`/${_id}`);
     dispatch(getTeachersPaginationAction(pageNumber, searchQuery, status));
     dispatch({ type: TEACHER_ALL_ACTIONS_TYPE.DELETE_TEACHER, payload: _id });
-    toastSuccess("Müəllim silindi");
+    toastSuccess("Təlimçi silindi");
   } catch (error) {
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -316,7 +316,7 @@ export const deleteTeacherAction = ({_id, pageNumber, searchQuery, status}) => a
           type: TEACHER_ALL_ACTIONS_TYPE.DELETE_TEACHER,
           payload: _id,
         });
-        toastSuccess("Müəllim silindi");
+        toastSuccess("Təlimçi silindi");
       } catch (error) {
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
@@ -324,7 +324,7 @@ export const deleteTeacherAction = ({_id, pageNumber, searchQuery, status}) => a
       }
     }
     if (error?.response?.data?.key === "has-current-week-lessons") {
-      toastError("Cari həftədə  dərsi olan müəllim silinə bilməz");
+      toastError("Cari həftədə  dərsi olan təlimçi silinə bilməz");
     }
     console.log(error);
     toastError(error?.response?.data.message);

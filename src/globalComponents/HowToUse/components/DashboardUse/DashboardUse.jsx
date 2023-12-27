@@ -31,7 +31,7 @@ const DashboardUse = ({
         " “Cədvəl” bölümündə dərs cədvəli yaza və düzəlişlər edə bilərsiniz.",
     },
     5: {
-      title: "Fənn, müəllim və tələbələr necə əlavə edilir?",
+      title: "Fənn, Təlimçi və tələbələr necə əlavə edilir?",
       content:
         "“Fənlər”, “Müəllumlər”, “Tələbələr” bölümlərindən biriniseçərək əlavə edə və düzəlişlər edə bilərsiniz.",
     },
@@ -41,14 +41,14 @@ const DashboardUse = ({
         "“Maliyyə” bölümündə müəssisənizin maliyyəsinə nəzarət edə bilərsiniz.",
     },
     7: {
-      title: "Müəllimlərə bonus və cərimələr hardan yazılır?",
+      title: "Təlimçilərə bonus və cərimələr hardan yazılır?",
       content:
-        " “Həvəsləndirmə” bölümündə müəllimlərə bonus və cərimələr yaza və ya düzəlişlər edə bilərsiniz.",
+        " “Həvəsləndirmə” bölümündə Təlimçilərə bonus və cərimələr yaza və ya düzəlişlər edə bilərsiniz.",
     },
     8: {
-      title: "Müəllim və tələbələrin geri dönüşlərinə hardan baxa bilərəm?",
+      title: "Təlimçi və tələbələrin geri dönüşlərinə hardan baxa bilərəm?",
       content:
-        "“Rəylər” bölümündə müəllimlər və tələbələrin rəylərinə nəzər yetirə bilərsiniz.",
+        "“Rəylər” bölümündə Təlimçilər və tələbələrin rəylərinə nəzər yetirə bilərsiniz.",
     },
   };
   return (

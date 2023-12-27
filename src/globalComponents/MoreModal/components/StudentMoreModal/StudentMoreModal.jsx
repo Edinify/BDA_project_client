@@ -5,9 +5,9 @@ import { useCustomHook } from "../../../GlobalFunctions/globalFunctions";
 
 const StudentMoreModal = ({ studentsModalData }) => {
   let courses =
-    Array.isArray(studentsModalData.courses) &&
-    studentsModalData.courses.length > 0
-      ? studentsModalData.courses
+    Array.isArray(studentsModalData?.courses) &&
+    studentsModalData?.courses.length > 0
+      ? studentsModalData?.courses
           .map((course) => {
             return `${course.name}`;
           })
@@ -22,7 +22,7 @@ const StudentMoreModal = ({ studentsModalData }) => {
     {
       title: "Doğum günü",
       value: studentsModalData?.birthday
-        ? moment(studentsModalData.birthday).locale("az").format("DD MMMM YYYY")
+        ? moment(studentsModalData?.birthday).locale("az").format("DD MMMM YYYY")
         : "",
     },
     { title: "Mobil nömrə", value: studentsModalData?.phone },
@@ -39,7 +39,7 @@ const StudentMoreModal = ({ studentsModalData }) => {
     {
       title: "Müqavilə başlama tarixi",
       value: studentsModalData?.contractStartDate
-        ? moment(studentsModalData.contractStartDate)
+        ? moment(studentsModalData?.contractStartDate)
             .locale("az")
             .format("DD MMMM YYYY")
         : "",
@@ -47,7 +47,7 @@ const StudentMoreModal = ({ studentsModalData }) => {
     {
       title: "Müqavilə bitmə tarixi",
       value: studentsModalData?.contractEndDate
-        ? moment(studentsModalData.contractEndDate)
+        ? moment(studentsModalData?.contractEndDate)
             .locale("az")
             .format("DD MMMM YYYY")
         : "",
@@ -71,7 +71,7 @@ const StudentMoreModal = ({ studentsModalData }) => {
     {
       title: "Qoşulma tarixi",
       value: studentsModalData?.createdAt
-        ? moment(studentsModalData.createdAt)
+        ? moment(studentsModalData?.createdAt)
             .locale("az")
             .format("DD MMMM YYYY")
         : "",

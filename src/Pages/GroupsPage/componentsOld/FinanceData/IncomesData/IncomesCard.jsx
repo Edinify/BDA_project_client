@@ -10,7 +10,7 @@ const IncomesCard = ({ data, mode, cellNumber }) => {
   const dispatch = useDispatch();
   const { deleteIncome } = useFinanceCustomHook();
   const listData = [
-    { key: "Müəllim", value: data.appointment },
+    { key: "Təlimçi", value: data.appointment },
     { key: "Qrup", value: data.appointment },
     { key: "Tələbə sayı", value: data.appointment },
     { key: "Gün", value: data.appointment },

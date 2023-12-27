@@ -12,7 +12,7 @@ const ConsultationData = ({ pageNum, getPageNumber }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const tableHead = [
     "Tələbə",
-    "Müəllim",
+    "Təlimçi",
     "Mobil nömrə",
     "İxtisas",
     "Əlaqə tarixi",

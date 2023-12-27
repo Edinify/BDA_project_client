@@ -47,7 +47,7 @@ const SuperAdminNav = ({ setOpenMenu }) => {
         to="/teachers"
         className={({ isActive }) => (isActive ? "active" : "")}
       >
-        Müəllimlər
+       Təlimçilər
       </NavLink>
       <NavLink
        onClick={(e) => {

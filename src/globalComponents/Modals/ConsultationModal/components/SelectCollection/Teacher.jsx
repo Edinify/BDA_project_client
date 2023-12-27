@@ -34,7 +34,7 @@ const Teacher = ({ formik, modalData, updateModalState }) => {
                 style: { fontSize: "12px", color: "#3F3F3F" },
               }}
               fullWidth
-              label="Müəllim"
+              label="Təlimçi"
               autoComplete="off"
               disabled
               value={inputValue}

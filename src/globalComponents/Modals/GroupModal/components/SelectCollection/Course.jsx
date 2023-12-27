@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
-import { useCustomHook } from "../../../../GlobalFunctions/globalFunctions";
+import { getAllCoursesAction } from "../../../../../redux/actions/coursesActions";
+import { useDispatch, useSelector } from "react-redux";
+import { getActiveStudentsAction } from "../../../../../redux/actions/studentsActions";
 
-const WhereComing = ({ formik, modalData, updateModalState }) => {
-  const { whereComingList: dataList } = useCustomHook();
-  const inputValue = dataList.find((item) => item.key === modalData.whereComing)?.name || ""
+const Course = ({ formik, modalData, updateModalState }) => {
+  const dispatch = useDispatch();
+  const { allCourses: dataList } = useSelector((state) => state.allCourses);
+  const inputValue = modalData?.course?.name || "";
   const [openDropdown, setOpenDropdown] = useState(false);
   const addData = (item) => {
-    updateModalState("whereComing", item)
-    setOpenDropdown(false)
+    dispatch(
+      getActiveStudentsAction({
+        studentsCount: 0,
+        searchQuery: "",
+        courseId: item._id,
+      })
+    );
+    updateModalState("course", item);
+    setOpenDropdown(false);
   };
+
+  useEffect(() => {
+    dispatch(getAllCoursesAction());
+  }, []);
   return (
     <>
       <div className="class-input">
@@ -28,11 +42,11 @@ const WhereComing = ({ formik, modalData, updateModalState }) => {
                 style: { fontSize: "12px", color: "#3F3F3F" },
               }}
               fullWidth
-              label="Bizi haradan eşitdiniz?"
+              label="Ixtisas"
               autoComplete="off"
               disabled
               value={inputValue}
-              onBlur={() => formik.setFieldTouched("whereComing", true)}
+              onBlur={() => formik.setFieldTouched("course", true)}
             />
             <div
               className="dropdown-icon"
@@ -64,20 +78,18 @@ const WhereComing = ({ formik, modalData, updateModalState }) => {
             }`}
           >
             {dataList.map((item) => (
-              <li key={item.key} onClick={() => addData(item.key)}>
+              <li key={item._id} onClick={() => addData(item)}>
                 <h4>{item.name}</h4>
               </li>
             ))}
           </ul>
         </div>
       </div>
-      {formik.errors.whereComing && formik.touched.whereComing && (
-        <small className="validation-err-message">
-          {formik.errors.whereComing}
-        </small>
+      {formik.errors.course && formik.touched.course && (
+        <small className="validation-err-message">{formik.errors.course}</small>
       )}
     </>
   );
 };
 
-export default WhereComing;
+export default Course;

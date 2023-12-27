@@ -32,7 +32,7 @@ export const Routing = () => {
       }
       if (user.role === "super-admin" && !notFound) {
         if (location.pathname.startsWith("/login")) {
-          navigate("/groups/current");
+          navigate("/");
         } else {
           return () => {};
         }

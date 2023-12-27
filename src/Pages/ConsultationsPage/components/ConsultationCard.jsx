@@ -18,10 +18,10 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data }) => {
     (state) => state.searchValues
   );
   const listData = [
-    { key: "Müəllim", value: data?.teacher?.fullName },
+    { key: "Təlimçi", value: data?.teacher?.fullName },
 
     { key: "Mobil nömrə", value: data?.studentPhone },
-    { key: "İxtisas", value: data?.course.name },
+    { key: "İxtisas", value: data?.course?.name },
     {
       key: "Əlaqə tarixi",
       value: data?.contactDate
@@ -75,7 +75,7 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data }) => {
           <td>{data?.studentName}</td>
           <td>{data?.teacher?.fullName}</td>
           <td>{data?.studentPhone}</td>
-          <td>{data?.course.name}</td>
+          <td>{data?.course?.name}</td>
           <td>{ data?.contactDate
         ? moment(data?.contactDate).locale("az").format("DD MMMM YYYY")
         : ""}</td>

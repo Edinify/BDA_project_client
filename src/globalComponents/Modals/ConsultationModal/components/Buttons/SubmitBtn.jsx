@@ -28,8 +28,8 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
       dispatch(
         updateConsultationAction(modalData?._id, {
           ...modalData,
-          course: modalData.course._id,
-          teacher: modalData.teacher._id,
+          course: modalData?.course?._id,
+          teacher: modalData?.teacher?._id,
         })
       );
     } else {
@@ -40,8 +40,8 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
       dispatch(
         createConsultationAction({
           ...modalData,
-          course: modalData.course._id,
-          teacher: modalData.teacher._id,
+          course: modalData?.course?._id,
+          teacher: modalData?.teacher?._id,
         })
       );
     }

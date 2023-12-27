@@ -8,7 +8,12 @@ import { GROUP_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
-import StudentsList from "./components/SelectCollection/StudentsList/StudentsList";
+import StudentsList from "./components/SelectCollection/StudentList/StudentList";
+import TeachersList from "./components/SelectCollection/TeachersList/TeachersList";
+import Course from "./components/SelectCollection/Course";
+import MentorsList from "./components/SelectCollection/MentorsList/MentorsList";
+import LessonDateList from "./components/SelectCollection/LessonDateList/LessonDateList";
+import Status from "./components/Buttons/Status";
 
 const GroupModal = () => {
   const dispatch = useDispatch();
@@ -20,7 +25,7 @@ const GroupModal = () => {
   // formik
   const formik = useFormik({
     initialValues: {
-
+      name: modalData.name ? modalData.name : "",
     },
     validationSchema: ValidationSchema,
   });
@@ -32,7 +37,6 @@ const GroupModal = () => {
       }),
     [formik]
   );
-
   const updateModalState = (keyName, value) => {
     if (keyName === "profiles") {
       const formikValue =
@@ -97,7 +101,26 @@ const GroupModal = () => {
                 />
               ))}
             </div>
+            <Course
+              modalData={modalData}
+              updateModalState={updateModalState}
+              formik={formik}
+            />
+            <TeachersList
+              modalData={modalData}
+              updateModalState={updateModalState}
+              formik={formik}
+            />
+            <MentorsList
+              modalData={modalData}
+              updateModalState={updateModalState}
+              formik={formik}
+            />
             <StudentsList
+              modalData={modalData}
+              updateModalState={updateModalState}
+            />
+            <LessonDateList
               modalData={modalData}
               updateModalState={updateModalState}
               formik={formik}
@@ -106,11 +129,23 @@ const GroupModal = () => {
         </Box>
 
         {modalData?._id ? (
-          // <div className="create-update-modal-btn-con">
-          <SubmitBtn formik={formik} modalData={modalData} funcType="update" />
+          <div className="create-update-modal-btn-con">
+            <Status modalData={modalData} updateModalState={updateModalState} />
+            <SubmitBtn
+              formik={formik}
+              modalData={modalData}
+              funcType="update"
+            />
+          </div>
         ) : (
-          // </div>
-          <SubmitBtn formik={formik} modalData={modalData} funcType="create" />
+          <div className="create-update-modal-btn-con">
+            <Status modalData={modalData} updateModalState={updateModalState} />
+            <SubmitBtn
+              formik={formik}
+              modalData={modalData}
+              funcType="create"
+            />
+          </div>
         )}
 
         {modalData?._id && (

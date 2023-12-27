@@ -40,7 +40,7 @@ const SidebarAdmin = ({ closeSidebar }) => {
       <li>
         <NavLink to="/teachers" onClick={closeSidebar}>
           <TeachersIcon />
-          Müəllimlər
+         Təlimçilər
         </NavLink>
       </li>
       <li>
@@ -50,7 +50,7 @@ const SidebarAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/lesson-table" onClick={closeSidebar}>
+        <NavLink to="/" onClick={closeSidebar}>
           <TableIcon />
           Cədvəl
         </NavLink>

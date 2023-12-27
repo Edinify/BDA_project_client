@@ -72,7 +72,7 @@ const TeacherModal = () => {
     <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal">
         <div className="create-update-modal-head">
-          <h2>{modalData?._id ? "Müəllim yenilə" : "Müəllim yarat"}</h2>
+          <h2>{modalData?._id ? "Təlimçi yenilə" : "Təlimçi yarat"}</h2>
           <CloseBtn onClick={closeModal} />
         </div>
 

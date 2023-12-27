@@ -4,17 +4,22 @@ import { getGroupsPaginationAction } from "../../redux/actions/groupsActions";
 import { GROUP_MODAL_ACTION_TYPE } from "../../redux/actions-type";
 import GroupsData from "./components/GroupsData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
+import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
+import { useLocation } from "react-router-dom";
 
 const GroupsPage = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { lastPage } = useSelector((state) => state.groupsPagination);
   const { groupsSearchValues } = useSelector((state) => state.searchValues);
-
+  const [completed, setCompleted] = useState(true);
   const getPageNumber = (pageNumber) => {
     if (groupsSearchValues) {
-      dispatch(getGroupsPaginationAction(pageNumber, groupsSearchValues));
+      dispatch(
+        getGroupsPaginationAction(pageNumber, groupsSearchValues, completed)
+      );
     } else {
-      dispatch(getGroupsPaginationAction(pageNumber, ""));
+      dispatch(getGroupsPaginationAction(pageNumber, "", completed));
     }
   };
   const openModal = () => {
@@ -25,16 +30,19 @@ const GroupsPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getGroupsPaginationAction(1, groupsSearchValues));
+    dispatch(getGroupsPaginationAction(1, groupsSearchValues, completed));
   };
 
   useEffect(() => {
-    if (groupsSearchValues) {
-      dispatch(getGroupsPaginationAction(1, groupsSearchValues));
-    } else {
-      dispatch(getGroupsPaginationAction(1, ""));
+    if (location.pathname === "/groups/current") {
+      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", true));
+      setCompleted(true);
+    } else if (location.pathname === "/groups/waiting") {
+      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", false));
+      setCompleted(false);
     }
-  }, []);
+  }, [location.pathname]);
+
   return (
     <div className="details-page teachers-page ">
       <GlobalHead
@@ -42,6 +50,12 @@ const GroupsPage = () => {
         openModal={openModal}
         DATA_SEARCH_VALUE={"GROUPS_SEARCH_VALUE"}
         dataSearchValues={groupsSearchValues}
+      />
+      <HeadTabs
+        firstRoute={"/groups/current"}
+        secondRoute={"/groups/waiting"}
+        firstPathname={"Mövcud qruplar"}
+        secondPathname={"Yığılan qruplar"}
       />
       <GroupsData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>

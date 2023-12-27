@@ -83,12 +83,12 @@ const HowToUse = ({ setHowToUse, howToUse }) => {
     { id: 2, text: "Baxılmamış dərslərə necə baxa bilərəm?" },
     { id: 3, text: "Dərslərə hardan nəzarət edə bilərəm?" },
     { id: 4, text: "Dərs cədvəli hardan yazılır və ya dəyişdirilir?" },
-    { id: 5, text: "Fənn, müəllim və tələbələr necə əlavə edilir?" },
+    { id: 5, text: "Fənn, Təlimçi və tələbələr necə əlavə edilir?" },
     { id: 6, text: "Müəssisəmin maliyyəsinə hardan nəzarət edə bilərəm?" },
-    { id: 7, text: "Müəllimlərə bonus və cərimələr hardan yazılır?" },
+    { id: 7, text: "Təlimçilərə bonus və cərimələr hardan yazılır?" },
     {
       id: 8,
-      text: "Müəllim və tələbələrin geri dönüşlərinə hardan baxa bilərəm?",
+      text: "Təlimçi və tələbələrin geri dönüşlərinə hardan baxa bilərəm?",
     },
   ];
 
@@ -131,7 +131,7 @@ const HowToUse = ({ setHowToUse, howToUse }) => {
       },
       {
         id: 6,
-        text: "“Liderlər lövhəsi” bölümündə admin və tələbələrin verdiyi qiymətləndirməyə və ya keçilən dərs sayına əsəasən müəllimlərin sıralamaları verilmişdir.",
+        text: "“Liderlər lövhəsi” bölümündə admin və tələbələrin verdiyi qiymətləndirməyə və ya keçilən dərs sayına əsəasən Təlimçilərin sıralamaları verilmişdir.",
         img: Dashboard6,
         tabletImg: DashboardTablet6,
         mobileImg:DashboardMobile6
@@ -152,7 +152,7 @@ const HowToUse = ({ setHowToUse, howToUse }) => {
     page3Data: [
       {
         id: 1,
-        text: "Cədvəlin yuxarısında yerləşdirilmiş tab-dan  müəllim və tələbəlirin dərs cədvəlinə keçid edilir.",
+        text: "Cədvəlin yuxarısında yerləşdirilmiş tab-dan Təlimçi və tələbəlirin dərs cədvəlinə keçid edilir.",
         text2: "Defolt olaraq cari həftənin cədvəli açılır.",
         text3: "Seçilmiş tarix aralığına əsasən bütün dərslərə baxıla bilir",
         text4:
@@ -163,7 +163,7 @@ const HowToUse = ({ setHowToUse, howToUse }) => {
       },
       {
         id: 2,
-        text: "Hər hansı dərsə klikləyərək dərs detalları ilə tanış olub statusu dəyişdirə, düzəliş edə və müəllimi qiymətləndirilə bilərsiniz.",
+        text: "Hər hansı dərsə klikləyərək dərs detalları ilə tanış olub statusu dəyişdirə, düzəliş edə və Təlimçii qiymətləndirilə bilərsiniz.",
         img: Modal1,
         tabletImg:ModalTablet2,
         mobileImg:ModalMobile2
@@ -179,7 +179,7 @@ const HowToUse = ({ setHowToUse, howToUse }) => {
           "Cari cədvəldə edilən dəyişikliklər yalnız olduğunuz həftənin cədvəlini yeniləyir.",
         text4:
           "Əsas cədvəldə edilən dəyişikliklər isə olduğunuz həftədən sonrakı həftənin cədvəlini yeniləyir.",
-        text5: "Yuxarıdan müəllimi seçərək dərsləri əlavə edə bilərsiniz",
+        text5: "Yuxarıdan Təlimçini seçərək dərsləri əlavə edə bilərsiniz",
         img: ChoosePage4,
         tabletImg:ChoosePage4Tablet1,
         mobileImg:ChoosePage4Mobile1
@@ -207,7 +207,7 @@ const HowToUse = ({ setHowToUse, howToUse }) => {
       },
       {
         id: 2,
-        text: "Əgər mövcud fənn, müəllim və ya tələbədə dəyişiklik etmək istəyirsinizsə üç nöqtəyə klikləyərək “Yenilə”-ni seçərək lazimi dəyişiklikləri edə bilərsiniz.",
+        text: "Əgər mövcud fənn,  və ya tələbədə dəyişiklik etmək istəyirsinizsə üç nöqtəyə klikləyərək “Yenilə”-ni seçərək lazimi dəyişiklikləri edə bilərsiniz.",
         img: EditModalImg,
         tabletImg:EditModalImgTablet3,
         mobileImg:EditModalImgMobile3

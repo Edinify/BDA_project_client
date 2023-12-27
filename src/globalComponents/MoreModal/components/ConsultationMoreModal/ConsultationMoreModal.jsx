@@ -17,32 +17,32 @@ const ConsultationMoreModal = ({ consultationModalData }) => {
     {
       title: "Persona",
       value:
-        personaList.find((item) => item.key === consultationModalData.persona)
+        personaList.find((item) => item?.key === consultationModalData?.persona)
           ?.name || "",
     },
     {
       title: "Bizi haradan eşitdiniz?",
       value:
         whereComingList.find(
-          (item) => item.key === consultationModalData.whereComing
+          (item) => item?.key === consultationModalData?.whereComing
         )?.name || "",
     },
   ];
   const dataList2 = [
-    { title: "Müəllim", value: consultationModalData?.teacher.fullName },
+    { title: "Təlimçi", value: consultationModalData?.teacher.fullName },
 
     { title: "İxtisas", value: consultationModalData?.course.name },
     {
       title: "Sahə biliyi",
       value:
         knowledgeList.find(
-          (item) => item.key === consultationModalData.knowledge
+          (item) => item?.key === consultationModalData?.knowledge
         )?.name || "",
     },
     {
       title: "Əlaqə tarixi",
       value: consultationModalData?.contactDate
-        ? moment(consultationModalData.contactDate)
+        ? moment(consultationModalData?.contactDate)
             .locale("az")
             .format("DD MMMM YYYY")
         : "",
@@ -50,31 +50,31 @@ const ConsultationMoreModal = ({ consultationModalData }) => {
     {
       title: "Konsultasiya tarixi",
       value: consultationModalData?.constDate
-        ? moment(consultationModalData.constDate)
+        ? moment(consultationModalData?.constDate)
             .locale("az")
             .format("DD MMMM YYYY")
         : "",
     },
     {
       title: "Konsultasiya saatı",
-      value: consultationModalData.constTime,
+      value: consultationModalData?.constTime,
     },
     {
       title: "Ləğv səbəbi",
       value:
         cancelReasonList.find(
-          (item) => item.key === consultationModalData.cancelReason
+          (item) => item?.key === consultationModalData?.cancelReason
         )?.name || "",
     },
     {
       title: "Əlavə məlumat",
-      value: consultationModalData.addInfo,
+      value: consultationModalData?.addInfo,
     },
     {
       title: "Status",
       value:
         constStatusList.find(
-          (item) => item.key === consultationModalData.status
+          (item) => item?.key === consultationModalData?.status
         )?.name || "",
     },
   ];
@@ -83,7 +83,7 @@ const ConsultationMoreModal = ({ consultationModalData }) => {
       <div className="more-modal-header-inform">
         {dataList1.map((item, index) => (
           <h3 key={index}>
-            {item.title}: <span>{item.value}</span>
+            {item?.title}: <span>{item?.value}</span>
           </h3>
         ))}
       </div>
@@ -92,7 +92,7 @@ const ConsultationMoreModal = ({ consultationModalData }) => {
         <div className="work-inform-con">
           {dataList2.map((item, index) => (
             <h3 key={index}>
-              {item.title}: <span>{item.value}</span>
+              {item?.title}: <span>{item?.value}</span>
             </h3>
           ))}
         </div>

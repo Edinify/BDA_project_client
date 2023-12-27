@@ -11,11 +11,13 @@ const GroupsData = ({ pageNum, getPageNumber }) => {
     (state) => state.groupsPagination
   );
   const tableHead = [
-    "Ad soyad",
-    "Email",
-    "Mobil nömrə",
-    "Pozisiya",
-    "Profil",
+    "Qrup adı",
+    "İxtisas",
+    "Təlimçilər",
+    "Tələbələr",
+    "Dərs günləri",
+    "Başlama tarixi",
+    "Bitmə tarixi",
     "",
   ];
 

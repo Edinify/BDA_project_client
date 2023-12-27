@@ -13,7 +13,7 @@ const TeachersData = ({ teacherPageNum, getPageNumber }) => {
   const { loading } = useSelector((state) => state.teachersPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const tableHead = [
-    { id: 1, label: "Müəllim adı" },
+    { id: 1, label: "Təlimçi adı" },
     { id: 2, label: "Fənn" },
     { id: 3, label: "Email" },
     { id: 4, label: "Telefon nömrəsi" },

@@ -11,7 +11,6 @@ import SubmitBtn from "./components/Buttons/SubmitBtn";
 import RegionDropdown from "./components/InputDropdowns/RegionDropdown";
 import InputField from "./components/Inputs/InputField";
 import Select from "./components/InputDropdowns/Select";
-import StudentLists from "./components/StudentLists/StudentLists";
 
 export const TuitionFeeModal = () => {
   const dispatch = useDispatch();
@@ -116,11 +115,7 @@ export const TuitionFeeModal = () => {
               modalData={modalData}
               updateModalState={updateModalState}
             />
-            <StudentLists
-              setSelectedStudentName={setSelectedStudentName}
-              selectedStudentName={selectedStudentName}
-              updateModalState={updateModalState}
-            />
+    
             <div className="input-couples">
               {inputNameArr1.map((name, index) => (
                 <InputField

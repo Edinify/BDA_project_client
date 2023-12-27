@@ -133,11 +133,10 @@ export const getStudentsAction = (payload) => async (dispatch) => {
 };
 
 export const getActiveStudentsAction = (payload) => async (dispatch) => {
-  console.log(payload);
   dispatch(setLoadingStudentsAction(true));
   try {
-    const { data } = await API.get(`/active?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}`);
-    console.log(data);
+    const { data } = await API.get(`/active?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}&courseId=${payload.courseId}`);
+    // console.log(data);
     if(payload.studentsCount > 0) {
       dispatch({
         type: STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_ALL,
@@ -162,7 +161,7 @@ export const getActiveStudentsAction = (payload) => async (dispatch) => {
             AccessToken: token?.data?.accesstoken,
           })
         );
-        const { data } = await API.get(`/active?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}`);
+        const { data } = await API.get(`/active?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}&courseId=${payload.courseId}`);
         if(payload.studentsCount > 0) {
           dispatch({
             type: STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_ALL,

@@ -9,7 +9,7 @@ const ProfileInput = ({ data, index, deleteClass, modalData, updateModalState })
   const [openDropdown, setOpenDropdown] = useState(false);
   const profileName = generalProfileList.find((item) => item.key === data.profile).name;
   const addPower = (selectedPower) => {
-    const profileData = [...modalData.profiles];
+    const profileData = [...modalData?.profiles];
     profileData[index] = { ...profileData[index], power: selectedPower };
     updateModalState("profiles", profileData);
     setOpenDropdown(false)

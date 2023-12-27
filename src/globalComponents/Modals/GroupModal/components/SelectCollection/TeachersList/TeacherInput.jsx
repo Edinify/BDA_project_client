@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { ReactComponent as MinusIcon } from "../../../../../../assets/icons/minus-cirlce.svg";
 
-const StudentsInput = ({
+const TeacherInput = ({
   data,
   index,
-  deleteClass,
+  deleteItem,
 }) => {
   return (
     <li>
       <div className="top">
-        {`${index + 1}. ${data?.name}`}
+        {`${index + 1}. ${data?.fullName}`}
         <div className="minus-icon-con">
           <MinusIcon
             className="minus-icon"
-            onClick={() => deleteClass(data._id)}
+            onClick={() => deleteItem(data._id)}
           />
         </div>
       </div>
@@ -21,4 +21,4 @@ const StudentsInput = ({
   );
 };
 
-export default StudentsInput;
+export default TeacherInput;

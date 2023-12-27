@@ -19,7 +19,7 @@ const IncomesData = () => {
     loading,
     lastPage: incomesPageNum,
   } = useSelector((state) => state.incomes);
-  const dataHead = ["Müəllim", "Qrup", "Tələbə sayı", "Gün", "Saat", "Başlama tarixi", "Bitmə tarixi", ""];
+  const dataHead = ["Təlimçi", "Qrup", "Tələbə sayı", "Gün", "Saat", "Başlama tarixi", "Bitmə tarixi", ""];
 
   const getPageNumberIncomes = (pageNumber) => {
     if (financeChooseDate.startDate && financeChooseDate.endDate) {

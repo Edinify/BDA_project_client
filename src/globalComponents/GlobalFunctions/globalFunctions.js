@@ -96,7 +96,7 @@ export function useCustomHook() {
   const cancelReasonList = [
     { name: "Maddi", key: "financial" },
     { name: "Vaxt Uyğunsuzluğu", key: "timeMismatch" },
-    { name: "Müəllim seçimi", key: "teacherSelection" },
+    { name: "Təlimçi seçimi", key: "teacherSelection" },
     { name: "Qərarsızlıq", key: "indecision" },
   ];
   const knowledgeList = [

@@ -23,7 +23,8 @@ export const groupsPaginationReducer = (state = initialState, action) => {
     case GROUP_ALL_ACTIONS_TYPE.GET_GROUP_PAGINATION:
       return {
         ...state,
-        ...action.payload,
+        groupData: action.payload.groups,
+        totalPages: action.payload.totalPages
       };
 
     case GROUP_ALL_ACTIONS_TYPE.CREATE_GROUP:
