@@ -19,7 +19,6 @@ const StudentList = ({ modalData, updateModalState }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchedValue, setSearchedValue] = useState("");
   const [openDropdown, setOpenDropdown] = useState(false);
-
   const inputValue = selectedItem ? selectedItem.fullName : searchedValue;
 
   const getSearchValue = (e) => {
@@ -64,7 +63,6 @@ const StudentList = ({ modalData, updateModalState }) => {
       })
     );
   };
-
   const deleteItem = (_id) => {
     if (modalData.students.length === 1) {
       updateModalState("students", []);

@@ -13,13 +13,13 @@ import WhereComing from "./components/SelectCollection/WhereComing";
 import PaymentType from "./components/SelectCollection/PaymentType";
 import CoursesList from "./components/SelectCollection/CoursesList/CoursesList";
 import DiscountReason from "./components/SelectCollection/DiscountReason";
+import GroupList from "./components/Groups/GroupsList";
 
 export const StudentModal = () => {
   const dispatch = useDispatch();
   const { studentsModalData: modalData } = useSelector(
     (state) => state.studentsModal
   );
-
   const inputNameArr1 = [
     "fin",
     "seria",
@@ -154,6 +154,12 @@ export const StudentModal = () => {
               modalData={modalData}
               updateModalState={updateModalState}
               formik={formik}
+            />
+             <GroupList
+              formik={formik}
+              setInputValue={setInputValue}
+              updateModalState={updateModalState}
+              modalData={modalData}
             />
           </div>
         </Box>
