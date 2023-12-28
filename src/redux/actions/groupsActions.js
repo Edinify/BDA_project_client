@@ -67,6 +67,11 @@ const toastError = (message) => {
     theme: "colored",
   });
 };
+
+export const setLoadingAllGroupsAction = (loadingValue) => ({
+  type: GROUP_ALL_ACTIONS_TYPE.GROUP_LOADING_ALL,
+  payload: loadingValue,
+});
 const pageLoading = (loadingValue) => ({
   type: GROUP_ALL_ACTIONS_TYPE.GROUP_LOADING,
   payload: loadingValue,
@@ -105,6 +110,61 @@ export const getGroupsAction = () => async (dispatch) => {
         console.log(error);
       }
     }
+  }
+};
+
+export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
+  dispatch(pageLoading(true));
+  try {
+    const { data } = await API.get(`/with-course?groupsCount=${payload.groupsCount}&searchQuery=${payload.searchQuery}`, {params:{courseIds: payload.courseIds}});
+    // console.log(data);
+    if(payload.groupsCount > 0) {
+      dispatch({
+        type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL_ADD,
+        payload: data,
+      });
+    }
+  } catch (error) {
+    const originalRequest = error.config;
+    console.log(error);
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token?.data?.accesstoken,
+          })
+        );
+        const { data } = await API.get(`/with-course?groupsCount=${payload.groupsCount}&searchQuery=${payload.searchQuery}&courseId=${payload.courseId}`);
+        if(payload.groupsCount > 0) {
+          dispatch({
+            type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL,
+            payload: data,
+          });
+        } else {
+          dispatch({
+            type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL_ADD,
+            payload: data,
+          });
+        }
+  
+      } catch (error) {
+        console.log(error);
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+        }
+      }
+    }
+  } finally {
+    dispatch(pageLoading(false));
+    dispatch(setLoadingAllGroupsAction(false))
   }
 };
 

@@ -369,7 +369,10 @@
   position: absolute;
   top: -14px;
 }
-
+.create-update-modal .exist-error-message {
+  font-size: 10px;
+  color: red;
+}
 .create-update-modal-form .dropdown-input .dropdown-body {
   background: #ffffff;
   border: 0.4px solid #dddddd;

@@ -6,7 +6,7 @@ import { COURSES_MODAL_ACTION_TYPE } from "../../../../redux/actions-type";
 export default function InputField({
   setInputValue,
   setCategoryItem,
-  coursesModalData,
+  modalData,
   formik,
   inputName,
   categoryItem,
@@ -17,10 +17,10 @@ export default function InputField({
     { name: "name", label: "Fənn adı" },
     { name: "category", label: "Səviyyə" },
   ];
-  const inputValue = inputName === "name" ? coursesModalData[inputName] || "" : categoryItem;
+  const inputValue = inputName === "name" ? modalData[inputName] || "" : categoryItem;
 
   const nameOnChange = (e) => {
-    dispatch({type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL, payload:{data: {...coursesModalData, name: e.target.value}, openModal: true} })
+    dispatch({type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL, payload:{data: {...modalData, name: e.target.value}, openModal: true} })
     setInputValue(inputName, e.target.value);
   };
 

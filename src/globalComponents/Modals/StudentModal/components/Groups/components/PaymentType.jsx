@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { TextField } from "@mui/material";
-import { useCustomHook } from "../../../../GlobalFunctions/globalFunctions";
-import DropdownIcon from "../../../components/DropdownIcon/DropdownIcon";
+import DropdownIcon from "../../../../components/DropdownIcon/DropdownIcon";
+import { useCustomHook } from "../../../../../GlobalFunctions/globalFunctions";
 
-const DiscountReason = ({ formik, modalData, updateModalState }) => {
-  const { discountReasonList: dataList } = useCustomHook();
-  const inputValue = dataList.find((item) => item.key === modalData.discountReason)?.name || ""
+const PaymentType = ({ formik, data, addPaymentType }) => {
+  const { paymentTypeList: dataList } = useCustomHook();
+  const inputValue = dataList.find((item) => item.key === data.paymentType)?.name || "";
   const [openDropdown, setOpenDropdown] = useState(false);
   const addData = (item) => {
-    updateModalState("discountReason", item)
+    addPaymentType(item);
     setOpenDropdown(false)
   };
+
   return (
     <>
       <div className="class-input">
@@ -29,11 +30,11 @@ const DiscountReason = ({ formik, modalData, updateModalState }) => {
                 style: { fontSize: "12px", color: "#3F3F3F" },
               }}
               fullWidth
-              label="Endirim növü"
+              label="Ödəniş növü"
               autoComplete="off"
               disabled
               value={inputValue}
-              onBlur={() => formik.setFieldTouched("discountReason", true)}
+              onBlur={() => formik.setFieldTouched("paymentType", true)}
             />
            <DropdownIcon
               setOpenDropdown={setOpenDropdown}
@@ -54,13 +55,13 @@ const DiscountReason = ({ formik, modalData, updateModalState }) => {
           </ul>
         </div>
       </div>
-      {formik.errors.discountReason && formik.touched.discountReason && (
+      {formik.errors.paymentType && formik.touched.paymentType && (
         <small className="validation-err-message">
-          {formik.errors.discountReason}
+          {formik.errors.paymentType}
         </small>
       )}
     </>
   );
 };
 
-export default DiscountReason;
+export default PaymentType;

@@ -2,9 +2,11 @@ import { GROUP_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState = {
   groupData: [],
+  groupsByMore: [],
   totalPages: 1,
   lastPage: "",
   loading: false,
+  loadingAll: false
 };
 
 export const groupsPaginationReducer = (state = initialState, action) => {
@@ -26,7 +28,24 @@ export const groupsPaginationReducer = (state = initialState, action) => {
         groupData: action.payload.groups,
         totalPages: action.payload.totalPages
       };
-
+      case GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL_ADD:
+        return {
+          ...state,
+          groupsByMore: action.payload?.groups,
+        };
+      case GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL:
+        return {
+          ...state,
+          groupsByMore: [
+            ...state.groupsByMore,
+            ...action.payload?.groups,
+          ],
+        };
+        case GROUP_ALL_ACTIONS_TYPE.GROUP_LOADING_ALL:
+          return {
+            ...state,
+            loadingAll: action.payload,
+          };
     case GROUP_ALL_ACTIONS_TYPE.CREATE_GROUP:
       return {
         ...state,

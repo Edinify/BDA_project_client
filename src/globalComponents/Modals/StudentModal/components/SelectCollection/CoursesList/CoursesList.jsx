@@ -5,20 +5,39 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { ReactComponent as CheckIcon } from "../../../../../../assets/icons/Checkbox.svg";
 import CoursesInput from "./CoursesInput";
 import { getAllCoursesAction } from "../../../../../../redux/actions/coursesActions";
+import { getGroupsByCourseIdAction } from "../../../../../../redux/actions/groupsActions";
+import { GROUP_ALL_ACTIONS_TYPE } from "../../../../../../redux/actions-type";
+import DropdownIcon from "../../../../components/DropdownIcon/DropdownIcon";
 
 const CoursesList = ({ formik, updateModalState, modalData }) => {
   const dispatch = useDispatch();
   const { allCourses: dataList } = useSelector((state) => state.allCourses);
+  const courseIds = modalData?.courses?.map((item) => {return item._id}) || []
   const [openDropdown, setOpenDropdown] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [profileErrMessage, setProfileErrMessage] = useState(false);
 
+  const getGroups = (courseIds) => {
+    dispatch(
+      getGroupsByCourseIdAction({
+        groupsCount: 0,
+        searchQuery: "",
+        courseIds: courseIds,
+      })
+    );
+  }
   const deleteClass = (_id) => {
     if (modalData.courses.length === 1) {
+      dispatch({
+        type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL_ADD,
+        payload: {groups: []},
+      });
       updateModalState("courses", []);
     } else {
       const coursesData = modalData.courses.filter((course) => course._id !== _id )
+      const courseIds = coursesData.map((item) => {return item._id})
       updateModalState("courses", coursesData);
+      getGroups(courseIds)
     }
   };
   const addCourse = () => {
@@ -27,11 +46,13 @@ const CoursesList = ({ formik, updateModalState, modalData }) => {
       if (modalData.courses.find((item) => item._id === selectedItem._id)) {
         setProfileErrMessage(true);
       } else {
+        getGroups([...courseIds, selectedItem._id])
         const coursesData = [...modalData?.courses, selectedItem];
         setProfileErrMessage(false);
         updateModalState("courses", coursesData);
       }
     } else {
+      getGroups([selectedItem._id])
       const coursesData = [selectedItem];
       setProfileErrMessage(false);
       updateModalState("courses", coursesData);
@@ -42,6 +63,9 @@ const CoursesList = ({ formik, updateModalState, modalData }) => {
 
   useEffect(() => {
     dispatch(getAllCoursesAction());
+    if(modalData.courses) {
+      getGroups(courseIds)
+    }
   }, []);
 
 
@@ -65,29 +89,10 @@ const CoursesList = ({ formik, updateModalState, modalData }) => {
               disabled
               onClick={() => setOpenDropdown(!openDropdown)}
             />
-
-            <div
-              className="dropdown-icon"
-              onClick={() => setOpenDropdown(!openDropdown)}
-            >
-              <svg
-                className={!openDropdown ? "down" : "up"}
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19.92 9.4502L13.4 15.9702C12.63 16.7402 11.37 16.7402 10.6 15.9702L4.07999 9.4502"
-                  stroke="#5D5D5D"
-                  strokeWidth="1.5"
-                  strokeMiterlimit="10"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
+           <DropdownIcon
+              setOpenDropdown={setOpenDropdown}
+              openDropdown={openDropdown}
+            />
           </div>
 
           <ul className={`dropdown-body ${openDropdown ? "active" : ""}`}>

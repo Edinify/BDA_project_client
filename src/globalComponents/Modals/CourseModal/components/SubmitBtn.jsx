@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  COURSES_MODAL_ACTION_TYPE,
   SEARCH_VALUES_ACTION_TYPES,
 } from "../../../../redux/actions-type";
 import {
@@ -10,32 +9,26 @@ import {
 } from "../../../../redux/actions/coursesActions";
 import LoadingBtn from "../../../Loading/components/LoadingBtn/LoadingBtn";
 
-export default function SubmitBtn({
-  formik,
-  coursesModalData,
-  funcType,
-  closeModal,
-}) {
+export default function SubmitBtn({ formik, modalData, funcType }) {
   const dispatch = useDispatch();
   const { coursesModalLoading } = useSelector((state) => state.coursesModal);
   const classCreate = () => {
-    if (coursesModalData?._id) {
-      dispatch(
-        updateCoursesAction(coursesModalData?._id, coursesModalData, closeModal)
-      );
+    if (modalData?._id) {
+      dispatch(updateCoursesAction(modalData?._id, modalData));
     } else {
       dispatch({
         type: SEARCH_VALUES_ACTION_TYPES.COURSES_SEARCH_VALUE,
         payload: "",
       });
-      dispatch(createCoursesAction(coursesModalData));
+      dispatch(createCoursesAction(modalData));
     }
-    // closeModal();
   };
   return (
     <div className="create-update-modal-btn">
       <button
-        disabled={!(formik.isValid && coursesModalData?.name && !coursesModalLoading)}
+        disabled={
+          !(formik.isValid && modalData?.name && !coursesModalLoading)
+        }
         onClick={classCreate}
       >
         {coursesModalLoading ? (

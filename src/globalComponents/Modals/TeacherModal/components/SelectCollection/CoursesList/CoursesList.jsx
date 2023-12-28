@@ -5,6 +5,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { ReactComponent as CheckIcon } from "../../../../../../assets/icons/Checkbox.svg";
 import CoursesInput from "./CoursesInput";
 import { getAllCoursesAction } from "../../../../../../redux/actions/coursesActions";
+import DropdownIcon from "../../../../components/DropdownIcon/DropdownIcon";
 
 const CoursesList = ({ formik, updateModalState, modalData }) => {
   const dispatch = useDispatch();
@@ -66,28 +67,10 @@ const CoursesList = ({ formik, updateModalState, modalData }) => {
               onClick={() => setOpenDropdown(!openDropdown)}
             />
 
-            <div
-              className="dropdown-icon"
-              onClick={() => setOpenDropdown(!openDropdown)}
-            >
-              <svg
-                className={!openDropdown ? "down" : "up"}
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19.92 9.4502L13.4 15.9702C12.63 16.7402 11.37 16.7402 10.6 15.9702L4.07999 9.4502"
-                  stroke="#5D5D5D"
-                  strokeWidth="1.5"
-                  strokeMiterlimit="10"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
+           <DropdownIcon
+              setOpenDropdown={setOpenDropdown}
+              openDropdown={openDropdown}
+            />
           </div>
 
           <ul className={`dropdown-body ${openDropdown ? "active" : ""}`}>

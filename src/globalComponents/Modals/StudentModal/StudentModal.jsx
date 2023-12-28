@@ -13,7 +13,7 @@ import WhereComing from "./components/SelectCollection/WhereComing";
 import PaymentType from "./components/SelectCollection/PaymentType";
 import CoursesList from "./components/SelectCollection/CoursesList/CoursesList";
 import DiscountReason from "./components/SelectCollection/DiscountReason";
-import GroupList from "./components/Groups/GroupsList";
+import GroupList from "./components/Groups/GroupList";
 
 export const StudentModal = () => {
   const dispatch = useDispatch();
@@ -131,11 +131,11 @@ export const StudentModal = () => {
               />
             </div>
             <div className="input-couples">
-              <PaymentType
+              {/* <PaymentType
                 modalData={modalData}
                 updateModalState={updateModalState}
                 formik={formik}
-              />
+              /> */}
               <InputField
                 inputName={"amount"}
                 formik={formik}

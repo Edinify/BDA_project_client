@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TextField } from "@mui/material";
-import { ReactComponent as SearchIcon } from "../../../../../../assets/icons/search-normal.svg";
-import { ReactComponent as CheckIcon } from "../../../../../../assets/icons/Checkbox.svg";
+import { ReactComponent as SearchIcon } from "../../../../../assets/icons/search-normal.svg";
+import { ReactComponent as CheckIcon } from "../../../../../assets/icons/Checkbox.svg";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import {
-  getActiveStudentsAction,
-  setLoadingAllStudentsAction,
-} from "../../../../../../redux/actions/studentsActions";
-import LoadingBtn from "../../../../../Loading/components/LoadingBtn/LoadingBtn";
-import StudentInput from "./StudentInput";
-import DropdownIcon from "../../../../components/DropdownIcon/DropdownIcon";
+  getGroupsByCourseIdAction,
+  setLoadingAllGroupsAction,
+} from "../../../../../redux/actions/groupsActions";
+import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
+import GroupInput from "./GroupInput";
+import { STUDENTS_MODAL_ACTION_TYPE } from "../../../../../redux/actions-type";
+import DropdownIcon from "../../../components/DropdownIcon/DropdownIcon";
 
-const StudentList = ({ modalData, updateModalState }) => {
+const GroupList = ({ modalData, updateModalState, formik, setInputValue }) => {
   const dispatch = useDispatch();
-  const { loading, loadingAll, studentsByMore } = useSelector(
-    (state) => state.studentsPagination
+  const { loading, loadingAll, groupsByMore } = useSelector(
+    (state) => state.groupsPagination
   );
+  const courseIds =
+    modalData?.courses?.map((item) => {
+      return item._id;
+    }) || [];
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchedValue, setSearchedValue] = useState("");
   const [openDropdown, setOpenDropdown] = useState(false);
-  const inputValue = selectedItem ? selectedItem.fullName : searchedValue;
+  const inputValue = selectedItem ? selectedItem.name : searchedValue;
+  const [sameItemErrMessage, setsameItemErrMessage] = useState(false);
 
   const getSearchValue = (e) => {
     if (!openDropdown) {
@@ -30,62 +36,55 @@ const StudentList = ({ modalData, updateModalState }) => {
     setSelectedItem("");
     updateModalState("student", "");
   };
-  const addItem = () => {
-    if (modalData.students) {
-      // the same element can't be added twice
-      if (modalData.students.find((item) => item._id === selectedItem._id)) {
-      } else {
-        const studentsData = [...modalData?.students, selectedItem];
-        updateModalState("students", studentsData);
-      }
-    } else {
-      const studentsData = [selectedItem];
-      updateModalState("students", studentsData);
-    }
-    setSelectedItem("");
-    setOpenDropdown(false);
-  };
   const searchData = (e) => {
-    dispatch(setLoadingAllStudentsAction(true));
+    dispatch(setLoadingAllGroupsAction(true));
     dispatch(
-      getActiveStudentsAction({
-        studentsCount: 0,
+      getGroupsByCourseIdAction({
+        groupsCount: 0,
         searchQuery: searchedValue ? searchedValue : "",
-        courseId: modalData?.course?._id,
+        courseIds: courseIds,
       })
     );
   };
   const getMoreData = () => {
     dispatch(
-      getActiveStudentsAction({
-        studentsCount: studentsByMore?.length ? studentsByMore?.length : 0,
+      getGroupsByCourseIdAction({
+        groupsCount: groupsByMore?.length ? groupsByMore?.length : 0,
         searchQuery: searchedValue ? searchedValue : "",
-        courseId: modalData?.course?._id,
+        courseIds: courseIds,
       })
     );
   };
-  const deleteItem = (_id) => {
-    if (modalData.students.length === 1) {
-      updateModalState("students", []);
+
+  const addData = () => {
+    if (modalData.groups) {
+      // the same element can't be added twice
+      if (
+        modalData.groups.find((item) => item.group._id === selectedItem._id)
+      ) {
+        setsameItemErrMessage(true);
+      } else {
+        setsameItemErrMessage(false);
+        const groupsData = [...modalData.groups, { group: selectedItem }];
+        updateModalState("groups", groupsData);
+      }
     } else {
-      const studentsData = modalData.students.filter(
-        (student) => student._id !== _id
+      const groupsData = [{ group: selectedItem }];
+      updateModalState("groups", groupsData);
+    }
+    setSelectedItem("");
+    setOpenDropdown(false);
+  };
+  const deleteItem = (_id) => {
+    if (modalData.groups.length === 1) {
+      updateModalState("groups", []);
+    } else {
+      const groupsData = modalData.groups.filter(
+        (item) => item.group._id !== _id
       );
-      updateModalState("students", studentsData);
+      updateModalState("groups", groupsData);
     }
   };
-
-  useEffect(() => {
-    if (modalData.course) {
-      dispatch(
-        getActiveStudentsAction({
-          studentsCount: 0,
-          searchQuery: searchedValue ? searchedValue : "",
-          courseId: modalData?.course?._id,
-        })
-      );
-    }
-  }, []);
 
   return (
     <div>
@@ -114,46 +113,41 @@ const StudentList = ({ modalData, updateModalState }) => {
                 style: { fontSize: "12px", color: "#3F3F3F" },
               }}
               fullWidth
-              label="Tələbə adı"
+              label="Qrup adı"
               name="class"
               autoComplete="off"
               value={inputValue}
               onChange={(e) => getSearchValue(e)}
             />
-           <DropdownIcon
+            <DropdownIcon
               setOpenDropdown={setOpenDropdown}
               openDropdown={openDropdown}
             />
           </div>
+
           <ul className={`dropdown-body  ${openDropdown ? "active" : ""}`}>
             {loadingAll ? (
               <li className="loading">
                 <LoadingBtn />
               </li>
             ) : (
-              studentsByMore?.map((item, i) => (
-                <li
-                  key={i}
-                  onClick={() => setSelectedItem(item)}
-                  className={
-                    modalData.items?.find(
-                      (item) => item?.item._id === item?._id
-                    )
-                      ? "disabled"
-                      : ""
-                  }
-                >
-                  {modalData?.students?.find((obj) => obj._id === item._id) ? (
+              groupsByMore?.map((item, i) => (
+                <li key={i} onClick={() => setSelectedItem(item)}>
+                  {modalData?.groups?.find(
+                    (obj) => obj.group._id === item._id
+                  ) ? (
                     <CheckIcon />
                   ) : null}
-                  <h4>{item.fullName}</h4>
+                  <h4>{item.name}</h4>
                 </li>
               ))
             )}
             {!loadingAll && (
               <li>
                 <button
-                  onClick={() => modalData.course && getMoreData()}
+                  onClick={() =>
+                    modalData?.courses?.length > 0 && getMoreData()
+                  }
                   className="more-btn"
                   disabled={loading}
                 >
@@ -167,7 +161,7 @@ const StudentList = ({ modalData, updateModalState }) => {
         <div className="right">
           <button
             disabled={!selectedItem}
-            onClick={() => addItem()}
+            onClick={() => addData()}
             className="add-class"
           >
             <AiOutlinePlusCircle />
@@ -175,15 +169,22 @@ const StudentList = ({ modalData, updateModalState }) => {
         </div>
       </div>
 
+      {sameItemErrMessage && (
+        <small className="exist-error-message">
+          Bu qrup növü artıq mövcuddur.
+        </small>
+      )}
+
       <ul className="category-list courses-li">
-        {modalData?.students?.map((item, index) => (
-          <StudentInput
+        {modalData?.groups?.map((item, index) => (
+          <GroupInput
             key={index}
             index={index}
             data={item}
             deleteItem={deleteItem}
-            modalData={modalData}
             updateModalState={updateModalState}
+            modalData={modalData}
+            formik={formik}
           />
         ))}
       </ul>
@@ -191,4 +192,4 @@ const StudentList = ({ modalData, updateModalState }) => {
   );
 };
 
-export default StudentList;
+export default GroupList;

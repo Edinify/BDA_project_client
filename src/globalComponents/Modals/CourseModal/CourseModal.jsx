@@ -1,4 +1,4 @@
-import {  useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
 import { Box } from "@mui/material";
@@ -6,18 +6,19 @@ import { COURSES_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { useFormik } from "formik";
 import { ValidationSchema } from "./components/ValidationSchema";
 import SubmitBtn from "./components/SubmitBtn";
-// import Status from "./components/Status";
 import InputField from "./components/InputField";
-// import CategoryInput from "./components/CategoryInput";
+import Payments from "./components/Payments/Payments";
 
 export const CourseModal = () => {
   const dispatch = useDispatch();
-  const {coursesModalData, coursesOpenModal} = useSelector(state => state.coursesModal)
+  const { coursesModalData: modalData, coursesOpenModal } = useSelector(
+    (state) => state.coursesModal
+  );
 
   // formik
   const formik = useFormik({
     initialValues: {
-      name: coursesModalData?.name ? coursesModalData?.name : "",
+      name: modalData?.name ? modalData?.name : "",
     },
     validationSchema: ValidationSchema,
   });
@@ -32,29 +33,30 @@ export const CourseModal = () => {
 
   const updateModalState = (keyName, value) => {
     dispatch({
-      type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL, 
-      payload:{
-        data: {...coursesModalData, [keyName]: value }, 
-        openModal: true
-      } })
-  }
-  const closeModal = () => {
-    dispatch({ type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL, payload: { data: {}, openModal: false } });
+      type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL,
+      payload: {
+        data: { ...modalData, [keyName]: value },
+        openModal: true,
+      },
+    });
   };
-  
+  const closeModal = () => {
+    dispatch({
+      type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL,
+      payload: { data: {}, openModal: false },
+    });
+  };
 
-
-
+  console.log(modalData);
   return (
     <div className="create-update-modal-con">
       <div className="create-update-modal">
         <div className="create-update-modal-head">
-          <h2>{coursesModalData?._id ? "Dərs yenilə" : "Dərs yaradın"}</h2>
+          <h2>{modalData?._id ? "Dərs yenilə" : "Dərs yaradın"}</h2>
           <CloseBtn onClick={closeModal} />
         </div>
-
         <Box
-          onSubmit={e => e.preventDefault()}
+          onSubmit={(e) => e.preventDefault()}
           component="form"
           sx={{
             maxWidth: "100%",
@@ -65,34 +67,23 @@ export const CourseModal = () => {
           <div className="create-update-modal-form">
             <InputField
               setInputValue={setInputValue}
-              coursesModalData={coursesModalData}
+              modalData={modalData}
               formik={formik}
               inputName={"name"}
             />
-            {/* <CategoryInput
-              formik={formik}
-              setInputValue={setInputValue}
-              coursesModalData={coursesModalData}
+            <Payments
+              modalData={modalData}
               updateModalState={updateModalState}
-            /> */}
+              formik={formik}
+            />
           </div>
         </Box>
 
-        {coursesModalData?._id ? (
-          <SubmitBtn
-            formik={formik}
-            coursesModalData={coursesModalData}
-            funcType="update"
-            closeModal={closeModal}
-          />
-        ) : (
-          <SubmitBtn
-            formik={formik}
-            coursesModalData={coursesModalData}
-            funcType="create"
-            closeModal={closeModal}
-          />
-        )}
+        <SubmitBtn
+          formik={formik}
+          modalData={modalData}
+          funcType={modalData?._id ? "update" : "create"}
+        />
       </div>
     </div>
   );

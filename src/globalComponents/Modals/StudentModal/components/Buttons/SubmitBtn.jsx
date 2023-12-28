@@ -21,12 +21,16 @@ const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
     }
   });
   const studentCreate = () => {
+    const courses = modalData?.courses.map((item) => {
+      return item._id;
+    });
+    const groups = modalData?.groups.map((item) => {
+      return {...item, group: item.group._id};
+    });
+
     if (modalData?._id) {
-      const courses = modalData?.courses.map((item) => {
-        return item._id;
-      });
       dispatch(
-        updateStudentsAction(modalData?._id, { ...modalData, courses: courses })
+        updateStudentsAction(modalData?._id, { ...modalData, courses: courses, groups: groups })
       );
     } else {
       dispatch({
@@ -36,7 +40,7 @@ const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
       const courses = modalData?.courses.map((item) => {
         return item._id;
       });
-      dispatch(createStudentsAction({ ...modalData, courses: courses }));
+      dispatch(createStudentsAction({ ...modalData, courses: courses, groups: groups  }));
     }
   };
 

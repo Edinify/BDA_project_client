@@ -80,6 +80,16 @@
   transform: rotate(180deg);
 }
 
+.dropdown-icon.down,
+.dropdown-icon.up {
+  transition: 0.3s;
+}
+.dropdown-icon.down {
+  transform: rotate(0deg);
+}
+.dropdown-icon.up {
+  transform: rotate(180deg);
+}
 /* global */
 .login .back-btn {
   color: var(--primary-500);

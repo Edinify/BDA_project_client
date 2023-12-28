@@ -8,10 +8,9 @@ const CourseCard = ({ data, mode, cellNumber }) => {
   const { courses, lastPage } = useSelector((state) => state.coursesPagination);
   const { coursesSearchValues } = useSelector((state) => state.searchValues);
   const updateItem = () => {
-    const { name, _id, status } = data;
     dispatch({
       type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL,
-      payload: { data: { name, _id, status }, openModal: true },
+      payload: { data: data, openModal: true },
     });
   };
   const deleteItem = () => {

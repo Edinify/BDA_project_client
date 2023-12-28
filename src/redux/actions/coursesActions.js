@@ -129,8 +129,10 @@ export const getCoursesPaginationAction =
   };
 export const createCoursesAction = (courseData) => async (dispatch) => {
   dispatch(modalLoading(true));
+  console.log(courseData);
   try {
     const { data } = await API.post("/", courseData);
+    console.log(data);
     dispatch(getCoursesPaginationAction(data.lastPage, ""));
     dispatch(courseModalOpen(false));
     toastSuccess("Yeni fənn yaradıldı");
