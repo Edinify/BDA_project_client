@@ -4,56 +4,83 @@ import { useEffect, useState } from "react";
 
 export default function InputField({
   formik,
-  modalData,
+  data,
   inputName,
-  updateModalState,
+  addGroupData,
+
 }) {
   const [shrink, setShrink] = useState(false);
+  const [totalAmountValue, setTotalAmountValue] = useState(() => {
+    const amount = data.amount || 0;
+    const discount = data?.discount || 0;
+    return amount - (amount * discount) / 100;
+  });
   const inputData = [
     {
-      inputName: "fullName",
-      label: "Ad soyad",
-      type: "text",
-      marginTop: "0",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "fin",
-      label: "Fin kod",
+      inputName: "degree",
+      label: "Təhsil dərəcəsi",
       type: "text",
       marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
+      marginBottom: "24px",
+      inputValue: data[inputName] || "",
     },
     {
-      inputName: "seria",
-      label: "Seria nömrəsi",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "birthday",
-      label: "Doğum tarixi",
+      inputName: "contractStartDate",
+      label: "Müqavilə başlama tarixi",
       type: "date",
       marginTop: "24px",
       marginBottom: "0",
       inputValue:
-        modalData[inputName] && inputName === "birthday"
-          ? moment(modalData[inputName]).format("YYYY-MM-DD")
+        data[inputName] && inputName === "contractStartDate"
+          ? moment(data[inputName]).format("YYYY-MM-DD")
           : "",
     },
     {
-      inputName: "phone",
-      label: "Mobil nömrə",
-      type: "text",
+      inputName: "contractEndDate",
+      label: "Müqavilə bitmə tarixi",
+      type: "date",
       marginTop: "24px",
       marginBottom: "0",
-      inputValue: modalData[inputName] || "",
+      inputValue:
+        data[inputName] && inputName === "contractEndDate"
+          ? moment(data[inputName]).format("YYYY-MM-DD")
+          : "",
+    },
+    {
+      inputName: "amount",
+      label: "Ödəniş",
+      type: "number",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue: data[inputName] || "",
+    },
+    {
+      inputName: "totalAmount",
+      label: "Yekun məbləğ",
+      type: "number",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue: totalAmountValue || "0",
+    },
+    {
+      inputName: "discount",
+      label: "Endirim %",
+      type: "number",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue: data[inputName] || "",
     },
   ];
+
+  useEffect(() => {
+    setTotalAmountValue(() => {
+      const amount = data.amount || 0;
+      const discount = data.discount || 0;
+      const result = amount - (amount * discount) / 100;
+      addGroupData("totalAmount", result);
+      return result;
+    });
+  }, [data.amount, data.discount]);
 
   return (
     <div>
@@ -92,9 +119,10 @@ export default function InputField({
         value={
           inputData.find((item) => item.inputName === inputName)?.inputValue
         }
+        disabled={inputName === "totalAmount" || inputName === "amount"  ? true : false}
         onWheel={(e) => e.target.blur()}
         onChange={(e) => {
-          updateModalState(inputName, e.target.value);
+          addGroupData(inputName, e.target.value);
         }}
         onBlur={(e) => {
           formik.setFieldTouched(inputName, true);
@@ -103,13 +131,11 @@ export default function InputField({
         onFocus={() => setShrink(true)}
       />
 
-      {formik.errors[inputName] &&
-          formik.touched[inputName] && (
-            <small className="validation-err-message">
-              {formik.errors[inputName]}
-            </small>
-          )}
-
+      {formik.errors[inputName] && formik.touched[inputName] && (
+        <small className="validation-err-message">
+          {formik.errors[inputName]}
+        </small>
+      )}
     </div>
   );
 }

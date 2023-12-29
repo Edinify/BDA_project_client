@@ -63,9 +63,6 @@ const CoursesList = ({ formik, updateModalState, modalData }) => {
 
   useEffect(() => {
     dispatch(getAllCoursesAction());
-    if(modalData.courses) {
-      getGroups(courseIds)
-    }
   }, []);
 
 

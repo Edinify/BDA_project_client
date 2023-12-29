@@ -22,7 +22,9 @@ const StudentMoreModal = ({ studentsModalData }) => {
     {
       title: "Doğum günü",
       value: studentsModalData?.birthday
-        ? moment(studentsModalData?.birthday).locale("az").format("DD MMMM YYYY")
+        ? moment(studentsModalData?.birthday)
+            .locale("az")
+            .format("DD MMMM YYYY")
         : "",
     },
     { title: "Mobil nömrə", value: studentsModalData?.phone },
@@ -32,50 +34,50 @@ const StudentMoreModal = ({ studentsModalData }) => {
         (item) => item.key === studentsModalData?.whereComing
       ).name,
     },
+    { title: "İxtisaslar", value: courses },
   ];
   const dataList2 = [
-    { title: "İxtisaslar", value: courses },
-    { title: "Təhsil dərəcəsi", value: studentsModalData?.degree },
-    {
-      title: "Müqavilə başlama tarixi",
-      value: studentsModalData?.contractStartDate
-        ? moment(studentsModalData?.contractStartDate)
-            .locale("az")
-            .format("DD MMMM YYYY")
-        : "",
-    },
-    {
-      title: "Müqavilə bitmə tarixi",
-      value: studentsModalData?.contractEndDate
-        ? moment(studentsModalData?.contractEndDate)
-            .locale("az")
-            .format("DD MMMM YYYY")
-        : "",
-    },
-    { title: "Ödəniş", value: studentsModalData?.amount },
-    { title: "Yekun məbləğ", value: studentsModalData?.totalAmount },
-    {
-      title: "Endirim növü",
-      value: discountReasonList.find(
-        (item) => item.key === studentsModalData?.discountReason
-      ).name,
-    },
-    { title: "Endirim %", value: studentsModalData?.discount },
-    {
-      title: "Ödəniş növü",
-      value: paymentTypeList.find(
-        (item) => item.key === studentsModalData?.paymentType
-      ).name,
-    },
-    { title: "Qrup", value: "" },
-    {
-      title: "Qoşulma tarixi",
-      value: studentsModalData?.createdAt
-        ? moment(studentsModalData?.createdAt)
-            .locale("az")
-            .format("DD MMMM YYYY")
-        : "",
-    },
+    // { title: "Təhsil dərəcəsi", value: studentsModalData?.degree },
+    // {
+    //   title: "Müqavilə başlama tarixi",
+    //   value: studentsModalData?.contractStartDate
+    //     ? moment(studentsModalData?.contractStartDate)
+    //         .locale("az")
+    //         .format("DD MMMM YYYY")
+    //     : "",
+    // },
+    // {
+    //   title: "Müqavilə bitmə tarixi",
+    //   value: studentsModalData?.contractEndDate
+    //     ? moment(studentsModalData?.contractEndDate)
+    //         .locale("az")
+    //         .format("DD MMMM YYYY")
+    //     : "",
+    // },
+    // { title: "Ödəniş", value: studentsModalData?.amount },
+    // { title: "Yekun məbləğ", value: studentsModalData?.totalAmount },
+    // {
+    //   title: "Endirim növü",
+    //   value: discountReasonList.find(
+    //     (item) => item.key === studentsModalData?.discountReason
+    //   ).name,
+    // },
+    // { title: "Endirim %", value: studentsModalData?.discount },
+    // {
+    //   title: "Ödəniş növü",
+    //   value: paymentTypeList.find(
+    //     (item) => item.key === studentsModalData?.paymentType
+    //   ).name,
+    // },
+    // { title: "Qrup", value: "" },
+    // {
+    //   title: "Qoşulma tarixi",
+    //   value: studentsModalData?.createdAt
+    //     ? moment(studentsModalData?.createdAt)
+    //         .locale("az")
+    //         .format("DD MMMM YYYY")
+    //     : "",
+    // },
   ];
 
   return (
@@ -88,16 +90,62 @@ const StudentMoreModal = ({ studentsModalData }) => {
         ))}
       </div>
 
-      <div className="more-modal-work-inform">
-        <h2>Təhsil məlumatları</h2>
-        <div className="work-inform-con">
-          {dataList2.map((item, index) => (
-            <h3 key={index}>
-              {item.title}: <span>{item.value}</span>
+      {studentsModalData.groups.map((item) => (
+        <div key={item.group._id} className="more-modal-work-inform">
+          <h2>Qrup adi: {item.group.name}</h2>
+          <div className="work-inform-con">
+            <h3>
+              Yekun məbləğ: <span>{item.totalAmount}</span>
             </h3>
-          ))}
+            <h3>
+              Ödəniş: <span>{item.amount}</span>
+            </h3>
+            <h3>
+              Ödəmə hissəsi: <span>{item.paymentType} hissəli</span>
+            </h3>
+            <h3>
+              Endirim növü:{" "}
+              <span>
+                {
+                  discountReasonList.find(
+                    (data) => data.key === item?.discountReason
+                  ).name
+                }
+              </span>
+            </h3>
+            <h3>
+              Endirim %: <span>{item.discount}</span>
+            </h3>
+            <h3>
+              Müqavilə başlama tarixi:{" "}
+              <span>
+                {item?.contractStartDate
+                  ? moment(item?.contractStartDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </span>
+            </h3>
+            <h3>
+              Müqavilə bitmə tarixi:{" "}
+              <span>
+                {item?.contractEndDate
+                  ? moment(item?.contractEndDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </span>
+            </h3>
+            <h3>
+              Təhsil dərəcəsi: <span>{item.degree}</span>
+            </h3>
+
+            <h3>
+              Status: <span>{item.status ? "Davam edir" : "Məzun"}</span>
+            </h3>
+          </div>
         </div>
-      </div>
+      ))}
     </>
   );
 };

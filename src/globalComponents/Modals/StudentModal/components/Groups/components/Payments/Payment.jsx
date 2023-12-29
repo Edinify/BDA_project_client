@@ -2,56 +2,33 @@ import { TextField } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 
-export default function InputField({
+export default function Payment({
   formik,
-  modalData,
+  data,
   inputName,
-  updateModalState,
+  addPayments,
+  index
 }) {
   const [shrink, setShrink] = useState(false);
   const inputData = [
     {
-      inputName: "fullName",
-      label: "Ad soyad",
-      type: "text",
-      marginTop: "0",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "fin",
-      label: "Fin kod",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "seria",
-      label: "Seria nömrəsi",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "birthday",
-      label: "Doğum tarixi",
+      inputName: "paymentDate",
+      label: "Ödəniş tarixi",
       type: "date",
       marginTop: "24px",
       marginBottom: "0",
       inputValue:
-        modalData[inputName] && inputName === "birthday"
-          ? moment(modalData[inputName]).format("YYYY-MM-DD")
+        data[inputName] && inputName === "paymentDate"
+          ? moment(data[inputName]).format("YYYY-MM-DD")
           : "",
     },
     {
-      inputName: "phone",
-      label: "Mobil nömrə",
-      type: "text",
+      inputName: "payment",
+      label: "Ödəniş",
+      type: "number",
       marginTop: "24px",
       marginBottom: "0",
-      inputValue: modalData[inputName] || "",
+      inputValue: data[inputName] || "",
     },
   ];
 
@@ -61,8 +38,6 @@ export default function InputField({
         sx={{
           "& input": {
             fontSize: "12px",
-            paddingRight: inputData.find((item) => item.inputName === inputName)
-              ?.paddingRight,
           },
           marginTop:
             inputData.find((item) => item.inputName === inputName)?.marginTop ||
@@ -94,7 +69,7 @@ export default function InputField({
         }
         onWheel={(e) => e.target.blur()}
         onChange={(e) => {
-          updateModalState(inputName, e.target.value);
+          addPayments(inputName, e.target.value, index);
         }}
         onBlur={(e) => {
           formik.setFieldTouched(inputName, true);
@@ -103,13 +78,11 @@ export default function InputField({
         onFocus={() => setShrink(true)}
       />
 
-      {formik.errors[inputName] &&
-          formik.touched[inputName] && (
-            <small className="validation-err-message">
-              {formik.errors[inputName]}
-            </small>
-          )}
-
+      {formik.errors[inputName] && formik.touched[inputName] && (
+        <small className="validation-err-message">
+          {formik.errors[inputName]}
+        </small>
+      )}
     </div>
   );
 }

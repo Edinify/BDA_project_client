@@ -1,66 +1,26 @@
-import React, { useState } from "react";
-import { TextField } from "@mui/material";
-import { useCustomHook } from "../../../../../../GlobalFunctions/globalFunctions";
-import DropdownIcon from "../../../../../components/DropdownIcon/DropdownIcon";
+import React from "react";
+import Payment from "./Payment";
 
-const Payments = ({ formik, groupObj, updateModalState }) => {
-  const { paymentTypeList: dataList } = useCustomHook();
-  const inputValue =
-    dataList.find((item) => item.key === groupObj.paymentType)?.name || "";
-  const [openDropdown, setOpenDropdown] = useState(false);
-  const addData = (item) => {
-    updateModalState("paymentType", item);
-    setOpenDropdown(false)
-  };
+const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
   return (
-    <>
-      <div className="class-input">
-        <div className="dropdown-input">
-          <div className="input-box">
-            <TextField
-              sx={{
-                "& input": {
-                  fontSize: "12px",
-                  marginRight: "32px",
-                },
-                marginTop: "24px",
-                // marginBottom: "24px",
-              }}
-              InputLabelProps={{
-                style: { fontSize: "12px", color: "#3F3F3F" },
-              }}
-              fullWidth
-              label="Ödəniş növü"
-              autoComplete="off"
-              disabled
-              value={inputValue}
-              onBlur={() => formik.setFieldTouched("paymentType", true)}
-            />
-           <DropdownIcon
-              setOpenDropdown={setOpenDropdown}
-              openDropdown={openDropdown}
-            />
-          </div>
-
-          <ul
-            className={`dropdown-body where-coming ${
-              openDropdown ? "active" : ""
-            }`}
-          >
-            {dataList.map((item) => (
-              <li key={item.key} onClick={() => addData(item.key)}>
-                <h4>{item.name}</h4>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      {formik.errors.paymentType && formik.touched.paymentType && (
-        <small className="validation-err-message">
-          {formik.errors.paymentType}
-        </small>
-      )}
-    </>
+    <div className="input-couples">
+      <Payment
+        inputName={"payment"}
+        formik={formik}
+        setInputValue={setInputValue}
+        data={data}
+        addPayments={addPayments}
+        index={index}
+      />
+      <Payment
+        inputName={"paymentDate"}
+        formik={formik}
+        setInputValue={setInputValue}
+        data={data}
+        addPayments={addPayments}
+        index={index}
+      />
+    </div>
   );
 };
 

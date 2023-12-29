@@ -338,6 +338,10 @@
   flex-direction: column;
   width: 100%;
 }
+.create-update-modal .category-list.courses-li > li.group-li {
+  border-bottom: 1px solid black;
+  padding-bottom: 20px;
+}
 .create-update-modal .category-list.courses-li > li .top {
   display: flex;
   justify-content: space-between;
@@ -351,6 +355,7 @@
 
 .create-update-modal .category-list > li:last-child {
   margin-bottom: 0;
+  border-bottom: none;
 }
 
 .create-update-modal .category-list > li .minus-icon-con {

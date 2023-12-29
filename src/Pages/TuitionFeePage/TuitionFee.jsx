@@ -27,14 +27,14 @@ const TuitionFeePage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getTuitionFeePaginationAction(1, tuitionFeeSearchValues, "all"));
+    dispatch(getTuitionFeePaginationAction(1, tuitionFeeSearchValues));
   };
 
   useEffect(() => {
     if (tuitionFeeSearchValues) {
-      dispatch(getTuitionFeePaginationAction(1, tuitionFeeSearchValues, "all"));
+      dispatch(getTuitionFeePaginationAction(1, tuitionFeeSearchValues));
     } else {
-      dispatch(getTuitionFeePaginationAction(1, "", ""));
+      dispatch(getTuitionFeePaginationAction(1, ""));
     }
   }, [dispatch]);
 
@@ -43,9 +43,9 @@ const TuitionFeePage = () => {
       <GlobalHead
         searchData={searchData}
         openModal={openModal}
+        addBtn={false}
         DATA_SEARCH_VALUE={"TUITION_FEE_SEARCH_VALUE"}
         dataSearchValues={tuitionFeeSearchValues}
-        // statusType="student"
       />
       <TuitionFeeData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>

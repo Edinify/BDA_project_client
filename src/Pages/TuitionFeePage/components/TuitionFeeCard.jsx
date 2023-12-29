@@ -3,43 +3,46 @@ import { useDispatch, useSelector } from "react-redux";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { TUITION_FEE_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { deleteStudentAction } from "../../../redux/actions/studentsActions";
+import moment from "moment";
+import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 
-const TuitionFeeCard = ({ mode, setOpenMoreModal }) => {
+const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   const dispatch = useDispatch();
-  const { students, lastPage } = useSelector(
+  const { discountReasonList } = useCustomHook();
+  const { tuitionFeeData, lastPage } = useSelector(
     (state) => state.tuitionFeePagination
   );
   const { tuitionFeeSearchValues } = useSelector((state) => state.searchValues);
-  const data = {
-    groupNumber: 1,
-    instructor: "kimse",
-    studentName: "kimseler",
-    status: "Active",
-    contractType: "technset",
-    price: 20,
-    discount: 5,
-    finalPrice: 1,
-    amountPaid: 0,
-    remainder: 0,
-    fin: 0,
-    phone: 0,
-    startDate: 0,
-  };
 
   const listData = [
-    { key: "Tələbənin adı", value: "Nurməmməd Nurməmmədli" },
-    { key: "Qrup Nömrəsi", value: "Camp" },
-    { key: "İnstruktor", value: "Emil" },
-    { key: "Status", value: "Aktiv" },
-    { key: "Müqavilə növü", value: "Tam ödəniş" },
-    { key: "Məbləğ", value: "700" },
-    { key: "Endirim %", value: "0%" },
-    { key: "Yekun Məbləğ", value: "700" },
-    { key: "Ödənilmiş məbləğ", value: "0" },
-    { key: "Qalıq", value: "700" },
-    { key: "Fin kodu", value: "" },
-    { key: "Nömrəsi", value: "" },
-    { key: "Dərs baş. tarixi", value: "11/23/2023" },
+    // { key: "Fin kodu", value: data.fin },
+    // { key: "Seriya", value: data.seria },
+    // { key: "Mobil Nömrə", value: data.phone },
+    { key: "Status", value: data.status ? "Davam edir" : "Məzun" },
+
+    { key: "Qrup", value: data.group.name },
+    { key: "Məbləğ", value: data.amount },
+    { key: "Yekun Məbləğ", value: data.totalAmount },
+    { key: "Ödənişlər", value: "0%" },
+    { key: "Endirim %", value: data.discount },
+    {
+      key: "Endirim növü",
+      value: discountReasonList.find(
+        (item) => item.key === data?.discountReason
+      )?.name || '',
+    },
+    {
+      key: "Müqavilə başlama tarixi",
+      value: data?.contractStartDate
+        ? moment(data?.contractStartDate).locale("az").format("DD MMMM YYYY")
+        : "",
+    },
+    {
+      key: "Müqavilə bitmə tarixi",
+      value: data?.contractEndDate
+        ? moment(data?.contractEndDate).locale("az").format("DD MMMM YYYY")
+        : "",
+    },
   ];
 
   const updateItem = (modalType) => {
@@ -83,7 +86,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal }) => {
   };
   const deleteItem = () => {
     const pageNumber =
-      lastPage > 1 ? (students.length > 1 ? lastPage : lastPage - 1) : 1;
+      lastPage > 1 ? (tuitionFeeData.length > 1 ? lastPage : lastPage - 1) : 1;
     const _id = data._id;
     const searchQuery = tuitionFeeSearchValues;
     const status = "all";
@@ -122,7 +125,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal }) => {
       ) : (
         <div className="content-box">
           <div className="left">
-            <h3>Nurməmməd Nurməmmədli</h3>
+            <h3>{data.fullName}</h3>
             <ul>
               {listData.map((item, index) => (
                 <li key={index}>

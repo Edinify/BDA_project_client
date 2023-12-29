@@ -16,7 +16,7 @@ const Sidebar = () => {
 
   const closeSidebar = () => {
     dispatch({ type: SIDEBAR_ACTION_TYPE.SIDEBAR_OPEN_MODAL, payload: false });
-    dispatch(profileGetImage())
+    // dispatch(profileGetImage())
   };
   const openFullSidebar = () => {
     dispatch({ type: SIDEBAR_ACTION_TYPE.SIDEBAR_OPEN_MODAL, payload: true });

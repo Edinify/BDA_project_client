@@ -13,7 +13,7 @@ const refreshApi = axios.create({
 });
 
 const API = axios.create({
-  baseURL: `${apiRoot}/user/student`,
+  baseURL: `${apiRoot}/tution-fee`,
   withCredentials: true,
 });
 const REGISTERAPI = axios.create({
@@ -79,71 +79,17 @@ const toastError = (message) => {
   });
 };
 
-export const getActiveTuitionFeeAction = (payload) => async (dispatch) => {
-  dispatch(pageLoading(true));
-  try {
-    const { data } = await API.get(
-      `/active?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}`
-    );
-    if (payload.studentsCount > 0) {
-      dispatch({
-        type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_MORE_TUITION_FEE_ALL,
-        payload: data,
-      });
-    } else {
-      dispatch({
-        type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_MORE_TUITION_FEE_ALL_ADD,
-        payload: data,
-      });
-    }
-  } catch (error) {
-    const originalRequest = error.config;
-    console.log(error);
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token?.data?.accesstoken,
-          })
-        );
-        const { data } = await API.get(
-          `/active?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}`
-        );
-        if (payload.studentsCount > 0) {
-          dispatch({
-            type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_MORE_TUITION_FEE_ALL,
-            payload: data,
-          });
-        } else {
-          dispatch({
-            type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_MORE_TUITION_FEE_ALL_ADD,
-            payload: data,
-          });
-        }
-      } catch (error) {
-        console.log(error);
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
-        }
-      }
-    }
-  } finally {
-    dispatch(pageLoading(false));
-    dispatch(setLoadingAllTuitionFeeAction(false));
-  }
-};
+
 
 export const getTuitionFeePaginationAction =
-  (pageNumber, searchQuery, status = "all") =>
+  (pageNumber, searchQuery) =>
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}`
+        `/?page=${pageNumber}&searchQuery=${searchQuery}`
       );
+      console.log(data);
       dispatch({
         type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_LAST_PAGE,
         payload: pageNumber,
@@ -168,7 +114,7 @@ export const getTuitionFeePaginationAction =
           );
 
           const { data } = await API.get(
-            `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}`
+            `/?page=${pageNumber}&searchQuery=${searchQuery}`
           );
           dispatch({
             type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_LAST_PAGE,
@@ -190,154 +136,3 @@ export const getTuitionFeePaginationAction =
     }
   };
 
-export const createTuitionFeeAction = (tuitionFeeData) => async (dispatch) => {
-  dispatch(modalLoading(true));
-  try {
-    const { data } = await REGISTERAPI.post("/student/sign", tuitionFeeData);
-    dispatch(getTuitionFeePaginationAction(data.lastPage, "", "all"));
-    dispatch({
-      type: TUITION_FEE_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
-      payload: false,
-    });
-    toastSuccess("Yeni tələbə yaradıldı");
-  } catch (error) {
-    console.log(error);
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-
-        const { data } = await REGISTERAPI.post("/student/sign", tuitionFeeData);
-        dispatch(getTuitionFeePaginationAction(data.lastPage, "", "all"));
-        dispatch({
-          type: TUITION_FEE_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
-          payload: false,
-        });
-        toastSuccess("Yeni tələbə yaradıldı");
-      } catch (error) {
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
-        }
-      }
-    }
-    console.log(error);
-    if (error?.response?.data?.key === "email-already-exist") {
-      dispatch({
-        type: TUITION_FEE_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
-        payload: true,
-      });
-      toastError("Bu email ilə istifadəçi mövcuddur");
-    }
-  } finally {
-    dispatch(modalLoading(false));
-  }
-};
-
-export const updateTuitionFeeAction = (_id, tuitionFeeData) => async (dispatch) => {
-  dispatch(modalLoading(true));
-  try {
-    const { data } = await API.patch(`/${_id}`, tuitionFeeData);
-    dispatch({
-      type: TUITION_FEE_ALL_ACTIONS_TYPE.UPDATE_TUITION_FEE,
-      payload: data,
-    });
-    dispatch({
-      type: TUITION_FEE_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
-      payload: false,
-    });
-    toastSuccess("Tələbə yeniləndi");
-  } catch (error) {
-    const originalRequest = error.config;
-
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-        const { data } = await API.patch(`/${_id}`, tuitionFeeData);
-        dispatch({
-          type: TUITION_FEE_ALL_ACTIONS_TYPE.UPDATE_TUITION_FEE,
-          payload: data,
-        });
-        dispatch({
-          type: TUITION_FEE_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
-          payload: false,
-        });
-        toastSuccess("Tələbə yeniləndi");
-      } catch (error) {
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
-        }
-      }
-    }
-    console.log(error);
-    if (error?.response?.data?.key === "email-already-exist") {
-      // dispatch({type:TUITION_FEE_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,payload:true})
-      toastError("Bu email ilə istifadəçi mövcuddur");
-    }
-    if (error?.response?.data?.key === "has-current-week-lessons") {
-      toastError("Cari həftədə  dərsi olan tələbə yenilənə bilməz");
-    }
-  } finally {
-    dispatch(modalLoading(false));
-  }
-};
-
-export const deleteTuitionFeeAction =
-  ({ _id, pageNumber, searchQuery, status }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getTuitionFeePaginationAction(pageNumber, searchQuery, status));
-      dispatch({
-        type: TUITION_FEE_ALL_ACTIONS_TYPE.DELETE_TUITION_FEE,
-        payload: _id,
-      });
-      toastSuccess("Tələbə silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-
-          await API.delete(`/${_id}`);
-          dispatch(
-            getTuitionFeePaginationAction(pageNumber, searchQuery, status)
-          );
-          dispatch({
-            type: TUITION_FEE_ALL_ACTIONS_TYPE.DELETE_TUITION_FEE,
-            payload: _id,
-          });
-          toastSuccess("Tələbə silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
-        }
-      }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan tələbə silinə bilməz");
-      }
-      console.log(error);
-      toastError(error?.response?.data.message);
-    }
-  };

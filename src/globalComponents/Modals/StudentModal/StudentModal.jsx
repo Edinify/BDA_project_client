@@ -6,13 +6,10 @@ import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
 import { Box } from "@mui/material";
 import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
 import { STUDENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
-import Status from "./components/Buttons/Status";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
 import WhereComing from "./components/SelectCollection/WhereComing";
-import PaymentType from "./components/SelectCollection/PaymentType";
 import CoursesList from "./components/SelectCollection/CoursesList/CoursesList";
-import DiscountReason from "./components/SelectCollection/DiscountReason";
 import GroupList from "./components/Groups/GroupList";
 
 export const StudentModal = () => {
@@ -20,14 +17,7 @@ export const StudentModal = () => {
   const { studentsModalData: modalData } = useSelector(
     (state) => state.studentsModal
   );
-  const inputNameArr1 = [
-    "fin",
-    "seria",
-    "birthday",
-    "phone",
-    "contractStartDate",
-    "contractEndDate",
-  ];
+  const inputNameArr1 = ["fin", "seria", "birthday", "phone"];
 
   // formik
   const formik = useFormik({
@@ -66,6 +56,7 @@ export const StudentModal = () => {
     });
   };
 
+  console.log(modalData.groups);
   return (
     <div className="create-update-modal-con student-modal">
       <div className="create-update-modal">
@@ -104,50 +95,10 @@ export const StudentModal = () => {
                 />
               ))}
             </div>
-
-            <InputField
-              inputName={"degree"}
-              formik={formik}
-              setInputValue={setInputValue}
-              modalData={modalData}
-              updateModalState={updateModalState}
-            />
             <WhereComing
               modalData={modalData}
               updateModalState={updateModalState}
               formik={formik}
-            />
-            <div className="input-couples">
-              <DiscountReason
-                modalData={modalData}
-                updateModalState={updateModalState}
-                formik={formik}
-              />
-              <InputField
-                inputName={"discount"}
-                formik={formik}
-                modalData={modalData}
-                updateModalState={updateModalState}
-              />
-            </div>
-            <div className="input-couples">
-              {/* <PaymentType
-                modalData={modalData}
-                updateModalState={updateModalState}
-                formik={formik}
-              /> */}
-              <InputField
-                inputName={"amount"}
-                formik={formik}
-                modalData={modalData}
-                updateModalState={updateModalState}
-              />
-            </div>
-            <InputField
-              inputName={"totalAmount"}
-              formik={formik}
-              modalData={modalData}
-              updateModalState={updateModalState}
             />
 
             <CoursesList
@@ -155,7 +106,7 @@ export const StudentModal = () => {
               updateModalState={updateModalState}
               formik={formik}
             />
-             <GroupList
+            <GroupList
               formik={formik}
               setInputValue={setInputValue}
               updateModalState={updateModalState}
@@ -164,21 +115,12 @@ export const StudentModal = () => {
           </div>
         </Box>
 
-        {modalData?._id ? (
-          <SubmitBtn
-            formik={formik}
-            modalData={modalData}
-            closeModal={closeModal}
-            funcType="update"
-          />
-        ) : (
-          <SubmitBtn
-            formik={formik}
-            modalData={modalData}
-            closeModal={closeModal}
-            funcType="create"
-          />
-        )}
+        <SubmitBtn
+          formik={formik}
+          modalData={modalData}
+          closeModal={closeModal}
+          funcType={modalData?._id ? "update" : "create"}
+        />
 
         {modalData?._id && (
           <div className="joined-time">

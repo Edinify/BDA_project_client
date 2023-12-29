@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import DropdownIcon from "../../../../components/DropdownIcon/DropdownIcon";
-import { useCustomHook } from "../../../../../GlobalFunctions/globalFunctions";
 
 const PaymentType = ({ formik, data, addPaymentType }) => {
-  const { paymentTypeList: dataList } = useCustomHook();
-  const inputValue = dataList.find((item) => item.key === data.paymentType)?.name || "";
+  const inputValue = data.paymentType ? `${data.paymentType} hissəli` : ''
   const [openDropdown, setOpenDropdown] = useState(false);
   const addData = (item) => {
     addPaymentType(item);
@@ -47,9 +45,9 @@ const PaymentType = ({ formik, data, addPaymentType }) => {
               openDropdown ? "active" : ""
             }`}
           >
-            {dataList.map((item) => (
-              <li key={item.key} onClick={() => addData(item.key)}>
-                <h4>{item.name}</h4>
+            {data.group.course.payments.map((item) => (
+              <li key={item.paymentType} onClick={() => addData(item)}>
+                <h4>{item.paymentType} hissəli, ödəniş: {item.payment}</h4>
               </li>
             ))}
           </ul>

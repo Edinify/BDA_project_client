@@ -6,25 +6,26 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 
 const TuitionFeeData = ({ pageNum, getPageNumber }) => {
-  const { students, totalPages } = useSelector(
+  const { tuitionFeeData, totalPages } = useSelector(
     (state) => state.tuitionFeePagination
   );
   const { loading } = useSelector((state) => state.tuitionFeePagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const tableHead = [
-    "Qrup Nömrəsi",
-    "İnstruktor",
-    "Status",
-    "Müqavilə növü",
-    "Məbləğ",
-    "Endirim %",
-    "Yekun Məbləğ",
-    "Ödənilmiş məbləğ",
-    "Qalıq",
     "Tələbənin adı",
     "Fin kodu",
+    "Seriya",
     "Nömrəsi",
-    "Dərs baş. tarixi",
+    "Status",
+
+    "Qruplar",
+    "Məbləğ",
+    "Yekun Məbləğ",
+    "Ödənişlər",
+    "Endirim %",
+    "Endirim növü",
+    "Müqavilə başlama tarixi",
+    "Müqavilə bitmə tarixi",
     "",
   ];
 
@@ -36,19 +37,20 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
     }
   }, [openMoreModal]);
 
+  console.log(tuitionFeeData);
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
         <>
-          {openMoreModal && (
+          {/* {openMoreModal && (
             <MoreModal
-              data={students}
+              data={tuitionFeeData}
               setOpenMoreModal={setOpenMoreModal}
               type="student"
             />
-          )}
+          )} */}
           <div className="table-con">
             <table className="details-table  student-table">
               <thead>
@@ -59,10 +61,10 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
                 </tr>
               </thead>
               <tbody>
-                {students?.map((student, i) => (
+                {tuitionFeeData?.map((data, i) => (
                   <TuitionFeeCard
                     key={i}
-                    data={student}
+                    data={data}
                     mode="desktop"
                     setOpenMoreModal={setOpenMoreModal}
                     cellNumber={i + 1 + (pageNum - 1) * 10}
@@ -73,10 +75,10 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
           </div>
 
           <div className="details-list-tablet with-more">
-            {students?.map((student, i) => (
+            {tuitionFeeData?.map((data, i) => (
               <TuitionFeeCard
                 key={i}
-                data={student}
+                data={data}
                 mode="tablet"
                 setOpenMoreModal={setOpenMoreModal}
                 cellNumber={i + 1 + (pageNum - 1) * 10}

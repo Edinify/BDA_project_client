@@ -14,11 +14,8 @@ const StudentsData = ({ studentPageNum, getPageNumber }) => {
   const tableHead = [
     "Tələbə adı",
     "Ixtisas",
-    "Qrup",
     "Mobil nömrə",
-    "Təhsil dərəcəsi",
-    "Ödəniş",
-    "Yekun ödəniş",
+    "Qrup",
     "",
     ""
   ];

@@ -196,7 +196,7 @@ export const createConsultationAction =
       const { data } = await API.post("/", consultationData);
       dispatch(getConsultationPaginationAction(data.lastPage, "", 'appointed'));
       dispatch({
-        type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_MODAL_LOADING,
+        type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_OPEN_MODAL,
         payload: false,
       });
       toastSuccess("Yeni konsultasiya yaradıldı");

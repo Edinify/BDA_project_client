@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { TextField } from "@mui/material";
-import { useCustomHook } from "../../../../GlobalFunctions/globalFunctions";
-import DropdownIcon from "../../../components/DropdownIcon/DropdownIcon";
+import { useCustomHook } from "../../../../../../GlobalFunctions/globalFunctions";
+import DropdownIcon from "../../../../../components/DropdownIcon/DropdownIcon";
 
-const DiscountReason = ({ formik, modalData, updateModalState }) => {
+const DiscountReason = ({ formik, data, addGroupData }) => {
   const { discountReasonList: dataList } = useCustomHook();
-  const inputValue = dataList.find((item) => item.key === modalData.discountReason)?.name || ""
+  const inputValue = dataList.find((item) => item.key === data.discountReason)?.name || ""
   const [openDropdown, setOpenDropdown] = useState(false);
   const addData = (item) => {
-    updateModalState("discountReason", item)
+    addGroupData("discountReason", item)
     setOpenDropdown(false)
   };
   return (

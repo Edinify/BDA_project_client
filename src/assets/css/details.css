@@ -235,6 +235,9 @@
     font-weight: 700;
     text-transform: capitalize;
   }
+  .details-list-tablet .content-box .left .groups-list h2 {
+    font-size: 14px;
+  }
   .details-list-tablet.course-list-mobile .content-box .left h3 {
     font-weight: 600;
   }
@@ -245,6 +248,13 @@
     font-weight: 500;
     margin: 4px 0;
     white-space: nowrap;
+  }
+  .details-list-tablet .content-box .left .groups-list li {
+    flex-direction: column;
+  }
+  .details-list-tablet .content-box .left .groups-list li span {
+    color: var(--neutrals-900);
+    font-weight: 700;
   }
   .details-list-tablet .content-box .left ul li p {
     margin-left: 8px;

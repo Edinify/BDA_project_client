@@ -19,12 +19,13 @@ export const tuitionFeeDataPaginationReducer = (state = initialState, action) =>
     case TUITION_FEE_ALL_ACTIONS_TYPE.GET_MORE_TUITION_FEE_ALL:
       return {
         ...state,
-        tuitionFeeDataByMore: [...state.tuitionFeeDataByMore, ...action.payload?.tuitionFeeData],
+        tuitionFeeDataByMore: [...state.tuitionFeeDataByMore, ...action.payload?.tutionFees],
       };
     case TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_PAGINATION:
       return {
         ...state,
-        ...action.payload,
+        tuitionFeeData: action.payload.tutionFees,
+        totalPages: action.payload.totalPages,
       };
     case TUITION_FEE_ALL_ACTIONS_TYPE.TUITION_FEE_LOADING:
       return {

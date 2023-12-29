@@ -20,23 +20,10 @@ const StudentCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           .join(", ")
       : "boş";
   const listData = [
-    { key: "Ixtisas", value: courses , },
-    { key: "Qrup", value: '' , },
+    { key: "Ixtisas", value: courses },
     {
       key: "Mobil nömrə",
       value: data.phone ? data.phone : "boş",
-    },
-    {
-      key: "Təhsil dərəcəsi",
-      value: data.degree ? data.degree : "boş",
-    },
-    {
-      key: "Ödəniş",
-      value: data.amount ? data.amount : "0",
-    },
-    {
-      key: "Yekun ödəniş",
-      value: data.totalAmount ? data.totalAmount : "0",
     },
   ];
 
@@ -62,7 +49,6 @@ const StudentCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
     setOpenMoreModal(true);
   };
 
-
   return (
     <>
       {mode === "desktop" ? (
@@ -82,31 +68,17 @@ const StudentCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">''</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td>
-            <div className="td-con">
               <div className="table-scroll-text">{data.phone}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.degree}</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td>
-            <div className="td-con">
-              <div className="table-scroll-text">{data.amount}</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td>
-            <div className="td-con">
-              <div className="table-scroll-text">{data.totalAmount}</div>
+              <div className="table-scroll-text">{data.groups.map((item) => (
+                <p  key={item.group._id}>
+                {item.group.name} <br />
+                </p>
+              ))}</div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -133,6 +105,20 @@ const StudentCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
                 </li>
               ))}
             </ul>
+            <div className="groups-list">
+              <h2>Qruplar</h2>
+              <ul>
+                {data.groups.map((groupsData) => (
+                  <li key={groupsData.group._id}>
+                    <span>
+                    Qrup adı: {groupsData.group.name}
+                    </span> 
+                    Qrup ixtisası: {groupsData.group.course.name} <br />
+                    Ümumi ödəniş: {groupsData.totalAmount} <br />
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
           <div className="right">
             <UpdateDeleteModal

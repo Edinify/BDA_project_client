@@ -10,6 +10,10 @@ const StudentsPage = () => {
   const { lastPage } = useSelector((state) => state.studentsPagination);
   const { studentSearchValues } = useSelector((state) => state.searchValues);
   const { studentStatus } = useSelector((state) => state.studentStatus);
+  const { loading, loadingAll, groupsByMore } = useSelector(
+    (state) => state.groupsPagination
+  );
+  const { allCourses: dataList } = useSelector((state) => state.allCourses);
 
   const getPageNumber = (pageNumber) => {
     if (studentSearchValues) {
