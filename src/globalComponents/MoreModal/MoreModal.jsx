@@ -12,10 +12,12 @@ import "moment/locale/az";
 import TeacherMoreModal from "./components/TeacherMoreModal/TeacherMoreModal";
 import StudentMoreModal from "./components/StudentMoreModal/StudentMoreModal";
 import ConsultationMoreModal from "./components/ConsultationMoreModal/ConsultationMoreModal";
+import TuitionFeeMoreModal from "./components/TuitionFeeMoreModal/TuitionFeeMoreModal";
 const MoreModal = ({ setOpenMoreModal, type }) => {
   const dispatch = useDispatch();
   const { teachersModalData } = useSelector((state) => state.teachersModal);
   const { studentsModalData } = useSelector((state) => state.studentsModal);
+  const { tuitionFeeModalData } = useSelector((state) => state.tuitionFeeModal);
   const { consultationModalData } = useSelector(
     (state) => state.consultationModal
   );
@@ -58,15 +60,20 @@ const MoreModal = ({ setOpenMoreModal, type }) => {
     <div className="more-modal">
       <div className="more-modal-con">
         <div className="more-modal-header">
-          {type === "teacher" || type === "student" || type === "consultation" ? (
+          {type === "teacher" ||
+          type === "student" ||
+          type === "consultation" ||
+          type === "tuitionFee" ? (
             <h2>Şəxsi məlumatlar</h2>
           ) : (
             ""
           )}
           <div className="more-modal-header-icons">
-            <div className="header-icon-edit">
-              <EditIcon onClick={() => openUpdateModal()} />
-            </div>
+            {type !== "tuitionFee" && (
+              <div className="header-icon-edit">
+                <EditIcon onClick={() => openUpdateModal()} />
+              </div>
+            )}
             <div className="header-icon-close">
               <CloseIcon onClick={() => setOpenMoreModal(false)} />
             </div>
@@ -76,11 +83,16 @@ const MoreModal = ({ setOpenMoreModal, type }) => {
         {type === "teacher" && (
           <TeacherMoreModal teachersModalData={teachersModalData} />
         )}
+        {type === "tuitionFee" && (
+          <TuitionFeeMoreModal tuitionFeeModalData={tuitionFeeModalData} />
+        )}
         {type === "student" && (
           <StudentMoreModal studentsModalData={studentsModalData} />
         )}
-          {type === "consultation" && (
-          <ConsultationMoreModal consultationModalData={consultationModalData} />
+        {type === "consultation" && (
+          <ConsultationMoreModal
+            consultationModalData={consultationModalData}
+          />
         )}
       </div>
     </div>

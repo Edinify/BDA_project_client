@@ -138,25 +138,6 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td>
-            <div className="td-con">
-              <div className="table-scroll-text no-wrap">
-                {data.payments.map((item, index) => (
-                  <p key={index}>
-                    Məbləğ: {item.payment} <br /> 
-                    Tarix:{" "}
-                    {item.paymentDate
-                      ? moment(item.paymentDate)
-                          .locale("az")
-                          .format("DD MMMM YYYY")
-                      : ""}{" "}
-                    <br /> <br />
-                  </p>
-                ))}
-              </div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
           <td className="overflow-hiiden">
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
@@ -181,9 +162,9 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          {/* <td className="more" onClick={() => openMoreModal()}>
+          <td className="more" onClick={() => openMoreModal()}>
             Ətraflı
-          </td> */}
+          </td>
           {/* <td>
             <UpdateDeleteModal
               updateItem={updateItem}
@@ -205,32 +186,16 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
               ))}
             </ul>
 
-            <div className="groups-list">
-              <h2>Ödənişlər</h2>
-              <ul>
-                {data.payments.map((item, index) => (
-                  <li key={index}>
-                    Məbləğ: {item.payment} <br />
-                    Tarix:{" "}
-                    {item.paymentDate
-                      ? moment(item.paymentDate)
-                          .locale("az")
-                          .format("DD MMMM YYYY")
-                      : ""}{" "}
-                    <br /> 
-                  </li> 
-                ))}
-              </ul>
-            </div>
+         
           </div>
-          {/* <div className="right">
-            <UpdateDeleteModal
+          <div className="right">
+            {/* <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
-            />
+            /> */}
             <span onClick={() => openMoreModal()}>Ətraflı</span>
-          </div> */}
+          </div>
         </div>
       )}
     </>

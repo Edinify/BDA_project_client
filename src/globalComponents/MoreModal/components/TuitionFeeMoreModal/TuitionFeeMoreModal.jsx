@@ -3,81 +3,55 @@ import moment from "moment";
 import "moment/locale/az";
 import { useCustomHook } from "../../../GlobalFunctions/globalFunctions";
 
-const TuitionFeeMoreModal = ({ consultationModalData }) => {
-  const {
-    cancelReasonList,
-    knowledgeList,
-    constStatusList,
-    whereComingList,
-    personaList,
-  } = useCustomHook();
+const TuitionFeeMoreModal = ({ tuitionFeeModalData }) => {
+  const { discountReasonList } = useCustomHook();
   const dataList1 = [
-    { title: "Tələbə", value: consultationModalData?.studentName },
-    { title: "Mobil nömrə", value: consultationModalData?.studentPhone },
+    { title: "Tələbə", value: tuitionFeeModalData?.fullName },
+    { title: "Mobil nömrə", value: tuitionFeeModalData?.phone },
     {
-      title: "Persona",
-      value:
-        personaList.find((item) => item?.key === consultationModalData?.persona)
-          ?.name || "",
-    },
-    {
-      title: "Bizi haradan eşitdiniz?",
-      value:
-        whereComingList.find(
-          (item) => item?.key === consultationModalData?.whereComing
-        )?.name || "",
+      title: "Status",
+      value: tuitionFeeModalData.status ? "Davam edir" : "Məzun",
     },
   ];
   const dataList2 = [
-    { title: "Təlimçi", value: consultationModalData?.teacher.fullName },
+    {
+      title: "Qrup",
+      value: `${tuitionFeeModalData.group.name} - ${tuitionFeeModalData.group.course.name}`,
+    },
 
-    { title: "İxtisas", value: consultationModalData?.course.name },
+    { title: "Məbləğ", value: tuitionFeeModalData.amount },
+    { title: "Yekun Məbləğ", value: tuitionFeeModalData.totalAmount },
     {
-      title: "Sahə biliyi",
+      title: "Ödəmə növü:",
+      value: `${tuitionFeeModalData.paymentType} hissəli`,
+    },
+    { title: "Endirim %", value: tuitionFeeModalData.discount },
+    {
+      title: "Endirim növü",
       value:
-        knowledgeList.find(
-          (item) => item?.key === consultationModalData?.knowledge
+        discountReasonList.find(
+          (item) => item.title === tuitionFeeModalData?.discountReason
         )?.name || "",
     },
     {
-      title: "Əlaqə tarixi",
-      value: consultationModalData?.contactDate
-        ? moment(consultationModalData?.contactDate)
+      title: "Müqavilə başlama tarixi",
+      value: tuitionFeeModalData?.contractStartDate
+        ? moment(tuitionFeeModalData?.contractStartDate)
             .locale("az")
             .format("DD MMMM YYYY")
         : "",
     },
     {
-      title: "Konsultasiya tarixi",
-      value: consultationModalData?.constDate
-        ? moment(consultationModalData?.constDate)
+      title: "Müqavilə bitmə tarixi",
+      value: tuitionFeeModalData?.contractEndDate
+        ? moment(tuitionFeeModalData?.contractEndDate)
             .locale("az")
             .format("DD MMMM YYYY")
         : "",
-    },
-    {
-      title: "Konsultasiya saatı",
-      value: consultationModalData?.constTime,
-    },
-    {
-      title: "Ləğv səbəbi",
-      value:
-        cancelReasonList.find(
-          (item) => item?.key === consultationModalData?.cancelReason
-        )?.name || "",
-    },
-    {
-      title: "Əlavə məlumat",
-      value: consultationModalData?.addInfo,
-    },
-    {
-      title: "Status",
-      value:
-        constStatusList.find(
-          (item) => item?.key === consultationModalData?.status
-        )?.name || "",
     },
   ];
+
+  console.log(tuitionFeeModalData);
   return (
     <>
       <div className="more-modal-header-inform">
@@ -88,11 +62,27 @@ const TuitionFeeMoreModal = ({ consultationModalData }) => {
         ))}
       </div>
       <div className="more-modal-work-inform">
-        <h2>İş məlumatları</h2>
+        <h2>Ödəniş məlumatları</h2>
         <div className="work-inform-con">
           {dataList2.map((item, index) => (
             <h3 key={index}>
               {item?.title}: <span>{item?.value}</span>
+            </h3>
+          ))}
+        </div>
+      </div>
+
+      <div className="more-modal-work-inform">
+        <h2>Ödənişlər</h2>
+        <div className="work-inform-con">
+          {tuitionFeeModalData.payments.map((item, index) => (
+            <h3 key={index}>
+              {/* {item?.title}: <span>{item?.value}</span> */}
+              Məbləğ: {item.payment} <br />
+              Tarix:{" "}
+              {item.paymentDate
+                ? moment(item.paymentDate).locale("az").format("DD MMMM YYYY")
+                : ""}{" "}
             </h3>
           ))}
         </div>

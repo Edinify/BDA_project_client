@@ -21,10 +21,9 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
     "Ödəmə növü",
     "Endirim %",
     "Endirim növü",
-    "Ödənişlər",
     "Müqavilə başlama tarixi",
     "Müqavilə bitmə tarixi",
-    // "",
+    "",
   ];
 
   useEffect(() => {
@@ -41,13 +40,13 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
         <Loading />
       ) : (
         <>
-          {/* {openMoreModal && (
+          {openMoreModal && (
             <MoreModal
               data={tuitionFeeData}
               setOpenMoreModal={setOpenMoreModal}
               type="tuitionFee"
             />
-          )} */}
+          )}
           <div className="table-con">
             <table className="details-table  student-table">
               <thead>
