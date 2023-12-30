@@ -19,6 +19,8 @@ export function useCustomHook() {
   endWeek.setDate(startWeek.getDate() + 6);
   endWeek.setHours(0, 0, 0, 0);
   const weeksArr = ["", "B.e", "Ç.a", "Ç.", "C.a", "C.", "Ş.", "B."];
+  const weeksArrFullName = ["Bazar", "Bazar ertəsi", "Çərşənbə axşamı", "Çərşənbə", "Cümə axşamı", "Cümə", "Şənbə", ];
+
   const lessonHours = [
     {
       first_time: "08:30",
@@ -52,6 +54,11 @@ export function useCustomHook() {
       first_time: "19:30",
       second_time: "20:00",
     },
+  ];
+  const lessonStatusList = [
+    { name: "Baxılmayıb", key: "unviewed" },
+    { name: "Təsdiqləndi", key: "confirmed" },
+    { name: "Ləğv edildi", key: "cancelled" },
   ];
   const fineTypeList = [
     { name: "Şifahi xəbərdarlıq", key: "verbalWarning" },
@@ -252,6 +259,7 @@ export function useCustomHook() {
     endWeek,
     lessonHours,
     weeksArr,
+    weeksArrFullName,
     fineTypeList,
     tuitionFeeHeadList,
     whereComingList,
@@ -263,6 +271,7 @@ export function useCustomHook() {
     knowledgeList,
     cancelReasonList,
     constStatusList,
+    lessonStatusList,
     getWeeksBetweenDates,
     changeMainPageType,
     createLessonModal,

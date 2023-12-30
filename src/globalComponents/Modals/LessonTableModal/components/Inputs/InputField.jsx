@@ -3,7 +3,8 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { ReactComponent as Eye } from "../../../../../assets/icons/eye.svg";
 import { ReactComponent as EyeSlash } from "../../../../../assets/icons/eye-slash.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useCustomHook } from "../../../../GlobalFunctions/globalFunctions";
 
 export default function InputField({
   formik,
@@ -12,69 +13,64 @@ export default function InputField({
   updateModalState,
 }) {
   const dispatch = useDispatch();
+  const {weeksArrFullName} = useCustomHook()
+  const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [shrink, setShrink] = useState(false);
-  const [viewPass, setViewPass] = useState(true);
   const inputData = [
     {
-      inputName: "fullName",
-      label: "Ad soyad",
+      inputName: "group",
+      label: "Qrup",
       type: "text",
       marginTop: "0",
       marginBottom: "0",
-      inputValue: modalData[inputName] || "",
+      inputValue: selectedGroup.name,
     },
     {
-      inputName: "birthday",
-      label: "Doğum tarixi",
+      inputName: "day",
+      label: "Dərs günü",
+      type: "text",
+      type: "text",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue:  inputName === "day"
+      ? weeksArrFullName[moment(new Date(modalData.date)).day()]
+      : "",
+    },
+    {
+      inputName: "date",
+      label: "Dərs tarixi",
       type: "date",
       marginTop: "24px",
       marginBottom: "0",
       inputValue:
-        modalData[inputName] && inputName === "birthday"
+        modalData[inputName] && inputName === "date"
           ? moment(modalData[inputName]).format("YYYY-MM-DD")
           : "",
       className: "birthday-input",
     },
     {
-      inputName: "phone",
-      label: "Telefon nömrəsi",
-      type: "tel",
+      inputName: "time",
+      label: "Dərs saat",
+      type: "time",
       marginTop: "24px",
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
     },
     {
-      inputName: "position",
-      label: "Pozisiya",
+      inputName: "changes",
+      label: "Dəyişikliklər",
       type: "text",
       marginTop: "24px",
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
     },
     {
-      inputName: "profiles",
-      label: "Profils",
+      inputName: "topic",
+      label: "Dəyişikliklər",
       type: "text",
       marginTop: "24px",
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "email",
-      label: "Email",
-      type: "email",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "password",
-      label: !modalData._id ? "Şifrə" : "Şifrəni dəyiş",
-      type: viewPass ? "password" : "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      paddingRight: "50px",
-      className: "password-input",
     },
   ];
 
@@ -98,7 +94,7 @@ export default function InputField({
         }}
         InputLabelProps={{
           shrink:
-            inputName === "birthday"
+           ( inputName === "date" || inputName === "time")
               ? true
               : inputData.find((item) => item.inputName === inputName)
                   .inputValue
@@ -119,6 +115,7 @@ export default function InputField({
         value={
           inputData.find((item) => item.inputName === inputName)?.inputValue
         }
+        disabled={inputName === "group"}
         onWheel={(e) => e.target.blur()}
         onChange={(e) => updateModalState(inputName, e.target.value)}
         onBlur={(e) => {
@@ -128,25 +125,12 @@ export default function InputField({
         onFocus={() => setShrink(true)}
       />
 
-      {inputName === "password" && modalData?._id
-        ? formik.errors[inputName] &&
-          formik.errors[inputName] !== "Bu xana tələb olunur." &&
-          formik.touched[inputName] && (
-            <small className="validation-err-message">
-              {formik.errors[inputName]}
-            </small>
-          )
-        : formik.errors[inputName] &&
+      { formik.errors[inputName] &&
           formik.touched[inputName] && (
             <small className="validation-err-message">
               {formik.errors[inputName]}
             </small>
           )}
-      {inputName === "password" && (
-        <div className="modal-view-icon" onClick={() => setViewPass(!viewPass)}>
-          {viewPass ? <EyeSlash /> : <Eye />}
-        </div>
-      )}
     </div>
   );
 }

@@ -3,28 +3,28 @@ import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as ArrowIcon } from "../../../assets/icons/arrow-down-dropdown.svg";
 import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg";
 import {
-  SYLLABUS_ALL_ACTIONS_TYPE,
+  DROPDOWN_GROUP_ACTIONS_TYPE,
 } from "../../../redux/actions-type";
-import { getAllCoursesAction } from "../../../redux/actions/coursesActions";
-import { getSyllabusPaginationAction } from "../../../redux/actions/syllabusActions";
+import { getGroupsAction } from "../../../redux/actions/groupsActions";
+import { getLessonTablePaginationAction } from "../../../redux/actions/lessonTableActions";
 
-export const CoursesDropdown = ({ deviceType = "" }) => {
+export const GroupsDropdown = ({ deviceType = "" }) => {
   const dispatch = useDispatch();
-  const { allCourses: dataList } = useSelector((state) => state.allCourses);
-  const { selectedCourse } = useSelector((state) => state.syllabusCourse);
+  const { groupData: dataList } = useSelector((state) => state.groupsPagination);
+  const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const getCourse = (course) => {
+  const getCourse = (group) => {
     setDropdownOpen(false);
     dispatch({
-      type: SYLLABUS_ALL_ACTIONS_TYPE.SELECT_COURSE_FOR_SYLLABUS,
-      payload: course,
+      type: DROPDOWN_GROUP_ACTIONS_TYPE.SELECT_GROUP,
+      payload: group,
     });
-    dispatch(getSyllabusPaginationAction(1, "", course._id));
+    dispatch(getLessonTablePaginationAction(1, "", group._id));
   };
 
   useEffect(() => {
-    dispatch(getAllCoursesAction());
+    dispatch(getGroupsAction());
   }, []);
 
   return (
@@ -37,7 +37,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
         className="dropdown-head"
         onClick={() => setDropdownOpen(!dropdownOpen)}
       >
-        <h2>{selectedCourse ? selectedCourse.name : "Ixtisaslar"}</h2>
+        <h2>{selectedGroup ? selectedGroup.name : "Qruplar"}</h2>
         <div className="arrow-icon">
           <ArrowIcon />
         </div>
@@ -47,7 +47,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
         <ul>
           {dataList.map((item) => (
             <li key={item._id} onClick={() => getCourse(item)}>
-              {selectedCourse === item._id && <CheckIcon />}
+              {selectedGroup === item._id && <CheckIcon />}
               {item.name}
             </li>
           ))}

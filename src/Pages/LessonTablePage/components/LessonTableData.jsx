@@ -10,11 +10,14 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
     (state) => state.lessonTablePagination
   );
   const tableHead = [
-    "Ad soyad",
-    "Email",
-    "Mobil nömrə",
-    "Pozisiya",
-    "Profil",
+    "Qrup",
+    "İxtisas",
+    "Mövzu",
+    "Müəllim",
+    "Tələbələr",
+    "Dərs günü",
+    "Dərs saatı",
+    "Status",
     "",
   ];
 

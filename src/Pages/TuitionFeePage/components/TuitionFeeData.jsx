@@ -45,7 +45,7 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
             <MoreModal
               data={tuitionFeeData}
               setOpenMoreModal={setOpenMoreModal}
-              type="student"
+              type="tuitionFee"
             />
           )} */}
           <div className="table-con">

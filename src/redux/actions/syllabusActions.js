@@ -77,9 +77,9 @@ const modalLoading = (loadingValue) => ({
 });
 
 
-export const getSyllabusAction = (courseId) => async (dispatch) => {
+export const getAllSyllabusAction = (courseId) => async (dispatch) => {
   try {
-    const { data } = await API.get("/all");
+    const { data } = await API.get(`/all?courseId=${courseId}`);
     dispatch({ type: SYLLABUS_ALL_ACTIONS_TYPE.GET_ACTIVE_SYLLABUS, payload: data });
   } catch (error) {
     console.log(error);
@@ -94,7 +94,7 @@ export const getSyllabusAction = (courseId) => async (dispatch) => {
             AccessToken: token.data.accesstoken,
           })
         );
-        const { data } = await API.get("/all");
+        const { data } = await API.get(`/all?courseId=${courseId}`);
         dispatch({ type: SYLLABUS_ALL_ACTIONS_TYPE.GET_ACTIVE_SYLLABUS, payload: data });
       } catch (error) {
         if (error?.response?.status === 401) {

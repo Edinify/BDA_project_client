@@ -13,6 +13,7 @@ import CareerModal from "./globalComponents/Modals/CareerModal/CareerModal";
 import SyllabusModal from "./globalComponents/Modals/SyllabusModal/SyllabusModal";
 import ConsultationModal from "./globalComponents/Modals/ConsultationModal/ConsultationModal";
 import LessonTableModal from "./globalComponents/Modals/LessonTableModal/LessonTableModal";
+import LessonModal from "./globalComponents/Modals/LessonModal/LessonModal";
 
 //
 function App() {
@@ -68,6 +69,7 @@ function App() {
       {careerOpenModal && <CareerModal />}
       {lessonTableOpenModal && <LessonTableModal />}
       {groupOpenModal && <GroupModal />}
+      {/* <LessonModal /> */}
       <ToastContainer />
     </div>
   );

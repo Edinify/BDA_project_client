@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { StatusDropdown } from "./StatusDropdown/StatusDropdown";
 import Search from "./Search/Search";
 import { CoursesDropdown } from "./CoursesDropdown/CoursesDropdown";
+import { GroupsDropdown } from "./GroupsDropdown/GroupsDropdown";
 
 const GlobalHead = ({
   searchData,
@@ -39,6 +40,9 @@ const GlobalHead = ({
               {statusType === "syllabus" && (
                 <CoursesDropdown deviceType="desktop" />
               )}
+              {statusType === "lesson-table" && (
+                <GroupsDropdown deviceType="desktop" />
+              )}
             </div>
 
             {addBtn && (
@@ -55,6 +59,9 @@ const GlobalHead = ({
             <StatusDropdown statusType="student" deviceType="mobile" />
           )} */}
           {statusType === "syllabus" && <CoursesDropdown deviceType="mobile" />}
+          {statusType === "lesson-table" && (
+            <GroupsDropdown deviceType="mobile" />
+          )}
         </div>
       </div>
     </div>

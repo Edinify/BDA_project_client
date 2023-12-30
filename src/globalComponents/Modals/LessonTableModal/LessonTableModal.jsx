@@ -8,25 +8,21 @@ import { LESSON_TABLE_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
-import ProfileList from "./components/SelectCollection/Profiles/ProfileList";
-
+import Topic from "./components/SelectCollection/Topic";
+import Teacher from "./components/SelectCollection/Teacher";
+import Mentor from "./components/SelectCollection/Mentor";
+import StudentsList from "./components/SelectCollection/StudentList/StudentList";
 const LessonTableModal = () => {
   const dispatch = useDispatch();
   const { lessonTableModalData: modalData } = useSelector(
     (state) => state.lessonTableModal
   );
-  const inputNameArr1 = ["birthday", "phone", "email", "password"];
+  const inputNameArr1 = ["date", "time", "changes", "day"];
 
   // formik
   const formik = useFormik({
     initialValues: {
-      fullName: modalData.fullName ? modalData.fullName : "",
-      birthday: modalData?.birthday ? modalData?.birthday : "",
-      email: modalData.email ? modalData.email : "",
-      phone: modalData.phone ? modalData.phone : "",
-      position: modalData.position ? modalData.position : "",
-      profiles: modalData.profiles ? modalData.profiles : "",
-      password: modalData.password ? modalData.password : "",
+      group: modalData.group ? modalData.group : "",
     },
     validationSchema: ValidationSchema,
   });
@@ -41,7 +37,12 @@ const LessonTableModal = () => {
 
   const updateModalState = (keyName, value) => {
     if (keyName === "profiles") {
-      const formikValue = value.length > 0 ? (value?.find((item) => !item.power) ? "" : "true") : '' ;
+      const formikValue =
+        value.length > 0
+          ? value?.find((item) => !item.power)
+            ? ""
+            : "true"
+          : "";
       setInputValue("profiles", formikValue);
     } else {
       setInputValue(keyName, value);
@@ -61,11 +62,12 @@ const LessonTableModal = () => {
     });
   };
 
+  console.log(modalData);
   return (
     <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal">
         <div className="create-update-modal-head">
-          <h2>{modalData?._id ? "Əməkdaş yenilə" : "Əməkdaş yarat"}</h2>
+          <h2>{modalData?._id ? "Dərs yenilə" : "Dərs yarat"}</h2>
           <CloseBtn onClick={closeModal} />
         </div>
 
@@ -81,7 +83,7 @@ const LessonTableModal = () => {
         >
           <div className="create-update-modal-form">
             <InputField
-              inputName="fullName"
+              inputName="group"
               formik={formik}
               setInputValue={setInputValue}
               modalData={modalData}
@@ -98,17 +100,25 @@ const LessonTableModal = () => {
                 />
               ))}
             </div>
-            <InputField
-              inputName="position"
+
+            <Topic
               formik={formik}
-              setInputValue={setInputValue}
-              modalData={modalData}
               updateModalState={updateModalState}
+              modalData={modalData}
             />
-            <ProfileList
+            <Teacher
               formik={formik}
               updateModalState={updateModalState}
               modalData={modalData}
+            />
+            <Mentor
+              formik={formik}
+              updateModalState={updateModalState}
+              modalData={modalData}
+            />
+            <StudentsList
+              modalData={modalData}
+              updateModalState={updateModalState}
             />
           </div>
         </Box>

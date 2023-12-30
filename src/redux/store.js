@@ -47,6 +47,7 @@ import { syllabusCourseReducer } from "./reducers/syllabusCourseReducer";
 import { lessonTableModalReducer } from "./reducers/lessonTableModalReducer";
 import { lessonTablePaginationReducer } from "./reducers/lessonTablePaginationReducer";
 import { groupsPaginationReducer } from "./reducers/groupsPaginationReducer";
+import { dropdownGroupReducer } from "./reducers/dropdownGroupReducer";
 
 const initialState = {};
 const reducers = combineReducers({
@@ -93,6 +94,7 @@ const reducers = combineReducers({
   financeDateFilter: financeFilterReducer,
   studentStatus: studentStatusReducer,
   teacherStatus: teacherStatusReducer,
+  dropdownGroup: dropdownGroupReducer,
 });
 // test
 

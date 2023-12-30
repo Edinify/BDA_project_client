@@ -181,6 +181,9 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
               <div className="right-fade"></div>
             </div>
           </td>
+          {/* <td className="more" onClick={() => openMoreModal()}>
+            Ətraflı
+          </td> */}
           {/* <td>
             <UpdateDeleteModal
               updateItem={updateItem}

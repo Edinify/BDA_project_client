@@ -8,7 +8,7 @@ import { logoutAction } from "./auth";
 import { apiRoot } from "../../apiRoot";
 
 const API = axios.create({
-  baseURL: `${apiRoot}/user/worker`,
+  baseURL: `${apiRoot}/lesson`,
   withCredentials: true,
 });
 
@@ -77,13 +77,14 @@ const modalLoading = (loadingValue) => ({
 });
 
 export const getLessonTablePaginationAction =
-  (pageNumber, searchQuery) =>
-  async (dispatch) => {
+  (pageNumber, searchQuery, groupId) => async (dispatch) => {
     dispatch(pageLoading(true));
+    // console.log(pageNumber, searchQuery, groupId);
     try {
       const { data } = await API.get(
-        `/?page=${pageNumber}&searchQuery=${searchQuery}`
+        `/?page=${pageNumber}&searchQuery=${searchQuery}&groupId=${groupId}`
       );
+      // console.log(data);
       dispatch({
         type: LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_TABLE_LAST_PAGE,
         payload: pageNumber,
@@ -106,7 +107,7 @@ export const getLessonTablePaginationAction =
             })
           );
           const { data } = await API.get(
-            `/?page=${pageNumber}&searchQuery=${searchQuery}`
+            `/?page=${pageNumber}&searchQuery=${searchQuery}&groupId=${groupId}`
           );
 
           dispatch({
@@ -130,128 +131,136 @@ export const getLessonTablePaginationAction =
     }
   };
 
-export const createLessonTableAction = (lessonTableData) => async (dispatch) => {
-  dispatch(modalLoading(true));
-  try {
-    const { data } = await API.post("/create", lessonTableData);
-    dispatch(getLessonTablePaginationAction(data.lastPage, ""));
-    dispatch({
-      type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
-      payload: false,
-    });
-    toastSuccess("Yeni dərs yaradıldı");
-  } catch (error) {
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-        const { data } = await API.post("/create", lessonTableData);
-        dispatch(getLessonTablePaginationAction(data.lastPage, ""));
-        dispatch({
-          type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
-          payload: false,
-        });
-        toastSuccess("Yeni dərs yaradıldı");
-      } catch (error) {
-        console.log(error);
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
+export const createLessonTableAction =
+  (lessonTableData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.post("/create", lessonTableData);
+      dispatch(getLessonTablePaginationAction(data.lastPage, ""));
+      dispatch({
+        type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
+        payload: false,
+      });
+      toastSuccess("Yeni dərs yaradıldı");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.post("/create", lessonTableData);
+          dispatch(getLessonTablePaginationAction(data.lastPage, ""));
+          dispatch({
+            type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Yeni dərs yaradıldı");
+        } catch (error) {
+          console.log(error);
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
         }
       }
+      console.log(error);
+    } finally {
+      dispatch(modalLoading(false));
     }
-    console.log(error);
-  } finally {
-    dispatch(modalLoading(false));
-  }
-};
+  };
 
-export const updateLessonTableAction = (_id, lessonTableData) => async (dispatch) => {
-  dispatch(modalLoading(true));
-  try {
-    const { data } = await API.patch(`/${_id}`, lessonTableData);
-    dispatch({ type: LESSON_TABLE_ALL_ACTIONS_TYPE.UPDATE_LESSON_TABLE, payload: data });
-    dispatch({
-      type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
-      payload: false,
-    });
-    toastSuccess("Dərs yeniləndi");
-  } catch (error) {
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-        const { data } = await API.patch(`/${_id}`, lessonTableData);
-        dispatch({
-          type: LESSON_TABLE_ALL_ACTIONS_TYPE.UPDATE_LESSON_TABLE,
-          payload: data,
-        });
-        dispatch({
-          type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
-          payload: false,
-        });
-        toastSuccess("Dərs yeniləndi");
-      } catch (error) {
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
+export const updateLessonTableAction =
+  (_id, lessonTableData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(`/${_id}`, lessonTableData);
+      dispatch({
+        type: LESSON_TABLE_ALL_ACTIONS_TYPE.UPDATE_LESSON_TABLE,
+        payload: data,
+      });
+      dispatch({
+        type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
+        payload: false,
+      });
+      toastSuccess("Dərs yeniləndi");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, lessonTableData);
+          dispatch({
+            type: LESSON_TABLE_ALL_ACTIONS_TYPE.UPDATE_LESSON_TABLE,
+            payload: data,
+          });
+          dispatch({
+            type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Dərs yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
         }
       }
+    } finally {
+      dispatch(modalLoading(false));
     }
-  } finally {
-    dispatch(modalLoading(false));
-  }
-};
+  };
 
-export const deleteLessonTableAction = ({_id, pageNumber, searchQuery}) => async (dispatch) => {
-  try {
-    await API.delete(`/${_id}`);
-    dispatch(getLessonTablePaginationAction(pageNumber, searchQuery));
-    dispatch({ type: LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE, payload: _id });
-    toastSuccess("Dərs silindi");
-  } catch (error) {
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-        await API.delete(`/${_id}`);
-        dispatch(getLessonTablePaginationAction(pageNumber, searchQuery));
-        dispatch({
-          type: LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE,
-          payload: _id,
-        });
-        toastSuccess("Dərs silindi");
-      } catch (error) {
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
+export const deleteLessonTableAction =
+  ({ _id, pageNumber, searchQuery }) =>
+  async (dispatch) => {
+    try {
+      await API.delete(`/${_id}`);
+      dispatch(getLessonTablePaginationAction(pageNumber, searchQuery));
+      dispatch({
+        type: LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE,
+        payload: _id,
+      });
+      toastSuccess("Dərs silindi");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          await API.delete(`/${_id}`);
+          dispatch(getLessonTablePaginationAction(pageNumber, searchQuery));
+          dispatch({
+            type: LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE,
+            payload: _id,
+          });
+          toastSuccess("Dərs silindi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
         }
       }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan dərs silinə bilməz");
+      }
+      console.log(error);
+      toastError(error?.response?.data.message);
     }
-    if (error?.response?.data?.key === "has-current-week-lessons") {
-      toastError("Cari həftədə  dərsi olan dərs silinə bilməz");
-    }
-    console.log(error);
-    toastError(error?.response?.data.message);
-  }
-};
-
-
+  };

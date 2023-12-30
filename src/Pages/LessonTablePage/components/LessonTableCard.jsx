@@ -4,26 +4,46 @@ import { LESSON_TABLE_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
+import moment from "moment";
 const LessonTableCard = ({ data, mode, cellNumber }) => {
-  const { generalProfileList, generalProfilePowerList } = useCustomHook();
+  const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
-  const { lessonTableData, lastPage } = useSelector((state) => state.lessonTablePagination);
-  const { lessonTableSearchValues } = useSelector((state) => state.searchValues);
-  let profiles =
-    Array.isArray(data.profiles) && data.profiles.length > 0
-      ? data.profiles
+  const { lessonTableData, lastPage } = useSelector(
+    (state) => state.lessonTablePagination
+  );
+  const { lessonTableSearchValues } = useSelector(
+    (state) => state.searchValues
+  );
+  const lessonDay = data.date
+    ? `${moment(data.date).locale("az").format("DD MMMM YYYY")}, ${
+        weeksArrFullName[moment(new Date(data.date)).day()]
+      },`
+    : "";
+  let students =
+    Array.isArray(data.students) && data.students.length > 0
+      ? data.students
           .map((item) => {
-            return `${
-              generalProfileList.find((profile) => profile.key === item.profile)
-                .name
-            } - ${
-              generalProfilePowerList.find(
-                (profile) => profile.key === item.power
-              ).name
-            }`;
+            return `${item.student.fullName} `;
           })
           .join(", ")
       : "boş";
+
+  const listData = [
+    { key: "İxtisas", value: data.group.course.name },
+    { key: "Mövzu", value: `${data.topic.orderNumber}. ${data.topic.name}` },
+    { key: "Müəllim", value: data.teacher.fullName },
+    { key: "Tələbələr", value: students },
+    {
+      key: "Dərs günü",
+      value: lessonDay,
+    },
+    { key: "Dərs saatı", value: data.time },
+    {
+      key: "Status",
+      value:
+        lessonStatusList.find((item) => item.key === data.status).name || "",
+    },
+  ];
   const updateItem = (modalType) => {
     dispatch({
       type: LESSON_TABLE_MODAL_ACTION_TYPE.GET_LESSON_TABLE_MODAL,
@@ -48,31 +68,53 @@ const LessonTableCard = ({ data, mode, cellNumber }) => {
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>
-              <div className="table-scroll-text">{data.fullName}</div>
+              <div className="table-scroll-text">{data.group.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td className="email">
             <div className="td-con">
-              <div className="table-scroll-text">{data.email}</div>
+              <div className="table-scroll-text">{data.group.course.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone">{data.phone}</div>
+              <div className="table-scroll-text">{`${data.topic.orderNumber}. ${data.topic.name}`}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.position}</div>
+              <div className="table-scroll-text">{data.teacher.fullName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text profiles">{profiles}</div>
+              <div className="table-scroll-text">{students}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text profiles">{lessonDay}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data.time}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {lessonStatusList.find((item) => item.key === data.status)
+                  .name || ""}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -87,24 +129,14 @@ const LessonTableCard = ({ data, mode, cellNumber }) => {
       ) : (
         <div className="content-box">
           <div className="left">
-            <h3>{data.fullName}</h3>
+            <h3>{data.group.name}</h3>
             <ul>
-              <li>
-                <span>Email:</span>
-                <p>{data.email ? data.email : "boş"}</p>
-              </li>
-              <li>
-                <span>Telefon nömrəsi:</span>
-                <p>{data.phone ? data.phone : "boş"}</p>
-              </li>
-              <li>
-                <span>Pozisiya:</span>
-                <p>{data.position ? data.position : "boş"}</p>
-              </li>
-              <li>
-                <span>Profil:</span>
-                <p className="profiles">{profiles}</p>
-              </li>
+              {listData.map((item, index) => (
+                <li key={index}>
+                  <span className="type">{item.key}</span>
+                  <p>{item.value}</p>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="right">

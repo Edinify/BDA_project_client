@@ -17,7 +17,8 @@ export const lessonTablePaginationReducer = (state = initialState, action) => {
     case LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_TABLE_PAGINATION:
       return {
         ...state,
-        ...action.payload,
+        lessonTableData: action.payload.lessons,
+        totalPages: action.payload.totalPages
       };
 
     case LESSON_TABLE_ALL_ACTIONS_TYPE.CREATE_LESSON_TABLE:
