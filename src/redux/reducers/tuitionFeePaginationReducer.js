@@ -37,26 +37,26 @@ export const tuitionFeeDataPaginationReducer = (state = initialState, action) =>
         ...state,
         loadingAll: action.payload,
       };
-    case TUITION_FEE_ALL_ACTIONS_TYPE.CREATE_STUDENT:
+    case TUITION_FEE_ALL_ACTIONS_TYPE.CREATE_TUITION_FEE:
       return {
         ...state,
         tuitionFeeData: [...state.tuitionFeeData, action.payload],
       };
-    case TUITION_FEE_ALL_ACTIONS_TYPE.UPDATE_STUDENT:
+    case TUITION_FEE_ALL_ACTIONS_TYPE.UPDATE_TUITION_FEE:
       return {
         ...state,
         tuitionFeeData: state.tuitionFeeData.map((student) =>
           student._id === action.payload._id ? action.payload : student
         ),
       };
-    case TUITION_FEE_ALL_ACTIONS_TYPE.DELETE_STUDENT:
+    case TUITION_FEE_ALL_ACTIONS_TYPE.DELETE_TUITION_FEE:
       return {
         ...state,
         tuitionFeeData: state.tuitionFeeData.filter(
           (student) => student._id !== action.payload
         ),
       };
-    case TUITION_FEE_ALL_ACTIONS_TYPE.GET_STUDENT_LAST_PAGE:
+    case TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_LAST_PAGE:
       return {
         // ...state,
         lastPage: action.payload,

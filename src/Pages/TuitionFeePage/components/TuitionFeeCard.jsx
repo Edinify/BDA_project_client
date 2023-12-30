@@ -17,19 +17,19 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   const listData = [
     // { key: "Fin kodu", value: data.fin },
     // { key: "Seriya", value: data.seria },
-    // { key: "Mobil Nömrə", value: data.phone },
+    { key: "Mobil Nömrə", value: data.phone },
     { key: "Status", value: data.status ? "Davam edir" : "Məzun" },
 
-    { key: "Qrup", value: data.group.name },
+    { key: "Qrup", value: `${data.group.name} - ${data.group.course.name}` },
     { key: "Məbləğ", value: data.amount },
     { key: "Yekun Məbləğ", value: data.totalAmount },
-    { key: "Ödənişlər", value: "0%" },
+    { key: "Ödəmə növü:", value: `${data.paymentType} hissəli` },
     { key: "Endirim %", value: data.discount },
     {
       key: "Endirim növü",
-      value: discountReasonList.find(
-        (item) => item.key === data?.discountReason
-      )?.name || '',
+      value:
+        discountReasonList.find((item) => item.key === data?.discountReason)
+          ?.name || "",
     },
     {
       key: "Müqavilə başlama tarixi",
@@ -101,26 +101,123 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
     <>
       {mode === "desktop" ? (
         <tr>
-          <td>Camp</td>
-          <td>Emil</td>
-          <td>Aktiv</td>
-          <td>Tam ödəniş</td>
-          <td>700</td>
-          <td>0%</td>
-          <td>700</td>
-          <td>0</td>
-          <td>700</td>
-          <td>Nurməmməd Nurməmmədli</td>
-          <td></td>
-          <td></td>
-          <td>11/23/2023</td>
           <td>
+            <div className="td-con">
+              <div className="cell-number">{cellNumber}.</div>
+              <div className="table-scroll-text no-wrap">{data.fullName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap">{data.phone}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap">
+                {data.status ? "Davam edir" : "Məzun"}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap">
+                {data.group.name} - {data.group.course.name}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap">{data.amount}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap">
+                {data.totalAmount}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap">
+                {data.paymentType} hissəli`
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap">{data.discount}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap">
+                {discountReasonList.find(
+                  (item) => item.key === data?.discountReason
+                )?.name || ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap">
+                {data.payments.map((item, index) => (
+                  <p key={index}>
+                    Məbləğ: {item.payment} <br /> 
+                    Tarix:{" "}
+                    {item.paymentDate
+                      ? moment(item.paymentDate)
+                          .locale("az")
+                          .format("DD MMMM YYYY")
+                      : ""}{" "}
+                    <br /> <br />
+                  </p>
+                ))}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td className="overflow-hiiden">
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap">
+                {data?.contractStartDate
+                  ? moment(data?.contractStartDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td className="overflow-hiiden">
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap no-wrap">
+                {data?.contractEndDate
+                  ? moment(data?.contractEndDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          {/* <td>
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
             />
-          </td>
+          </td> */}
         </tr>
       ) : (
         <div className="content-box">
@@ -134,15 +231,33 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
                 </li>
               ))}
             </ul>
+
+            <div className="groups-list">
+              <h2>Ödənişlər</h2>
+              <ul>
+                {data.payments.map((item, index) => (
+                  <li key={index}>
+                    Məbləğ: {item.payment} <br />
+                    Tarix:{" "}
+                    {item.paymentDate
+                      ? moment(item.paymentDate)
+                          .locale("az")
+                          .format("DD MMMM YYYY")
+                      : ""}{" "}
+                    <br /> 
+                  </li> 
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="right">
+          {/* <div className="right">
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
             />
             <span onClick={() => openMoreModal()}>Ətraflı</span>
-          </div>
+          </div> */}
         </div>
       )}
     </>

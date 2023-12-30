@@ -101,7 +101,7 @@ const StudentMoreModal = ({ studentsModalData }) => {
               Ödəniş: <span>{item.amount}</span>
             </h3>
             <h3>
-              Ödəmə hissəsi: <span>{item.paymentType} hissəli</span>
+              Ödəmə növü: <span>{item.paymentType} hissəli</span>
             </h3>
             <h3>
               Endirim növü:{" "}

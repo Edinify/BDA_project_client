@@ -13,20 +13,18 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const tableHead = [
     "Tələbənin adı",
-    "Fin kodu",
-    "Seriya",
     "Nömrəsi",
     "Status",
-
-    "Qruplar",
+    "Qrup",
     "Məbləğ",
     "Yekun Məbləğ",
-    "Ödənişlər",
+    "Ödəmə növü",
     "Endirim %",
     "Endirim növü",
+    "Ödənişlər",
     "Müqavilə başlama tarixi",
     "Müqavilə bitmə tarixi",
-    "",
+    // "",
   ];
 
   useEffect(() => {
@@ -37,7 +35,6 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
     }
   }, [openMoreModal]);
 
-  console.log(tuitionFeeData);
   return (
     <>
       {loading ? (

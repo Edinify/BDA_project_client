@@ -54,6 +54,10 @@
   overflow: hidden;
   width: 100px;
 }
+.details-table tr td.overflow-hiiden {
+  overflow: hidden;
+  width: 100px;
+}
 .details-table.syllabus-table tr td:first-child,
 .details-table.syllabus-table tr th:first-child {
   width: 80px;
@@ -128,7 +132,7 @@
   overflow-x: scroll;
   padding-right: 24px;
 }
-.details-table .table-scroll-text.phone {
+.details-table .table-scroll-text.no-wrap {
   white-space: nowrap;
 }
 .details-table .table-scroll-text.profiles {

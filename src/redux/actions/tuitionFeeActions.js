@@ -89,7 +89,7 @@ export const getTuitionFeePaginationAction =
       const { data } = await API.get(
         `/?page=${pageNumber}&searchQuery=${searchQuery}`
       );
-      console.log(data);
+      // console.log(data);
       dispatch({
         type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_LAST_PAGE,
         payload: pageNumber,
