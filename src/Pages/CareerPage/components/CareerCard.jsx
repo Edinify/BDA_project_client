@@ -3,53 +3,41 @@ import { useDispatch, useSelector } from "react-redux";
 import { CAREER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteCareerAction } from "../../../redux/actions/careerActions";
+import moment from "moment";
 const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   const dispatch = useDispatch();
-  const { careerData, lastPage } = useSelector((state) => state.careerPagination);
+  const { careerData, lastPage } = useSelector(
+    (state) => state.careerPagination
+  );
   const { careerSearchValues } = useSelector((state) => state.searchValues);
+  const listData = [
+    { key: "Qrup", value: data.group.name },
+    { key: "Ixtisas", value: data.group.course.name },
+    // { key: "Tələbənin adı", value: data.fullName },
+    { key: "Portfolio linki", value: "" },
+    { key: "CV linki", value: "" },
+    { key: "Mobil Nömrə", value: data.phone },
+    {
+      key: "Müqavilə başlama tarixi",
+      value: data?.contractStartDate
+        ? moment(data?.contractStartDate).locale("az").format("DD MMMM YYYY")
+        : "",
+    },
+    {
+      key: "Müqavilə bitmə tarixi",
+      value: data?.contractEndDate
+        ? moment(data?.contractEndDate).locale("az").format("DD MMMM YYYY")
+        : "",
+    },
+    { key: "Status", value: data.status ? "Davam edir" : "Məzun" },
+    { key: "Diplom", value: "" },
+  ];
 
   const updateItem = (modalType) => {
-    const {
-      fullName,
-      courses,
-      email,
-      password,
-      salary,
-      status,
-      _id,
-      createdAt,
-      sector,
-      birthday,
-      fin,
-      seria,
-      phone,
-      workExperience,
-      maritalStatus,
-      disability,
-      healthStatus,
-    } = data;
     dispatch({
       type: CAREER_MODAL_ACTION_TYPE.GET_CAREER_MODAL,
       payload: {
-        data: {
-          fullName,
-          courses,
-          email,
-          password,
-          salary,
-          status,
-          _id,
-          createdAt,
-          sector,
-          birthday,
-          fin,
-          seria,
-          phone,
-          workExperience,
-          maritalStatus,
-          disability,
-          healthStatus,
-        },
+        data: data,
         openModal: modalType !== "more" ? true : false,
       },
     });
@@ -73,13 +61,31 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>
-              <div className="table-scroll-text">{data.fullName}</div>
+              <div className="table-scroll-text">{data.group.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td className="email">
             <div className="td-con">
-              <div className="table-scroll-text">{data.email}</div>
+              <div className="table-scroll-text">{data.group.course.name}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">{data.fullName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone"></div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone"></div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -89,19 +95,45 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td>
+          <td className="overflow-hiiden">
             <div className="td-con">
-              <div className="table-scroll-text phone">{data.position}</div>
+              <div className="table-scroll-text no-wrap">
+                {data?.contractStartDate
+                  ? moment(data?.contractStartDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td className="overflow-hiiden">
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap no-wrap">
+                {data?.contractEndDate
+                  ? moment(data?.contractEndDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone">{data.role}</div>
+              <div className="table-scroll-text no-wrap">
+                {data.status ? "Davam edir" : "Məzun"}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="more" onClick={() => openMoreModal()}>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap"></div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          {/* <td className="more" onClick={() => openMoreModal()}>
             Ətraflı
           </td>
           <td>
@@ -110,39 +142,29 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               deleteItem={deleteItem}
               data={data}
             />
-          </td>
+          </td> */}
         </tr>
       ) : (
         <div className="content-box">
           <div className="left">
             <h3>{data.fullName}</h3>
             <ul>
-              <li>
-                <span className="type">Email:</span>
-                <p>{data.email ? data.email : "boş"}</p>
-              </li>
-              <li>
-                <span className="type">Telefon nömrəsi:</span>
-                <p>{data.phone ? data.phone : "boş"}</p>
-              </li>
-              <li>
-                <span className="type">Pozisiya:</span>
-                <p>{data.position ? data.position : "boş"}</p>
-              </li>
-              <li>
-                <span className="type">Rol:</span>
-                <p>{data.role ? data.role : "boş"}</p>
-              </li>
+            {listData.map((item, index) => (
+                <li key={index}>
+                  <span className="type">{item.key}</span>
+                  <p>{item.value}</p>
+                </li>
+              ))}
             </ul>
           </div>
-          <div className="right">
+          {/* <div className="right">
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
             />
             <span onClick={() => openMoreModal()}>Ətraflı</span>
-          </div>
+          </div> */}
         </div>
       )}
     </>

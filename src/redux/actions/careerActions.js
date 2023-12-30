@@ -8,7 +8,7 @@ import { logoutAction } from "./auth";
 import { apiRoot } from "../../apiRoot";
 
 const API = axios.create({
-  baseURL: `${apiRoot}/user/worker`,
+  baseURL: `${apiRoot}/career`,
   withCredentials: true,
 });
 
@@ -76,71 +76,6 @@ const modalLoading = (loadingValue) => ({
   payload: loadingValue,
 });
 
-
-export const getCareerAction = () => async (dispatch) => {
-  try {
-    const { data } = await API.get("/all");
-    dispatch({ type: CAREER_ALL_ACTIONS_TYPE.GET_ALL_CAREERS, payload: data });
-  } catch (error) {
-    console.log(error);
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-        const { data } = await API.get("/all");
-        dispatch({ type: CAREER_ALL_ACTIONS_TYPE.GET_ALL_CAREERS, payload: data });
-      } catch (error) {
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
-        }
-        console.log(error);
-      }
-    }
-  }
-};
-
-export const getCareerActiveAction = () => async (dispatch) => {
-  try {
-    const { data } = await API.get("/active");
-    dispatch({
-      type: CAREER_ALL_ACTIONS_TYPE.GET_ACTIVE_CAREER,
-      payload: data,
-    });
-  } catch (error) {
-    console.log(error);
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-        const { data } = await API.get("/active");
-        dispatch({
-          type: CAREER_ALL_ACTIONS_TYPE.GET_ACTIVE_CAREER,
-          payload: data,
-        });
-      } catch (error) {
-        console.log(error);
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
-        }
-      }
-    }
-  }
-};
-
 export const getCareerPaginationAction =
   (pageNumber, searchQuery) =>
   async (dispatch) => {
@@ -149,6 +84,7 @@ export const getCareerPaginationAction =
       const { data } = await API.get(
         `/?page=${pageNumber}&searchQuery=${searchQuery}`
       );
+      console.log(data);
       dispatch({
         type: CAREER_ALL_ACTIONS_TYPE.GET_CAREER_LAST_PAGE,
         payload: pageNumber,
@@ -195,6 +131,71 @@ export const getCareerPaginationAction =
     }
   };
 
+
+
+
+export const getCareerAction = () => async (dispatch) => {
+  try {
+    const { data } = await API.get("/all");
+    dispatch({ type: CAREER_ALL_ACTIONS_TYPE.GET_ALL_CAREERS, payload: data });
+  } catch (error) {
+    console.log(error);
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.get("/all");
+        dispatch({ type: CAREER_ALL_ACTIONS_TYPE.GET_ALL_CAREERS, payload: data });
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+        }
+        console.log(error);
+      }
+    }
+  }
+};
+export const getCareerActiveAction = () => async (dispatch) => {
+  try {
+    const { data } = await API.get("/active");
+    dispatch({
+      type: CAREER_ALL_ACTIONS_TYPE.GET_ACTIVE_CAREER,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.get("/active");
+        dispatch({
+          type: CAREER_ALL_ACTIONS_TYPE.GET_ACTIVE_CAREER,
+          payload: data,
+        });
+      } catch (error) {
+        console.log(error);
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+        }
+      }
+    }
+  }
+};
 export const createCareerAction = (careerData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
@@ -240,7 +241,6 @@ export const createCareerAction = (careerData) => async (dispatch) => {
     dispatch(modalLoading(false));
   }
 };
-
 export const updateCareerAction = (_id, careerData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
@@ -289,7 +289,6 @@ export const updateCareerAction = (_id, careerData) => async (dispatch) => {
     dispatch(modalLoading(false));
   }
 };
-
 export const deleteCareerAction = ({_id, pageNumber, searchQuery}) => async (dispatch) => {
   try {
     await API.delete(`/${_id}`);

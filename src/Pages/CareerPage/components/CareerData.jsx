@@ -12,7 +12,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const tableHead = [
-    "Ad soyad", "Email", "Mobil nömrə", "Pozisiya","Rol", "", "",
+    "Qrup", "Ixtisas", "Tələbənin adı", "Portfolio linki","CV linki", "Mobil Nömrə", "Müqavilə başlama tarixi", "Müqavilə bitmə tarixi", "Status", "Diplom"
   ];
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
           {openMoreModal && (
             <MoreModal setOpenMoreModal={setOpenMoreModal} type="teacher" />
           )}
-          <table className="details-table teacher-table">
+          <table className="details-table career-table">
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
@@ -54,7 +54,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
             </tbody>
           </table>
 
-          <div className="details-list-tablet with-more">
+          <div className="details-list-tablet">
             {careerData?.map((teacher, i) => (
               <CareerCard
                 key={i}

@@ -13,7 +13,7 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const tableHead = [
     "Tələbənin adı",
-    "Nömrəsi",
+    "Mobil Nömrə",
     "Status",
     "Qrup",
     "Məbləğ",
@@ -71,7 +71,7 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
             </table>
           </div>
 
-          <div className="details-list-tablet with-more">
+          <div className="details-list-tablet">
             {tuitionFeeData?.map((data, i) => (
               <TuitionFeeCard
                 key={i}

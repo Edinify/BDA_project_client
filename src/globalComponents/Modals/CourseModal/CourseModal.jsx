@@ -47,7 +47,6 @@ export const CourseModal = () => {
     });
   };
 
-  console.log(modalData);
   return (
     <div className="create-update-modal-con">
       <div className="create-update-modal">

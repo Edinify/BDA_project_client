@@ -29,7 +29,8 @@ export const careerPaginationReducer = (state = initialState, action) => {
     case CAREER_ALL_ACTIONS_TYPE.GET_CAREER_PAGINATION:
       return {
         ...state,
-        ...action.payload,
+        careerData: action.payload.careers,
+        totalPages: action.payload.totalPages,
       };
 
     case CAREER_ALL_ACTIONS_TYPE.CREATE_CAREER:

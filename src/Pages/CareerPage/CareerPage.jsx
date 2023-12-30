@@ -37,12 +37,12 @@ const CareerPage = () => {
   }, []);
   return (
     <div className="details-page teachers-page ">
-      <GlobalHead
+      {/* <GlobalHead
         searchData={searchData}
         openModal={openModal}
         DATA_SEARCH_VALUE={"CAREER_SEARCH_VALUE"}
         dataSearchValues={careerSearchValues}
-      />
+      /> */}
       <CareerData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>
   );

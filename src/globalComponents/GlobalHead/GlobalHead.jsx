@@ -33,9 +33,9 @@ const GlobalHead = ({
               {statusType === "teacher" && (
                 <StatusDropdown statusType="teacher" deviceType="desktop" />
               )}
-              {statusType === "student" && (
+              {/* {statusType === "student" && (
                 <StatusDropdown statusType="student" deviceType="desktop" />
-              )}
+              )} */}
               {statusType === "syllabus" && (
                 <CoursesDropdown deviceType="desktop" />
               )}
@@ -51,9 +51,9 @@ const GlobalHead = ({
           {statusType === "teacher" && (
             <StatusDropdown statusType="teacher" deviceType="mobile" />
           )}
-          {statusType === "student" && (
+          {/* {statusType === "student" && (
             <StatusDropdown statusType="student" deviceType="mobile" />
-          )}
+          )} */}
           {statusType === "syllabus" && <CoursesDropdown deviceType="mobile" />}
         </div>
       </div>

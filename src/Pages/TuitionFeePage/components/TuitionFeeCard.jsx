@@ -46,40 +46,10 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   ];
 
   const updateItem = (modalType) => {
-    const {
-      groupNumber,
-      instructor,
-      studentName,
-      status,
-      contractType,
-      price,
-      discount,
-      finalPrice,
-      amountPaid,
-      remainder,
-      fin,
-      phone,
-      startDate,
-    } = data;
-
     dispatch({
       type: TUITION_FEE_MODAL_ACTION_TYPE.GET_TUITION_FEE_MODAL,
       payload: {
-        data: {
-          groupNumber,
-          instructor,
-          studentName,
-          status,
-          contractType,
-          price,
-          discount,
-          finalPrice,
-          amountPaid,
-          remainder,
-          fin,
-          phone,
-          startDate,
-        },
+        data: data,
         openModal: modalType !== "more" ? true : false,
       },
     });

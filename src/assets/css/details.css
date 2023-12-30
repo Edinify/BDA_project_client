@@ -73,6 +73,11 @@
   width: 60px;
   border-right: none;
 }
+.details-table.career-table tr td:last-child,
+.details-table.career-table tr th:last-child {
+  text-align: unset;
+  width: auto;
+}
 .tuition-fee-page .details-table tr th {
   text-align: center;
 }
@@ -206,7 +211,8 @@
   .details-table.syllabus-table tr th:first-child {
     width: 50px;
   }
-  .details-table tr td:last-child, .details-table tr th:last-child {
+  .details-table tr td:last-child, 
+  .details-table tr th:last-child {
     width: 40px;
   }
   .details-list-tablet {
