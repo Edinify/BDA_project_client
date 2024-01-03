@@ -5,8 +5,8 @@
   position: fixed;
   right: 0;
   bottom: 0;
-  /* top: 70px;
-  height: 100%; */
+  /* top: 70px; */
+  height: 100%;
 }
 .more-modal .more-modal-con {
   width: 370px;
