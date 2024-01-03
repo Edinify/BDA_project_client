@@ -34,6 +34,7 @@ export const loginAction = (authData) => async (dispatch) => {
   dispatch(setLoadingAction(true));
   try {
     const { data } = await API.post("/auth/login", authData);
+    console.log(data, "bla bla bla");
     dispatch({ type: AUTH_ALL_ACTION_TYPE.LOGIN, payload: { data: data } });
   } catch (error) {
     console.log(error);

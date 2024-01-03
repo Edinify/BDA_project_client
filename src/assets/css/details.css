@@ -50,6 +50,9 @@
 .details-table tr td.email {
   text-transform: lowercase;
 }
+.details-table tr td.student-length{
+  cursor: pointer;
+}
 .details-table tr td.salary {
   overflow: hidden;
   width: 100px;

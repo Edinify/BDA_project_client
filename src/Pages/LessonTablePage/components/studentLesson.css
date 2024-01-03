@@ -1,0 +1,54 @@
+.students-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.students-list .student-list {
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin: 5px 5px;
+  cursor: pointer;
+  padding: 4px 8px;
+  background-color: var(--neutrals-100);
+
+}
+.students-list .student-list h5 {
+  font-size: 20px;
+}
+.student-name.green{
+    background-color: #00bb00;
+}
+.student-name.red{
+    background-color: var(--error-600);
+}
+.student-list .drop-icon{
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.student-list .status {
+  position: absolute;
+  right: 0;
+  bottom: -75px;
+  /* width: 100%; */
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+
+.student-list .status button {
+  cursor: pointer;
+  padding: 8px;
+}
+
+.student-list .status button:nth-child(1) {
+  color: #00bb00;
+}
+.student-list .status button:nth-child(2) {
+  color: var(--error-600);
+}

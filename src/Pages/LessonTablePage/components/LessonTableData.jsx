@@ -4,20 +4,24 @@ import LessonTableCard from "./LessonTableCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import StudentLessonModal from "./StudentLessonModal";
 
 const LessonTableData = ({ pageNum, getPageNumber }) => {
   const { lessonTableData, totalPages, loading } = useSelector(
     (state) => state.lessonTablePagination
   );
+  const [openStudentModal, setOpenStudentModal] = useState(false);
+  const [students, setStudents] = useState();
+  const [togggleIcon,setToggleIcon] = useState(true)
   const tableHead = [
     "Qrup",
     "İxtisas",
     "Mövzu",
     "Müəllim",
-    "Tələbələr",
     "Dərs günü",
     "Dərs saatı",
     "Status",
+    "Tələbələr",
     "",
   ];
 
@@ -27,6 +31,15 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
         <Loading />
       ) : (
         <>
+          {openStudentModal && (
+            <StudentLessonModal
+              students={students}
+              setOpenStudentModal={setOpenStudentModal}
+              setToggleIcon={setToggleIcon}
+              togggleIcon={togggleIcon}
+            />
+          )}
+
           <table className="details-table">
             <thead>
               <tr>
@@ -43,6 +56,8 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
                   data={teacher}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
+                  setOpenStudentModal={setOpenStudentModal}
+                  setStudents={setStudents}
                 />
               ))}
             </tbody>
@@ -55,6 +70,8 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
                 data={teacher}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
+                setOpenStudentModal={setOpenStudentModal}
+                setStudents={setStudents}
               />
             ))}
           </div>
