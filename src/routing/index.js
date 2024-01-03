@@ -27,9 +27,9 @@ export const Routing = () => {
 
   useEffect(() => {
     if (token) {
-      // if (!user._id) {
-      //   dispatch(userAction());
-      // }
+      if (!user._id) {
+        dispatch(userAction());
+      }
       if (user.role === "super-admin" && !notFound) {
         if (location.pathname.startsWith("/login")) {
           navigate("/");
