@@ -14,10 +14,10 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
     "İxtisas",
     "Mövzu",
     "Müəllim",
-    "Tələbələr",
     "Dərs günü",
     "Dərs saatı",
     "Status",
+    "Tələbələr",
     "",
   ];
 

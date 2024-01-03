@@ -19,20 +19,24 @@ const LessonTableCard = ({ data, mode, cellNumber }) => {
         weeksArrFullName[moment(new Date(data.date)).day()]
       },`
     : "";
-  let students =
-    Array.isArray(data.students) && data.students.length > 0
-      ? data.students
-          .map((item) => {
-            return `${item.student.fullName} `;
-          })
-          .join(", ")
-      : "boş";
 
+  // let students =
+  //   Array.isArray(data.students) && data.students.length > 0
+      // ? data.students
+  //         .map((item) => {
+  //           return `${item.student.fullName} `;
+  //         })
+  //         .join(", ")
+  //     : "boş";
+
+  // console.log(students, "students");
   const listData = [
     { key: "İxtisas", value: data.group.course.name },
-    { key: "Mövzu", value: `${data.topic.orderNumber}. ${data.topic.name}` },
+    {
+      key: "Mövzu",
+      value: `${data?.topic?.orderNumber}. ${data?.topic?.name}`,
+    },
     { key: "Müəllim", value: data.teacher.fullName },
-    { key: "Tələbələr", value: students },
     {
       key: "Dərs günü",
       value: lessonDay,
@@ -43,6 +47,7 @@ const LessonTableCard = ({ data, mode, cellNumber }) => {
       value:
         lessonStatusList.find((item) => item.key === data.status).name || "",
     },
+    { key: "Tələbələr", value: 'students' },
   ];
   const updateItem = (modalType) => {
     dispatch({
@@ -80,7 +85,9 @@ const LessonTableCard = ({ data, mode, cellNumber }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{`${data.topic.orderNumber}. ${data.topic.name}`}</div>
+              <div className="table-scroll-text">{`${
+                data?.topic?.orderNumber || ""
+              }. ${data?.topic?.name || ""}`}</div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -90,13 +97,6 @@ const LessonTableCard = ({ data, mode, cellNumber }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td>
-            <div className="td-con">
-              <div className="table-scroll-text">{students}</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-
           <td>
             <div className="td-con">
               <div className="table-scroll-text profiles">{lessonDay}</div>
@@ -115,6 +115,12 @@ const LessonTableCard = ({ data, mode, cellNumber }) => {
                 {lessonStatusList.find((item) => item.key === data.status)
                   .name || ""}
               </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data.students.length}</div>
               <div className="right-fade"></div>
             </div>
           </td>
