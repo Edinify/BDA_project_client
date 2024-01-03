@@ -3,7 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { TEACHERS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteTeacherAction } from "../../../redux/actions/teachersActions";
-const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
+const TeacherCard = ({
+  data,
+  mode,
+  cellNumber,
+  setOpenMoreModal,
+  setOpenConfirmModal,
+}) => {
   const dispatch = useDispatch();
   const { teachers, lastPage } = useSelector(
     (state) => state.teachersPagination
@@ -48,6 +54,11 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
     setOpenMoreModal(true);
   };
 
+  const openConfirmModal = () => {
+    setOpenConfirmModal(true);
+    updateItem("more");
+  };
+
   return (
     <>
       {mode === "desktop" ? (
@@ -80,6 +91,9 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           <td className="more" onClick={() => openMoreModal()}>
             Ətraflı
           </td>
+          <td className="confirm" onClick={openConfirmModal}>
+            Təsdiqlə
+          </td>
           <td>
             <UpdateDeleteModal
               updateItem={updateItem}
@@ -107,7 +121,10 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               deleteItem={deleteItem}
               data={data}
             />
-            <span onClick={() => openMoreModal()}>Ətraflı</span>
+            <div className="more-content">
+              <span onClick={openMoreModal}>Ətraflı</span>
+              <span onClick={openConfirmModal}>Təsdiqlə</span>
+            </div>
           </div>
         </div>
       )}

@@ -21,6 +21,8 @@ const MoreModal = ({ setOpenMoreModal, type }) => {
   const { consultationModalData } = useSelector(
     (state) => state.consultationModal
   );
+
+
   const openUpdateModal = () => {
     if (type === "teacher") {
       dispatch({
