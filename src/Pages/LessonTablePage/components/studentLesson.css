@@ -29,6 +29,12 @@
     align-items: center;
     margin-left: 5px;
 }
+/* .student-list.selected{
+  background-color: #00bb00;
+}
+.student-list.red{
+  background-color: var(--error-600);
+} */
 
 .student-list .status {
   position: absolute;

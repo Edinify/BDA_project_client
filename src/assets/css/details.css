@@ -84,6 +84,17 @@
 .tuition-fee-page .details-table tr th {
   text-align: center;
 }
+
+.details-table.courses-table tr th:first-child,
+.details-table.courses-table tr td:first-child
+{
+  width: 80%;
+}
+
+.details-table.syllabus-table tr th:nth-child(2),
+.details-table.syllabus-table tr td:nth-child(2){
+  width: 70%;
+}
 /* stimulations */
 .stimulations-page .details-table tr th {
   border-top: 0.5px solid var(--neutrals-500);
@@ -110,8 +121,7 @@
   cursor: pointer;
 }
 
-.details-table.teacher-table tr td.confirm,
-.details-table.student-table tr td.confirm {
+.details-table tr td.confirm {
   text-decoration: underline;
   color: var(--neutrals-900);
   cursor: pointer;
@@ -315,6 +325,10 @@
     height: 100%;
     padding: 12px 0;
   }
+  .details-list-tablet  .content-box .right.courses {
+    flex-direction: row;
+    align-items: center;
+  }
 
   .details-list-tablet .content-box .right .more-content{
     display: flex;
@@ -339,6 +353,10 @@
   .details-list-tablet .content-box.admin .right {
     justify-content: center;
   }
+  .details-table.syllabus-table tr th:nth-child(2),
+.details-table.syllabus-table tr td:nth-child(2){
+  width: auto;
+}
 }
 
 @media screen and (max-width: 500px) {

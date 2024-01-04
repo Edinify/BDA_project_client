@@ -142,7 +142,6 @@ const StudentCard = ({
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
-              setOpenConfirmModal={setOpenConfirmModal}
             />
             <div className="more-content">
               <span onClick={openMoreModal}>Ətraflı</span>

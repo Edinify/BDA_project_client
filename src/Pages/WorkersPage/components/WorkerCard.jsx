@@ -4,7 +4,7 @@ import { WORKER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteWorkerAction } from "../../../redux/actions/workersActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
-const WorkerCard = ({ data, mode, cellNumber }) => {
+const WorkerCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
   const { generalProfileList, generalProfilePowerList } = useCustomHook();
   const dispatch = useDispatch();
   const { workers, lastPage } = useSelector((state) => state.workersPagination);
@@ -29,7 +29,7 @@ const WorkerCard = ({ data, mode, cellNumber }) => {
       type: WORKER_MODAL_ACTION_TYPE.GET_WORKER_MODAL,
       payload: {
         data: data,
-        openModal: true,
+        openModal: modalType !== "more" ? true : false,
       },
     });
   };
@@ -41,6 +41,10 @@ const WorkerCard = ({ data, mode, cellNumber }) => {
     dispatch(deleteWorkerAction({ _id, pageNumber, searchQuery }));
   };
 
+  const openConfirmModal = () => {
+    setOpenConfirmModal(true);
+    updateItem("more");
+  };
   return (
     <>
       {mode === "desktop" ? (
@@ -76,6 +80,10 @@ const WorkerCard = ({ data, mode, cellNumber }) => {
               <div className="right-fade"></div>
             </div>
           </td>
+          <td className="confirm" onClick={openConfirmModal}>
+            Təsdiqlə
+          </td>
+
           <td>
             <UpdateDeleteModal
               updateItem={updateItem}
@@ -113,6 +121,9 @@ const WorkerCard = ({ data, mode, cellNumber }) => {
               deleteItem={deleteItem}
               data={data}
             />
+            <div className="more-content">
+              <span onClick={openConfirmModal}>Təsdiqlə</span>
+            </div>
           </div>
         </div>
       )}

@@ -6,21 +6,17 @@ import "./studentLesson.css";
 const StudentLessonModal = ({ students, setOpenStudentModal }) => {
   const [openStatus, setOpenStatus] = useState({});
   const [selectedStudentId, setSelectedStudentId] = useState(null);
-  const [changeDrop, setChangeDrop] = useState(false);
-  const [status, setStatus] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState(null);
+  const [statuses, setStatuses] = useState({});
 
   const handleStudentClick = (studentId) => {
-    setOpenStatus((prevStatus) => ({
-      ...prevStatus,
-      [studentId]: !prevStatus[studentId],
-    }));
     setSelectedStudentId(studentId);
   };
 
   const handleStatusChange = (newStatus) => {
-    setStatus(newStatus);
-    setSelectedStatus(newStatus);
+    setStatuses((prevStatuses) => ({
+      ...prevStatuses,
+      [selectedStudentId]: newStatus,
+    }));
   };
 
   return (
@@ -39,33 +35,51 @@ const StudentLessonModal = ({ students, setOpenStudentModal }) => {
               }`}
               key={student._id}
             >
-              <h5
-              // className={`student-name ${
-              //   selectedStatus === "i/e"
-              //     ? "green"
-              //     : selectedStatus === "q/b"
-              //     ? "red"
-              //     : ""
-              // }`}
-              >
+              <h5>
                 {student.student.fullName}{" "}
-                {student._id === selectedStudentId && status}
+                {statuses[student._id] && (
+                  <span className={`status-indicator ${statuses[student._id]}`}>
+                    {statuses[student._id]}
+                  </span>
+                )}
               </h5>
 
               <div
-                onClick={() => setChangeDrop(!changeDrop)}
+                onClick={() => {
+                  setSelectedStudentId(
+                    selectedStudentId===student._id ? "" : student._id
+                  )
+                  setOpenStatus((prevStatus) => ({
+                  ...prevStatus,
+                  [student._id]: !prevStatus[student._id],
+                }))}}
                 className="drop-icon"
               >
-                <DropdownArrowIcon />
+                <div className="dropdown-icon">
+                  <svg
+                    className={
+                      selectedStudentId === student._id ? "up" : "down"
+                      // togggleIcon === child.student._id ? "up" : "down"
+                    }
+                    width="16"
+                    height="17"
+                    viewBox="0 0 16 17"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.9465 5.95337L7.79316 5.95337L4.05317 5.95337C3.41317 5.95337 3.09317 6.7267 3.5465 7.18004L6.99983 10.6334C7.55317 11.1867 8.45317 11.1867 9.0065 10.6334L10.3198 9.32003L12.4598 7.18003C12.9065 6.7267 12.5865 5.95337 11.9465 5.95337Z"
+                      fill="#717171"
+                    />
+                  </svg>
+                </div>
               </div>
               {openStatus[student._id] && (
                 <div className="status">
                   <button onClick={() => handleStatusChange("i/e")}>
-                    {" "}
                     i/e
                   </button>
                   <button onClick={() => handleStatusChange("q/b")}>
-                    {" "}
                     q/b
                   </button>
                 </div>

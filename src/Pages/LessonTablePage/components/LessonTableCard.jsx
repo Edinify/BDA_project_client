@@ -5,7 +5,14 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
-const LessonTableCard = ({ data, mode, cellNumber,setOpenStudentModal ,setStudents}) => {
+const LessonTableCard = ({
+  data,
+  mode,
+  cellNumber,
+  setOpenStudentModal,
+  setStudents,
+  setOpenConfirmModal,
+}) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
   const { lessonTableData, lastPage } = useSelector(
@@ -20,11 +27,9 @@ const LessonTableCard = ({ data, mode, cellNumber,setOpenStudentModal ,setStuden
       },`
     : "";
 
-
-
   // let students =
   //   Array.isArray(data.students) && data.students.length > 0
-      // ? data.students
+  // ? data.students
   //         .map((item) => {
   //           return `${item.student.fullName} `;
   //         })
@@ -49,14 +54,14 @@ const LessonTableCard = ({ data, mode, cellNumber,setOpenStudentModal ,setStuden
       value:
         lessonStatusList.find((item) => item.key === data.status).name || "",
     },
-    { key: "Tələbələr", value: 'students' },
+    { key: "Tələbələr", value: "students" },
   ];
   const updateItem = (modalType) => {
     dispatch({
       type: LESSON_TABLE_MODAL_ACTION_TYPE.GET_LESSON_TABLE_MODAL,
       payload: {
         data: data,
-        openModal: true,
+        openModal: modalType !== "more" ? true : false,
       },
     });
   };
@@ -66,6 +71,11 @@ const LessonTableCard = ({ data, mode, cellNumber,setOpenStudentModal ,setStuden
     const _id = data._id;
     const searchQuery = lessonTableSearchValues;
     dispatch(deleteLessonTableAction({ _id, pageNumber, searchQuery }));
+  };
+
+  const openConfirmModal = () => {
+    setOpenConfirmModal(true);
+    updateItem("more");
   };
 
   return (
@@ -121,12 +131,19 @@ const LessonTableCard = ({ data, mode, cellNumber,setOpenStudentModal ,setStuden
             </div>
           </td>
           <td className="student-length">
-            <div onClick={()=>{
-              setStudents(data.students)
-              setOpenStudentModal(true)}} className="td-con">
+            <div
+              onClick={() => {
+                setStudents(data.students);
+                setOpenStudentModal(true);
+              }}
+              className="td-con"
+            >
               <div className="table-scroll-text">{data.students.length}</div>
               <div className="right-fade"></div>
             </div>
+          </td>
+          <td className="confirm" onClick={openConfirmModal}>
+            Təsdiqlə
           </td>
           <td>
             <UpdateDeleteModal
@@ -155,6 +172,9 @@ const LessonTableCard = ({ data, mode, cellNumber,setOpenStudentModal ,setStuden
               deleteItem={deleteItem}
               data={data}
             />
+            <div className="more-content">
+              <span onClick={openConfirmModal}>Təsdiqlə</span>
+            </div>
           </div>
         </div>
       )}
