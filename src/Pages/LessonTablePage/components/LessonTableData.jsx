@@ -13,15 +13,14 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
   );
   const [openStudentModal, setOpenStudentModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [updatedResultData, setUpdatedResultData] = useState("");
   const [students, setStudents] = useState();
   const [togggleIcon, setToggleIcon] = useState(true);
   const tableHead = [
-    "Qrup",
-    "İxtisas",
-    "Mövzu",
-    "Müəllim",
     "Dərs günü",
     "Dərs saatı",
+    "Mövzu",
+    "Müəllim",
     "Status",
     "Tələbələr",
     "",
@@ -40,6 +39,8 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
               setOpenStudentModal={setOpenStudentModal}
               setToggleIcon={setToggleIcon}
               togggleIcon={togggleIcon}
+              setUpdatedResultData={setUpdatedResultData}
+              updatedResultData={updatedResultData}
             />
           )}
 

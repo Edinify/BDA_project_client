@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
-import { ReactComponent as DropdownArrowIcon } from "../../../assets/icons/dashboard/arrow-down.svg";
 import "./studentLesson.css";
 
-const StudentLessonModal = ({ students, setOpenStudentModal }) => {
+const StudentLessonModal = ({
+  setOpenStudentModal,
+  setToggleIcon,
+  togggleIcon,
+  
+}) => {
+
   const [openStatus, setOpenStatus] = useState({});
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [statuses, setStatuses] = useState({});
 
   const handleStudentClick = (studentId) => {
     setSelectedStudentId(studentId);
+    setOpenStatus((prevStatus) => ({
+      ...prevStatus,
+      [studentId]: !prevStatus[studentId],
+    }));
   };
 
   const handleStatusChange = (newStatus) => {
@@ -18,6 +27,12 @@ const StudentLessonModal = ({ students, setOpenStudentModal }) => {
       [selectedStudentId]: newStatus,
     }));
   };
+
+  const students = [
+    { id: 1, fullName: "Kamran" },
+    { id: 2, fullName: "Mahmud" },
+    { id: 3, fullName: "Kəmalə" },
+  ];
 
   return (
     <div className="create-update-modal-con">
@@ -29,17 +44,20 @@ const StudentLessonModal = ({ students, setOpenStudentModal }) => {
         <div className="students-list">
           {students?.map((student) => (
             <div
-              onClick={() => handleStudentClick(student._id)}
+              onClick={() =>
+                setToggleIcon(togggleIcon === student.id ? "" : student.id)
+              }
+              // onClick={() => handleStudentClick(student.id)}
               className={`student-list ${
-                selectedStudentId === student._id ? "selected" : ""
+                selectedStudentId === student.id ? "selected" : ""
               }`}
-              key={student._id}
+              key={student.id}
             >
               <h5>
-                {student.student.fullName}{" "}
-                {statuses[student._id] && (
-                  <span className={`status-indicator ${statuses[student._id]}`}>
-                    {statuses[student._id]}
+                {student.fullName}{" "}
+                {statuses[student.id] && (
+                  <span className={`status-indicator ${statuses[student.id]}`}>
+                    {statuses[student.id]}
                   </span>
                 )}
               </h5>
@@ -47,20 +65,18 @@ const StudentLessonModal = ({ students, setOpenStudentModal }) => {
               <div
                 onClick={() => {
                   setSelectedStudentId(
-                    selectedStudentId===student._id ? "" : student._id
-                  )
+                    selectedStudentId === student.id ? "" : student.id
+                  );
                   setOpenStatus((prevStatus) => ({
-                  ...prevStatus,
-                  [student._id]: !prevStatus[student._id],
-                }))}}
+                    ...prevStatus,
+                    [student.id]: !prevStatus[student.id],
+                  }));
+                }}
                 className="drop-icon"
               >
                 <div className="dropdown-icon">
                   <svg
-                    className={
-                      selectedStudentId === student._id ? "up" : "down"
-                      // togggleIcon === child.student._id ? "up" : "down"
-                    }
+                    className={togggleIcon === student.id ? "up" : "down"}
                     width="16"
                     height="17"
                     viewBox="0 0 16 17"
@@ -74,19 +90,19 @@ const StudentLessonModal = ({ students, setOpenStudentModal }) => {
                   </svg>
                 </div>
               </div>
-              {openStatus[student._id] && (
+              {openStatus[student.id] && (
                 <div className="status">
-                  <button onClick={() => handleStatusChange("i/e")}>
-                    i/e
-                  </button>
-                  <button onClick={() => handleStatusChange("q/b")}>
-                    q/b
-                  </button>
+                  <button onClick={() => handleStatusChange("i/e")}>i/e</button>
+                  <button onClick={() => handleStatusChange("q/b")}>q/b</button>
                 </div>
               )}
             </div>
           ))}
+        
         </div>
+       <div className="confirm-btn">
+        <button  onClick={()=>setOpenStudentModal(false)}  >Təsdiqlə</button>
+       </div>
       </div>
     </div>
   );

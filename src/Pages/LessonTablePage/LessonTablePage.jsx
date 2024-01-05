@@ -25,9 +25,14 @@ const LessonTablePage = () => {
   };
   const openModal = () => {
     if (selectedGroup) {
+      const students = selectedGroup.students.map((student) => ({ student }));
+
       dispatch({
         type: LESSON_TABLE_MODAL_ACTION_TYPE.GET_LESSON_TABLE_MODAL,
-        payload: { data: {}, openModal: true },
+        payload: {
+          data: { group: selectedGroup._id, students },
+          openModal: true,
+        },
       });
     } else {
       toast.error("Qrup seçməlisiniz", {

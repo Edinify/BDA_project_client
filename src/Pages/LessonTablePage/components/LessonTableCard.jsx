@@ -5,14 +5,8 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
-const LessonTableCard = ({
-  data,
-  mode,
-  cellNumber,
-  setOpenStudentModal,
-  setStudents,
-  setOpenConfirmModal,
-}) => {
+
+const LessonTableCard = ({ data, mode, cellNumber, setOpenConfirmModal, setOpenStudentModal ,setStudents}) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
   const { lessonTableData, lastPage } = useSelector(
@@ -22,9 +16,9 @@ const LessonTableCard = ({
     (state) => state.searchValues
   );
   const lessonDay = data.date
-    ? `${moment(data.date).locale("az").format("DD MMMM YYYY")}, ${
+    ? `${moment(data.date).locale("az").format("DD.MM.YYYY")}, ${
         weeksArrFullName[moment(new Date(data.date)).day()]
-      },`
+      }`
     : "";
 
   // let students =
@@ -38,17 +32,18 @@ const LessonTableCard = ({
 
   // console.log(students, "students");
   const listData = [
+    {
+      key: "Dərs günü",
+      value: lessonDay,
+    },
+    { key: "Dərs saatı", value: data.time },
     { key: "İxtisas", value: data.group.course.name },
     {
       key: "Mövzu",
       value: `${data?.topic?.orderNumber}. ${data?.topic?.name}`,
     },
     { key: "Müəllim", value: data.teacher.fullName },
-    {
-      key: "Dərs günü",
-      value: lessonDay,
-    },
-    { key: "Dərs saatı", value: data.time },
+
     {
       key: "Status",
       value:
@@ -60,7 +55,14 @@ const LessonTableCard = ({
     dispatch({
       type: LESSON_TABLE_MODAL_ACTION_TYPE.GET_LESSON_TABLE_MODAL,
       payload: {
-        data: data,
+        data: {
+          _id: data._id,
+          group: data.group._id,
+          teacher: data.teacher._id,
+          date: data.date,
+          time: data.time,
+          topic: data.topic,
+        },
         openModal: modalType !== "more" ? true : false,
       },
     });
@@ -84,14 +86,13 @@ const LessonTableCard = ({
         <tr>
           <td>
             <div className="td-con">
-              <div className="cell-number">{cellNumber}.</div>
-              <div className="table-scroll-text">{data.group.name}</div>
+              <div className="table-scroll-text profiles">{lessonDay}</div>
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="email">
+          <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.group.course.name}</div>
+              <div className="table-scroll-text">{data.time}</div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -106,18 +107,6 @@ const LessonTableCard = ({
           <td>
             <div className="td-con">
               <div className="table-scroll-text">{data.teacher.fullName}</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td>
-            <div className="td-con">
-              <div className="table-scroll-text profiles">{lessonDay}</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td>
-            <div className="td-con">
-              <div className="table-scroll-text">{data.time}</div>
               <div className="right-fade"></div>
             </div>
           </td>
