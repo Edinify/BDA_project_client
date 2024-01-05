@@ -6,7 +6,7 @@ import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActio
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
 
-const LessonTableCard = ({ data, mode, cellNumber }) => {
+const LessonTableCard = ({ data, mode, cellNumber, setOpenConfirmModal, setOpenStudentModal }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
   const { lessonTableData, lastPage } = useSelector(
@@ -63,7 +63,7 @@ const LessonTableCard = ({ data, mode, cellNumber }) => {
           time: data.time,
           topic: data.topic,
         },
-        openModal: true,
+        openModal: modalType !== "more" ? true : false,
       },
     });
   };
@@ -73,6 +73,11 @@ const LessonTableCard = ({ data, mode, cellNumber }) => {
     const _id = data._id;
     const searchQuery = lessonTableSearchValues;
     dispatch(deleteLessonTableAction({ _id, pageNumber, searchQuery }));
+  };
+
+  const openConfirmModal = () => {
+    setOpenConfirmModal(true);
+    updateItem("more");
   };
 
   return (
@@ -114,11 +119,20 @@ const LessonTableCard = ({ data, mode, cellNumber }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td>
-            <div className="td-con">
+          <td className="student-length">
+            <div
+              onClick={() => {
+                // setStudents(data.students);
+                setOpenStudentModal(true);
+              }}
+              className="td-con"
+            >
               <div className="table-scroll-text">{data.students.length}</div>
               <div className="right-fade"></div>
             </div>
+          </td>
+          <td className="confirm" onClick={openConfirmModal}>
+            Təsdiqlə
           </td>
           <td>
             <UpdateDeleteModal
@@ -147,6 +161,9 @@ const LessonTableCard = ({ data, mode, cellNumber }) => {
               deleteItem={deleteItem}
               data={data}
             />
+            <div className="more-content">
+              <span onClick={openConfirmModal}>Təsdiqlə</span>
+            </div>
           </div>
         </div>
       )}

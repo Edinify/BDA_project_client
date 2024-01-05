@@ -50,6 +50,9 @@
 .details-table tr td.email {
   text-transform: lowercase;
 }
+.details-table tr td.student-length{
+  cursor: pointer;
+}
 .details-table tr td.salary {
   overflow: hidden;
   width: 100px;
@@ -81,6 +84,17 @@
 .tuition-fee-page .details-table tr th {
   text-align: center;
 }
+
+.details-table.courses-table tr th:first-child,
+.details-table.courses-table tr td:first-child
+{
+  width: 80%;
+}
+
+.details-table.syllabus-table tr th:nth-child(2),
+.details-table.syllabus-table tr td:nth-child(2){
+  width: 70%;
+}
 /* stimulations */
 .stimulations-page .details-table tr th {
   border-top: 0.5px solid var(--neutrals-500);
@@ -91,12 +105,23 @@
 .finance-page .details-table tr th {
   border-top: 0.5px solid var(--neutrals-500);
 }
+.details-table.teacher-table tr th:nth-last-child(3),
+.details-table.student-table tr th:nth-last-child(3) {
+  width: 80px;
+}
+
 .details-table.teacher-table tr th:nth-last-child(2),
 .details-table.student-table tr th:nth-last-child(2) {
-  width: 80px;
+  width: 100px;
 }
 .details-table.teacher-table tr td.more,
 .details-table.student-table tr td.more {
+  text-decoration: underline;
+  color: var(--neutrals-900);
+  cursor: pointer;
+}
+
+.details-table tr td.confirm {
   text-decoration: underline;
   color: var(--neutrals-900);
   cursor: pointer;
@@ -300,11 +325,22 @@
     height: 100%;
     padding: 12px 0;
   }
-  .details-list-tablet .content-box .right span {
+  .details-list-tablet  .content-box .right.courses {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .details-list-tablet .content-box .right .more-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .details-list-tablet .content-box .right .more-content span {
     font-size: 14px;
     color: var(--neutrals-600);
     font-weight: 700;
     cursor: pointer;
+    margin-top: 5px;
   }
   .details-list-tablet .content-box .right .salary-tablet-modal {
     height: 100%;
@@ -317,6 +353,10 @@
   .details-list-tablet .content-box.admin .right {
     justify-content: center;
   }
+  .details-table.syllabus-table tr th:nth-child(2),
+.details-table.syllabus-table tr td:nth-child(2){
+  width: auto;
+}
 }
 
 @media screen and (max-width: 500px) {

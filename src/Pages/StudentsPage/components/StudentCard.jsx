@@ -4,7 +4,13 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { STUDENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { deleteStudentAction } from "../../../redux/actions/studentsActions";
 
-const StudentCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
+const StudentCard = ({
+  data,
+  mode,
+  cellNumber,
+  setOpenMoreModal,
+  setOpenConfirmModal,
+}) => {
   const dispatch = useDispatch();
   const { students, lastPage } = useSelector(
     (state) => state.studentsPagination
@@ -49,6 +55,11 @@ const StudentCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
     setOpenMoreModal(true);
   };
 
+  const openConfirmModal = () => {
+    setOpenConfirmModal(true);
+    updateItem("more");
+  };
+
   return (
     <>
       {mode === "desktop" ? (
@@ -74,22 +85,30 @@ const StudentCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.groups.map((item) => (
-                <p  key={item.group._id}>
-                {item.group.name} <br />
-                </p>
-              ))}</div>
+              <div className="table-scroll-text">
+                {data.groups.map((item) => (
+                  <p key={item.group._id}>
+                    {item.group.name} <br />
+                  </p>
+                ))}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="more" onClick={() => openMoreModal()}>
+          <td className="more" onClick={openMoreModal}>
             Ətraflı
+          </td>
+
+          <td className="confirm" onClick={openConfirmModal}>
+            Təsdiqlə
           </td>
           <td>
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
+              setOpenConfirmModal={setOpenConfirmModal}
+
             />
           </td>
         </tr>
@@ -110,9 +129,7 @@ const StudentCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               <ul>
                 {data.groups.map((groupsData) => (
                   <li key={groupsData.group._id}>
-                    <span>
-                    Qrup adı: {groupsData.group.name}
-                    </span> 
+                    <span>Qrup adı: {groupsData.group.name}</span>
                     Qrup ixtisası: {groupsData.group.course.name} <br />
                     Ümumi ödəniş: {groupsData.totalAmount} <br />
                   </li>
@@ -126,7 +143,10 @@ const StudentCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               deleteItem={deleteItem}
               data={data}
             />
-            <span onClick={() => openMoreModal()}>Ətraflı</span>
+            <div className="more-content">
+              <span onClick={openMoreModal}>Ətraflı</span>
+              <span onClick={openConfirmModal}>Təsdiqlə</span>
+            </div>
           </div>
         </div>
       )}

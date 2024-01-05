@@ -4,6 +4,7 @@ import StudentCard from "./StudentCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
 const StudentsData = ({ studentPageNum, getPageNumber }) => {
   const { students, totalPages } = useSelector(
@@ -11,14 +12,17 @@ const StudentsData = ({ studentPageNum, getPageNumber }) => {
   );
   const { loading } = useSelector((state) => state.studentsPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
+  const [openConfirmModal,setOpenConfirmModal] = useState(false)
   const tableHead = [
     "Tələbə adı",
     "Ixtisas",
     "Mobil nömrə",
     "Qrup",
     "",
+    "",
     ""
   ];
+
 
   useEffect(() => {
     if (openMoreModal) {
@@ -40,6 +44,13 @@ const StudentsData = ({ studentPageNum, getPageNumber }) => {
               type="student"
             />
           )}
+
+          {openConfirmModal && (
+            <ConfirmModal
+            setOpenConfirmModal={setOpenConfirmModal}
+            type="student"
+            />
+          )}
           <table className="details-table  student-table">
             <thead>
               <tr>
@@ -55,6 +66,7 @@ const StudentsData = ({ studentPageNum, getPageNumber }) => {
                   data={student}
                   mode="desktop"
                   setOpenMoreModal={setOpenMoreModal}
+                  setOpenConfirmModal={setOpenConfirmModal}
                   cellNumber={i + 1 + (studentPageNum - 1) * 10}
                 />
               ))}
@@ -68,6 +80,7 @@ const StudentsData = ({ studentPageNum, getPageNumber }) => {
                 data={student}
                 mode="tablet"
                 setOpenMoreModal={setOpenMoreModal}
+                setOpenConfirmModal={setOpenConfirmModal}
                 cellNumber={i + 1 + (studentPageNum - 1) * 10}
               />
             ))}

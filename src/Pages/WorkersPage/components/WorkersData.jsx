@@ -4,18 +4,22 @@ import WorkerCard from "./WorkerCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
 const WorkersData = ({ pageNum, getPageNumber }) => {
   const dispatch = useDispatch();
   const { workers, totalPages, loading } = useSelector(
     (state) => state.workersPagination
   );
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+
   const tableHead = [
     "Ad soyad",
     "Email",
     "Mobil nömrə",
     "Pozisiya",
     "Profil",
+    "",
     "",
   ];
 
@@ -25,6 +29,12 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
         <Loading />
       ) : (
         <>
+          {openConfirmModal && (
+            <ConfirmModal
+              setOpenConfirmModal={setOpenConfirmModal}
+              type="workers"
+            />
+          )}
           <table className="details-table">
             <thead>
               <tr>
@@ -41,6 +51,7 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
                   data={teacher}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
+                  setOpenConfirmModal={setOpenConfirmModal}
                 />
               ))}
             </tbody>
@@ -53,6 +64,7 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
                 data={teacher}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
+                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>

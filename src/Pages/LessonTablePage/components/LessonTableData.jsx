@@ -4,11 +4,17 @@ import LessonTableCard from "./LessonTableCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import StudentLessonModal from "./StudentLessonModal";
+import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
 const LessonTableData = ({ pageNum, getPageNumber }) => {
   const { lessonTableData, totalPages, loading } = useSelector(
     (state) => state.lessonTablePagination
   );
+  const [openStudentModal, setOpenStudentModal] = useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [students, setStudents] = useState();
+  const [togggleIcon, setToggleIcon] = useState(true);
   const tableHead = [
     "Dərs günü",
     "Dərs saatı",
@@ -16,6 +22,7 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
     "Müəllim",
     "Status",
     "Tələbələr",
+    "",
     "",
   ];
 
@@ -25,6 +32,22 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
         <Loading />
       ) : (
         <>
+          {openStudentModal && (
+            <StudentLessonModal
+              students={students}
+              setOpenStudentModal={setOpenStudentModal}
+              setToggleIcon={setToggleIcon}
+              togggleIcon={togggleIcon}
+            />
+          )}
+
+          {openConfirmModal && (
+            <ConfirmModal
+              setOpenConfirmModal={setOpenConfirmModal}
+              type="lesson-table"
+            />
+          )}
+
           <table className="details-table">
             <thead>
               <tr>
@@ -41,6 +64,9 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
                   data={teacher}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
+                  setOpenStudentModal={setOpenStudentModal}
+                  setStudents={setStudents}
+                  setOpenConfirmModal={setOpenConfirmModal}
                 />
               ))}
             </tbody>
@@ -53,6 +79,9 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
                 data={teacher}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
+                setOpenStudentModal={setOpenStudentModal}
+                setStudents={setStudents}
+                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>

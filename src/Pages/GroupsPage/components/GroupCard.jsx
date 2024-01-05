@@ -5,7 +5,7 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { deleteGroupAction } from "../../../redux/actions/groupsActions";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
-const GroupCard = ({ data, mode, cellNumber }) => {
+const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { groupData, lastPage } = useSelector(
@@ -39,8 +39,14 @@ const GroupCard = ({ data, mode, cellNumber }) => {
     { key: "İxtisas", value: data?.course.name },
     { key: "Təlimçilər", value: teachers },
     { key: "Tələbələr", value: students },
-    { key: "Başlama tarixi", value: moment(data.startDate).locale("az").format("DD MMMM YYYY") },
-    { key: "Bitmə tarixi", value: moment(data.endDate).locale("az").format("DD MMMM YYYY") },
+    {
+      key: "Başlama tarixi",
+      value: moment(data.startDate).locale("az").format("DD MMMM YYYY"),
+    },
+    {
+      key: "Bitmə tarixi",
+      value: moment(data.endDate).locale("az").format("DD MMMM YYYY"),
+    },
     { key: "Dərs günləri", value: lessonDates },
   ];
   const updateItem = (modalType) => {
@@ -48,7 +54,7 @@ const GroupCard = ({ data, mode, cellNumber }) => {
       type: GROUP_MODAL_ACTION_TYPE.GET_GROUP_MODAL,
       payload: {
         data: data,
-        openModal: true,
+        openModal: modalType !== "more" ? true : false,
       },
     });
   };
@@ -59,6 +65,11 @@ const GroupCard = ({ data, mode, cellNumber }) => {
     const searchQuery = groupsSearchValues;
     const completed = location.pathname === "/groups/current" ? true : false;
     dispatch(deleteGroupAction({ _id, pageNumber, searchQuery, completed }));
+  };
+
+  const openConfirmModal = () => {
+    setOpenConfirmModal(true);
+    updateItem("more");
   };
 
   return (
@@ -98,15 +109,22 @@ const GroupCard = ({ data, mode, cellNumber }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{moment(data.startDate).locale("az").format("DD MMMM YYYY")}</div>
+              <div className="table-scroll-text">
+                {moment(data.startDate).locale("az").format("DD MMMM YYYY")}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{moment(data.endDate).locale("az").format("DD MMMM YYYY")}</div>
+              <div className="table-scroll-text">
+                {moment(data.endDate).locale("az").format("DD MMMM YYYY")}
+              </div>
               <div className="right-fade"></div>
             </div>
+          </td>
+          <td className="confirm" onClick={openConfirmModal}>
+            Təsdiqlə
           </td>
           <td>
             <UpdateDeleteModal
@@ -135,6 +153,9 @@ const GroupCard = ({ data, mode, cellNumber }) => {
               deleteItem={deleteItem}
               data={data}
             />
+             <div className="more-content">
+              <span onClick={openConfirmModal}>Təsdiqlə</span>
+            </div>
           </div>
         </div>
       )}

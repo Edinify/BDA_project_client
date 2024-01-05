@@ -4,6 +4,7 @@ import TeacherCard from "./TeacherCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
 const TeachersData = ({ teacherPageNum, getPageNumber }) => {
   const dispatch = useDispatch();
@@ -12,12 +13,14 @@ const TeachersData = ({ teacherPageNum, getPageNumber }) => {
   );
   const { loading } = useSelector((state) => state.teachersPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
+  const [openConfirmModal,setOpenConfirmModal] = useState(false)
   const tableHead = [
     { id: 1, label: "Təlimçi adı" },
     { id: 2, label: "Fənn" },
     { id: 3, label: "Email" },
     { id: 4, label: "Telefon nömrəsi" },
     { id: 6, label: "" },
+    {id:8,label:""},
     { id: 7, label: "" },
   ];
 
@@ -38,6 +41,12 @@ const TeachersData = ({ teacherPageNum, getPageNumber }) => {
           {openMoreModal && (
             <MoreModal setOpenMoreModal={setOpenMoreModal} type="teacher" />
           )}
+          {openConfirmModal && (
+            <ConfirmModal
+            setOpenConfirmModal={setOpenConfirmModal}
+            type="teacher"
+            />
+          )}
           <table className="details-table teacher-table">
             <thead>
               <tr>
@@ -55,6 +64,7 @@ const TeachersData = ({ teacherPageNum, getPageNumber }) => {
                   mode="desktop"
                   cellNumber={i + 1 + (teacherPageNum - 1) * 10}
                   setOpenMoreModal={setOpenMoreModal}
+                  setOpenConfirmModal={setOpenConfirmModal}
                 />
               ))}
             </tbody>
@@ -68,6 +78,7 @@ const TeachersData = ({ teacherPageNum, getPageNumber }) => {
                 mode="tablet"
                 cellNumber={i + 1 + (teacherPageNum - 1) * 10}
                 setOpenMoreModal={setOpenMoreModal}
+                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>

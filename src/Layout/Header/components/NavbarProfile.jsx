@@ -129,11 +129,11 @@ const NavbarProfile = () => {
           </div>
         )}
         <div className="notification-con">
-          {userData?.role === "super-admin" && (
+          {/* {userData?.role === "super-admin" && (
             <div className="help-icon" onClick={() => setHowToUse(true)}>
               <HelpIcon />
             </div>
-          )}
+          )} */}
           <div
             className="notification-icon"
             onClick={(e) => handleNotOpenModal(e)}
