@@ -2,7 +2,7 @@ import moment from "moment";
 import "moment/locale/az";
 import { useCustomHook } from "../../../GlobalFunctions/globalFunctions";
 const LessonTableConfirmModal = ({ lessonTableModalData }) => {
-  const { weeksArrFullName, lessonStatusList } = useCustomHook();
+  const { weeksArrFullName } = useCustomHook();
 
   const lessonDay = lessonTableModalData.date
     ? `${moment(lessonTableModalData.date)
