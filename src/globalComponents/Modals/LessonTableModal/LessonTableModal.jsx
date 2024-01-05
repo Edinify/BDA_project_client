@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import {  useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import moment from "moment";
@@ -12,20 +12,21 @@ import Topic from "./components/SelectCollection/Topic";
 import Teacher from "./components/SelectCollection/Teacher";
 import Mentor from "./components/SelectCollection/Mentor";
 import StudentsList from "./components/SelectCollection/StudentList/StudentList";
+
 const LessonTableModal = () => {
   const dispatch = useDispatch();
   const { lessonTableModalData: modalData } = useSelector(
     (state) => state.lessonTableModal
   );
-  const inputNameArr1 = ["date", "time", "changes", "day"];
+
+  const inputNameArr1 = ["date", "time"];
 
   // formik
   const formik = useFormik({
-    initialValues: {
-      group: modalData.group ? modalData.group : "",
-    },
+    initialValues: {},
     validationSchema: ValidationSchema,
   });
+
   const setInputValue = useCallback(
     (key, value) =>
       formik.setValues({
@@ -47,6 +48,7 @@ const LessonTableModal = () => {
     } else {
       setInputValue(keyName, value);
     }
+
     dispatch({
       type: LESSON_TABLE_MODAL_ACTION_TYPE.GET_LESSON_TABLE_MODAL,
       payload: {
@@ -62,7 +64,7 @@ const LessonTableModal = () => {
     });
   };
 
-  console.log(modalData);
+  console.log(modalData, "modal data");
   return (
     <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal">
@@ -111,15 +113,11 @@ const LessonTableModal = () => {
               updateModalState={updateModalState}
               modalData={modalData}
             />
-            <Mentor
+            {/* <Mentor
               formik={formik}
               updateModalState={updateModalState}
               modalData={modalData}
-            />
-            <StudentsList
-              modalData={modalData}
-              updateModalState={updateModalState}
-            />
+            /> */}
           </div>
         </Box>
 

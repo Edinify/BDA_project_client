@@ -135,8 +135,8 @@ export const createLessonTableAction =
   (lessonTableData) => async (dispatch) => {
     dispatch(modalLoading(true));
     try {
-      const { data } = await API.post("/create", lessonTableData);
-      dispatch(getLessonTablePaginationAction(data.lastPage, ""));
+      const { data } = await API.post("/", lessonTableData);
+      dispatch(getLessonTablePaginationAction(data.lastPage, "", data.group));
       dispatch({
         type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
         payload: false,

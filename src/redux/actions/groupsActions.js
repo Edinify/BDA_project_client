@@ -116,9 +116,12 @@ export const getGroupsAction = () => async (dispatch) => {
 export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
   dispatch(pageLoading(true));
   try {
-    const { data } = await API.get(`/with-course?groupsCount=${payload.groupsCount}&searchQuery=${payload.searchQuery}`, {params:{courseIds: payload.courseIds}});
+    const { data } = await API.get(
+      `/with-course?groupsCount=${payload.groupsCount}&searchQuery=${payload.searchQuery}`,
+      { params: { courseIds: payload.courseIds } }
+    );
     // console.log(data);
-    if(payload.groupsCount > 0) {
+    if (payload.groupsCount > 0) {
       dispatch({
         type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL,
         payload: data,
@@ -142,8 +145,10 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
             AccessToken: token?.data?.accesstoken,
           })
         );
-        const { data } = await API.get(`/with-course?groupsCount=${payload.groupsCount}&searchQuery=${payload.searchQuery}&courseId=${payload.courseId}`);
-        if(payload.groupsCount > 0) {
+        const { data } = await API.get(
+          `/with-course?groupsCount=${payload.groupsCount}&searchQuery=${payload.searchQuery}&courseId=${payload.courseId}`
+        );
+        if (payload.groupsCount > 0) {
           dispatch({
             type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL,
             payload: data,
@@ -154,7 +159,6 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
             payload: data,
           });
         }
-  
       } catch (error) {
         console.log(error);
         if (error?.response?.status === 401) {
@@ -164,7 +168,7 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
     }
   } finally {
     dispatch(pageLoading(false));
-    dispatch(setLoadingAllGroupsAction(false))
+    dispatch(setLoadingAllGroupsAction(false));
   }
 };
 
@@ -235,7 +239,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
     });
     toastSuccess("Yeni əməkdaş yaradıldı");
   } catch (error) {
-    const originalRequest = error.config
+    const originalRequest = error.config;
     console.log(error);
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
