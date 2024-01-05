@@ -10,6 +10,7 @@ const UpdateDeleteModal = ({
   data,
   dataType = "",
 }) => {
+  
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { funcComp } = useSelector((state) => state.funcComponent);

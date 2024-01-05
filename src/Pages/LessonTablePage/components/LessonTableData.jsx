@@ -13,7 +13,7 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
   );
   const [openStudentModal, setOpenStudentModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
-  const [students, setStudents] = useState();
+  const [students, setStudents] = useState([]);
   const [togggleIcon, setToggleIcon] = useState(true);
   const tableHead = [
     "Dərs günü",
@@ -25,6 +25,8 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
     "",
     "",
   ];
+
+  console.log(students, "students-----------------");
 
   return (
     <>
@@ -58,10 +60,10 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
             </thead>
 
             <tbody>
-              {lessonTableData?.map((teacher, i) => (
+              {lessonTableData?.map((lesson, i) => (
                 <LessonTableCard
                   key={i}
-                  data={teacher}
+                  data={lesson}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
                   setOpenStudentModal={setOpenStudentModal}

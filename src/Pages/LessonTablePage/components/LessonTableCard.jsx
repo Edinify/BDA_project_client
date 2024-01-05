@@ -6,7 +6,13 @@ import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActio
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
 
-const LessonTableCard = ({ data, mode, cellNumber, setOpenConfirmModal, setOpenStudentModal }) => {
+const LessonTableCard = ({
+  data,
+  mode,
+  setOpenConfirmModal,
+  setOpenStudentModal,
+  setStudents,
+}) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
   const { lessonTableData, lastPage } = useSelector(
@@ -122,7 +128,7 @@ const LessonTableCard = ({ data, mode, cellNumber, setOpenConfirmModal, setOpenS
           <td className="student-length">
             <div
               onClick={() => {
-                // setStudents(data.students);
+                setStudents(data.students);
                 setOpenStudentModal(true);
               }}
               className="td-con"

@@ -12,13 +12,13 @@ const LessonTableConfirmModal = ({ lessonTableModalData }) => {
       },`
     : "";
 
-  const students = lessonTableModalData.students.map(
-    (student) => student.student.fullName
-  );
+  const students =
+    lessonTableModalData.students?.map((student) => student.student.fullName) ||
+    [];
 
   const dataList1 = [
-    { title: "Qrup", value: lessonTableModalData?.group.name },
-    { title: "Ixtisas", value: lessonTableModalData?.group.course.name },
+    { title: "Qrup", value: lessonTableModalData?.group?.name },
+    { title: "Ixtisas", value: lessonTableModalData?.group?.course?.name },
     {
       title: "Mövzu",
       value: `${lessonTableModalData?.topic?.orderNumber}. ${lessonTableModalData?.topic?.name}`,
