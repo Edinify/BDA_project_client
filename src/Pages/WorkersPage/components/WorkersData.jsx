@@ -15,6 +15,7 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
 
   const tableHead = [
     "Ad soyad",
+    "Fin kod",
     "Email",
     "Mobil nömrə",
     "Pozisiya",

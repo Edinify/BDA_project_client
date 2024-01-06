@@ -24,6 +24,14 @@ export default function InputField({
       inputValue: modalData[inputName] || "",
     },
     {
+      inputName: "fin",
+      label: "Fin kod",
+      type: "text",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue: modalData[inputName] || "",
+    },
+    {
       inputName: "birthday",
       label: "Doğum tarixi",
       type: "date",
@@ -81,7 +89,7 @@ export default function InputField({
   return (
     <div
       className={
-        inputData.find((item) => item.inputName === inputName)?.className || ''
+        inputData.find((item) => item.inputName === inputName)?.className || ""
       }
     >
       <TextField

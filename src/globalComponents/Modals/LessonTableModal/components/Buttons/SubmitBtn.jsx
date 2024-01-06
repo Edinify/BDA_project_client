@@ -61,7 +61,7 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
   console.log(isDisabled, "modal loading");
 
   return (
-    <div>
+    <>
       <div className="create-update-modal-btn">
         <button disabled={false} onClick={dataCreate}>
           {modalLoading ? (
@@ -73,7 +73,7 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
           )}
         </button>
       </div>
-    </div>
+    </>
   );
 };
 

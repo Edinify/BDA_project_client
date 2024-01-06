@@ -3,6 +3,7 @@ import { LESSON_TABLE_MODAL_ACTION_TYPE } from "../actions-type";
 const initialState = {
   lessonTableModalData: {},
   lessonTableOpenModal: false,
+  openStudentModal: false,
   lessonTableModalLoading: false,
 };
 
@@ -24,6 +25,11 @@ export const lessonTableModalReducer = (state = initialState, action) => {
       return {
         ...state,
         lessonTableModalLoading: action.payload,
+      };
+    case LESSON_TABLE_MODAL_ACTION_TYPE.STUDENT_MODAL:
+      return {
+        ...state,
+        openStudentModal: action.payload,
       };
     default:
       return state;

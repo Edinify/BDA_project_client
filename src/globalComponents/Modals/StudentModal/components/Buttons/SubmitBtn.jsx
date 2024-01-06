@@ -21,26 +21,29 @@ const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
     }
   });
   const studentCreate = () => {
-    const courses = modalData?.courses.map((item) => {
+    const courses = modalData?.courses?.map((item) => {
       return item._id;
     });
-    const groups = modalData?.groups.map((item) => {
-      return {...item, group: item.group._id};
+    const groups = modalData?.groups?.map((item) => {
+      return { ...item, group: item.group._id };
     });
 
     if (modalData?._id) {
       dispatch(
-        updateStudentsAction(modalData?._id, { ...modalData, courses: courses, groups: groups })
+        updateStudentsAction(modalData?._id, {
+          ...modalData,
+          courses: courses,
+          groups: groups,
+        })
       );
     } else {
       dispatch({
         type: SEARCH_VALUES_ACTION_TYPES.STUDENTS_SEARCH_VALUE,
         payload: "",
       });
-      const courses = modalData?.courses.map((item) => {
-        return item._id;
-      });
-      dispatch(createStudentsAction({ ...modalData, courses: courses, groups: groups  }));
+      dispatch(
+        createStudentsAction({ ...modalData, courses: courses, groups: groups })
+      );
     }
   };
 

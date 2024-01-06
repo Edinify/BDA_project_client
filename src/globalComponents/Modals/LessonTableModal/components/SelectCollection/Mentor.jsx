@@ -5,20 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { getActiveTeachersAction } from "../../../../../redux/actions/teachersActions";
 
 const Mentor = ({ formik, modalData, updateModalState }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { teachers: dataList } = useSelector(
     (state) => state.teachersPagination
   );
-  const inputValue =  modalData.teacher ? modalData.teacher.fullName : ''
+  const inputValue = modalData.teacher ? modalData.teacher.fullName : "";
   const [openDropdown, setOpenDropdown] = useState(false);
   const addData = (item) => {
-    updateModalState("teacher", item)
-    setOpenDropdown(false)
+    updateModalState("teacher", item);
+    setOpenDropdown(false);
   };
 
   useEffect(() => {
-    dispatch(getActiveTeachersAction())
-  }, [])
+    // dispatch(getActiveTeachersAction())
+  }, []);
 
   return (
     <>
@@ -44,7 +44,7 @@ const Mentor = ({ formik, modalData, updateModalState }) => {
               value={inputValue}
               onBlur={() => formik.setFieldTouched("teacher", true)}
             />
-           <DropdownIcon
+            <DropdownIcon
               setOpenDropdown={setOpenDropdown}
               openDropdown={openDropdown}
             />

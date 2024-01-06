@@ -12,6 +12,7 @@ import Topic from "./components/SelectCollection/Topic";
 import Teacher from "./components/SelectCollection/Teacher";
 import Mentor from "./components/SelectCollection/Mentor";
 import StudentsList from "./components/SelectCollection/StudentList/StudentList";
+import Status from "./components/Status/Status";
 
 const LessonTableModal = () => {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const LessonTableModal = () => {
   console.log(modalData, "modal data");
   return (
     <div className="create-update-modal-con teacher-modal">
-      <div className="create-update-modal">
+      <div className="create-update-modal teacher-modal ">
         <div className="create-update-modal-head">
           <h2>{modalData?._id ? "Dərs yenilə" : "Dərs yarat"}</h2>
           <CloseBtn onClick={closeModal} />
@@ -122,10 +123,17 @@ const LessonTableModal = () => {
         </Box>
 
         {modalData?._id ? (
-          // <div className="create-update-modal-btn-con">
+           <div className="modal-buttons">
+           <Status
+          //  updatedResultData={updatedResultData} 
+          //  setUpdatedResultData={setUpdatedResultData}
+          //  futureLesson={futureLesson}
+          //  user={user}
+           />
+          
           <SubmitBtn formik={formik} modalData={modalData} funcType="update" />
+          </div>
         ) : (
-          // </div>
           <SubmitBtn formik={formik} modalData={modalData} funcType="create" />
         )}
 

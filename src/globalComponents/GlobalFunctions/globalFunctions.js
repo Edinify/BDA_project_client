@@ -19,7 +19,15 @@ export function useCustomHook() {
   endWeek.setDate(startWeek.getDate() + 6);
   endWeek.setHours(0, 0, 0, 0);
   const weeksArr = ["", "B.e", "Ç.a", "Ç.", "C.a", "C.", "Ş.", "B."];
-  const weeksArrFullName = ["Bazar", "Bazar ertəsi", "Çərşənbə axşamı", "Çərşənbə", "Cümə axşamı", "Cümə", "Şənbə", ];
+  const weeksArrFullName = [
+    "Bazar",
+    "Bazar ertəsi",
+    "Çərşənbə axşamı",
+    "Çərşənbə",
+    "Cümə axşamı",
+    "Cümə",
+    "Şənbə",
+  ];
 
   const lessonHours = [
     {
@@ -118,17 +126,9 @@ export function useCustomHook() {
     // { name: "Dərs müddətində", key: "duringLesson" },
     // { name: "11 hissəli", key: "2part" },
 
-    { name: "1 hissəli", key: 1 },
-    { name: "2 hissəli", key: 2 },
-    { name: "3 hissəli", key: 3 },
-    { name: "4 hissəli", key: 4 },
-    { name: "5 hissəli", key: 5 },
-    { name: "6 hissəli", key: 6 },
-    { name: "7 hissəli", key: 7 },
-    { name: "8 hissəli", key: 8 },
-    { name: "9 hissəli", key: 9 },
-    { name: "10 hissəli", key: 10 },
-    { name: "11 hissəli", key: 11 },
+    { name: "Tam", key: 1 },
+    { name: "Tədris müddəti", key: 2 },
+    { name: "10 hissəli", key: 3 },
 
     // { name: "Seçim yoxdur", key: "noChoice" },
     // { name: "Kredit Kart Birbaşa", key: "creditCardDirect" },
@@ -164,9 +164,9 @@ export function useCustomHook() {
     { name: "Konsultasiya", key: "consultation" },
   ];
   const generalProfilePowerList = [
-    { name: "Tam", key: "all" },
-    { name: "Yalnız görmək", key: "only-show" },
-    { name: "Dəyişiklik", key: "update" },
+    { name: "Tam-səlahiyyətli", key: "all" },
+    { name: "Yarım-səlahiyyətli", key: "update" },
+    { name: "Heç biri", key: "only-show" },
   ];
 
   const getWeeksBetweenDates = (start, end) => {

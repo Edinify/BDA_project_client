@@ -1,66 +1,89 @@
 import React, { useState } from "react";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
-import { ReactComponent as DropdownArrowIcon } from "../../../assets/icons/dashboard/arrow-down.svg";
 import "./studentLesson.css";
+import { useDispatch } from "react-redux";
+import { updateLessonTableAction } from "../../../redux/actions/lessonTableActions";
+import { LESSON_TABLE_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 
-const StudentLessonModal = ({ students, setOpenStudentModal }) => {
-  const [openStatus, setOpenStatus] = useState({});
+const StudentLessonModal = ({ students, setStudents }) => {
   const [selectedStudentId, setSelectedStudentId] = useState(null);
-  const [statuses, setStatuses] = useState({});
+  const [togggleIcon, setToggleIcon] = useState("");
+  const dispatch = useDispatch();
 
   const handleStudentClick = (studentId) => {
     setSelectedStudentId(studentId);
   };
 
-  const handleStatusChange = (newStatus) => {
-    setStatuses((prevStatuses) => ({
-      ...prevStatuses,
-      [selectedStudentId]: newStatus,
-    }));
+  const updateLessonStudents = () => {
+    dispatch(
+      updateLessonTableAction(students.lessonId, {
+        students: students.data.map((item) => ({
+          ...item,
+          student: item.student._id,
+        })),
+      })
+    );
   };
 
+  const handleStatusChange = (newItem) => {
+    const newStudentsList = students.data.map((item) =>
+      item._id == newItem._id ? newItem : item
+    );
+    setStudents({ ...students, data: newStudentsList });
+  };
+
+  console.log(students, "students kljjlkjkk");
   return (
     <div className="create-update-modal-con">
       <div className="student-lesson-modal">
         <div className="create-update-modal-head">
           <h2>Tələbələr</h2>
-          <CloseBtn onClick={() => setOpenStudentModal(false)} />
+          <CloseBtn
+            onClick={() =>
+              dispatch({
+                type: LESSON_TABLE_MODAL_ACTION_TYPE.STUDENT_MODAL,
+                payload: false,
+              })
+            }
+          />
         </div>
         <div className="students-list">
-          {students?.map((student) => (
+          {students.data?.map((item) => (
             <div
-              onClick={() => handleStudentClick(student._id)}
+              style={{
+                backgroundColor:
+                  item.attendance === 1
+                    ? "blue"
+                    : item.attendance === -1
+                    ? "red"
+                    : "",
+              }}
+              onClick={() =>
+                setToggleIcon(
+                  togggleIcon == item.student._id ? "" : item.student._id
+                )
+              }
+              // onClick={() => handleStudentClick(student.id)}
               className={`student-list ${
-                selectedStudentId === student._id ? "selected" : ""
+                selectedStudentId === item.student._id ? "selected" : ""
               }`}
-              key={student._id}
+              key={item.student._id}
             >
-              <h5>
-                {student.student.fullName}{" "}
-                {statuses[student._id] && (
-                  <span className={`status-indicator ${statuses[student._id]}`}>
-                    {statuses[student._id]}
-                  </span>
-                )}
-              </h5>
+              <h5>{item.student.fullName}</h5>
 
               <div
                 onClick={() => {
                   setSelectedStudentId(
-                    selectedStudentId===student._id ? "" : student._id
-                  )
-                  setOpenStatus((prevStatus) => ({
-                  ...prevStatus,
-                  [student._id]: !prevStatus[student._id],
-                }))}}
+                    selectedStudentId === item.student._id
+                      ? ""
+                      : item.student._id
+                  );
+                }}
                 className="drop-icon"
               >
                 <div className="dropdown-icon">
                   <svg
-                    className={
-                      selectedStudentId === student._id ? "up" : "down"
-                      // togggleIcon === child.student._id ? "up" : "down"
-                    }
+                    className={togggleIcon === item.student._id ? "up" : "down"}
                     width="16"
                     height="17"
                     viewBox="0 0 16 17"
@@ -74,18 +97,29 @@ const StudentLessonModal = ({ students, setOpenStudentModal }) => {
                   </svg>
                 </div>
               </div>
-              {openStatus[student._id] && (
+              {togggleIcon == item.student._id && (
                 <div className="status">
-                  <button onClick={() => handleStatusChange("i/e")}>
+                  <button
+                    onClick={() =>
+                      handleStatusChange({ ...item, attendance: 1 })
+                    }
+                  >
                     i/e
                   </button>
-                  <button onClick={() => handleStatusChange("q/b")}>
+                  <button
+                    onClick={() =>
+                      handleStatusChange({ ...item, attendance: -1 })
+                    }
+                  >
                     q/b
                   </button>
                 </div>
               )}
             </div>
           ))}
+        </div>
+        <div className="confirm-btn">
+          <button onClick={updateLessonStudents}>Təsdiqlə</button>
         </div>
       </div>
     </div>

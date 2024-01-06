@@ -11,10 +11,15 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
   const { lessonTableData, totalPages, loading } = useSelector(
     (state) => state.lessonTablePagination
   );
-  const [openStudentModal, setOpenStudentModal] = useState(false);
+  const { openStudentModal } = useSelector(
+    (state) => state.lessonTableModal
+  );
+
+  console.log(openStudentModal);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
-  const [students, setStudents] = useState([]);
-  const [togggleIcon, setToggleIcon] = useState(true);
+  const [students, setStudents] = useState({ data: [], lessonId: "" });
+  const [updatedResultData, setUpdatedResultData] = useState("");
+
   const tableHead = [
     "Dərs günü",
     "Dərs saatı",
@@ -37,9 +42,9 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
           {openStudentModal && (
             <StudentLessonModal
               students={students}
-              setOpenStudentModal={setOpenStudentModal}
-              setToggleIcon={setToggleIcon}
-              togggleIcon={togggleIcon}
+              setStudents={setStudents}
+              setUpdatedResultData={setUpdatedResultData}
+              updatedResultData={updatedResultData}
             />
           )}
 
@@ -66,7 +71,6 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
                   data={lesson}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
-                  setOpenStudentModal={setOpenStudentModal}
                   setStudents={setStudents}
                   setOpenConfirmModal={setOpenConfirmModal}
                 />
@@ -81,7 +85,6 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
                 data={teacher}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
-                setOpenStudentModal={setOpenStudentModal}
                 setStudents={setStudents}
                 setOpenConfirmModal={setOpenConfirmModal}
               />

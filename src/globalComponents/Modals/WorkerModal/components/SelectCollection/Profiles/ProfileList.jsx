@@ -7,11 +7,7 @@ import ProfileInput from "./ProfileInput";
 import { useCustomHook } from "../../../../../GlobalFunctions/globalFunctions";
 import DropdownIcon from "../../../../components/DropdownIcon/DropdownIcon";
 
-const ProfileList = ({
-  formik,
-  updateModalState,
-  modalData,
-}) => {
+const ProfileList = ({ formik, updateModalState, modalData }) => {
   const dispatch = useDispatch();
   const { generalProfileList } = useCustomHook();
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -72,7 +68,7 @@ const ProfileList = ({
               onClick={() => setOpenDropdown(!openDropdown)}
             />
 
-           <DropdownIcon
+            <DropdownIcon
               setOpenDropdown={setOpenDropdown}
               openDropdown={openDropdown}
             />

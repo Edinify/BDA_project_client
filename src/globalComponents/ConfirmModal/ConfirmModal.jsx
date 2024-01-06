@@ -24,27 +24,32 @@ const ConfirmModal = ({ setOpenConfirmModal, type }) => {
   const { workerModalData } = useSelector((state) => state.workerModal);
   const { groupModalData } = useSelector((state) => state.groupModal);
 
+  const getTypeHeader = (type) => {
+    switch (type) {
+      case "teacher":
+      case "student":
+      case "consultation":
+        return "Şəxsi məlumatlar";
+      case "lesson-table":
+        return "Qrup məlumatları";
+      case "courses":
+        return "Fənn məlumatları";
+      case "syllabus":
+        return "Sillabus məlumatları";
+      case "workers":
+        return "Əməkdaş məlumatları";
+      case "groups":
+        return "Qrup məlumatları";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className="more-modal">
       <div className="more-modal-con">
         <div className="more-modal-header">
-          {type === "teacher" ||
-          type === "student" ||
-          type === "consultation" ? (
-            <h2>Şəxsi məlumatlar</h2>
-          ) : type === "lesson-table" ? (
-            <h2>Qrup məlumatları</h2>
-          ) : type === "courses" ? (
-            <h2>Fənn məlumatları</h2>
-          ) : type === "syllabus" ? (
-            <h2>Sillabus məlumatları</h2>
-          ) : type === "workers" ? (
-            <h2>Əməkdaş məlumatları</h2>
-          ) : type === "groups" ? (
-            <h2>Qrup məlumatları</h2>
-          ) : (
-            ""
-          )}
+         <h2>{getTypeHeader(type)}</h2>
           <div className="more-modal-header-icons">
             <div className="header-icon-close">
               <CloseIcon onClick={() => setOpenConfirmModal(false)} />

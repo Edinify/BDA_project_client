@@ -19,6 +19,7 @@ export const CourseModal = () => {
   const formik = useFormik({
     initialValues: {
       name: modalData?.name ? modalData?.name : "",
+      payments: modalData.payments,
     },
     validationSchema: ValidationSchema,
   });
@@ -31,21 +32,14 @@ export const CourseModal = () => {
     [formik]
   );
 
-  const updateModalState = (keyName, value) => {
-    dispatch({
-      type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL,
-      payload: {
-        data: { ...modalData, [keyName]: value },
-        openModal: true,
-      },
-    });
-  };
   const closeModal = () => {
     dispatch({
       type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL,
       payload: { data: {}, openModal: false },
     });
   };
+
+  console.log(modalData);
 
   return (
     <div className="create-update-modal-con">
@@ -70,11 +64,7 @@ export const CourseModal = () => {
               formik={formik}
               inputName={"name"}
             />
-            <Payments
-              modalData={modalData}
-              updateModalState={updateModalState}
-              formik={formik}
-            />
+            <Payments modalData={modalData} formik={formik} />
           </div>
         </Box>
 

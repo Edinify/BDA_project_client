@@ -4,16 +4,26 @@ import { ReactComponent as MinusIcon } from "../../../../../../assets/icons/minu
 import { ReactComponent as CheckIcon } from "../../../../../../assets/icons/Checkbox.svg";
 import { useCustomHook } from "../../../../../GlobalFunctions/globalFunctions";
 
-const ProfileInput = ({ data, index, deleteClass, modalData, updateModalState }) => {
+const ProfileInput = ({
+  data,
+  index,
+  deleteClass,
+  modalData,
+  updateModalState,
+}) => {
   const { generalProfileList, generalProfilePowerList } = useCustomHook();
   const [openDropdown, setOpenDropdown] = useState(false);
-  const profileName = generalProfileList.find((item) => item.key === data.profile).name;
+  const profileName = generalProfileList.find(
+    (item) => item.key === data.profile
+  ).name;
   const addPower = (selectedPower) => {
     const profileData = [...modalData?.profiles];
     profileData[index] = { ...profileData[index], power: selectedPower };
     updateModalState("profiles", profileData);
-    setOpenDropdown(false)
+    setOpenDropdown(false);
   };
+
+  console.log(data, "dataadksfa");
 
   return (
     <li>
@@ -41,7 +51,10 @@ const ProfileInput = ({ data, index, deleteClass, modalData, updateModalState })
             label="Səlahiyyət"
             autoComplete="off"
             type="text"
-            value={data.power ? data.power : ""}
+            value={
+              generalProfilePowerList.find((item) => item.key === data.power)
+                ?.name || ""
+            }
             disabled
           />
           <div

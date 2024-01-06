@@ -9,7 +9,9 @@ import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 
 const SubmitBtn = ({ formik, modalData, funcType }) => {
   const dispatch = useDispatch();
-  const { workerModalLoading: modalLoading } = useSelector((state) => state.workerModal);
+  const { workerModalLoading: modalLoading } = useSelector(
+    (state) => state.workerModal
+  );
   const [isDisabled, setIsDisabled] = useState(() => {
     if (funcType === "update") {
       return false;
@@ -38,12 +40,10 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
   };
 
   useEffect(() => {
+    console.log(formik.errors, "formik errors");
     setIsDisabled(() => {
       if (funcType === "update") {
-        if (
-          Object.keys(formik.errors).length === 0 &&
-          modalData?.fullName
-        ) {
+        if (Object.keys(formik.errors).length === 0) {
           return false;
         } else if (
           Object.keys(formik.errors).length === 1 &&
@@ -67,13 +67,13 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
     <div>
       <div className="create-update-modal-btn">
         <button disabled={isDisabled || modalLoading} onClick={dataCreate}>
-        {modalLoading ? (
-          <LoadingBtn />
-        ) : funcType === "update" ? (
-          "Yenilə"
-        ) : (
-          "Yarat"
-        )}
+          {modalLoading ? (
+            <LoadingBtn />
+          ) : funcType === "update" ? (
+            "Yenilə"
+          ) : (
+            "Yarat"
+          )}
         </button>
       </div>
     </div>

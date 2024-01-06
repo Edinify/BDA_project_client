@@ -56,6 +56,12 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
               <div className="right-fade"></div>
             </div>
           </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data.fin}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
           <td className="email">
             <div className="td-con">
               <div className="table-scroll-text">{data.email}</div>

@@ -46,7 +46,7 @@ const MentorsList = ({ formik, updateModalState, modalData }) => {
   };
 
   useEffect(() => {
-    dispatch(getActiveTeachersAction());
+    // dispatch(getActiveTeachersAction());
   }, []);
 
   return (

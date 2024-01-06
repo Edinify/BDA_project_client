@@ -1,8 +1,9 @@
 import moment from "moment";
 import "moment/locale/az";
 import { useCustomHook } from "../../../GlobalFunctions/globalFunctions";
+
 const LessonTableConfirmModal = ({ lessonTableModalData }) => {
-  const { weeksArrFullName, lessonStatusList } = useCustomHook();
+  const { weeksArrFullName } = useCustomHook();
 
   const lessonDay = lessonTableModalData.date
     ? `${moment(lessonTableModalData.date)
@@ -32,11 +33,11 @@ const LessonTableConfirmModal = ({ lessonTableModalData }) => {
   return (
     <>
       <div className="more-modal-header-inform">
-        {dataList1.map((item, index) => (
+        {/* {dataList1.map((item, index) => (
           <h3 key={index}>
             {item?.title}: <span>{item?.value}</span>
           </h3>
-        ))}
+        ))} */}
       </div>
     </>
   );

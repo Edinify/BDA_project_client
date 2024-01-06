@@ -5,13 +5,15 @@ import { TextField } from "@mui/material";
 
 const PaymentItem = ({ data, deleteData, addPayment }) => {
   const { paymentTypeList } = useCustomHook();
+
   const paymentType = paymentTypeList.find(
-    (item) => item.key === data.paymentType
+    (item) => item.name === data.paymentType
   ).name;
+
   return (
     <li>
-      <div className="top">
-        ödəniş növü: {paymentType}
+      <div className="top" style={{marginTop: "20px"}}>
+        <span style={{ fontWeight: "bold" }}> ödəniş növü: {paymentType}</span>
         <div className="minus-icon-con">
           <MinusIcon
             className="minus-icon"
