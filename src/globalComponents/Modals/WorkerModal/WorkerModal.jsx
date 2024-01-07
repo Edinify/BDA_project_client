@@ -21,6 +21,7 @@ const WorkerModal = () => {
   const formik = useFormik({
     initialValues: {
       fullName: modalData.fullName ? modalData.fullName : "",
+      fin: modalData.fin ? modalData.fin : "",
       birthday: modalData?.birthday ? modalData?.birthday : "",
       email: modalData.email ? modalData.email : "",
       phone: modalData.phone ? modalData.phone : "",
@@ -41,7 +42,12 @@ const WorkerModal = () => {
 
   const updateModalState = (keyName, value) => {
     if (keyName === "profiles") {
-      const formikValue = value.length > 0 ? (value?.find((item) => !item.power) ? "" : "true") : '' ;
+      const formikValue =
+        value.length > 0
+          ? value?.find((item) => !item.power)
+            ? ""
+            : "true"
+          : "";
       setInputValue("profiles", formikValue);
     } else {
       setInputValue(keyName, value);
@@ -61,6 +67,7 @@ const WorkerModal = () => {
     });
   };
 
+  console.log(modalData, "worker modal data");
   return (
     <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal">
@@ -82,6 +89,13 @@ const WorkerModal = () => {
           <div className="create-update-modal-form">
             <InputField
               inputName="fullName"
+              formik={formik}
+              setInputValue={setInputValue}
+              modalData={modalData}
+              updateModalState={updateModalState}
+            />
+            <InputField
+              inputName="fin"
               formik={formik}
               setInputValue={setInputValue}
               modalData={modalData}

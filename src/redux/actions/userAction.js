@@ -5,14 +5,13 @@ import { apiRoot } from "../../apiRoot";
 
 const refreshApi = axios.create({
   baseURL: `${apiRoot}/user/auth/refresh_token`,
-  withCredentials:true
+  withCredentials: true,
 });
 
 const API = axios.create({
   baseURL: `${apiRoot}/user`,
-    withCredentials:true
+  withCredentials: true,
 });
-
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("auth")) {
@@ -23,17 +22,12 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-
-
 export const userAction = () => async (dispatch) => {
-  
   try {
-
     const { data } = await API.get("/auth");
-    console.log(data)
+    // console.log(data, "user action");
     dispatch({ type: USER_ACTION_TYPE.ADD_USER, payload: data });
-    localStorage.setItem("userData",JSON.stringify(data))
-
+    localStorage.setItem("userData", JSON.stringify(data));
   } catch (error) {
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -49,7 +43,7 @@ export const userAction = () => async (dispatch) => {
 
         const { data } = await API.get("/auth");
         dispatch({ type: USER_ACTION_TYPE.ADD_USER, payload: data });
-        localStorage.setItem("userData",JSON.stringify(data))
+        localStorage.setItem("userData", JSON.stringify(data));
       } catch (error) {
         console.log(error);
         if (error?.response?.status === 401) {
@@ -59,4 +53,3 @@ export const userAction = () => async (dispatch) => {
     }
   }
 };
-

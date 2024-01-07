@@ -4,22 +4,34 @@ import LessonTableCard from "./LessonTableCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import StudentLessonModal from "./StudentLessonModal";
+import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
 const LessonTableData = ({ pageNum, getPageNumber }) => {
   const { lessonTableData, totalPages, loading } = useSelector(
     (state) => state.lessonTablePagination
   );
+  const { openStudentModal } = useSelector(
+    (state) => state.lessonTableModal
+  );
+
+  console.log(openStudentModal);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [students, setStudents] = useState({ data: [], lessonId: "" });
+  const [updatedResultData, setUpdatedResultData] = useState("");
+
   const tableHead = [
-    "Qrup",
-    "İxtisas",
-    "Mövzu",
-    "Müəllim",
-    "Tələbələr",
     "Dərs günü",
     "Dərs saatı",
+    "Mövzu",
+    "Müəllim",
     "Status",
+    "Tələbələr",
+    "",
     "",
   ];
+
+  console.log(students, "students-----------------");
 
   return (
     <>
@@ -27,6 +39,22 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
         <Loading />
       ) : (
         <>
+          {openStudentModal && (
+            <StudentLessonModal
+              students={students}
+              setStudents={setStudents}
+              setUpdatedResultData={setUpdatedResultData}
+              updatedResultData={updatedResultData}
+            />
+          )}
+
+          {openConfirmModal && (
+            <ConfirmModal
+              setOpenConfirmModal={setOpenConfirmModal}
+              type="lesson-table"
+            />
+          )}
+
           <table className="details-table">
             <thead>
               <tr>
@@ -37,12 +65,14 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
             </thead>
 
             <tbody>
-              {lessonTableData?.map((teacher, i) => (
+              {lessonTableData?.map((lesson, i) => (
                 <LessonTableCard
                   key={i}
-                  data={teacher}
+                  data={lesson}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
+                  setStudents={setStudents}
+                  setOpenConfirmModal={setOpenConfirmModal}
                 />
               ))}
             </tbody>
@@ -55,6 +85,8 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
                 data={teacher}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
+                setStudents={setStudents}
+                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>

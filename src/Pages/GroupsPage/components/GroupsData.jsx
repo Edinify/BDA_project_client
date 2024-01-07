@@ -4,12 +4,15 @@ import GroupCard from "./GroupCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
 const GroupsData = ({ pageNum, getPageNumber }) => {
   const dispatch = useDispatch();
   const { groupData, totalPages, loading } = useSelector(
     (state) => state.groupsPagination
   );
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+
   const tableHead = [
     "Qrup adı",
     "İxtisas",
@@ -19,6 +22,7 @@ const GroupsData = ({ pageNum, getPageNumber }) => {
     "Başlama tarixi",
     "Bitmə tarixi",
     "",
+    ""
   ];
 
   return (
@@ -27,6 +31,12 @@ const GroupsData = ({ pageNum, getPageNumber }) => {
         <Loading />
       ) : (
         <>
+        {openConfirmModal && (
+            <ConfirmModal
+              setOpenConfirmModal={setOpenConfirmModal}
+              type="groups"
+            />
+          )}
           <table className="details-table">
             <thead>
               <tr>
@@ -43,6 +53,7 @@ const GroupsData = ({ pageNum, getPageNumber }) => {
                   data={teacher}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
+                  setOpenConfirmModal={setOpenConfirmModal}
                 />
               ))}
             </tbody>
@@ -55,6 +66,7 @@ const GroupsData = ({ pageNum, getPageNumber }) => {
                 data={teacher}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
+                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>

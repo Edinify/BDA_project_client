@@ -137,8 +137,8 @@ export const createLessonTableAction =
   (lessonTableData) => async (dispatch) => {
     dispatch(modalLoading(true));
     try {
-      const { data } = await API.post("/create", lessonTableData);
-      dispatch(getLessonTablePaginationAction(data.lastPage, ""));
+      const { data } = await API.post("/", lessonTableData);
+      dispatch(getLessonTablePaginationAction(data.lastPage, "", data.group));
       dispatch({
         type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
         payload: false,
@@ -179,14 +179,20 @@ export const createLessonTableAction =
 export const updateLessonTableAction =
   (_id, lessonTableData) => async (dispatch) => {
     dispatch(modalLoading(true));
+
     try {
       const { data } = await API.patch(`/${_id}`, lessonTableData);
+
       dispatch({
         type: LESSON_TABLE_ALL_ACTIONS_TYPE.UPDATE_LESSON_TABLE,
         payload: data,
       });
       dispatch({
         type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
+        payload: false,
+      });
+      dispatch({
+        type: LESSON_TABLE_MODAL_ACTION_TYPE.STUDENT_MODAL,
         payload: false,
       });
       toastSuccess("Dərs yeniləndi");

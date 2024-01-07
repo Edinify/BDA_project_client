@@ -4,7 +4,10 @@ import { TextField } from "@mui/material";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { ReactComponent as CheckIcon } from "../../../../../../assets/icons/Checkbox.svg";
 import TeacherInput from "./TeacherInput";
-import { getActiveTeachersAction } from "../../../../../../redux/actions/teachersActions";
+import {
+  getActiveTeachersAction,
+  getTeachersByCourseId,
+} from "../../../../../../redux/actions/teachersActions";
 import DropdownIcon from "../../../../components/DropdownIcon/DropdownIcon";
 
 const TeachersList = ({ formik, updateModalState, modalData }) => {
@@ -46,8 +49,9 @@ const TeachersList = ({ formik, updateModalState, modalData }) => {
   };
 
   useEffect(() => {
-    dispatch(getActiveTeachersAction());
-  }, []);
+    console.log(modalData, "modal data in groups lkdsfj");
+    dispatch(getTeachersByCourseId(modalData?.course?._id));
+  }, [modalData.course]);
 
   return (
     <div>
@@ -70,7 +74,7 @@ const TeachersList = ({ formik, updateModalState, modalData }) => {
               onClick={() => setOpenDropdown(!openDropdown)}
             />
 
-           <DropdownIcon
+            <DropdownIcon
               setOpenDropdown={setOpenDropdown}
               openDropdown={openDropdown}
             />

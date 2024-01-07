@@ -4,12 +4,14 @@ import ConsultationCard from "./ConsultationCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
 const ConsultationData = ({ pageNum, getPageNumber }) => {
   const { totalPages, loading, consultationData } = useSelector(
     (state) => state.consultationPagination
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const tableHead = [
     "Tələbə",
     "Təlimçi",
@@ -19,6 +21,8 @@ const ConsultationData = ({ pageNum, getPageNumber }) => {
     "Konsultasiya tarixi",
     "Konsultasiya saatı",
     "Status",
+    "",
+    "",
     "",
   ];
 
@@ -43,6 +47,13 @@ const ConsultationData = ({ pageNum, getPageNumber }) => {
               type="consultation"
             />
           )}
+
+          {openConfirmModal && (
+            <ConfirmModal
+              setOpenConfirmModal={setOpenConfirmModal}
+              type="consultation"
+            />
+          )}
           <div className="table-con">
             <table className="details-table  student-table">
               <thead>
@@ -59,6 +70,7 @@ const ConsultationData = ({ pageNum, getPageNumber }) => {
                     data={student}
                     mode="desktop"
                     setOpenMoreModal={setOpenMoreModal}
+                    setOpenConfirmModal={setOpenConfirmModal}
                     cellNumber={i + 1 + (pageNum - 1) * 10}
                   />
                 ))}
@@ -74,6 +86,7 @@ const ConsultationData = ({ pageNum, getPageNumber }) => {
                 mode="tablet"
                 setOpenMoreModal={setOpenMoreModal}
                 cellNumber={i + 1 + (pageNum - 1) * 10}
+                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>

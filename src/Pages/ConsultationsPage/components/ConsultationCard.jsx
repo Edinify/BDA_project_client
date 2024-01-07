@@ -7,7 +7,7 @@ import { deleteConsultationAction } from "../../../redux/actions/consultationsAc
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import { useLocation } from "react-router-dom";
 
-const ConsultationCard = ({ mode, setOpenMoreModal, data }) => {
+const ConsultationCard = ({ mode, setOpenMoreModal, data ,setOpenConfirmModal}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { constStatusList } = useCustomHook();
@@ -68,6 +68,11 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data }) => {
     setOpenMoreModal(true);
   };
 
+  const openConfirmModal = () => {
+    setOpenConfirmModal(true);
+    updateItem("more");
+  };
+
   return (
     <>
       {mode === "desktop" ? (
@@ -84,8 +89,11 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data }) => {
         : ""}</td>
           <td>{data?.constTime}</td>
           <td>{constStatusList.find((item) => item.key === data.status)?.name || ""}</td>
-          <td className="more" onClick={() => openMoreModal()}>
+          <td className="more" onClick={openMoreModal}>
             Ətraflı
+          </td>
+          <td className="confirm" onClick={openConfirmModal} >
+            Təsdiqlə
           </td>
           <td>
             <UpdateDeleteModal
@@ -114,7 +122,10 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data }) => {
               deleteItem={deleteItem}
               data={data}
             />
-            <span onClick={() => openMoreModal()}>Ətraflı</span>
+             <div className="more-content">
+              <span onClick={openMoreModal}>Ətraflı</span>
+              <span onClick={openConfirmModal}>Təsdiqlə</span>
+            </div>
           </div>
         </div>
       )}

@@ -76,7 +76,6 @@ const modalLoading = (loadingValue) => ({
   payload: loadingValue,
 });
 
-
 export const getAllTeachersAction = () => async (dispatch) => {
   try {
     const { data } = await API.get("/all");
@@ -109,6 +108,43 @@ export const getAllTeachersAction = () => async (dispatch) => {
 export const getActiveTeachersAction = () => async (dispatch) => {
   try {
     const { data } = await API.get("/active");
+    dispatch({
+      type: TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHERS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.get("/active");
+        dispatch({
+          type: TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHERS,
+          payload: data,
+        });
+      } catch (error) {
+        console.log(error);
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+        }
+      }
+    }
+  }
+};
+
+export const getTeachersByCourseId = (courseId) => async (dispatch) => {
+  try {
+    const { data } = await API.get("/by-course", {
+      params: { courseId: courseId },
+    });
     dispatch({
       type: TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHERS,
       payload: data,
@@ -292,44 +328,48 @@ export const updateTeacherAction = (_id, teacherData) => async (dispatch) => {
   }
 };
 
-export const deleteTeacherAction = ({_id, pageNumber, searchQuery, status}) => async (dispatch) => {
-  try {
-    await API.delete(`/${_id}`);
-    dispatch(getTeachersPaginationAction(pageNumber, searchQuery, status));
-    dispatch({ type: TEACHER_ALL_ACTIONS_TYPE.DELETE_TEACHER, payload: _id });
-    toastSuccess("Təlimçi silindi");
-  } catch (error) {
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-        await API.delete(`/${_id}`);
-        dispatch(getTeachersPaginationAction(pageNumber, searchQuery, status));
-        dispatch({
-          type: TEACHER_ALL_ACTIONS_TYPE.DELETE_TEACHER,
-          payload: _id,
-        });
-        toastSuccess("Təlimçi silindi");
-      } catch (error) {
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
+export const deleteTeacherAction =
+  ({ _id, pageNumber, searchQuery, status }) =>
+  async (dispatch) => {
+    try {
+      await API.delete(`/${_id}`);
+      dispatch(getTeachersPaginationAction(pageNumber, searchQuery, status));
+      dispatch({ type: TEACHER_ALL_ACTIONS_TYPE.DELETE_TEACHER, payload: _id });
+      toastSuccess("Təlimçi silindi");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          await API.delete(`/${_id}`);
+          dispatch(
+            getTeachersPaginationAction(pageNumber, searchQuery, status)
+          );
+          dispatch({
+            type: TEACHER_ALL_ACTIONS_TYPE.DELETE_TEACHER,
+            payload: _id,
+          });
+          toastSuccess("Təlimçi silindi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
         }
       }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan təlimçi silinə bilməz");
+      }
+      console.log(error);
+      toastError(error?.response?.data.message);
     }
-    if (error?.response?.data?.key === "has-current-week-lessons") {
-      toastError("Cari həftədə  dərsi olan təlimçi silinə bilməz");
-    }
-    console.log(error);
-    toastError(error?.response?.data.message);
-  }
-};
+  };
 
 export const getTeacherLessonStatisticsAction =
   (startDate, endDate, monthCount) => async (dispatch) => {

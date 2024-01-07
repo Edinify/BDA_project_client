@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CourseCard from "./CourseCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
+import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
 const CoursesData = ({ coursePageNum, getPageNumber }) => {
-  const { courses, totalPages } = useSelector((state) => state.coursesPagination);
+  const { courses, totalPages } = useSelector(
+    (state) => state.coursesPagination
+  );
   const { loading } = useSelector((state) => state.coursesPagination);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+
   const tableHead = [
     { id: 1, label: "Fənn adı" },
+    { id: 2, label: "" },
     { id: 3, label: "" },
   ];
   return (
@@ -17,6 +23,12 @@ const CoursesData = ({ coursePageNum, getPageNumber }) => {
         <Loading />
       ) : (
         <>
+          {openConfirmModal && (
+            <ConfirmModal
+              setOpenConfirmModal={setOpenConfirmModal}
+              type="courses"
+            />
+          )}
           <table className="details-table courses-table">
             <thead>
               <tr>
@@ -25,7 +37,7 @@ const CoursesData = ({ coursePageNum, getPageNumber }) => {
                 ))}
               </tr>
             </thead>
-            
+
             <tbody>
               {courses.map((courseName, i) => (
                 <CourseCard
@@ -33,6 +45,7 @@ const CoursesData = ({ coursePageNum, getPageNumber }) => {
                   data={courseName}
                   mode="desktop"
                   cellNumber={i + 1 + (coursePageNum - 1) * 10}
+                  setOpenConfirmModal={setOpenConfirmModal}
                 />
               ))}
             </tbody>
@@ -46,6 +59,7 @@ const CoursesData = ({ coursePageNum, getPageNumber }) => {
                 data={courseName}
                 mode="mobile"
                 cellNumber={i + 1 + (coursePageNum - 1) * 10}
+                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>

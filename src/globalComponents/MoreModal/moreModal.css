@@ -5,8 +5,8 @@
   position: fixed;
   right: 0;
   bottom: 0;
-  /* top: 70px;
-  height: 100%; */
+  /* top: 70px; */
+  height: 100%;
 }
 .more-modal .more-modal-con {
   width: 370px;
@@ -123,6 +123,27 @@
 }
 .more-modal .more-status.active {
   color: #00bc85;
+}
+
+
+.more-modal .confirm-btns{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.more-modal .confirm-btns button{
+  background-color: var(--primary-500);
+  border-radius: 8px;
+  padding: 10px 24px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 16px;
+  font-weight: 600;
+}
+.more-modal .confirm-btns .cancel{
+  background-color: var(--error-600);
 }
 
 @media screen and (max-width: 1280px) {

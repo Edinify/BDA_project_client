@@ -4,7 +4,7 @@ import { SYLLABUS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteSyllabusAction } from "../../../redux/actions/syllabusActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
-const SyllabusCard = ({ data, mode, cellNumber }) => {
+const SyllabusCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
   const dispatch = useDispatch();
   const { selectedCourse } = useSelector((state) => state.syllabusCourse);
 
@@ -13,12 +13,12 @@ const SyllabusCard = ({ data, mode, cellNumber }) => {
   );
   const { syllabusSearchValues } = useSelector((state) => state.searchValues);
 
-  const updateItem = () => {
+  const updateItem = (modalType) => {
     dispatch({
       type: SYLLABUS_MODAL_ACTION_TYPE.GET_SYLLABUS_MODAL,
       payload: {
         data: data,
-        openModal: true,
+        openModal: modalType !== "more" ? true : false,
       },
     });
   };
@@ -31,6 +31,11 @@ const SyllabusCard = ({ data, mode, cellNumber }) => {
     dispatch(deleteSyllabusAction({ _id, pageNumber, searchQuery, courseId }));
   };
 
+  const openConfirmModal = () => {
+    setOpenConfirmModal(true);
+    updateItem("more");
+  };
+
   return (
     <>
       {mode === "desktop" ? (
@@ -41,6 +46,9 @@ const SyllabusCard = ({ data, mode, cellNumber }) => {
               <div className="table-scroll-text">{data.name}</div>
               <div className="right-fade"></div>
             </div>
+          </td>
+          <td className="confirm" onClick={openConfirmModal}>
+            Təsdiqlə
           </td>
           <td>
             <UpdateDeleteModal
@@ -71,6 +79,9 @@ const SyllabusCard = ({ data, mode, cellNumber }) => {
               deleteItem={deleteItem}
               data={data}
             />
+            <div className="more-content">
+              <span onClick={openConfirmModal}>Təsdiqlə</span>
+            </div>
           </div>
         </div>
       )}

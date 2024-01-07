@@ -1,8 +1,7 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
-import { useEffect, useState } from "react";
-import { ReactComponent as Eye } from "../../../../../assets/icons/eye.svg";
-import { ReactComponent as EyeSlash } from "../../../../../assets/icons/eye-slash.svg";
+import { useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useCustomHook } from "../../../../GlobalFunctions/globalFunctions";
 
@@ -13,7 +12,7 @@ export default function InputField({
   updateModalState,
 }) {
   const dispatch = useDispatch();
-  const {weeksArrFullName} = useCustomHook()
+  const { weeksArrFullName } = useCustomHook();
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [shrink, setShrink] = useState(false);
   const inputData = [
@@ -32,9 +31,10 @@ export default function InputField({
       type: "text",
       marginTop: "24px",
       marginBottom: "0",
-      inputValue:  inputName === "day"
-      ? weeksArrFullName[moment(new Date(modalData.date)).day()]
-      : "",
+      inputValue:
+        inputName === "day"
+          ? weeksArrFullName[moment(new Date(modalData.date)).day()]
+          : "",
     },
     {
       inputName: "date",
@@ -57,14 +57,6 @@ export default function InputField({
       inputValue: modalData[inputName] || "",
     },
     {
-      inputName: "changes",
-      label: "Dəyişikliklər",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
       inputName: "topic",
       label: "Dəyişikliklər",
       type: "text",
@@ -77,7 +69,7 @@ export default function InputField({
   return (
     <div
       className={
-        inputData.find((item) => item.inputName === inputName)?.className || ''
+        inputData.find((item) => item.inputName === inputName)?.className || ""
       }
     >
       <TextField
@@ -94,7 +86,7 @@ export default function InputField({
         }}
         InputLabelProps={{
           shrink:
-           ( inputName === "date" || inputName === "time")
+            inputName === "date" || inputName === "time"
               ? true
               : inputData.find((item) => item.inputName === inputName)
                   .inputValue
@@ -120,17 +112,16 @@ export default function InputField({
         onChange={(e) => updateModalState(inputName, e.target.value)}
         onBlur={(e) => {
           formik.setFieldTouched(inputName, true);
-          setShrink(!!e.target.value);
+          setShrink(!e.target.value);
         }}
         onFocus={() => setShrink(true)}
       />
 
-      { formik.errors[inputName] &&
-          formik.touched[inputName] && (
-            <small className="validation-err-message">
-              {formik.errors[inputName]}
-            </small>
-          )}
+      {formik.errors[inputName] && formik.touched[inputName] && (
+        <small className="validation-err-message">
+          {formik.errors[inputName]}
+        </small>
+      )}
     </div>
   );
 }

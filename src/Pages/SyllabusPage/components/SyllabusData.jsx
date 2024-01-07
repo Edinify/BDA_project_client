@@ -3,16 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import SyllabusCard from "./SyllabusCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
-import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
-
+import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal"
 const SyllabusData = ({ pageNum, getPageNumber }) => {
   const dispatch = useDispatch();
   const { syllabusData, totalPages, loading } = useSelector(
     (state) => state.syllabusPagination
   );
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const tableHead = [
     "No",
     "Mövzü",
+    "",
     "",
   ];
 
@@ -22,6 +23,12 @@ const SyllabusData = ({ pageNum, getPageNumber }) => {
         <Loading />
       ) : (
         <>
+        {openConfirmModal && (
+            <ConfirmModal
+              setOpenConfirmModal={setOpenConfirmModal}
+              type="syllabus"
+            />
+          )}
           <table className="details-table syllabus-table">
             <thead>
               <tr>
@@ -38,6 +45,7 @@ const SyllabusData = ({ pageNum, getPageNumber }) => {
                   data={teacher}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
+                  setOpenConfirmModal={setOpenConfirmModal}
                 />
               ))}
             </tbody>
@@ -50,6 +58,7 @@ const SyllabusData = ({ pageNum, getPageNumber }) => {
                 data={teacher}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
+                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>

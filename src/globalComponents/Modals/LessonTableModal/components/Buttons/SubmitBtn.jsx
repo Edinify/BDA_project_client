@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateLessonTableAction, createLessonTableAction } from "../../../../../redux/actions/lessonTableActions";
+import {
+  updateLessonTableAction,
+  createLessonTableAction,
+} from "../../../../../redux/actions/lessonTableActions";
 import { SEARCH_VALUES_ACTION_TYPES } from "../../../../../redux/actions-type";
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 
 const SubmitBtn = ({ formik, modalData, funcType }) => {
   const dispatch = useDispatch();
-  const { lessonTableModalLoading: modalLoading } = useSelector((state) => state.lessonTableModal);
+  const { lessonTableModalLoading: modalLoading } = useSelector(
+    (state) => state.lessonTableModal
+  );
   const [isDisabled, setIsDisabled] = useState(() => {
     if (funcType === "update") {
       return false;
@@ -14,6 +19,7 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
       return true;
     }
   });
+
   const dataCreate = () => {
     dispatch({
       type: SEARCH_VALUES_ACTION_TYPES.LESSON_TABLE_SEARCH_VALUE,
@@ -22,25 +28,15 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
     if (modalData?._id) {
       dispatch(updateLessonTableAction(modalData?._id, modalData));
     } else {
-      dispatch({
-        type: SEARCH_VALUES_ACTION_TYPES.LESSON_TABLE_SEARCH_VALUE,
-        payload: "",
-      });
-      dispatch(
-        createLessonTableAction({
-          ...modalData,
-        })
-      );
+      dispatch(createLessonTableAction(modalData));
     }
   };
 
   useEffect(() => {
+    console.log(funcType, "func type");
     setIsDisabled(() => {
       if (funcType === "update") {
-        if (
-          Object.keys(formik.errors).length === 0 &&
-          modalData?.fullName
-        ) {
+        if (Object.keys(formik.errors).length === 0) {
           return false;
         } else if (
           Object.keys(formik.errors).length === 1 &&
@@ -51,7 +47,9 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
           return true;
         }
       } else {
-        if (formik.isValid && modalData?.fullName) {
+        console.log(formik.isValid, "formik is valid");
+        console.log(modalData);
+        if (formik.isValid) {
           return false;
         } else {
           return true;
@@ -60,20 +58,22 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
     });
   }, [formik.errors]);
 
+  console.log(isDisabled, "modal loading");
+
   return (
-    <div>
+    <>
       <div className="create-update-modal-btn">
-        <button disabled={isDisabled || modalLoading} onClick={dataCreate}>
-        {modalLoading ? (
-          <LoadingBtn />
-        ) : funcType === "update" ? (
-          "Yenilə"
-        ) : (
-          "Yarat"
-        )}
+        <button disabled={false} onClick={dataCreate}>
+          {modalLoading ? (
+            <LoadingBtn />
+          ) : funcType === "update" ? (
+            "Yenilə"
+          ) : (
+            "Yarat"
+          )}
         </button>
       </div>
-    </div>
+    </>
   );
 };
 
