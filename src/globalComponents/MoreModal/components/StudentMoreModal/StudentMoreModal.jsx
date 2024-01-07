@@ -109,7 +109,7 @@ const StudentMoreModal = ({ studentsModalData }) => {
                 {
                   discountReasonList.find(
                     (data) => data.key === item?.discountReason
-                  ).name
+                  )?.name
                 }
               </span>
             </h3>
