@@ -25,6 +25,17 @@ const StudentLessonModal = ({ students, setStudents }) => {
     );
   };
 
+
+  const getBackgroundColor = (item) => {
+    if (item.attendance === 1) {
+      return "#D4FFBF";
+    } else if (item.attendance === -1) {
+      return "#FFCED1";
+    } else {
+      return "";
+    }
+  };
+
   const handleStatusChange = (newItem) => {
     const newStudentsList = students.data.map((item) =>
       item._id == newItem._id ? newItem : item
@@ -37,7 +48,7 @@ const StudentLessonModal = ({ students, setStudents }) => {
     <div className="create-update-modal-con">
       <div className="student-lesson-modal">
         <div className="create-update-modal-head">
-          <h2>Tələbələr</h2>
+          <p className="content-type" >Tələbələr</p>
           <CloseBtn
             onClick={() =>
               dispatch({
@@ -50,14 +61,7 @@ const StudentLessonModal = ({ students, setStudents }) => {
         <div className="students-list">
           {students.data?.map((item) => (
             <div
-              style={{
-                backgroundColor:
-                  item.attendance === 1
-                    ? "blue"
-                    : item.attendance === -1
-                    ? "red"
-                    : "",
-              }}
+              style={{backgroundColor:getBackgroundColor(item)}}
               onClick={() =>
                 setToggleIcon(
                   togggleIcon == item.student._id ? "" : item.student._id
@@ -69,7 +73,7 @@ const StudentLessonModal = ({ students, setStudents }) => {
               }`}
               key={item.student._id}
             >
-              <h5>{item.student.fullName}</h5>
+              <div className="student-name" >{item.student.fullName}</div>
 
               <div
                 onClick={() => {
@@ -98,21 +102,25 @@ const StudentLessonModal = ({ students, setStudents }) => {
                 </div>
               </div>
               {togggleIcon == item.student._id && (
-                <div className="status">
-                  <button
+                <div
+                className={`status ${
+                  togggleIcon === item.student._id ? "active" : ""
+                }`}
+              >
+                  <p
                     onClick={() =>
                       handleStatusChange({ ...item, attendance: 1 })
                     }
                   >
                     i/e
-                  </button>
-                  <button
+                  </p>
+                  <p
                     onClick={() =>
                       handleStatusChange({ ...item, attendance: -1 })
                     }
                   >
                     q/b
-                  </button>
+                  </p>
                 </div>
               )}
             </div>
