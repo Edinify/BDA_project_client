@@ -31,9 +31,11 @@ const toastError = (message) => {
 };
 
 export const loginAction = (authData) => async (dispatch) => {
+  console.log(authData)
   dispatch(setLoadingAction(true));
   try {
     const { data } = await API.post("/auth/login", authData);
+    console.log(data)
     dispatch({ type: AUTH_ALL_ACTION_TYPE.LOGIN, payload: { data: data } });
   } catch (error) {
     console.log(error);

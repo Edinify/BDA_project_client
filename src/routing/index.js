@@ -25,11 +25,12 @@ export const Routing = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const token = localStorage.getItem("auth");
 
+  console.log(auth)
   useEffect(() => {
     if (token) {
-      // if (!user._id) {
-      //   dispatch(userAction());
-      // }
+      if (!user._id) {
+        dispatch(userAction());
+      }
       if (user.role === "super-admin" && !notFound) {
         if (location.pathname.startsWith("/login")) {
           navigate("/");
