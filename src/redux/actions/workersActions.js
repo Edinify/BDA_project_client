@@ -196,9 +196,11 @@ export const getWorkersPaginationAction =
   };
 
 export const createWorkerAction = (workerData) => async (dispatch) => {
+  console.log(workerData)
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/create", workerData);
+    console.log(data)
     dispatch(getWorkersPaginationAction(data.lastPage, ""));
     dispatch({
       type: WORKER_MODAL_ACTION_TYPE.WORKER_OPEN_MODAL,
