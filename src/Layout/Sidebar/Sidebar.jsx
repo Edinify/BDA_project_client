@@ -6,7 +6,7 @@ import SidebarSuperAdmin from "./components/SidebarSuperAdmin/SidebarSuperAdmin"
 import SidebarTeacher from "./components/SidebarTeacher/SidebarTeacher";
 import { SIDEBAR_ACTION_TYPE } from "../../redux/actions-type";
 import SidebarHead from "./components/SidebarHead/SidebarHead";
-import SidebarStudent from "./components/SidebarStudent/SidebarStudent";
+import SidebarWorkers from "./components/SidebarWorkers/SidebarWorkers";
 import { profileGetImage } from "../../redux/actions/profileImageAction";
 
 const Sidebar = () => {
@@ -16,12 +16,10 @@ const Sidebar = () => {
 
   const closeSidebar = () => {
     dispatch({ type: SIDEBAR_ACTION_TYPE.SIDEBAR_OPEN_MODAL, payload: false });
-    // dispatch(profileGetImage())
   };
   const openFullSidebar = () => {
     dispatch({ type: SIDEBAR_ACTION_TYPE.SIDEBAR_OPEN_MODAL, payload: true });
   };
-
   return (
     <div className={`main-sidebar ${openSidebar ? "active" : ""}`}>
       <div className="main-sidebar-con">
@@ -41,8 +39,8 @@ const Sidebar = () => {
           {userData?.role === "teacher" && (
             <SidebarTeacher closeSidebar={closeSidebar} />
           )}
-          {userData?.role === "student" && (
-            <SidebarStudent closeSidebar={closeSidebar} />
+          {userData?.role === "worker" && (
+            <SidebarWorkers closeSidebar={closeSidebar} profiles={userData.profiles} />
           )}
         </div>
       </div>

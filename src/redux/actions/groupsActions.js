@@ -236,7 +236,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
     dispatch({
       type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
       payload: false,
-    });
+    }); 
     toastSuccess("Yeni əməkdaş yaradıldı");
   } catch (error) {
     const originalRequest = error.config;

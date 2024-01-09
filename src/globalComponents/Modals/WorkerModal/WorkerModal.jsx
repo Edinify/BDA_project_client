@@ -31,6 +31,8 @@ const WorkerModal = () => {
     },
     validationSchema: ValidationSchema,
   });
+
+  
   const setInputValue = useCallback(
     (key, value) =>
       formik.setValues({
@@ -50,8 +52,10 @@ const WorkerModal = () => {
           : "";
       setInputValue("profiles", formikValue);
     } else {
+      // console.log(keyName, value)
       setInputValue(keyName, value);
     }
+    console.log( keyName, value )
     dispatch({
       type: WORKER_MODAL_ACTION_TYPE.GET_WORKER_MODAL,
       payload: {
@@ -67,7 +71,7 @@ const WorkerModal = () => {
     });
   };
 
-  console.log(modalData, "worker modal data");
+  // console.log(modalData, "worker modal data");
   return (
     <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal">

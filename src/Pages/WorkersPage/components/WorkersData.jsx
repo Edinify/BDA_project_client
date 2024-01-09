@@ -6,7 +6,7 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const WorkersData = ({ pageNum, getPageNumber }) => {
+const WorkersData = ({userData, pageNum, getPageNumber }) => {
   const dispatch = useDispatch();
   const { workers, totalPages, loading } = useSelector(
     (state) => state.workersPagination
@@ -23,7 +23,6 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
     "",
     "",
   ];
-
   return (
     <>
       {loading ? (
@@ -50,6 +49,7 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
                 <WorkerCard
                   key={i}
                   data={teacher}
+                  worker={userData}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
                   setOpenConfirmModal={setOpenConfirmModal}
@@ -63,6 +63,7 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
               <WorkerCard
                 key={i}
                 data={teacher}
+                worker={userData}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
                 setOpenConfirmModal={setOpenConfirmModal}

@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WORKER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteWorkerAction } from "../../../redux/actions/workersActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
-const WorkerCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
+const WorkerCard = ({ data, mode, worker, cellNumber, setOpenConfirmModal }) => {
   const { generalProfileList, generalProfilePowerList } = useCustomHook();
   const dispatch = useDispatch();
   const { workers, lastPage } = useSelector((state) => state.workersPagination);
   const { workersSearchValues } = useSelector((state) => state.searchValues);
+  const userData = JSON.parse(localStorage.getItem("userData")) 
   let profiles =
     Array.isArray(data.profiles) && data.profiles.length > 0
       ? data.profiles
@@ -45,6 +46,8 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
     setOpenConfirmModal(true);
     updateItem("more");
   };
+  
+  console.log(worker)
   return (
     <>
       {mode === "desktop" ? (
@@ -89,13 +92,34 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
           <td className="confirm" onClick={openConfirmModal}>
             Təsdiqlə
           </td>
-
           <td>
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
+            {
+              worker?.power === "update" ? 
+              <>
+                  <UpdateDeleteModal
+                  updateItem={updateItem}
+                  deleteItem={deleteItem}
+                  state={worker}
+                  data={data}
+                /> 
+              </> : worker?.power === "all" ? <>
+              <UpdateDeleteModal
+                  updateItem={updateItem}
+                  deleteItem={deleteItem}
+                  state={worker}
+                  data={data}
+                /> 
+              </> :<></>
+            }
+            {
+              userData?.role === "super-admin" && <>
+                <UpdateDeleteModal
+                  updateItem={updateItem}
+                  deleteItem={deleteItem}
+                  data={data}
+                />
+              </>
+            }
           </td>
         </tr>
       ) : (
@@ -122,11 +146,19 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
             </ul>
           </div>
           <div className="right">
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
+            {
+              userData?.power === "update"  ?
+              <>
+                <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                />
+            </> : <>
+              
+            </>
+            }
+            
             <div className="more-content">
               <span onClick={openConfirmModal}>Təsdiqlə</span>
             </div>

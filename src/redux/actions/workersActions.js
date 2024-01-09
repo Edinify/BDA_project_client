@@ -196,9 +196,11 @@ export const getWorkersPaginationAction =
   };
 
 export const createWorkerAction = (workerData) => async (dispatch) => {
+  console.log(workerData)
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/create", workerData);
+    console.log(data)
     dispatch(getWorkersPaginationAction(data.lastPage, ""));
     dispatch({
       type: WORKER_MODAL_ACTION_TYPE.WORKER_OPEN_MODAL,
@@ -252,6 +254,7 @@ export const updateWorkerAction = (_id, workerData) => async (dispatch) => {
     });
     toastSuccess("İşçi yeniləndi");
   } catch (error) {
+    console.log(error)
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;

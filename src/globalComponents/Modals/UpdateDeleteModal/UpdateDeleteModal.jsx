@@ -7,6 +7,7 @@ import DeleteItemModal from "../DeleteItemModal/DeleteItemModal";
 const UpdateDeleteModal = ({
   updateItem = () => {},
   deleteItem = () => {},
+  state,
   data,
   dataType = "",
 }) => {
@@ -48,22 +49,25 @@ const UpdateDeleteModal = ({
   return (
     <div className="func-component">
       <MoreIcon className="more-icon" onMouseDown={handleToggleModal} />
+      
       <div
         className={`delete-update-modal ${
           funcComp === data._id ? "active" : ""
         }`}
         ref={modalRef}
       >
+
         <>
           {dataType !== "feedback" && (
             <h4 onClick={() => updateItem()}>Yenilə</h4>
           )}
+          {state?.power !== "update" &&
           <h4
             className={`delete-func ${dataType === "branches" ? "only" : ""}`}
             onClick={() => setShowDeleteModal(true)}
           >
             Sil
-          </h4>
+          </h4>}
         </>
       </div>
       {showDeleteModal && (

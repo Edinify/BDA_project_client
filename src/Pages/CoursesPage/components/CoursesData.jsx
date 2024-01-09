@@ -5,7 +5,7 @@ import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const CoursesData = ({ coursePageNum, getPageNumber }) => {
+const CoursesData = ({userData, coursePageNum, getPageNumber }) => {
   const { courses, totalPages } = useSelector(
     (state) => state.coursesPagination
   );
@@ -43,6 +43,7 @@ const CoursesData = ({ coursePageNum, getPageNumber }) => {
                 <CourseCard
                   key={i}
                   data={courseName}
+                  course={userData}
                   mode="desktop"
                   cellNumber={i + 1 + (coursePageNum - 1) * 10}
                   setOpenConfirmModal={setOpenConfirmModal}
@@ -57,6 +58,7 @@ const CoursesData = ({ coursePageNum, getPageNumber }) => {
               <CourseCard
                 key={i}
                 data={courseName}
+                course={userData}
                 mode="mobile"
                 cellNumber={i + 1 + (coursePageNum - 1) * 10}
                 setOpenConfirmModal={setOpenConfirmModal}

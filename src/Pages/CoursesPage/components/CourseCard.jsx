@@ -5,10 +5,11 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { useState } from "react";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const CourseCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
+const CourseCard = ({ data, mode, course, cellNumber, setOpenConfirmModal }) => {
   const dispatch = useDispatch();
   const { courses, lastPage } = useSelector((state) => state.coursesPagination);
   const { coursesSearchValues } = useSelector((state) => state.searchValues);
+  const userData = JSON.parse(localStorage.getItem("userData")) 
   const updateItem = (modalType) => {
     dispatch({
       type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL,
@@ -29,7 +30,7 @@ const CourseCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
     setOpenConfirmModal(true);
     updateItem("more");
   };
-
+  console.log(course)
   return (
     <>
       {mode === "desktop" ? (
@@ -45,11 +46,33 @@ const CourseCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
             Təsdiqlə
           </td>
           <td>
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
+          {
+              course?.power === "update" ? 
+              <>
+                  <UpdateDeleteModal
+                  updateItem={updateItem}
+                  deleteItem={deleteItem}
+                  state={course}
+                  data={data}
+                /> 
+              </> : course?.power === "all" ? <>
+              <UpdateDeleteModal
+                  updateItem={updateItem}
+                  deleteItem={deleteItem}
+                  course={course}
+                  data={data}
+                /> 
+              </> :<></>
+            }
+            {
+              userData?.role === "super-admin" && <>
+                <UpdateDeleteModal
+                  updateItem={updateItem}
+                  deleteItem={deleteItem}
+                  data={data}
+                />
+              </>
+            }
           </td>
         </tr>
       ) : (

@@ -67,6 +67,8 @@ const toastError = (message) => {
     theme: "colored",
   });
 };
+
+
 const pageLoading = (loadingValue) => ({
   type: LESSON_TABLE_ALL_ACTIONS_TYPE.LESSON_TABLE_LOADING,
   payload: loadingValue,
@@ -84,7 +86,7 @@ export const getLessonTablePaginationAction =
       const { data } = await API.get(
         `/?page=${pageNumber}&searchQuery=${searchQuery}&groupId=${groupId}`
       );
-      // console.log(data);
+      
       dispatch({
         type: LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_TABLE_LAST_PAGE,
         payload: pageNumber,

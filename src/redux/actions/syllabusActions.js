@@ -80,6 +80,7 @@ const modalLoading = (loadingValue) => ({
 export const getAllSyllabusAction = (courseId) => async (dispatch) => {
   try {
     const { data } = await API.get(`/all?courseId=${courseId}`);
+    console.log(data)
     dispatch({ type: SYLLABUS_ALL_ACTIONS_TYPE.GET_ACTIVE_SYLLABUS, payload: data });
   } catch (error) {
     console.log(error);
