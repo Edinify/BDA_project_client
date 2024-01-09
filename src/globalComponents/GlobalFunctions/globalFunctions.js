@@ -1,4 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
+import { ReactComponent as DashboardIcon } from "../../assets/icons/dashboardIcon.svg";
+import { ReactComponent as MainPanelIcon } from "../../assets/icons/mainPanelIcon.svg";
+import { ReactComponent as CoursesIcon } from "../../assets/icons/coursesIcon.svg";
+import { ReactComponent as TeachersIcon } from "../../assets/icons/teachersIcon.svg";
+import { ReactComponent as StudentsIcon } from "../../assets/icons/studentsIcon.svg";
+import { ReactComponent as TableIcon } from "../../assets/icons/tableIcon.svg";
+import { ReactComponent as SalaryIcon } from "../../assets/icons/salaryIcon.svg";
+import { ReactComponent as ExpensesIcon } from "../../assets/icons/expensenIcon.svg";
+import { ReactComponent as IncomesIcon } from "../../assets/icons/incomesIcon.svg";
+import { ReactComponent as FeedBacksIcon } from "../../assets/icons/sidebar/feedbacks-icon.svg";
+import { ReactComponent as AdminIcon } from "../../assets/icons/sidebar/users-01.svg";
+import { ReactComponent as GroupIcon } from "../../assets/icons/sidebar/group-svgrepo-com.svg";
+import { ReactComponent as CareerIcon } from "../../assets/icons/sidebar/work-case-filled-svgrepo-com (1).svg";
+import { ReactComponent as SyllabusIcon } from "../../assets/icons/sidebar/syllabus-svgrepo-com.svg";
 import {
   WEEKS_BETWEEN_SELECTED_DATES_ACTION_TYPE,
   MAIN_PAGE_TYPE_ACTION_TYPE,
@@ -154,14 +168,15 @@ export function useCustomHook() {
     { key: "startDate", title: "Dərs baş. tarixi" },
   ];
   const generalProfileList = [
-    { name: "Qruplar", key: "groups" },
-    { name: "Əməkdaşlar", key: "workers" },
-    { name: "Tələbələr", key: "students" },
-    { name: "Təlimçilər", key: "teachers" },
-    { name: "Fənlər", key: "courses" },
-    { name: "Təhsil haqqı", key: "tuitionFee" },
-    { name: "Karyera", key: "career" },
-    { name: "Konsultasiya", key: "consultation" },
+    {  id:1, name: "Qruplar", key: "groups", icon:<GroupIcon/>},
+    {  id:2, name: "Əməkdaşlar", key: "workers",icon:<AdminIcon/>},
+    {  id:3, name: "Tələbələr", key: "students",icon:<StudentsIcon/>},
+    {  id:6, name: "Təlimçilər", key: "teachers",icon:<TeachersIcon/>},
+    {  id:7, name: "Fənlər", key: "courses",icon:<CoursesIcon/>},
+    {  id:8, name: "Təhsil haqqı", key: "tuitionFee",icon:<ExpensesIcon/>},
+    {  id:9, name: "Karyera", key: "career",icon:<CareerIcon/>},
+    {  id:10, name: "Konsultasiya", key: "consultation",icon:<MainPanelIcon/>},
+     
   ];
   const generalProfilePowerList = [
     { name: "Tam-səlahiyyətli", key: "all" },

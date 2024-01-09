@@ -148,7 +148,7 @@ export const DropdownName = () => {
         <input
           type="text"
           placeholder={
-            mainpageType === "teacher" ? Təlimçi adı" : "Tələbə adı"
+            mainpageType === "teacher" ? "Təlimçi adı" : "Tələbə adı"
           }
           onChange={(e) => getSearchValue(e)}
           value={selectedName ? selectedName : searchedValue}
