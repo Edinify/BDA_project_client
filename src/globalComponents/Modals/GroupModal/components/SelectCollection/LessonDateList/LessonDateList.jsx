@@ -6,11 +6,7 @@ import { ReactComponent as CheckIcon } from "../../../../../../assets/icons/Chec
 import LessonInput from "./LessonInput";
 import { useCustomHook } from "../../../../../GlobalFunctions/globalFunctions";
 
-const LessonDateList = ({
-  formik,
-  updateModalState,
-  modalData,
-}) => {
+const LessonDateList = ({ formik, updateModalState, modalData }) => {
   const [selectedDay, setSelectedDay] = useState(null);
   const [timeErrMessage, setTimeErrMessage] = useState(false);
 
@@ -23,12 +19,11 @@ const LessonDateList = ({
       updateModalState("lessonDate", lessonDateData);
     }
   };
-  const addTime = () => {
+
+  const addDay = () => {
     if (modalData.lessonDate) {
       // the same element can't be added twice
-      if (
-        modalData.lessonDate.find((item) => item.day === selectedDay)
-      ) {
+      if (modalData.lessonDate.find((item) => item.day === selectedDay)) {
         setTimeErrMessage(true);
       } else {
         const lessonDateData = [
@@ -45,6 +40,8 @@ const LessonDateList = ({
     }
     setSelectedDay("");
   };
+
+  console.log(selectedDay, "selected day");
 
   return (
     <div>
@@ -72,7 +69,7 @@ const LessonDateList = ({
         <div className="right">
           <button
             disabled={!selectedDay}
-            onClick={() => addTime()}
+            onClick={() => addDay()}
             className="add-class"
           >
             <AiOutlinePlusCircle />
@@ -89,7 +86,7 @@ const LessonDateList = ({
       <ul className="category-list courses-li">
         {timeErrMessage ? (
           <small className="category-error-message">
-           Bu dərs vaxtı artıq mövcuddur.
+            Bu dərs vaxtı artıq mövcuddur.
           </small>
         ) : null}
 
