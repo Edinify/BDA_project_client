@@ -6,14 +6,27 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const GroupsData = ({ pageNum, getPageNumber }) => {
+const GroupsData = ({ pageNum, getPageNumber,userData }) => {
   const dispatch = useDispatch();
   const { groupData, totalPages, loading } = useSelector(
     (state) => state.groupsPagination
   );
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
 
-  const tableHead = [
+  const tableHead =
+  userData?.power==="only-show"?
+
+  [
+    "Qrup adı",
+    "İxtisas",
+    "Təlimçilər",
+    "Tələbələr",
+    "Dərs günləri",
+    "Başlama tarixi",
+    "Bitmə tarixi",
+  ]
+  :
+   [
     "Qrup adı",
     "İxtisas",
     "Təlimçilər",
@@ -22,8 +35,7 @@ const GroupsData = ({ pageNum, getPageNumber }) => {
     "Başlama tarixi",
     "Bitmə tarixi",
     "",
-    ""
-  ];
+  ]
 
   return (
     <>
@@ -37,7 +49,9 @@ const GroupsData = ({ pageNum, getPageNumber }) => {
               type="groups"
             />
           )}
-          <table className="details-table">
+          <table className={`details-table  teacher-table ${
+              userData.power === "only-show" ? "only-show" : "update"
+            } `}>
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
@@ -51,6 +65,7 @@ const GroupsData = ({ pageNum, getPageNumber }) => {
                 <GroupCard
                   key={i}
                   data={teacher}
+                  group={userData}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
                   setOpenConfirmModal={setOpenConfirmModal}
@@ -64,6 +79,7 @@ const GroupsData = ({ pageNum, getPageNumber }) => {
               <GroupCard
                 key={i}
                 data={teacher}
+                group={userData}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
                 setOpenConfirmModal={setOpenConfirmModal}

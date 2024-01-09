@@ -6,7 +6,13 @@ import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActio
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
 
-const LessonTableCard = ({ data, mode, setOpenConfirmModal, setStudents }) => {
+const LessonTableCard = ({
+  data,
+  mode,
+  setOpenConfirmModal,
+  setStudents,
+  lesson,
+}) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
   const { lessonTableData, lastPage } = useSelector(
@@ -20,6 +26,7 @@ const LessonTableCard = ({ data, mode, setOpenConfirmModal, setStudents }) => {
         weeksArrFullName[moment(new Date(data.date)).day()]
       }`
     : "";
+
 
   // let students =
   //   Array.isArray(data.students) && data.students.length > 0
@@ -134,16 +141,17 @@ const LessonTableCard = ({ data, mode, setOpenConfirmModal, setStudents }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="confirm" onClick={openConfirmModal}>
-            Təsdiqlə
-          </td>
-          <td>
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
-          </td>
+          {lesson.power !== "only-show" ? (
+            <td>
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                openConfirmModal={openConfirmModal}
+                state={lesson}
+              />
+            </td>
+          ) : null}
         </tr>
       ) : (
         <div className="content-box">
@@ -158,16 +166,20 @@ const LessonTableCard = ({ data, mode, setOpenConfirmModal, setStudents }) => {
               ))}
             </ul>
           </div>
-          <div className="right">
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
-            <div className="more-content">
-              <span onClick={openConfirmModal}>Təsdiqlə</span>
+          {lesson.power === "only-show" ? (
+            null
+          ) : (
+            <div className="right">
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                state={lesson}
+                openConfirmModal={openConfirmModal}
+              />
+            
             </div>
-          </div>
+          )}
         </div>
       )}
     </>

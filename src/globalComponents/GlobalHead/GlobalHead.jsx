@@ -15,8 +15,8 @@ const GlobalHead = ({
   statusType,
   search = true,
   addBtn = true,
+  power,
 }) => {
-  const dispatch = useDispatch();
   return (
     <div className="details-header">
       <div className="container">
@@ -44,12 +44,15 @@ const GlobalHead = ({
                 <GroupsDropdown deviceType="desktop" />
               )}
             </div>
-
             {addBtn && (
-              <button className="add-detail" onClick={openModal}>
-                <PlusIcon />
-                Əlavə et
-              </button>
+              <>
+                {power === "only-show" ? null : power === "update" ? null : (
+                  <button className="add-detail" onClick={openModal}>
+                    <PlusIcon />
+                    Əlavə et
+                  </button>
+                )}
+              </>
             )}
           </div>
           {statusType === "teacher" && (

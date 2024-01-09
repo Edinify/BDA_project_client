@@ -12,6 +12,11 @@ const LessonTablePage = () => {
   const { lessonTableSearchValues } = useSelector(
     (state) => state.searchValues
   );
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  userData =
+    userData.role !== "super-admin"
+      ? userData.profiles
+      : JSON.parse(localStorage.getItem("userData"));
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
 
   const getPageNumber = (pageNumber) => {
@@ -55,15 +60,65 @@ const LessonTablePage = () => {
 
   return (
     <div className="details-page teachers-page ">
-      <GlobalHead
-        searchData={searchData}
-        openModal={openModal}
-        DATA_SEARCH_VALUE={"LESSON_TABLE_SEARCH_VALUE"}
-        dataSearchValues={lessonTableSearchValues}
-        statusType="lesson-table"
-        search={false}
-      />
-      <LessonTableData pageNum={lastPage} getPageNumber={getPageNumber} />
+      {userData.role === "super-admin" ? (
+        <>
+          <GlobalHead
+            searchData={searchData}
+            openModal={openModal}
+            DATA_SEARCH_VALUE={"LESSON_TABLE_SEARCH_VALUE"}
+            dataSearchValues={lessonTableSearchValues}
+            statusType="lesson-table"
+            search={false}
+          />
+        </>
+      ) : (
+        <>
+          {userData.map((data, i) => {
+            const { profile, power } = data;
+            return (
+              profile === "lessonTable" && (
+                <span key={i}>
+                  <GlobalHead
+                    searchData={searchData}
+                    openModal={openModal}
+                    DATA_SEARCH_VALUE={"LESSON_TABLE_SEARCH_VALUE"}
+                    dataSearchValues={lessonTableSearchValues}
+                    statusType="lesson-table"
+                    search={false}
+                    power={power}
+                  />
+                </span>
+              )
+            );
+          })}
+        </>
+      )}
+      {userData?.role === "super-admin" ? (
+        <>
+          <LessonTableData
+            pageNum={lastPage}
+            getPageNumber={getPageNumber}
+            userData={userData}
+          />
+        </>
+      ) : (
+        <>
+          {userData?.map((data, i) => {
+            const { profile, power } = data;
+            return (
+              profile === "lessonTable" && (
+                <span key={i}>
+                  <LessonTableData
+                    pageNum={lastPage}
+                    getPageNumber={getPageNumber}
+                    userData={data}
+                  />
+                </span>
+              )
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };

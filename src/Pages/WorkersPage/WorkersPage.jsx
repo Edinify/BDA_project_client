@@ -9,6 +9,11 @@ const WorkersPage = () => {
   const dispatch = useDispatch();
   const { lastPage } = useSelector((state) => state.workersPagination);
   const { workersSearchValues } = useSelector((state) => state.searchValues);
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  userData =
+    userData.role !== "super-admin"
+      ? userData.profiles
+      : JSON.parse(localStorage.getItem("userData"));
 
   const getPageNumber = (pageNumber) => {
     if (workersSearchValues) {
@@ -35,15 +40,66 @@ const WorkersPage = () => {
       dispatch(getWorkersPaginationAction(1, ""));
     }
   }, []);
+
   return (
     <div className="details-page teachers-page ">
-      <GlobalHead
-        searchData={searchData}
-        openModal={openModal}
-        DATA_SEARCH_VALUE={"WORKERS_SEARCH_VALUE"}
-        dataSearchValues={workersSearchValues}
-      />
-      <WorkersData pageNum={lastPage} getPageNumber={getPageNumber} />
+      {userData?.role === "super-admin" ? (
+        <>
+          <GlobalHead
+            searchData={searchData}
+            openModal={openModal}
+            DATA_SEARCH_VALUE={"WORKERS_SEARCH_VALUE"}
+            dataSearchValues={workersSearchValues}
+          />
+        </>
+      ) : (
+        <>
+          {userData.map((data, i) => {
+            const { profile, power } = data;
+
+            return (
+              profile === "workers" &&
+              power === "all" && (
+                <span key={i}>
+                  <GlobalHead
+                    searchData={searchData}
+                    openModal={openModal}
+                    DATA_SEARCH_VALUE={"WORKERS_SEARCH_VALUE"}
+                    dataSearchValues={workersSearchValues}
+                  />
+                </span>
+              )
+            );
+          })}
+        </>
+      )}
+
+      {userData?.role === "super-admin" ? (
+        <>
+          <WorkersData
+            userData={userData}
+            pageNum={lastPage}
+            getPageNumber={getPageNumber}
+          />
+        </>
+      ) : (
+        <>
+          {userData.map((data, i) => {
+            const { profile, power } = data;
+            return (
+              profile === "workers" && (
+                <span key={i}>
+                  <WorkersData
+                    userData={data}
+                    pageNum={lastPage}
+                    getPageNumber={getPageNumber}
+                  />
+                </span>
+              )
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };

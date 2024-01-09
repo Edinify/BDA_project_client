@@ -5,18 +5,25 @@ import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const CoursesData = ({ coursePageNum, getPageNumber }) => {
+const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
   const { courses, totalPages } = useSelector(
     (state) => state.coursesPagination
   );
   const { loading } = useSelector((state) => state.coursesPagination);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
 
-  const tableHead = [
-    { id: 1, label: "Fənn adı" },
-    { id: 2, label: "" },
-    { id: 3, label: "" },
-  ];
+  const tableHead =
+    userData.power === "only-show"
+      ? [{ id: 1, label: "Fənn adı" }]
+      : userData.power === "update"
+      ? [
+          { id: 1, label: "Fənn adı" },
+          { id: 2, label: "" },
+        ]
+      : [
+          { id: 1, label: "Fənn adı" },
+          { id: 2, label: "" },
+        ];
   return (
     <>
       {loading ? (
@@ -29,7 +36,9 @@ const CoursesData = ({ coursePageNum, getPageNumber }) => {
               type="courses"
             />
           )}
-          <table className="details-table courses-table">
+          <table className={`details-table  courses-table ${
+              userData.power === "only-show" ? "only-show" : "update"
+            } `}>
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
@@ -43,6 +52,7 @@ const CoursesData = ({ coursePageNum, getPageNumber }) => {
                 <CourseCard
                   key={i}
                   data={courseName}
+                  course={userData}
                   mode="desktop"
                   cellNumber={i + 1 + (coursePageNum - 1) * 10}
                   setOpenConfirmModal={setOpenConfirmModal}
@@ -57,6 +67,7 @@ const CoursesData = ({ coursePageNum, getPageNumber }) => {
               <CourseCard
                 key={i}
                 data={courseName}
+                course={userData}
                 mode="mobile"
                 cellNumber={i + 1 + (coursePageNum - 1) * 10}
                 setOpenConfirmModal={setOpenConfirmModal}

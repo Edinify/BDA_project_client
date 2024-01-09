@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeachersPaginationAction } from "../../redux/actions/teachersActions";
-import { TEACHERS_MODAL_ACTION_TYPE} from "../../redux/actions-type";
+import { TEACHERS_MODAL_ACTION_TYPE } from "../../redux/actions-type";
 import TeachersData from "./components/TeachersData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
@@ -11,6 +11,13 @@ const TeachersPage = () => {
   const { teachersSearchValues } = useSelector((state) => state.searchValues);
   const { teacherStatus } = useSelector((state) => state.teacherStatus);
   const [teacherPageNum, setTeacherPageNum] = useState(1);
+
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  userData =
+    userData.role !== "super-admin"
+      ? userData.profiles
+      : JSON.parse(localStorage.getItem("userData"));
+
 
   const getPageNumber = (pageNumber) => {
     setTeacherPageNum(pageNumber);
@@ -82,17 +89,63 @@ const TeachersPage = () => {
 
   return (
     <div className="details-page teachers-page ">
-      <GlobalHead
-        searchData={searchData}
-        openModal={openModal}
-        DATA_SEARCH_VALUE={"TEACHERS_SEARCH_VALUE"}
-        dataSearchValues={teachersSearchValues}
-        statusType="teacher"
-      />
-      <TeachersData
-        teacherPageNum={teacherPageNum}
-        getPageNumber={getPageNumber}
-      />
+      {userData?.role === "super-admin" ? (
+        <>
+          <GlobalHead
+            searchData={searchData}
+            openModal={openModal}
+            DATA_SEARCH_VALUE={"TEACHERS_SEARCH_VALUE"}
+            dataSearchValues={teachersSearchValues}
+            statusType="teacher"
+          />
+        </>
+      ) : (
+        <>
+          {userData.map((data, i) => {
+            const { profile, power } = data;
+            return profile === "teachers" && power === "all" ? (
+              <span>
+                <GlobalHead
+                  searchData={searchData}
+                  openModal={openModal}
+                  DATA_SEARCH_VALUE={"STUDENTS_SEARCH_VALUE"}
+                  dataSearchValues={teachersSearchValues}
+                  statusType="teacher"
+                />
+              </span>
+            ) : (
+              ""
+            );
+          })}
+        </>
+      )}
+
+      {userData?.role === "super-admin" ? (
+        <>
+          <TeachersData
+            teacherPageNum={teacherPageNum}
+            getPageNumber={getPageNumber}
+            userData={userData}
+          />
+        </>
+      ) : (
+        <>
+          {userData.map((data, i) => {
+            const { profile, power } = data;
+            return (
+              profile === "teachers" && (
+                <span key={i}>
+                  <TeachersData
+                    teacherPageNum={teacherPageNum}
+                    getPageNumber={getPageNumber}
+                    userData={data}
+                  />
+                </span>
+              )
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };

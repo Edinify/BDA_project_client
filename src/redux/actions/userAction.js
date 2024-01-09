@@ -29,6 +29,7 @@ export const userAction = () => async (dispatch) => {
     dispatch({ type: USER_ACTION_TYPE.ADD_USER, payload: data });
     localStorage.setItem("userData", JSON.stringify(data));
   } catch (error) {
+    console.log(error)
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;

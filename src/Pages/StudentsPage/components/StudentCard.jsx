@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { STUDENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
@@ -10,6 +9,7 @@ const StudentCard = ({
   cellNumber,
   setOpenMoreModal,
   setOpenConfirmModal,
+  student,
 }) => {
   const dispatch = useDispatch();
   const { students, lastPage } = useSelector(
@@ -99,18 +99,18 @@ const StudentCard = ({
             Ətraflı
           </td>
 
-          <td className="confirm" onClick={openConfirmModal}>
-            Təsdiqlə
-          </td>
-          <td>
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-              setOpenConfirmModal={setOpenConfirmModal}
-
-            />
-          </td>
+          {student?.power !== "only-show" ? (
+            <td>
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                setOpenConfirmModal={setOpenConfirmModal}
+                state={student}
+                openConfirmModal={openConfirmModal}
+              />
+            </td>
+          ) : null}
         </tr>
       ) : (
         <div className="content-box">
@@ -137,17 +137,25 @@ const StudentCard = ({
               </ul>
             </div>
           </div>
-          <div className="right">
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
+          {student.power === "only-show" ? (
             <div className="more-content">
               <span onClick={openMoreModal}>Ətraflı</span>
-              <span onClick={openConfirmModal}>Təsdiqlə</span>
             </div>
-          </div>
+          ) : (
+            <div className="right">
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                state={student}
+                setOpenConfirmModal={setOpenConfirmModal}
+                openConfirmModal={openConfirmModal}
+              />
+              <div className="more-content">
+                <span onClick={openMoreModal}>Ətraflı</span>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>

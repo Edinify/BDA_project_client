@@ -22,6 +22,7 @@
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+  padding: 10px 60px 0 15px;
 }
 
 .delete-update-modal h4 {
@@ -30,17 +31,18 @@
   font-weight: 600;
   color: #1e1e1e;
   cursor: pointer;
+  margin: 5px 0;
 }
 
-.delete-update-modal h4:first-child {
+/* .delete-update-modal h4:first-child {
   padding: 10px 60px 0 15px;
 }
 .delete-update-modal h4.only {
   padding: 10px 60px 10px 15px;
-}
+} */
 .delete-update-modal .delete-func {
   color: #f03b2a;
-  padding: 10px 60px 12px 15px;
+  /* padding: 10px 60px 12px 15px; */
 }
 .delete-update-modal .delete-feed{
   padding: 10px 60px 10px 15px;

@@ -35,6 +35,7 @@ export const Header = () => {
       case "/syllabus":
         return "Sillabus";
       case "/":
+        case "/lessonTable":
         return "Dərs cədvəli";
       default:
         return "";

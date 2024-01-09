@@ -45,6 +45,7 @@ const ConfirmModal = ({ setOpenConfirmModal, type }) => {
     }
   };
 
+
   return (
     <div className="more-modal">
       <div className="more-modal-con">

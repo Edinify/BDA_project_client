@@ -12,7 +12,7 @@ import Sidebar from "../Layout/Sidebar/Sidebar";
 import SuperAdminPanelRoute from "./SuperAdminPanelRoute";
 // import AdminPanelRoute from "./AdminPanelRoute";
 // import TeacherPanelRoute from "./TeacherPanelRoute";
-// import StudentPanelRoute from "./StudentPanelRoute";
+import WorkerPanelRoute from "./WorkerPanelRoute";
 
 export const Routing = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export const Routing = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const token = localStorage.getItem("auth");
 
-  // console.log(user, "user");
+  console.log(user, "user");
 
   useEffect(() => {
     if (token) {
@@ -48,8 +48,8 @@ export const Routing = () => {
         if (location.pathname.startsWith("/login")) {
           navigate("/teacher-panel/home");
         }
-      } else if (user.role === "student" && !notFound) {
-        navigate("/student-panel");
+      } else if (user.role === "worker" && !notFound) {
+        navigate("/consultation/appointed");
       }
     } else if (forgetPassword.login) {
       navigate("/login");
@@ -88,8 +88,8 @@ export const Routing = () => {
           {LoginRoute()}
           {userData?.role === "super-admin" && SuperAdminPanelRoute()}
           {/* {userData?.role === "admin" && AdminPanelRoute()}
-          {userData?.role === "teacher" && TeacherPanelRoute()}
-          {userData?.role === "student" && StudentPanelRoute()} */}
+          {userData?.role === "teacher" && TeacherPanelRoute()} */}
+          {userData?.role === "worker" && WorkerPanelRoute()}
         </Routes>
       </div>
     </div>

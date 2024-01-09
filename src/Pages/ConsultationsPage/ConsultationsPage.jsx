@@ -17,6 +17,11 @@ const ConsultationsPage = () => {
   const status =
     location.pathname === "/consultation/appointed" ? "appointed" : "completed";
 
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  userData =
+    userData.role !== "super-admin"
+      ? userData.profiles
+      : JSON.parse(localStorage.getItem("userData"));
   const getPageNumber = (pageNumber) => {
     if (consultationSearchValues) {
       dispatch(
@@ -30,6 +35,7 @@ const ConsultationsPage = () => {
       dispatch(getConsultationPaginationAction(pageNumber, "", status));
     }
   };
+
   const openModal = () => {
     dispatch({
       type: CONSULTATION_MODAL_ACTION_TYPE.GET_CONSULTATION_MODAL,
@@ -65,21 +71,71 @@ const ConsultationsPage = () => {
 
   return (
     <div className="details-page tuition-fee-page">
-      <GlobalHead
-        searchData={searchData}
-        openModal={openModal}
-        DATA_SEARCH_VALUE={"CONSULTATION_SEARCH_VALUE"}
-        dataSearchValues={consultationSearchValues}
-        addBtn={status === "appointed" ? true : false}
-        // statusType="student"
-      />
+      {userData?.role === "super-admin" ? (
+        <>
+          <GlobalHead
+            searchData={searchData}
+            openModal={openModal}
+            DATA_SEARCH_VALUE={"CONSULTATION_SEARCH_VALUE"}
+            dataSearchValues={consultationSearchValues}
+            addBtn={status === "appointed" ? true : false}
+            statusType="student"
+          />
+        </>
+      ) : (
+        <>
+          {userData?.map((data, i) => {
+            const { profile, power } = data;
+            return profile === "consultation" && power === "all" ? (
+              <span key={i}>
+                <GlobalHead
+                  searchData={searchData}
+                  openModal={openModal}
+                  DATA_SEARCH_VALUE={"CONSULTATION_SEARCH_VALUE"}
+                  dataSearchValues={consultationSearchValues}
+                  addBtn={status === "appointed" ? true : false}
+                  statusType="student"
+                />
+              </span>
+            ) : (
+              ""
+            );
+          })}
+        </>
+      )}
+
       <HeadTabs
         firstRoute={"/consultation/appointed"}
         secondRoute={"/consultation/completed"}
         firstPathname={"Təyin olunmuş"}
         secondPathname={"Baş tutmuş"}
       />
-      <ConsultationData pageNum={lastPage} getPageNumber={getPageNumber} />
+      {userData?.role === "super-admin" ? (
+        <>
+          <ConsultationData
+            pageNum={lastPage}
+            getPageNumber={getPageNumber}
+            userData={userData}
+          />
+        </>
+      ) : (
+        <>
+          {userData?.map((data, i) => {
+            const { profile, power } = data;
+            return (
+              profile === "consultation" && (
+                <span key={i}>
+                  <ConsultationData
+                    pageNum={lastPage}
+                    getPageNumber={getPageNumber}
+                    userData={data}
+                  />
+                </span>
+              )
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };

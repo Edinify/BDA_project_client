@@ -11,17 +11,17 @@ import TemporaryTable from "../Pages/TemporaryTable/TemporaryTable";
 const AdminPanelRoute = () => {
   return (
     <>
-      <Route path="/" element={<MainPage />} />
-      <Route path="/student" element={<MainPage />} />
+      {/* <Route path="/" element={<MainPage />} /> */}
+      {/* <Route path="/student" element={<MainPage />} />
       <Route path="/lesson-table" element={<TablePage />} />
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/students" element={<StudentsPage />} />
       <Route path="/teachers" element={<TeachersPage />} />
       <Route path="/feedback/teacher" element={<FeedbackPage />} />
-      <Route path="/feedback/student" element={<FeedbackPage />} />
-
+      <Route path="/feedback/student" element={<FeedbackPage />} /> */}
+  
       {/* temporary table */}
-      <Route path="/temporary-table" element={<TemporaryTable />} />
+      {/* <Route path="/temporary-table" element={<TemporaryTable />} /> */}
     </>
   );
 };

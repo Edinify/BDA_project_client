@@ -7,21 +7,28 @@ import {
   TEACHERS_MODAL_ACTION_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
   CONSULTATION_MODAL_ACTION_TYPE,
+  WORKER_MODAL_ACTION_TYPE,
 } from "../../redux/actions-type";
 import "moment/locale/az";
 import TeacherMoreModal from "./components/TeacherMoreModal/TeacherMoreModal";
 import StudentMoreModal from "./components/StudentMoreModal/StudentMoreModal";
 import ConsultationMoreModal from "./components/ConsultationMoreModal/ConsultationMoreModal";
 import TuitionFeeMoreModal from "./components/TuitionFeeMoreModal/TuitionFeeMoreModal";
-const MoreModal = ({ setOpenMoreModal, type }) => {
+import WorkersMoreModal from "./components/WorkersMoreModal/WorkersMoreModal";
+const MoreModal = ({ setOpenMoreModal, type, userData }) => {
   const dispatch = useDispatch();
   const { teachersModalData } = useSelector((state) => state.teachersModal);
   const { studentsModalData } = useSelector((state) => state.studentsModal);
   const { tuitionFeeModalData } = useSelector((state) => state.tuitionFeeModal);
+  const { workerModalData } = useSelector((state) => state.workerModal);
   const { consultationModalData } = useSelector(
     (state) => state.consultationModal
   );
+  const { user } = useSelector((state) => state.user);
 
+  console.log(userData?.power === "only-show", "user Dataaaa");
+  console.log(user.role === "super-admin");
+  console.log(type, "user data more modal");
 
   const openUpdateModal = () => {
     if (type === "teacher") {
@@ -54,6 +61,16 @@ const MoreModal = ({ setOpenMoreModal, type }) => {
           openModal: true,
         },
       });
+    } else if (type === "worker") {
+      dispatch({
+        type: WORKER_MODAL_ACTION_TYPE.GET_WORKER_MODAL,
+        payload: {
+          data: {
+            ...workerModalData,
+          },
+          openModal: true,
+        },
+      });
     }
     setOpenMoreModal(false);
   };
@@ -65,17 +82,21 @@ const MoreModal = ({ setOpenMoreModal, type }) => {
           {type === "teacher" ||
           type === "student" ||
           type === "consultation" ||
-          type === "tuitionFee" ? (
+          type === "tuitionFee" ||
+          type === "worker" ? (
             <h2>Şəxsi məlumatlar</h2>
           ) : (
             ""
           )}
           <div className="more-modal-header-icons">
-            {type !== "tuitionFee" && (
-              <div className="header-icon-edit">
-                <EditIcon onClick={() => openUpdateModal()} />
-              </div>
-            )}
+            {(user?.role === "super-admin" ||
+              userData?.power !== "only-show") &&
+              type !== "tuitionFee" && (
+                <div className="header-icon-edit">
+                  <EditIcon onClick={() => openUpdateModal()} />
+                </div>
+              )}
+
             <div className="header-icon-close">
               <CloseIcon onClick={() => setOpenMoreModal(false)} />
             </div>
@@ -95,6 +116,9 @@ const MoreModal = ({ setOpenMoreModal, type }) => {
           <ConsultationMoreModal
             consultationModalData={consultationModalData}
           />
+        )}
+        {type === "worker" && (
+          <WorkersMoreModal workerModal={workerModalData} />
         )}
       </div>
     </div>
