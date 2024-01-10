@@ -7,18 +7,28 @@ import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import StudentLessonModal from "./StudentLessonModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const LessonTableData = ({ pageNum, getPageNumber }) => {
+const LessonTableData = ({ pageNum, getPageNumber ,userData}) => {
   const { lessonTableData, totalPages, loading } = useSelector(
     (state) => state.lessonTablePagination
   );
   const { openStudentModal } = useSelector((state) => state.lessonTableModal);
 
-  console.log(openStudentModal);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [students, setStudents] = useState({ data: [], lessonId: "" });
   const [updatedResultData, setUpdatedResultData] = useState("");
 
-  const tableHead = [
+  const tableHead =
+  userData?.power ==="only-show"?
+  [
+    "Dərs günü",
+    "Dərs saatı",
+    "Mövzu",
+    "Müəllim",
+    "Status",
+    "Tələbələr",
+  ]
+  :
+   [
     "Dərs günü",
     "Dərs saatı",
     "Mövzu",
@@ -27,10 +37,8 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
     "Status",
     "Tələbələr",
     "",
-    "",
-  ];
+  ]
 
-  console.log(students, "students-----------------");
 
   return (
     <>
@@ -54,7 +62,9 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
             />
           )}
 
-          <table className="details-table">
+          <table  className={`details-table  teacher-table ${
+              userData.power === "only-show" ? "only-show" : "update"
+            } `}>
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
@@ -68,6 +78,7 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
                 <LessonTableCard
                   key={i}
                   data={lesson}
+                  lesson={userData}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
                   setStudents={setStudents}
@@ -82,6 +93,7 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
               <LessonTableCard
                 key={i}
                 data={teacher}
+                lesson={userData}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
                 setStudents={setStudents}

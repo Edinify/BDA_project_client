@@ -5,7 +5,7 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { deleteGroupAction } from "../../../redux/actions/groupsActions";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
-const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
+const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal,group }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { groupData, lastPage } = useSelector(
@@ -72,6 +72,8 @@ const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
     updateItem("more");
   };
 
+  console.log(group,"grouppp")
+
   return (
     <>
       {mode === "desktop" ? (
@@ -123,16 +125,21 @@ const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="confirm" onClick={openConfirmModal}>
-            Təsdiqlə
-          </td>
+         {group?.power !=="only-show"?(
           <td>
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
+              openConfirmModal={openConfirmModal}
+              state={group}
             />
           </td>
+         )
+         :
+         null
+        }
+          
         </tr>
       ) : (
         <div className="content-box">
@@ -147,16 +154,20 @@ const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
               ))}
             </ul>
           </div>
-          <div className="right">
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
-             <div className="more-content">
-              <span onClick={openConfirmModal}>Təsdiqlə</span>
+          {group.power === "only-show" ? (
+            null
+          ) : (
+            <div className="right">
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                openConfirmModal={openConfirmModal}
+                state={group}
+              />
+              
             </div>
-          </div>
+          )}
         </div>
       )}
     </>

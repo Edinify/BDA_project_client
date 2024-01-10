@@ -1,29 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WORKER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteWorkerAction } from "../../../redux/actions/workersActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
-const WorkerCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
-  const { generalProfileList, generalProfilePowerList } = useCustomHook();
+const WorkerCard = ({
+  data,
+  mode,
+  worker,
+  cellNumber,
+  setOpenConfirmModal,
+  setOpenMoreModal
+}) => {
+
   const dispatch = useDispatch();
   const { workers, lastPage } = useSelector((state) => state.workersPagination);
   const { workersSearchValues } = useSelector((state) => state.searchValues);
-  let profiles =
-    Array.isArray(data.profiles) && data.profiles.length > 0
-      ? data.profiles
-          .map((item) => {
-            return `${
-              generalProfileList.find((profile) => profile.key === item.profile)
-                .name
-            } - ${
-              generalProfilePowerList.find(
-                (profile) => profile.key === item.power
-              ).name
-            }`;
-          })
-          .join(", ")
-      : "boş";
+
   const updateItem = (modalType) => {
     dispatch({
       type: WORKER_MODAL_ACTION_TYPE.GET_WORKER_MODAL,
@@ -45,6 +38,13 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
     setOpenConfirmModal(true);
     updateItem("more");
   };
+
+  const openMoreModal = () => {
+    updateItem("more");
+    setOpenMoreModal(true);
+  };
+
+  // console.log(worker)
   return (
     <>
       {mode === "desktop" ? (
@@ -80,23 +80,29 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td>
+          {/* <td>
             <div className="td-con">
               <div className="table-scroll-text profiles">{profiles}</div>
               <div className="right-fade"></div>
             </div>
+          </td> */}
+          <td className="more" onClick={openMoreModal}>
+            Ətraflı
           </td>
-          <td className="confirm" onClick={openConfirmModal}>
-            Təsdiqlə
-          </td>
-
+         {worker.power !=="only-show"?(
           <td>
             <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
+                  updateItem={updateItem}
+                  deleteItem={deleteItem}
+                  data={data}
+                  openConfirmModal={openConfirmModal}
+                  state={worker}
+                />
           </td>
+         )
+         :null
+        }
+         
         </tr>
       ) : (
         <div className="content-box">
@@ -115,22 +121,30 @@ const WorkerCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
                 <span>Pozisiya:</span>
                 <p>{data.position ? data.position : "boş"}</p>
               </li>
-              <li>
+              {/* <li>
                 <span>Profil:</span>
                 <p className="profiles">{profiles}</p>
-              </li>
+              </li> */}
             </ul>
           </div>
-          <div className="right">
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
+          {worker.power === "only-show" ? (
             <div className="more-content">
-              <span onClick={openConfirmModal}>Təsdiqlə</span>
+              <span onClick={openMoreModal}>Ətraflı</span>
             </div>
-          </div>
+          ) : (
+            <div className="right">
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                openConfirmModal={openConfirmModal}
+                state={worker}
+              />
+              <div className="more-content">
+                <span onClick={openMoreModal}>Ətraflı</span>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>

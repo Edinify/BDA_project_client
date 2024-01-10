@@ -12,6 +12,13 @@ const SyllabusPage = () => {
   const { syllabusSearchValues } = useSelector((state) => state.searchValues);
   const { selectedCourse } = useSelector((state) => state.syllabusCourse);
 
+  let userData = JSON.parse(localStorage.getItem("userData"));
+  userData =
+    userData.role !== "super-admin"
+      ? userData.profiles
+      : JSON.parse(localStorage.getItem("userData"));
+
+
   const getPageNumber = (pageNumber) => {
     if (syllabusSearchValues) {
       dispatch(
@@ -68,14 +75,63 @@ const SyllabusPage = () => {
 
   return (
     <div className="details-page teachers-page ">
-      <GlobalHead
-        searchData={searchData}
-        openModal={openModal}
-        DATA_SEARCH_VALUE={"SYLLABUS_SEARCH_VALUE"}
-        dataSearchValues={syllabusSearchValues}
-        statusType="syllabus"
-      />
-      <SyllabusData pageNum={lastPage} getPageNumber={getPageNumber} />
+      {userData?.role === "super-admin" ? (
+        <>
+          <GlobalHead
+            searchData={searchData}
+            openModal={openModal}
+            DATA_SEARCH_VALUE={"SYLLABUS_SEARCH_VALUE"}
+            dataSearchValues={syllabusSearchValues}
+            statusType="syllabus"
+          />
+        </>
+      ) : (
+        <>
+          {userData.map((data,i) => {
+            const { profile, power } = data;
+            return profile === "syllabus" ? (
+              <span key={i}>
+                <GlobalHead
+                  searchData={searchData}
+                  openModal={openModal}
+                  DATA_SEARCH_VALUE={"SYLLABUS_SEARCH_VALUE"}
+                  dataSearchValues={syllabusSearchValues}
+                  statusType="syllabus"
+                  power={power}
+                />
+              </span>
+            ) : (
+              ""
+            );
+          })}
+        </>
+      )}
+
+      {userData.role === "super-admin" ? (
+        <SyllabusData
+          pageNum={lastPage}
+          getPageNumber={getPageNumber}
+          userData={userData}
+        />
+      ) : (
+        <>
+          {userData.map((data, i) => {
+            const { profile, power } = data;
+
+            return (
+              profile === "syllabus" && (
+                <span key={i}>
+                  <SyllabusData
+                    pageNum={lastPage}
+                    getPageNumber={getPageNumber}
+                    userData={userData}
+                  />
+                </span>
+              )
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };

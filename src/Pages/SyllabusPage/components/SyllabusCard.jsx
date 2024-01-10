@@ -4,7 +4,7 @@ import { SYLLABUS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteSyllabusAction } from "../../../redux/actions/syllabusActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
-const SyllabusCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
+const SyllabusCard = ({ data, mode, cellNumber, setOpenConfirmModal,syllabus }) => {
   const dispatch = useDispatch();
   const { selectedCourse } = useSelector((state) => state.syllabusCourse);
 
@@ -13,6 +13,8 @@ const SyllabusCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
   );
   const { syllabusSearchValues } = useSelector((state) => state.searchValues);
 
+
+  console.log(syllabus.power,"powerfff")
   const updateItem = (modalType) => {
     dispatch({
       type: SYLLABUS_MODAL_ACTION_TYPE.GET_SYLLABUS_MODAL,
@@ -47,14 +49,15 @@ const SyllabusCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="confirm" onClick={openConfirmModal}>
-            Təsdiqlə
-          </td>
+          {/* {syllabus.power} */}
+
           <td>
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
+              state={syllabus}
+              openConfirmModal={openConfirmModal}
             />
           </td>
         </tr>
@@ -78,10 +81,10 @@ const SyllabusCard = ({ data, mode, cellNumber, setOpenConfirmModal }) => {
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
+              state={syllabus}
+              openConfirmModal={openConfirmModal}
             />
-            <div className="more-content">
-              <span onClick={openConfirmModal}>Təsdiqlə</span>
-            </div>
+           
           </div>
         </div>
       )}

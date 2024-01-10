@@ -18,8 +18,8 @@ const NotFoundPage = ({setNotFound}) => {
     else if (user.role==="teacher"){
       navigate("/teacher-panel/home")
     }
-    else if (user.role==="student"){
-      navigate("/student-panel")
+    else if (user.role==="worker"){
+      navigate("/consultation/appointed")
     }
   }
 

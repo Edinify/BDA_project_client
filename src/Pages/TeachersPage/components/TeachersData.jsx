@@ -6,23 +6,31 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const TeachersData = ({ teacherPageNum, getPageNumber }) => {
+const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
   const dispatch = useDispatch();
   const { teachers, totalPages } = useSelector(
     (state) => state.teachersPagination
   );
   const { loading } = useSelector((state) => state.teachersPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
-  const [openConfirmModal,setOpenConfirmModal] = useState(false)
-  const tableHead = [
-    { id: 1, label: "Təlimçi adı" },
-    { id: 2, label: "Fənn" },
-    { id: 3, label: "Email" },
-    { id: 4, label: "Telefon nömrəsi" },
-    { id: 6, label: "" },
-    {id:8,label:""},
-    { id: 7, label: "" },
-  ];
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const tableHead =
+    userData.power === "only-show"
+      ? [
+          { id: 1, label: "Təlimçi adı" },
+          { id: 2, label: "Fənn" },
+          { id: 3, label: "Email" },
+          { id: 4, label: "Telefon nömrəsi" },
+          { id: 6, label: "" },
+        ]
+      : [
+          { id: 1, label: "Təlimçi adı" },
+          { id: 2, label: "Fənn" },
+          { id: 3, label: "Email" },
+          { id: 4, label: "Telefon nömrəsi" },
+          { id: 6, label: "" },
+          { id: 8, label: "" },
+        ];
 
   useEffect(() => {
     if (openMoreModal) {
@@ -39,15 +47,23 @@ const TeachersData = ({ teacherPageNum, getPageNumber }) => {
       ) : (
         <>
           {openMoreModal && (
-            <MoreModal setOpenMoreModal={setOpenMoreModal} type="teacher" />
+            <MoreModal
+              setOpenMoreModal={setOpenMoreModal}
+              type="teacher"
+              userData={userData}
+            />
           )}
           {openConfirmModal && (
             <ConfirmModal
-            setOpenConfirmModal={setOpenConfirmModal}
-            type="teacher"
+              setOpenConfirmModal={setOpenConfirmModal}
+              type="teacher"
             />
           )}
-          <table className="details-table teacher-table">
+          <table
+            className={`details-table  teacher-table ${
+              userData.power === "only-show" ? "only-show" : "update"
+            } `}
+          >
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
@@ -62,6 +78,7 @@ const TeachersData = ({ teacherPageNum, getPageNumber }) => {
                   key={i}
                   data={teacher}
                   mode="desktop"
+                  teacher={userData}
                   cellNumber={i + 1 + (teacherPageNum - 1) * 10}
                   setOpenMoreModal={setOpenMoreModal}
                   setOpenConfirmModal={setOpenConfirmModal}
@@ -76,6 +93,7 @@ const TeachersData = ({ teacherPageNum, getPageNumber }) => {
                 key={i}
                 data={teacher}
                 mode="tablet"
+                teacher={userData}
                 cellNumber={i + 1 + (teacherPageNum - 1) * 10}
                 setOpenMoreModal={setOpenMoreModal}
                 setOpenConfirmModal={setOpenConfirmModal}

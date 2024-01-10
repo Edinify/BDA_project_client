@@ -6,25 +6,37 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const ConsultationData = ({ pageNum, getPageNumber }) => {
+const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
   const { totalPages, loading, consultationData } = useSelector(
     (state) => state.consultationPagination
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
-  const tableHead = [
-    "Tələbə",
-    "Təlimçi",
-    "Mobil nömrə",
-    "İxtisas",
-    "Əlaqə tarixi",
-    "Konsultasiya tarixi",
-    "Konsultasiya saatı",
-    "Status",
-    "",
-    "",
-    "",
-  ];
+  const tableHead =
+    userData.power === "only-show"
+      ? [
+          "Tələbə",
+          "Təlimçi",
+          "Mobil nömrə",
+          "İxtisas",
+          "Əlaqə tarixi",
+          "Konsultasiya tarixi",
+          "Konsultasiya saatı",
+          "Status",
+          "",
+        ]
+      :  [
+          "Tələbə",
+          "Təlimçi",
+          "Mobil nömrə",
+          "İxtisas",
+          "Əlaqə tarixi",
+          "Konsultasiya tarixi",
+          "Konsultasiya saatı",
+          "Status",
+          "",
+          "",
+        ];
 
   useEffect(() => {
     if (openMoreModal) {
@@ -42,7 +54,7 @@ const ConsultationData = ({ pageNum, getPageNumber }) => {
         <>
           {openMoreModal && (
             <MoreModal
-              data={consultationData}
+              userData={userData}
               setOpenMoreModal={setOpenMoreModal}
               type="consultation"
             />
@@ -55,7 +67,7 @@ const ConsultationData = ({ pageNum, getPageNumber }) => {
             />
           )}
           <div className="table-con">
-            <table className="details-table  student-table">
+            <table className="details-table ">
               <thead>
                 <tr>
                   {tableHead.map((head, i) => (
@@ -69,6 +81,7 @@ const ConsultationData = ({ pageNum, getPageNumber }) => {
                     key={i}
                     data={student}
                     mode="desktop"
+                    consultation={userData}
                     setOpenMoreModal={setOpenMoreModal}
                     setOpenConfirmModal={setOpenConfirmModal}
                     cellNumber={i + 1 + (pageNum - 1) * 10}
@@ -87,6 +100,7 @@ const ConsultationData = ({ pageNum, getPageNumber }) => {
                 setOpenMoreModal={setOpenMoreModal}
                 cellNumber={i + 1 + (pageNum - 1) * 10}
                 setOpenConfirmModal={setOpenConfirmModal}
+                consultation={userData}
               />
             ))}
           </div>

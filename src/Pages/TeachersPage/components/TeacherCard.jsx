@@ -9,11 +9,14 @@ const TeacherCard = ({
   cellNumber,
   setOpenMoreModal,
   setOpenConfirmModal,
+  teacher,
 }) => {
   const dispatch = useDispatch();
   const { teachers, lastPage } = useSelector(
     (state) => state.teachersPagination
   );
+
+  // console.log(teacher,"teacher")
   const { teachersSearchValues } = useSelector((state) => state.searchValues);
   const { teacherStatus } = useSelector((state) => state.teacherStatus);
   let courses =
@@ -91,16 +94,19 @@ const TeacherCard = ({
           <td className="more" onClick={() => openMoreModal()}>
             Ətraflı
           </td>
-          <td className="confirm" onClick={openConfirmModal}>
-            Təsdiqlə
-          </td>
-          <td>
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
-          </td>
+
+          {teacher?.power !== "only-show" ? (
+            <td>
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                setOpenConfirmModal={setOpenConfirmModal}
+                state={teacher}
+                openConfirmModal={openConfirmModal}
+              />
+            </td>
+          ) : null}
         </tr>
       ) : (
         <div className="content-box">
@@ -115,17 +121,25 @@ const TeacherCard = ({
               ))}
             </ul>
           </div>
-          <div className="right">
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
+          {teacher.power === "only-show" ? (
             <div className="more-content">
               <span onClick={openMoreModal}>Ətraflı</span>
-              <span onClick={openConfirmModal}>Təsdiqlə</span>
             </div>
-          </div>
+          ) : (
+            <div className="right">
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                state={teacher}
+                setOpenConfirmModal={setOpenConfirmModal}
+                openConfirmModal={openConfirmModal}
+              />
+              <div className="more-content">
+                <span onClick={openMoreModal}>Ətraflı</span>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>

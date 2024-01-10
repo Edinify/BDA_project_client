@@ -7,7 +7,13 @@ import { deleteConsultationAction } from "../../../redux/actions/consultationsAc
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import { useLocation } from "react-router-dom";
 
-const ConsultationCard = ({ mode, setOpenMoreModal, data ,setOpenConfirmModal}) => {
+const ConsultationCard = ({
+  mode,
+  setOpenMoreModal,
+  data,
+  setOpenConfirmModal,
+  consultation,
+}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { constStatusList } = useCustomHook();
@@ -37,7 +43,8 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data ,setOpenConfirmModal}) 
     { key: "Konsultasiya saatı", value: data?.constTime },
     {
       key: "Status",
-      value: constStatusList.find((item) => item.key === data.status)?.name || "",
+      value:
+        constStatusList.find((item) => item.key === data.status)?.name || "",
     },
   ];
 
@@ -58,7 +65,9 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data ,setOpenConfirmModal}) 
     const _id = data?._id;
     const searchQuery = consultationSearchValues;
     const status =
-    location.pathname === "/consultation/appointed" ? "appointed" : "completed";
+      location.pathname === "/consultation/appointed"
+        ? "appointed"
+        : "completed";
     dispatch(
       deleteConsultationAction({ _id, pageNumber, searchQuery, status })
     );
@@ -81,27 +90,35 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data ,setOpenConfirmModal}) 
           <td>{data?.teacher?.fullName}</td>
           <td>{data?.studentPhone}</td>
           <td>{data?.course?.name}</td>
-          <td>{ data?.contactDate
-        ? moment(data?.contactDate).locale("az").format("DD MMMM YYYY")
-        : ""}</td>
-          <td>{ data?.constDate
-        ? moment(data?.constDate).locale("az").format("DD MMMM YYYY")
-        : ""}</td>
+          <td>
+            {data?.contactDate
+              ? moment(data?.contactDate).locale("az").format("DD MMMM YYYY")
+              : ""}
+          </td>
+          <td>
+            {data?.constDate
+              ? moment(data?.constDate).locale("az").format("DD MMMM YYYY")
+              : ""}
+          </td>
           <td>{data?.constTime}</td>
-          <td>{constStatusList.find((item) => item.key === data.status)?.name || ""}</td>
+          <td>
+            {constStatusList.find((item) => item.key === data.status)?.name ||
+              ""}
+          </td>
           <td className="more" onClick={openMoreModal}>
             Ətraflı
           </td>
-          <td className="confirm" onClick={openConfirmModal} >
-            Təsdiqlə
-          </td>
-          <td>
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
-          </td>
+          {consultation.power !== "only-show" ? (
+            <td>
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                openConfirmModal={openConfirmModal}
+                state={consultation}
+              />
+            </td>
+          ) : null}
         </tr>
       ) : (
         <div className="content-box">
@@ -116,17 +133,24 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data ,setOpenConfirmModal}) 
               ))}
             </ul>
           </div>
-          <div className="right">
-            <UpdateDeleteModal
-              updateItem={updateItem}
-              deleteItem={deleteItem}
-              data={data}
-            />
-             <div className="more-content">
+          {consultation.power === "only-show" ? (
+            <div className="more-content">
               <span onClick={openMoreModal}>Ətraflı</span>
-              <span onClick={openConfirmModal}>Təsdiqlə</span>
             </div>
-          </div>
+          ) : (
+            <div className="right">
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                openConfirmModal={openConfirmModal}
+                state={consultation}
+              />
+              <div className="more-content">
+                <span onClick={openMoreModal}>Ətraflı</span>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>

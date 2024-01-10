@@ -6,37 +6,57 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const WorkersData = ({ pageNum, getPageNumber }) => {
-  const dispatch = useDispatch();
+const WorkersData = ({userData, pageNum, getPageNumber}) => {
   const { workers, totalPages, loading } = useSelector(
     (state) => state.workersPagination
   );
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [openMoreModal, setOpenMoreModal] = useState(false);
 
-  const tableHead = [
+  const tableHead =
+    userData.power ==="only-show"?
+
+   [
     "Ad soyad",
     "Fin kod",
     "Email",
     "Mobil nömrə",
     "Pozisiya",
-    "Profil",
+    ""
+  ]
+  :
+  [
+    "Ad soyad",
+    "Fin kod",
+    "Email",
+    "Mobil nömrə",
+    "Pozisiya",
     "",
-    "",
-  ];
-
+    ""
+  ]
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
         <>
+        {openMoreModal &&(
+          <MoreModal 
+          userData={userData}
+          setOpenMoreModal={setOpenMoreModal}
+          type="worker"
+           />
+        )}
           {openConfirmModal && (
             <ConfirmModal
               setOpenConfirmModal={setOpenConfirmModal}
               type="workers"
             />
           )}
-          <table className="details-table">
+            <table
+            className={`details-table  teacher-table ${
+              userData.power === "only-show" ? "only-show" : "update"
+            } `}>
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
@@ -50,9 +70,11 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
                 <WorkerCard
                   key={i}
                   data={teacher}
+                  worker={userData}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
                   setOpenConfirmModal={setOpenConfirmModal}
+                  setOpenMoreModal={setOpenMoreModal}
                 />
               ))}
             </tbody>
@@ -63,8 +85,10 @@ const WorkersData = ({ pageNum, getPageNumber }) => {
               <WorkerCard
                 key={i}
                 data={teacher}
+                worker={userData}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
+                setOpenMoreModal={setOpenMoreModal}
                 setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}

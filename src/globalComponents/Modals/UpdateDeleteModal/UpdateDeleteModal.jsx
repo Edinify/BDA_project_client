@@ -7,10 +7,13 @@ import DeleteItemModal from "../DeleteItemModal/DeleteItemModal";
 const UpdateDeleteModal = ({
   updateItem = () => {},
   deleteItem = () => {},
+  state,
   data,
   dataType = "",
+  openConfirmModal,
 }) => {
-  
+
+  // console.log(state,"admin")
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { funcComp } = useSelector((state) => state.funcComponent);
@@ -48,6 +51,7 @@ const UpdateDeleteModal = ({
   return (
     <div className="func-component">
       <MoreIcon className="more-icon" onMouseDown={handleToggleModal} />
+
       <div
         className={`delete-update-modal ${
           funcComp === data._id ? "active" : ""
@@ -58,12 +62,19 @@ const UpdateDeleteModal = ({
           {dataType !== "feedback" && (
             <h4 onClick={() => updateItem()}>Yenilə</h4>
           )}
-          <h4
-            className={`delete-func ${dataType === "branches" ? "only" : ""}`}
-            onClick={() => setShowDeleteModal(true)}
-          >
-            Sil
-          </h4>
+          {(state?.role === "super-admin" || state?.power === "all") && (
+            <h4 className="confirm" onClick={openConfirmModal}>
+              Təsdiqlə
+            </h4>
+          )}
+          {state?.power !== "update" && (
+            <h4
+              className={`delete-func ${dataType === "branches" ? "only" : ""}`}
+              onClick={() => setShowDeleteModal(true)}
+            >
+              Sil
+            </h4>
+          )}
         </>
       </div>
       {showDeleteModal && (
