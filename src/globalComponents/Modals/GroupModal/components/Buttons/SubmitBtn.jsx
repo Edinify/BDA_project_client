@@ -21,17 +21,25 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
   });
   const dataCreate = () => {
     const courseId = modalData?.course?._id;
+
     const teachersId = modalData?.teachers?.map((item) => {
       return item._id;
     });
+
+    const mentorsId = modalData?.mentors?.map((item) => {
+      return item._id;
+    });
+
     const studentsId = modalData?.students?.map((item) => {
       return item._id;
     });
+
     const resultData = {
       ...modalData,
       course: courseId,
       teachers: teachersId,
       students: studentsId,
+      mentors: mentorsId,
     };
 
     dispatch({
@@ -62,7 +70,10 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
           return true;
         }
       } else {
-        if (formik.isValid && modalData?.name) {
+        console.log(formik);
+        console.log(formik.errors, "formik errroors");
+        console.log(modalData);
+        if (formik.isValid && modalData?.name && modalData.course) {
           return false;
         } else {
           return true;
@@ -70,6 +81,8 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
       }
     });
   }, [formik.errors]);
+
+  console.log(modalData, "moooodal data");
 
   return (
     <div>

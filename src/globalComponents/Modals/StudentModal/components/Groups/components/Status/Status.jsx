@@ -1,18 +1,13 @@
 import React from "react";
 
-export default function Status({
-  data,
-  setInputValue,
-  formik,
-  addGroupData,
-}) {
+export default function Status({ data, setInputValue, formik, addGroupData }) {
   const changeSector = (e, value) => {
     addGroupData("status", value);
     setInputValue("status", true);
   };
 
   return (
-    <div>
+    <div style={{ marginTop: "16px" }}>
       <label className="radio-sector-title"></label>
       <div className="radio-sector-con department">
         <label>

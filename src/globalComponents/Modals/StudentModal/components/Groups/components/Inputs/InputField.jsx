@@ -2,13 +2,7 @@ import { TextField } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 
-export default function InputField({
-  formik,
-  data,
-  inputName,
-  addGroupData,
-
-}) {
+export default function InputField({ formik, data, inputName, addGroupData }) {
   const [shrink, setShrink] = useState(false);
   const [totalAmountValue, setTotalAmountValue] = useState(() => {
     const amount = data.amount || 0;
@@ -48,7 +42,7 @@ export default function InputField({
     },
     {
       inputName: "amount",
-      label: "Ödəniş",
+      label: "Məbləğ",
       type: "number",
       marginTop: "24px",
       marginBottom: "0",
@@ -119,7 +113,14 @@ export default function InputField({
         value={
           inputData.find((item) => item.inputName === inputName)?.inputValue
         }
-        disabled={inputName === "totalAmount" || inputName === "amount"  ? true : false}
+        disabled={
+          inputName === "totalAmount" ||
+          inputName === "amount" ||
+          ((inputName === "discount" || inputName === "contractStartDate") &&
+            data?.payments?.find((item) => item.status != "wait"))
+            ? true
+            : false
+        }
         onWheel={(e) => e.target.blur()}
         onChange={(e) => {
           addGroupData(inputName, e.target.value);

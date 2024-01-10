@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  MENTOR_TYPES,
   TEACHER_ALL_ACTIONS_TYPE,
   TEACHERS_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -143,7 +144,7 @@ export const getActiveTeachersAction = () => async (dispatch) => {
 export const getTeachersByCourseId = (courseId) => async (dispatch) => {
   try {
     const { data } = await API.get("/by-course", {
-      params: { courseId: courseId },
+      params: { courseId: courseId, role: "teacher" },
     });
     dispatch({
       type: TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHERS,
@@ -178,12 +179,13 @@ export const getTeachersByCourseId = (courseId) => async (dispatch) => {
 };
 
 export const getTeachersPaginationAction =
-  (pageNumber, searchQuery, status = "all") =>
+  (pageNumber, searchQuery, status = "all", role) =>
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
+      console.log(role, "teacher role");
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}`
+        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&role=${role}`
       );
 
       dispatch({
@@ -585,3 +587,43 @@ export const getTeacherLeaderboradOrderAction =
       console.log(error);
     }
   };
+
+// Mentors Actions
+
+export const getMentorsByCourseId = (courseId) => async (dispatch) => {
+  try {
+    const { data } = await API.get("/by-course", {
+      params: { courseId: courseId, role: "mentor" },
+    });
+    console.log(data, "mentors in action");
+    dispatch({
+      type: MENTOR_TYPES.GET_MENTORS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.get("/active");
+        dispatch({
+          type: TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHERS,
+          payload: data,
+        });
+      } catch (error) {
+        console.log(error);
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+        }
+      }
+    }
+  }
+};

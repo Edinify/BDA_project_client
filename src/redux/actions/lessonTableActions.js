@@ -231,8 +231,11 @@ export const deleteLessonTableAction =
   ({ _id, pageNumber, searchQuery }) =>
   async (dispatch) => {
     try {
-      await API.delete(`/${_id}`);
-      dispatch(getLessonTablePaginationAction(pageNumber, searchQuery));
+      const { data } = await API.delete(`/${_id}`);
+      console.log(data, "deleted lessonnnnnn");
+      dispatch(
+        getLessonTablePaginationAction(pageNumber, searchQuery, data.group)
+      );
       dispatch({
         type: LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE,
         payload: _id,

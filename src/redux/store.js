@@ -48,6 +48,7 @@ import { lessonTableModalReducer } from "./reducers/lessonTableModalReducer";
 import { lessonTablePaginationReducer } from "./reducers/lessonTablePaginationReducer";
 import { groupsPaginationReducer } from "./reducers/groupsPaginationReducer";
 import { dropdownGroupReducer } from "./reducers/dropdownGroupReducer";
+import mentorsReducer from "./reducers/mentorsReducer";
 
 const initialState = {};
 const reducers = combineReducers({
@@ -95,6 +96,7 @@ const reducers = combineReducers({
   studentStatus: studentStatusReducer,
   teacherStatus: teacherStatusReducer,
   dropdownGroup: dropdownGroupReducer,
+  mentors: mentorsReducer
 });
 // test
 

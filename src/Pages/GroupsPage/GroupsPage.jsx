@@ -43,6 +43,8 @@ const GroupsPage = () => {
     }
   }, [location.pathname]);
 
+  console.log(lastPage, "last page");
+
   return (
     <div className="details-page teachers-page ">
       <GlobalHead
@@ -52,10 +54,10 @@ const GroupsPage = () => {
         dataSearchValues={groupsSearchValues}
       />
       <HeadTabs
-        firstRoute={"/groups/current"}
-        secondRoute={"/groups/waiting"}
-        firstPathname={"Mövcud qruplar"}
-        secondPathname={"Yığılan qruplar"}
+        firstRoute={"/groups/waiting"}
+        secondRoute={"/groups/current"}
+        firstPathname={"Yığılan qruplar"}
+        secondPathname={"Mövcud qruplar"}
       />
       <GroupsData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>

@@ -42,8 +42,8 @@ const LessonTableCard = ({ data, mode, setOpenConfirmModal, setStudents }) => {
       key: "Mövzu",
       value: `${data?.topic?.orderNumber}. ${data?.topic?.name}`,
     },
-    { key: "Müəllim", value: data.teacher.fullName },
-
+    { key: "Müəllim", value: data?.teacher?.fullName },
+    { key: "Mentor", value: data?.mentor?.fullName },
     {
       key: "Status",
       value:
@@ -58,10 +58,11 @@ const LessonTableCard = ({ data, mode, setOpenConfirmModal, setStudents }) => {
         data: {
           _id: data._id,
           group: data.group._id,
-          teacher: data.teacher._id,
-          date: data.date,
-          time: data.time,
-          topic: data.topic,
+          teacher: data?.teacher?._id,
+          mentor: data?.mentor?._id,
+          date: data?.date,
+          time: data?.time,
+          topic: data?.topic,
         },
         openModal: modalType !== "more" ? true : false,
       },
@@ -106,7 +107,13 @@ const LessonTableCard = ({ data, mode, setOpenConfirmModal, setStudents }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.teacher.fullName}</div>
+              <div className="table-scroll-text">{data?.teacher?.fullName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data?.mentor?.fullName}</div>
               <div className="right-fade"></div>
             </div>
           </td>

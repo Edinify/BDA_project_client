@@ -26,6 +26,7 @@ const GroupModal = () => {
   const formik = useFormik({
     initialValues: {
       name: modalData.name ? modalData.name : "",
+      course: modalData.course,
     },
     validationSchema: ValidationSchema,
   });

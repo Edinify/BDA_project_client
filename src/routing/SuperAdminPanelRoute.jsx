@@ -17,6 +17,7 @@ const SuperAdminPanelRoute = () => {
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/students" element={<StudentsPage />} />
       <Route path="/teachers" element={<TeachersPage />} />
+      <Route path="/teachers/mentors" element={<TeachersPage />} />
       <Route path="/tuition-fee" element={<TuitionFeePage />} />
       <Route path="/consultation/appointed" element={<ConsultationsPage />} />
       <Route path="/consultation/completed" element={<ConsultationsPage />} />

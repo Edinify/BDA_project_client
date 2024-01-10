@@ -6,13 +6,14 @@ import { getActiveTeachersAction } from "../../../../../redux/actions/teachersAc
 
 const Mentor = ({ formik, modalData, updateModalState }) => {
   const dispatch = useDispatch();
-  const { teachers: dataList } = useSelector(
-    (state) => state.teachersPagination
-  );
-  const inputValue = modalData.teacher ? modalData.teacher.fullName : "";
+  const { mentors } = useSelector((state) => state.dropdownGroup.selectedGroup);
+
+  const inputValue =
+    mentors.find((mentor) => mentor._id == modalData.mentor)?.fullName || "";
+
   const [openDropdown, setOpenDropdown] = useState(false);
   const addData = (item) => {
-    updateModalState("teacher", item);
+    updateModalState("mentor", item._id);
     setOpenDropdown(false);
   };
 
@@ -55,7 +56,7 @@ const Mentor = ({ formik, modalData, updateModalState }) => {
               openDropdown ? "active" : ""
             }`}
           >
-            {dataList.map((item) => (
+            {mentors.map((item) => (
               <li key={item._id} onClick={() => addData(item)}>
                 <h4>{item.fullName}</h4>
               </li>

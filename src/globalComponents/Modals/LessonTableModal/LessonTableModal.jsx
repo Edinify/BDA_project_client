@@ -1,4 +1,4 @@
-import {  useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import moment from "moment";
@@ -19,12 +19,17 @@ const LessonTableModal = () => {
   const { lessonTableModalData: modalData } = useSelector(
     (state) => state.lessonTableModal
   );
+  const { selectedGroup } = useSelector((state) => state.dropdownGroup);
 
   const inputNameArr1 = ["date", "time"];
 
   // formik
   const formik = useFormik({
-    initialValues: {},
+    initialValues: {
+      group: modalData?.group || "",
+      date: modalData?.date || "",
+      time: modalData?.time || "",
+    },
     validationSchema: ValidationSchema,
   });
 
@@ -38,6 +43,8 @@ const LessonTableModal = () => {
   );
 
   const updateModalState = (keyName, value) => {
+    console.log("keyname:", keyName);
+    console.log("value:", value);
     if (keyName === "profiles") {
       const formikValue =
         value.length > 0
@@ -65,7 +72,12 @@ const LessonTableModal = () => {
     });
   };
 
-  console.log(modalData, "modal data");
+  useEffect(() => {
+    updateModalState("group", selectedGroup._id);
+  }, []);
+
+  console.log(modalData, "moododd");
+
   return (
     <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal teacher-modal ">
@@ -114,27 +126,38 @@ const LessonTableModal = () => {
               updateModalState={updateModalState}
               modalData={modalData}
             />
-            {/* <Mentor
+            <Mentor
               formik={formik}
               updateModalState={updateModalState}
               modalData={modalData}
-            /> */}
+            />
           </div>
         </Box>
 
         {modalData?._id ? (
-           <div className="modal-buttons">
-           <Status
-          //  updatedResultData={updatedResultData} 
-          //  setUpdatedResultData={setUpdatedResultData}
-          //  futureLesson={futureLesson}
-          //  user={user}
-           />
-          
-          <SubmitBtn formik={formik} modalData={modalData} funcType="update" />
+          <div className="modal-buttons">
+            <Status
+            //  updatedResultData={updatedResultData}
+            //  setUpdatedResultData={setUpdatedResultData}
+            //  futureLesson={futureLesson}
+            //  user={user}
+            />
+
+            <SubmitBtn
+              formik={formik}
+              modalData={modalData}
+              funcType="update"
+            />
           </div>
         ) : (
-          <SubmitBtn formik={formik} modalData={modalData} funcType="create" />
+          <div className="modal-buttons">
+            <span></span>
+            <SubmitBtn
+              formik={formik}
+              modalData={modalData}
+              funcType="create"
+            />
+          </div>
         )}
 
         {modalData?._id && (

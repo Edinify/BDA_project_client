@@ -5,6 +5,7 @@ import Payments from "./components/Payments/Payments";
 import InputField from "./components/Inputs/InputField";
 import DiscountReason from "./components/DiscountReason/DiscountReason";
 import Status from "./components/Status/Status";
+import { date } from "yup";
 
 const GroupInput = ({
   data,
@@ -21,22 +22,10 @@ const GroupInput = ({
   );
 
   const addPaymentType = (item) => {
-    const paymentType = item.paymentType
-    const amount = item.payment
-    const onePartPayment = amount / paymentType
-    // const paymentArr = Array(paymentType).fill({
-    //   payment: "",
-    //   paymentDate: "",
-    // });
-    const paymentArr = Array(paymentType).fill({
-      payment: onePartPayment.toFixed(2),
-      paymentDate: "",
-    });
     groupData[foundIndex] = {
       ...groupData[foundIndex],
-      paymentType: paymentType,
-      payments: paymentArr,
-      amount: amount
+      payment: item,
+      amount: item.payment,
     };
     updateModalState("groups", groupData);
   };
@@ -46,7 +35,7 @@ const GroupInput = ({
       ...groupData[foundIndex].payments[index],
       [key]: value,
     };
-    console.log(groupData);
+
     updateModalState("groups", groupData);
   };
 
@@ -55,9 +44,48 @@ const GroupInput = ({
       ...groupData[foundIndex],
       [key]: value,
     };
-    console.log(key, value);
     updateModalState("groups", groupData);
   };
+
+  useEffect(() => {
+    const checkPayments = data?.payments?.find((item) => item.status !== "wait")
+      ? false
+      : true;
+    if (data.amount && data.payment && checkPayments) {
+      const payment = data.payment;
+      const amount = data.amount;
+      const discount = data?.discount || 0;
+
+      const totalAmount = amount - (amount * discount) / 100;
+      const part = payment.part;
+      const onePartPayment = totalAmount / part;
+      const paymentsDate = data?.contractStartDate
+        ? new Date(data.contractStartDate)
+        : "";
+
+      const paymentArr = [];
+
+      for (let i = 0; i < part; i++) {
+        const currentDate = paymentsDate ? new Date(paymentsDate) : "";
+
+        paymentArr.push({
+          payment: onePartPayment.toFixed(2),
+          paymentDate: currentDate,
+          status: "wait",
+        });
+
+        if (paymentsDate) paymentsDate.setMonth(paymentsDate.getMonth() + 1);
+      }
+
+      groupData[foundIndex] = {
+        ...groupData[foundIndex],
+        payments: paymentArr,
+        totalAmount: totalAmount,
+      };
+      console.log("helllooooooo");
+      updateModalState("groups", groupData);
+    }
+  }, [data.discount, data.amount, data.contractStartDate]);
 
   return (
     <li className="group-li">
@@ -70,21 +98,20 @@ const GroupInput = ({
           />
         </div>
       </div>
-      <PaymentType
-        data={data}
-        addPaymentType={addPaymentType}
+      <Status
         formik={formik}
+        setInputValue={setInputValue}
+        data={data}
+        addGroupData={addGroupData}
       />
-      {data?.payments?.map((item, index) => (
-        <Payments
-          key={index}
-          index={index}
-          setInputValue={setInputValue}
-          data={item}
-          addPayments={addPayments}
-          formik={formik}
-        />
-      ))}
+      <InputField
+        inputName={"degree"}
+        formik={formik}
+        setInputValue={setInputValue}
+        data={data}
+        addGroupData={addGroupData}
+      />
+
       <div className="input-couples">
         <InputField
           inputName={"contractStartDate"}
@@ -95,6 +122,25 @@ const GroupInput = ({
         />
         <InputField
           inputName={"contractEndDate"}
+          formik={formik}
+          setInputValue={setInputValue}
+          data={data}
+          addGroupData={addGroupData}
+        />
+      </div>
+      <PaymentType
+        data={data}
+        addPaymentType={addPaymentType}
+        formik={formik}
+      />
+      <div className="input-couples">
+        <DiscountReason
+          data={data}
+          addGroupData={addGroupData}
+          formik={formik}
+        />
+        <InputField
+          inputName={"discount"}
           formik={formik}
           setInputValue={setInputValue}
           data={data}
@@ -114,35 +160,19 @@ const GroupInput = ({
           data={data}
           addGroupData={addGroupData}
         />
-
-        <DiscountReason
-          data={data}
-          addGroupData={addGroupData}
-          formik={formik}
-        />
-        <InputField
-          inputName={"discount"}
-          formik={formik}
-          setInputValue={setInputValue}
-          data={data}
-          addGroupData={addGroupData}
-        />
       </div>
 
-      <InputField
-        inputName={"degree"}
-        formik={formik}
-        setInputValue={setInputValue}
-        data={data}
-        addGroupData={addGroupData}
-      />
-
-      <Status
-        formik={formik}
-        setInputValue={setInputValue}
-        data={data}
-        addGroupData={addGroupData}
-      />
+      <p style={{ marginTop: "20px" }}>{index + 1}. Ödənişlər</p>
+      {data?.payments?.map((item, index) => (
+        <Payments
+          key={index}
+          index={index}
+          setInputValue={setInputValue}
+          data={item}
+          addPayments={addPayments}
+          formik={formik}
+        />
+      ))}
     </li>
   );
 };

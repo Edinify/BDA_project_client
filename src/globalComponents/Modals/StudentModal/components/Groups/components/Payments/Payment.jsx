@@ -7,7 +7,7 @@ export default function Payment({
   data,
   inputName,
   addPayments,
-  index
+  index,
 }) {
   const [shrink, setShrink] = useState(false);
   const inputData = [
@@ -15,7 +15,7 @@ export default function Payment({
       inputName: "paymentDate",
       label: "Ödəniş tarixi",
       type: "date",
-      marginTop: "24px",
+      marginTop: "10px",
       marginBottom: "0",
       inputValue:
         data[inputName] && inputName === "paymentDate"
@@ -26,7 +26,7 @@ export default function Payment({
       inputName: "payment",
       label: "Ödəniş",
       type: "number",
-      marginTop: "24px",
+      marginTop: "10px",
       marginBottom: "0",
       inputValue: data[inputName] || "",
     },

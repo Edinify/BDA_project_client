@@ -50,7 +50,7 @@ const TeachersList = ({ formik, updateModalState, modalData }) => {
 
   useEffect(() => {
     console.log(modalData, "modal data in groups lkdsfj");
-    dispatch(getTeachersByCourseId(modalData?.course?._id));
+    dispatch(getTeachersByCourseId(modalData?.course?._id, "teacher"));
   }, [modalData.course]);
 
   return (
@@ -67,7 +67,7 @@ const TeachersList = ({ formik, updateModalState, modalData }) => {
                 style: { fontSize: "12px", color: "#3F3F3F" },
               }}
               fullWidth
-              label="Təlimçilər"
+              label="Müəllimlər"
               autoComplete="off"
               value={selectedItem?.fullName || ""}
               disabled

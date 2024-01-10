@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import moment from "moment";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
-import { Box } from "@mui/material";
+import { Box, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { TEACHERS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
 import Status from "./components/Buttons/Status";
@@ -32,7 +32,11 @@ const TeacherModal = () => {
       seria: modalData.seria ? modalData.seria : "",
       phone: modalData.phone ? modalData.phone : "",
       birthday: modalData?.birthday ? modalData?.birthday : "",
-      courses: modalData?.courses ? (modalData?.courses.length > 0 ? 'yes' : '') : "",
+      courses: modalData?.courses
+        ? modalData?.courses.length > 0
+          ? "yes"
+          : ""
+        : "",
       email: modalData?.email ? modalData?.email : "",
       password: modalData?.password ? modalData?.password : "",
     },
@@ -87,6 +91,40 @@ const TeacherModal = () => {
           }}
         >
           <div className="create-update-modal-form">
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+            >
+              <FormControlLabel
+                value={"teacher"}
+                control={<Radio checked={modalData?.role !== "mentor"} />}
+                label="Müəllim"
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    fontSize: 28,
+                  },
+                  "& .MuiFormControlLabel-label": {
+                    fontSize: 13,
+                  },
+                }}
+                onClick={() => updateModalState("role", "teacher")}
+              />
+              <FormControlLabel
+                value={"mentor"}
+                control={<Radio checked={modalData?.role === "mentor"} />}
+                label="Mentor"
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    fontSize: 28,
+                  },
+                  "& .MuiFormControlLabel-label": {
+                    fontSize: 13,
+                  },
+                }}
+                onClick={() => updateModalState("role", "mentor")}
+              />
+            </RadioGroup>
             <InputField
               inputName="fullName"
               formik={formik}

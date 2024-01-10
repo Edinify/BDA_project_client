@@ -108,7 +108,6 @@ const StudentCard = ({
               deleteItem={deleteItem}
               data={data}
               setOpenConfirmModal={setOpenConfirmModal}
-
             />
           </td>
         </tr>

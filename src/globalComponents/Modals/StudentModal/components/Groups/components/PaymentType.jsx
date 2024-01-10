@@ -3,11 +3,11 @@ import { TextField } from "@mui/material";
 import DropdownIcon from "../../../../components/DropdownIcon/DropdownIcon";
 
 const PaymentType = ({ formik, data, addPaymentType }) => {
-  const inputValue = data.paymentType ? `${data.paymentType} hissəli` : ''
+  const inputValue = data?.payment?.paymentType || "";
   const [openDropdown, setOpenDropdown] = useState(false);
   const addData = (item) => {
     addPaymentType(item);
-    setOpenDropdown(false)
+    setOpenDropdown(false);
   };
 
   return (
@@ -30,14 +30,20 @@ const PaymentType = ({ formik, data, addPaymentType }) => {
               fullWidth
               label="Ödəniş növü"
               autoComplete="off"
-              disabled
+              disabled={
+                data?.payments?.find((item) => item.status != "wait")
+                  ? true
+                  : false
+              }
               value={inputValue}
               onBlur={() => formik.setFieldTouched("paymentType", true)}
             />
-           <DropdownIcon
-              setOpenDropdown={setOpenDropdown}
-              openDropdown={openDropdown}
-            />
+            {!data?.payments?.find((item) => item.status != "wait") && (
+              <DropdownIcon
+                setOpenDropdown={setOpenDropdown}
+                openDropdown={openDropdown}
+              />
+            )}
           </div>
 
           <ul
@@ -47,7 +53,9 @@ const PaymentType = ({ formik, data, addPaymentType }) => {
           >
             {data.group.course.payments.map((item) => (
               <li key={item.paymentType} onClick={() => addData(item)}>
-                <h4>{item.paymentType} hissəli, ödəniş: {item.payment}</h4>
+                <h4>
+                  {item.paymentType}, ödəniş: {item.payment}
+                </h4>
               </li>
             ))}
           </ul>

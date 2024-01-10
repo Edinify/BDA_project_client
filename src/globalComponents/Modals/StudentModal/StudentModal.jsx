@@ -56,7 +56,6 @@ export const StudentModal = () => {
     });
   };
 
-  console.log(modalData.groups);
   return (
     <div className="create-update-modal-con student-modal">
       <div className="create-update-modal">

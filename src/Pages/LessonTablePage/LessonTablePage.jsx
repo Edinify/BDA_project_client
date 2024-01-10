@@ -14,18 +14,27 @@ const LessonTablePage = () => {
   );
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
 
+  console.log(selectedGroup, "selected group");
   const getPageNumber = (pageNumber) => {
     if (lessonTableSearchValues) {
       dispatch(
-        getLessonTablePaginationAction(pageNumber, lessonTableSearchValues)
+        getLessonTablePaginationAction(
+          pageNumber,
+          lessonTableSearchValues,
+          selectedGroup._id
+        )
       );
     } else {
-      dispatch(getLessonTablePaginationAction(pageNumber, ""));
+      dispatch(
+        getLessonTablePaginationAction(pageNumber, "", selectedGroup._id)
+      );
     }
   };
   const openModal = () => {
     if (selectedGroup) {
-      const students = selectedGroup.students.map((student) => ({ student }));
+      const students = selectedGroup.students.map((student) => ({
+        student,
+      }));
 
       dispatch({
         type: LESSON_TABLE_MODAL_ACTION_TYPE.GET_LESSON_TABLE_MODAL,
@@ -50,7 +59,13 @@ const LessonTablePage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getLessonTablePaginationAction(1, lessonTableSearchValues));
+    dispatch(
+      getLessonTablePaginationAction(
+        1,
+        lessonTableSearchValues,
+        selectedGroup._id
+      )
+    );
   };
 
   return (

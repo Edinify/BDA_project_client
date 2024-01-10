@@ -36,6 +36,9 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
     console.log(funcType, "func type");
     setIsDisabled(() => {
       if (funcType === "update") {
+        console.log(formik.isValid, "formik is valid");
+        console.log(formik.errors, "formik ERRROR");
+        console.log(modalData);
         if (Object.keys(formik.errors).length === 0) {
           return false;
         } else if (
@@ -48,6 +51,7 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
         }
       } else {
         console.log(formik.isValid, "formik is valid");
+        console.log(formik.errors, "formik ERRROR");
         console.log(modalData);
         if (formik.isValid) {
           return false;
@@ -63,7 +67,7 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
   return (
     <>
       <div className="create-update-modal-btn">
-        <button disabled={false} onClick={dataCreate}>
+        <button disabled={isDisabled} onClick={dataCreate}>
           {modalLoading ? (
             <LoadingBtn />
           ) : funcType === "update" ? (

@@ -11,9 +11,7 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
   const { lessonTableData, totalPages, loading } = useSelector(
     (state) => state.lessonTablePagination
   );
-  const { openStudentModal } = useSelector(
-    (state) => state.lessonTableModal
-  );
+  const { openStudentModal } = useSelector((state) => state.lessonTableModal);
 
   console.log(openStudentModal);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
@@ -25,6 +23,7 @@ const LessonTableData = ({ pageNum, getPageNumber }) => {
     "Dərs saatı",
     "Mövzu",
     "Müəllim",
+    "Mentor",
     "Status",
     "Tələbələr",
     "",

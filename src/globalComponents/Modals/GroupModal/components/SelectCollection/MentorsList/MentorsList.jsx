@@ -4,14 +4,17 @@ import { TextField } from "@mui/material";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { ReactComponent as CheckIcon } from "../../../../../../assets/icons/Checkbox.svg";
 import MentorInput from "./MentorInput";
-import { getActiveTeachersAction } from "../../../../../../redux/actions/teachersActions";
+import {
+  getActiveTeachersAction,
+  getMentorsByCourseId,
+} from "../../../../../../redux/actions/teachersActions";
 import DropdownIcon from "../../../../components/DropdownIcon/DropdownIcon";
 
 const MentorsList = ({ formik, updateModalState, modalData }) => {
   const dispatch = useDispatch();
-  const { teachers: dataList } = useSelector(
-    (state) => state.teachersPagination
-  );
+  const { mentors: dataList } = useSelector((state) => state.mentors);
+
+  console.log(dataList, "mentors");
   const [openDropdown, setOpenDropdown] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [profileErrMessage, setProfileErrMessage] = useState(false);
@@ -46,8 +49,8 @@ const MentorsList = ({ formik, updateModalState, modalData }) => {
   };
 
   useEffect(() => {
-    // dispatch(getActiveTeachersAction());
-  }, []);
+    dispatch(getMentorsByCourseId(modalData?.course?._id));
+  }, [modalData.course]);
 
   return (
     <div>
@@ -70,7 +73,7 @@ const MentorsList = ({ formik, updateModalState, modalData }) => {
               onClick={() => setOpenDropdown(!openDropdown)}
             />
 
-           <DropdownIcon
+            <DropdownIcon
               setOpenDropdown={setOpenDropdown}
               openDropdown={openDropdown}
             />

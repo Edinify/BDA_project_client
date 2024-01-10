@@ -76,7 +76,7 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
       <li>
         <NavLink
           className={groupsNav.includes(location.pathname) ? "active" : ""}
-          to="/groups/current"
+          to="/groups/waiting"
           onClick={closeSidebar}
         >
           <GroupIcon />

@@ -10,7 +10,10 @@ import {
 } from "../../../../../redux/actions/groupsActions";
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 import GroupInput from "./GroupInput";
-import { GROUP_ALL_ACTIONS_TYPE, STUDENTS_MODAL_ACTION_TYPE } from "../../../../../redux/actions-type";
+import {
+  GROUP_ALL_ACTIONS_TYPE,
+  STUDENTS_MODAL_ACTION_TYPE,
+} from "../../../../../redux/actions-type";
 import DropdownIcon from "../../../components/DropdownIcon/DropdownIcon";
 
 const GroupList = ({ modalData, updateModalState, formik, setInputValue }) => {
@@ -18,6 +21,7 @@ const GroupList = ({ modalData, updateModalState, formik, setInputValue }) => {
   const { loading, loadingAll, groupsByMore } = useSelector(
     (state) => state.groupsPagination
   );
+
   const courseIds =
     modalData?.courses?.map((item) => {
       return item._id;
@@ -87,7 +91,7 @@ const GroupList = ({ modalData, updateModalState, formik, setInputValue }) => {
   };
 
   useEffect(() => {
-    if(modalData.courses) {
+    if (modalData.courses) {
       dispatch(
         getGroupsByCourseIdAction({
           groupsCount: 0,
@@ -98,10 +102,11 @@ const GroupList = ({ modalData, updateModalState, formik, setInputValue }) => {
     } else {
       dispatch({
         type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL_ADD,
-        payload: {groups: ''},
+        payload: { groups: "" },
       });
     }
   }, []);
+
 
   return (
     <div>
@@ -148,7 +153,8 @@ const GroupList = ({ modalData, updateModalState, formik, setInputValue }) => {
                 <LoadingBtn />
               </li>
             ) : (
-              groupsByMore && groupsByMore?.map((item, i) => (
+              groupsByMore &&
+              groupsByMore?.map((item, i) => (
                 <li key={i} onClick={() => setSelectedItem(item)}>
                   {modalData?.groups?.find(
                     (obj) => obj.group._id === item._id
@@ -195,7 +201,7 @@ const GroupList = ({ modalData, updateModalState, formik, setInputValue }) => {
       <ul className="category-list courses-li">
         {modalData?.groups?.map((item, index) => (
           <GroupInput
-            key={index}
+            key={item.group._id}
             index={index}
             data={item}
             deleteItem={deleteItem}
