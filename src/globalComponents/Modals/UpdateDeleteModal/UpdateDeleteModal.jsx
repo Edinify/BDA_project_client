@@ -12,6 +12,7 @@ const UpdateDeleteModal = ({
   dataType = "",
   openConfirmModal,
 }) => {
+  // 
 
   // console.log(state,"admin")
   const dispatch = useDispatch();
