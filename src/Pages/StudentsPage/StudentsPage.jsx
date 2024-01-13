@@ -76,64 +76,19 @@ const StudentsPage = () => {
 
   return (
     <div className="details-page students-page">
-      {userData?.role === "super-admin" ? (
-        <>
-          <GlobalHead
-            searchData={searchData}
-            openModal={openModal}
-            DATA_SEARCH_VALUE={"STUDENTS_SEARCH_VALUE"}
-            dataSearchValues={studentSearchValues}
-            statusType="student"
-          />
-        </>
-      ) : (
-        <>
-          {userData.map((data, i) => {
-            const { profile, power } = data;
-            return profile === "students" && power === "all" ? (
-              <span>
-                <GlobalHead
-                  searchData={searchData}
-                  openModal={openModal}
-                  DATA_SEARCH_VALUE={"STUDENTS_SEARCH_VALUE"}
-                  dataSearchValues={studentSearchValues}
-                  statusType="student"
-                />
-              </span>
-            ) : (
-              ""
-            );
-          })}
-        </>
-      )}
+      <GlobalHead
+        searchData={searchData}
+        openModal={openModal}
+        DATA_SEARCH_VALUE={"STUDENTS_SEARCH_VALUE"}
+        dataSearchValues={studentSearchValues}
+        statusType="student"
+      />
 
-      {userData?.role === "super-admin" ? (
-        <>
-          <StudentsData
-            studentPageNum={lastPage}
-            getPageNumber={getPageNumber}
-            userData={userData}
-          />
-        </>
-      ) : (
-        <>
-          {userData.map((data, i) => {
-            const { profile, power } = data;
-
-            return (
-              profile === "students" && (
-                <span key={i}>
-                  <StudentsData
-                    studentPageNum={lastPage}
-                    getPageNumber={getPageNumber}
-                    userData={data}
-                  />
-                </span>
-              )
-            );
-          })}
-        </>
-      )}
+      <StudentsData
+        studentPageNum={lastPage}
+        getPageNumber={getPageNumber}
+        userData={userData}
+      />
     </div>
   );
 };

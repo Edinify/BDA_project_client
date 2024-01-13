@@ -27,7 +27,6 @@ const LessonTableCard = ({
       }`
     : "";
 
-
   // let students =
   //   Array.isArray(data.students) && data.students.length > 0
   // ? data.students
@@ -148,17 +147,16 @@ const LessonTableCard = ({
               <div className="right-fade"></div>
             </div>
           </td>
-          {lesson.power !== "only-show" ? (
-            <td>
-              <UpdateDeleteModal
-                updateItem={updateItem}
-                deleteItem={deleteItem}
-                data={data}
-                openConfirmModal={openConfirmModal}
-                state={lesson}
-              />
-            </td>
-          ) : null}
+
+          <td>
+            <UpdateDeleteModal
+              updateItem={updateItem}
+              deleteItem={deleteItem}
+              data={data}
+              openConfirmModal={openConfirmModal}
+              state={lesson}
+            />
+          </td>
         </tr>
       ) : (
         <div className="content-box">
@@ -173,9 +171,7 @@ const LessonTableCard = ({
               ))}
             </ul>
           </div>
-          {lesson.power === "only-show" ? (
-            null
-          ) : (
+          {lesson.power === "only-show" ? null : (
             <div className="right">
               <UpdateDeleteModal
                 updateItem={updateItem}
@@ -184,7 +180,6 @@ const LessonTableCard = ({
                 state={lesson}
                 openConfirmModal={openConfirmModal}
               />
-            
             </div>
           )}
         </div>

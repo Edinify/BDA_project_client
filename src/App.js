@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDebugValue, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Routing } from "./routing";
 import TeacherModal from "./globalComponents/Modals/TeacherModal/TeacherModal";
 import { CourseModal } from "./globalComponents/Modals/CourseModal/CourseModal";
@@ -14,6 +14,7 @@ import SyllabusModal from "./globalComponents/Modals/SyllabusModal/SyllabusModal
 import ConsultationModal from "./globalComponents/Modals/ConsultationModal/ConsultationModal";
 import LessonTableModal from "./globalComponents/Modals/LessonTableModal/LessonTableModal";
 import LessonModal from "./globalComponents/Modals/LessonModal/LessonModal";
+import { userAction } from "./redux/actions/userAction";
 
 //
 function App() {
@@ -31,6 +32,7 @@ function App() {
   );
   const { syllabusOpenModal } = useSelector((state) => state.syllabusModal);
   const { careerOpenModal } = useSelector((state) => state.careerModal);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (coursesOpenModal) {
@@ -56,6 +58,9 @@ function App() {
     }
   }, [teachersOpenModal]);
 
+  useEffect(() => {
+    dispatch(userAction());
+  }, []);
   return (
     <div className="App">
       <Routing />

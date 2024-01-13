@@ -12,31 +12,17 @@ const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
-  const tableHead =
-    userData.power === "only-show"
-      ? [
-          "Tələbə",
-          "Təlimçi",
-          "Mobil nömrə",
-          "İxtisas",
-          "Əlaqə tarixi",
-          "Konsultasiya tarixi",
-          "Konsultasiya saatı",
-          "Status",
-          "",
-        ]
-      :  [
-          "Tələbə",
-          "Təlimçi",
-          "Mobil nömrə",
-          "İxtisas",
-          "Əlaqə tarixi",
-          "Konsultasiya tarixi",
-          "Konsultasiya saatı",
-          "Status",
-          "",
-          "",
-        ];
+  const tableHead = [
+    "Tələbə",
+    "Təlimçi",
+    "Mobil nömrə",
+    "İxtisas",
+    "Əlaqə tarixi",
+    "Konsultasiya tarixi",
+    "Konsultasiya saatı",
+    "Status",
+    "",
+  ];
 
   useEffect(() => {
     if (openMoreModal) {

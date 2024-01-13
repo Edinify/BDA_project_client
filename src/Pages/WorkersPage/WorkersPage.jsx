@@ -43,63 +43,18 @@ const WorkersPage = () => {
 
   return (
     <div className="details-page teachers-page ">
-      {userData?.role === "super-admin" ? (
-        <>
-          <GlobalHead
-            searchData={searchData}
-            openModal={openModal}
-            DATA_SEARCH_VALUE={"WORKERS_SEARCH_VALUE"}
-            dataSearchValues={workersSearchValues}
-          />
-        </>
-      ) : (
-        <>
-          {userData.map((data, i) => {
-            const { profile, power } = data;
-
-            return (
-              profile === "workers" &&
-              power === "all" && (
-                <span key={i}>
-                  <GlobalHead
-                    searchData={searchData}
-                    openModal={openModal}
-                    DATA_SEARCH_VALUE={"WORKERS_SEARCH_VALUE"}
-                    dataSearchValues={workersSearchValues}
-                  />
-                </span>
-              )
-            );
-          })}
-        </>
-      )}
-
-      {userData?.role === "super-admin" ? (
-        <>
-          <WorkersData
-            userData={userData}
-            pageNum={lastPage}
-            getPageNumber={getPageNumber}
-          />
-        </>
-      ) : (
-        <>
-          {userData.map((data, i) => {
-            const { profile, power } = data;
-            return (
-              profile === "workers" && (
-                <span key={i}>
-                  <WorkersData
-                    userData={data}
-                    pageNum={lastPage}
-                    getPageNumber={getPageNumber}
-                  />
-                </span>
-              )
-            );
-          })}
-        </>
-      )}
+      <GlobalHead
+        searchData={searchData}
+        openModal={openModal}
+        DATA_SEARCH_VALUE={"WORKERS_SEARCH_VALUE"}
+        dataSearchValues={workersSearchValues}
+        profile={"workers"}
+      />
+      <WorkersData
+        userData={userData}
+        pageNum={lastPage}
+        getPageNumber={getPageNumber}
+      />
     </div>
   );
 };

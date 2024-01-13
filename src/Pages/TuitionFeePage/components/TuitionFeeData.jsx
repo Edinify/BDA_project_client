@@ -4,25 +4,27 @@ import TuitionFeeCard from "./TuitionFeeCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
 const TuitionFeeData = ({ pageNum, getPageNumber }) => {
   const { tuitionFeeData, totalPages } = useSelector(
     (state) => state.tuitionFeePagination
   );
   const { loading } = useSelector((state) => state.tuitionFeePagination);
+
+  const { openConfirmModal } = useSelector((state) => state.tuitionFeeModal);
+
   const [openMoreModal, setOpenMoreModal] = useState(false);
+
   const tableHead = [
     "Tələbənin adı",
-    "Mobil Nömrə",
-    "Status",
     "Qrup",
     "Məbləğ",
     "Yekun Məbləğ",
-    "Ödəmə növü",
-    "Endirim %",
     "Endirim növü",
-    "Müqavilə başlama tarixi",
-    "Müqavilə bitmə tarixi",
+    "Endirim %",
+    "Ödəniş növü",
+    "Cari ayın ödənişi",
     "",
   ];
 
@@ -47,6 +49,9 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
               type="tuitionFee"
             />
           )}
+
+          {openConfirmModal && <ConfirmModal type="tuitionFee" />}
+
           <div className="table-con">
             <table className="details-table  student-table">
               <thead>

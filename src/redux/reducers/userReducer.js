@@ -1,6 +1,10 @@
 import { USER_ACTION_TYPE } from "../actions-type/index";
 
-export const userReducer = (state = { user: {} }, action) => {
+const initialState = {
+  user: JSON.parse(localStorage.getItem("userData")) || {},
+};
+
+export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_ACTION_TYPE.ADD_USER:
       return {

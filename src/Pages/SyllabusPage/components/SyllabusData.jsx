@@ -10,12 +10,7 @@ const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
     (state) => state.syllabusPagination
   );
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
-  const tableHead =
-    userData.power === "only-show"
-      ? ["No", "Mövzü"]
-      : userData.power === "update"
-      ? ["No", "Mövzü", ""]
-      : ["No", "Mövzü", ""];
+  const tableHead = ["No", "Mövzü", ""];
 
   return (
     <>

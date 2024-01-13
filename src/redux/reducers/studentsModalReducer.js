@@ -26,6 +26,7 @@ const initialState = {
   },
   studentsOpenModal: false,
   studentsModalLoading: false,
+  openConfirmModal: false,
 };
 
 export const studentsModalReducer = (state = initialState, action) => {
@@ -45,6 +46,18 @@ export const studentsModalReducer = (state = initialState, action) => {
       return {
         ...state,
         studentsModalLoading: action.payload,
+      };
+    case STUDENTS_MODAL_ACTION_TYPE.CLOSE_STUDENT_CONFIRM_MODAL:
+      return {
+        ...state,
+        ...initialState,
+      };
+    case STUDENTS_MODAL_ACTION_TYPE.OPEN_STUDENT_CONFIRM_MODAL:
+      return {
+        ...state,
+        studentsModalData: action.payload.data,
+        studentsOpenModal: action.payload.openModal,
+        openConfirmModal: action.payload.confirmModal,
       };
     default:
       return state;

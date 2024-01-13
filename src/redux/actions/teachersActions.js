@@ -627,3 +627,109 @@ export const getMentorsByCourseId = (courseId) => async (dispatch) => {
     }
   }
 };
+
+export const confirmTeacherChangesAction =
+  (_id, teacherData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(`/changes/confirm/${_id}`, teacherData);
+
+      dispatch({
+        type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
+        payload: data,
+      });
+      dispatch({
+        type: TEACHERS_MODAL_ACTION_TYPE.CLOSE_TEACHER_CONFIRM_MODAL,
+      });
+      toastSuccess("Yeniliklər təstiqləndi");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, teacherData);
+          dispatch({
+            type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
+            payload: data,
+          });
+          dispatch({
+            type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Təlimçi təstiqləndi!");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      if (error?.response?.data?.key === "email-already-exist") {
+        toastError("Bu email ilə istifadəçi mövcuddur");
+      }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan təlimçi yenilənə bilməz");
+      }
+    } finally {
+      dispatch(modalLoading(false));
+    }
+  };
+
+export const cancelTeacherChangesAction =
+  (_id, teacherData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(`/changes/cancel/${_id}`, teacherData);
+
+      dispatch({
+        type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
+        payload: data,
+      });
+      dispatch({
+        type: TEACHERS_MODAL_ACTION_TYPE.CLOSE_TEACHER_CONFIRM_MODAL,
+      });
+      toastSuccess("Yeniliklər ləğv edildi!");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, teacherData);
+          dispatch({
+            type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
+            payload: data,
+          });
+          dispatch({
+            type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Təlimçi yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      if (error?.response?.data?.key === "email-already-exist") {
+        toastError("Bu email ilə istifadəçi mövcuddur");
+      }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan təlimçi yenilənə bilməz");
+      }
+    } finally {
+      dispatch(modalLoading(false));
+    }
+  };

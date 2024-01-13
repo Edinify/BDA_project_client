@@ -71,38 +71,15 @@ const ConsultationsPage = () => {
 
   return (
     <div className="details-page tuition-fee-page">
-      {userData?.role === "super-admin" ? (
-        <>
-          <GlobalHead
-            searchData={searchData}
-            openModal={openModal}
-            DATA_SEARCH_VALUE={"CONSULTATION_SEARCH_VALUE"}
-            dataSearchValues={consultationSearchValues}
-            addBtn={status === "appointed" ? true : false}
-            statusType="student"
-          />
-        </>
-      ) : (
-        <>
-          {userData?.map((data, i) => {
-            const { profile, power } = data;
-            return profile === "consultation" && power === "all" ? (
-              <span key={i}>
-                <GlobalHead
-                  searchData={searchData}
-                  openModal={openModal}
-                  DATA_SEARCH_VALUE={"CONSULTATION_SEARCH_VALUE"}
-                  dataSearchValues={consultationSearchValues}
-                  addBtn={status === "appointed" ? true : false}
-                  statusType="student"
-                />
-              </span>
-            ) : (
-              ""
-            );
-          })}
-        </>
-      )}
+      <GlobalHead
+        searchData={searchData}
+        openModal={openModal}
+        DATA_SEARCH_VALUE={"CONSULTATION_SEARCH_VALUE"}
+        dataSearchValues={consultationSearchValues}
+        addBtn={status === "appointed" ? true : false}
+        statusType="student"
+        profile={"consultation"}
+      />
 
       <HeadTabs
         firstRoute={"/consultation/appointed"}
@@ -110,32 +87,12 @@ const ConsultationsPage = () => {
         firstPathname={"Təyin olunmuş"}
         secondPathname={"Baş tutmuş"}
       />
-      {userData?.role === "super-admin" ? (
-        <>
-          <ConsultationData
-            pageNum={lastPage}
-            getPageNumber={getPageNumber}
-            userData={userData}
-          />
-        </>
-      ) : (
-        <>
-          {userData?.map((data, i) => {
-            const { profile, power } = data;
-            return (
-              profile === "consultation" && (
-                <span key={i}>
-                  <ConsultationData
-                    pageNum={lastPage}
-                    getPageNumber={getPageNumber}
-                    userData={data}
-                  />
-                </span>
-              )
-            );
-          })}
-        </>
-      )}
+
+      <ConsultationData
+        pageNum={lastPage}
+        getPageNumber={getPageNumber}
+        userData={userData}
+      />
     </div>
   );
 };

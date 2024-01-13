@@ -8,6 +8,7 @@ import {
   STUDENTS_MODAL_ACTION_TYPE,
   CONSULTATION_MODAL_ACTION_TYPE,
   WORKER_MODAL_ACTION_TYPE,
+  GROUP_MODAL_ACTION_TYPE,
 } from "../../redux/actions-type";
 import "moment/locale/az";
 import TeacherMoreModal from "./components/TeacherMoreModal/TeacherMoreModal";
@@ -15,6 +16,7 @@ import StudentMoreModal from "./components/StudentMoreModal/StudentMoreModal";
 import ConsultationMoreModal from "./components/ConsultationMoreModal/ConsultationMoreModal";
 import TuitionFeeMoreModal from "./components/TuitionFeeMoreModal/TuitionFeeMoreModal";
 import WorkersMoreModal from "./components/WorkersMoreModal/WorkersMoreModal";
+import GroupMoreModal from "./components/GroupMoreModal/GroupMoreModal";
 const MoreModal = ({ setOpenMoreModal, type, userData }) => {
   const dispatch = useDispatch();
   const { teachersModalData } = useSelector((state) => state.teachersModal);
@@ -24,6 +26,7 @@ const MoreModal = ({ setOpenMoreModal, type, userData }) => {
   const { consultationModalData } = useSelector(
     (state) => state.consultationModal
   );
+  const { groupModalData } = useSelector((state) => state.groupModal);
   const { user } = useSelector((state) => state.user);
 
   console.log(userData?.power === "only-show", "user Dataaaa");
@@ -71,6 +74,16 @@ const MoreModal = ({ setOpenMoreModal, type, userData }) => {
           openModal: true,
         },
       });
+    } else if (type === "group") {
+      dispatch({
+        type: GROUP_MODAL_ACTION_TYPE.GET_GROUP_MODAL,
+        payload: {
+          data: {
+            ...groupModalData,
+          },
+          openModal: true,
+        },
+      });
     }
     setOpenMoreModal(false);
   };
@@ -83,8 +96,9 @@ const MoreModal = ({ setOpenMoreModal, type, userData }) => {
           type === "student" ||
           type === "consultation" ||
           type === "tuitionFee" ||
-          type === "worker" ? (
-            <h2>Şəxsi məlumatlar</h2>
+          type === "worker" ||
+          type === "group" ? (
+            <h2>Ətraflı məlumatlar</h2>
           ) : (
             ""
           )}
@@ -120,6 +134,7 @@ const MoreModal = ({ setOpenMoreModal, type, userData }) => {
         {type === "worker" && (
           <WorkersMoreModal workerModal={workerModalData} />
         )}
+        {type === "group" && <GroupMoreModal groupModalData={groupModalData} />}
       </div>
     </div>
   );

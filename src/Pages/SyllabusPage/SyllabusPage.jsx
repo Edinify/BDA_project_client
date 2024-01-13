@@ -18,7 +18,6 @@ const SyllabusPage = () => {
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
 
-
   const getPageNumber = (pageNumber) => {
     if (syllabusSearchValues) {
       dispatch(
@@ -75,63 +74,19 @@ const SyllabusPage = () => {
 
   return (
     <div className="details-page teachers-page ">
-      {userData?.role === "super-admin" ? (
-        <>
-          <GlobalHead
-            searchData={searchData}
-            openModal={openModal}
-            DATA_SEARCH_VALUE={"SYLLABUS_SEARCH_VALUE"}
-            dataSearchValues={syllabusSearchValues}
-            statusType="syllabus"
-          />
-        </>
-      ) : (
-        <>
-          {userData.map((data,i) => {
-            const { profile, power } = data;
-            return profile === "syllabus" ? (
-              <span key={i}>
-                <GlobalHead
-                  searchData={searchData}
-                  openModal={openModal}
-                  DATA_SEARCH_VALUE={"SYLLABUS_SEARCH_VALUE"}
-                  dataSearchValues={syllabusSearchValues}
-                  statusType="syllabus"
-                  power={power}
-                />
-              </span>
-            ) : (
-              ""
-            );
-          })}
-        </>
-      )}
+      <GlobalHead
+        searchData={searchData}
+        openModal={openModal}
+        DATA_SEARCH_VALUE={"SYLLABUS_SEARCH_VALUE"}
+        dataSearchValues={syllabusSearchValues}
+        statusType="syllabus"
+      />
 
-      {userData.role === "super-admin" ? (
-        <SyllabusData
-          pageNum={lastPage}
-          getPageNumber={getPageNumber}
-          userData={userData}
-        />
-      ) : (
-        <>
-          {userData.map((data, i) => {
-            const { profile, power } = data;
-
-            return (
-              profile === "syllabus" && (
-                <span key={i}>
-                  <SyllabusData
-                    pageNum={lastPage}
-                    getPageNumber={getPageNumber}
-                    userData={userData}
-                  />
-                </span>
-              )
-            );
-          })}
-        </>
-      )}
+      <SyllabusData
+        pageNum={lastPage}
+        getPageNumber={getPageNumber}
+        userData={userData}
+      />
     </div>
   );
 };

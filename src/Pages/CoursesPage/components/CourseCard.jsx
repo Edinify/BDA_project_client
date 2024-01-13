@@ -9,6 +9,7 @@ const CourseCard = ({
   course,
   cellNumber,
   setOpenConfirmModal,
+  setOpenMoreModal,
 }) => {
   const dispatch = useDispatch();
   const { courses, lastPage } = useSelector((state) => state.coursesPagination);
@@ -28,6 +29,11 @@ const CourseCard = ({
     const _id = data._id;
     const searchQuery = coursesSearchValues;
     dispatch(deleteCoursesAction({ _id, pageNumber, searchQuery }));
+  };
+
+  const openMoreModal = () => {
+    updateItem("more");
+    setOpenMoreModal(true);
   };
 
   const openConfirmModal = () => {
@@ -54,6 +60,7 @@ const CourseCard = ({
                 data={data}
                 state={course}
                 openConfirmModal={openConfirmModal}
+                openMoreModal={openMoreModal}
               />
             </td>
           ) : null}
@@ -64,9 +71,7 @@ const CourseCard = ({
             <h3 className="name">{data.name}</h3>
           </div>
 
-          {course.power === "only-show" ? (
-            null
-          ) : (
+          {course.power === "only-show" ? null : (
             <div className="right">
               <UpdateDeleteModal
                 updateItem={updateItem}
@@ -75,7 +80,6 @@ const CourseCard = ({
                 state={course}
                 openConfirmModal={openConfirmModal}
               />
-            
             </div>
           )}
         </div>

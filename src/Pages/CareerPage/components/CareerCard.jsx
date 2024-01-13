@@ -95,30 +95,6 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="overflow-hiiden">
-            <div className="td-con">
-              <div className="table-scroll-text no-wrap">
-                {data?.contractStartDate
-                  ? moment(data?.contractStartDate)
-                      .locale("az")
-                      .format("DD MMMM YYYY")
-                  : ""}
-              </div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td className="overflow-hiiden">
-            <div className="td-con">
-              <div className="table-scroll-text no-wrap no-wrap">
-                {data?.contractEndDate
-                  ? moment(data?.contractEndDate)
-                      .locale("az")
-                      .format("DD MMMM YYYY")
-                  : ""}
-              </div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
           <td>
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
@@ -128,28 +104,21 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div className="td-con">
-              <div className="table-scroll-text no-wrap"></div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          {/* <td className="more" onClick={() => openMoreModal()}>
-            Ətraflı
-          </td>
-          <td>
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
+              openMoreModal={openMoreModal}
+              profil={"careers"}
               data={data}
             />
-          </td> */}
+          </td>
         </tr>
       ) : (
         <div className="content-box">
           <div className="left">
             <h3>{data.fullName}</h3>
             <ul>
-            {listData.map((item, index) => (
+              {listData.map((item, index) => (
                 <li key={index}>
                   <span className="type">{item.key}</span>
                   <p>{item.value}</p>

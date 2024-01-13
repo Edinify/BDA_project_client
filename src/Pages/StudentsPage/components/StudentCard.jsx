@@ -50,14 +50,21 @@ const StudentCard = ({
     const status = studentStatus ? studentStatus : "all";
     dispatch(deleteStudentAction({ _id, pageNumber, searchQuery, status }));
   };
+
   const openMoreModal = () => {
     updateItem("more");
     setOpenMoreModal(true);
   };
 
   const openConfirmModal = () => {
-    setOpenConfirmModal(true);
-    updateItem("more");
+    dispatch({
+      type: STUDENTS_MODAL_ACTION_TYPE.OPEN_STUDENT_CONFIRM_MODAL,
+      payload: {
+        data: data,
+        openModal: false,
+        confirmModal: true,
+      },
+    });
   };
 
   return (
@@ -95,22 +102,19 @@ const StudentCard = ({
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="more" onClick={openMoreModal}>
-            Ətraflı
-          </td>
 
-          {student?.power !== "only-show" ? (
-            <td>
-              <UpdateDeleteModal
-                updateItem={updateItem}
-                deleteItem={deleteItem}
-                data={data}
-                setOpenConfirmModal={setOpenConfirmModal}
-                state={student}
-                openConfirmModal={openConfirmModal}
-              />
-            </td>
-          ) : null}
+          <td>
+            <UpdateDeleteModal
+              updateItem={updateItem}
+              deleteItem={deleteItem}
+              data={data}
+              setOpenConfirmModal={setOpenConfirmModal}
+              state={student}
+              openConfirmModal={openConfirmModal}
+              openMoreModal={openMoreModal}
+              profil={"students"}
+            />
+          </td>
         </tr>
       ) : (
         <div className="content-box">

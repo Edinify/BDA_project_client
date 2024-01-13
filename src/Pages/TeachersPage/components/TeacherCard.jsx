@@ -3,14 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { TEACHERS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteTeacherAction } from "../../../redux/actions/teachersActions";
-const TeacherCard = ({
-  data,
-  mode,
-  cellNumber,
-  setOpenMoreModal,
-  setOpenConfirmModal,
-  teacher,
-}) => {
+const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
   const dispatch = useDispatch();
   const { teachers, lastPage } = useSelector(
     (state) => state.teachersPagination
@@ -58,8 +51,14 @@ const TeacherCard = ({
   };
 
   const openConfirmModal = () => {
-    setOpenConfirmModal(true);
-    updateItem("more");
+    dispatch({
+      type: TEACHERS_MODAL_ACTION_TYPE.OPEN_TEACHER_CONFIRM_MODAL,
+      payload: {
+        data: data,
+        openModal: false,
+        confirmModal: true,
+      },
+    });
   };
 
   return (
@@ -91,22 +90,18 @@ const TeacherCard = ({
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="more" onClick={() => openMoreModal()}>
-            Ətraflı
-          </td>
 
-          {teacher?.power !== "only-show" ? (
-            <td>
-              <UpdateDeleteModal
-                updateItem={updateItem}
-                deleteItem={deleteItem}
-                data={data}
-                setOpenConfirmModal={setOpenConfirmModal}
-                state={teacher}
-                openConfirmModal={openConfirmModal}
-              />
-            </td>
-          ) : null}
+          <td>
+            <UpdateDeleteModal
+              updateItem={updateItem}
+              deleteItem={deleteItem}
+              data={data}
+              state={teacher}
+              openConfirmModal={openConfirmModal}
+              openMoreModal={openMoreModal}
+              profil={"teachers"}
+            />
+          </td>
         </tr>
       ) : (
         <div className="content-box">
@@ -132,8 +127,8 @@ const TeacherCard = ({
                 deleteItem={deleteItem}
                 data={data}
                 state={teacher}
-                setOpenConfirmModal={setOpenConfirmModal}
                 openConfirmModal={openConfirmModal}
+                profil={"teachers"}
               />
               <div className="more-content">
                 <span onClick={openMoreModal}>Ətraflı</span>

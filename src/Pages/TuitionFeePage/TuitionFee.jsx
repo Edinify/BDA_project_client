@@ -38,15 +38,17 @@ const TuitionFeePage = () => {
     }
   }, [dispatch]);
 
+
   return (
     <div className="details-page tuition-fee-page">
-      {/* <GlobalHead
+      <GlobalHead
         searchData={searchData}
         openModal={openModal}
         addBtn={false}
         DATA_SEARCH_VALUE={"TUITION_FEE_SEARCH_VALUE"}
         dataSearchValues={tuitionFeeSearchValues}
-      /> */}
+        profile={"tuitionFee"}
+      />
       <TuitionFeeData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>
   );

@@ -12,7 +12,14 @@ const CareerData = ({ pageNum, getPageNumber }) => {
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const tableHead = [
-    "Qrup", "Ixtisas", "Tələbənin adı", "Portfolio linki","CV linki", "Mobil Nömrə", "Müqavilə başlama tarixi", "Müqavilə bitmə tarixi", "Status", "Diplom"
+    "Qrup",
+    "Ixtisas",
+    "Tələbənin adı",
+    "Portfolio linki",
+    "CV linki",
+    "Mobil Nömrə",
+    "Status",
+    ""
   ];
 
   useEffect(() => {
@@ -22,6 +29,8 @@ const CareerData = ({ pageNum, getPageNumber }) => {
       document.body.style.overflowY = "overlay";
     }
   }, [openMoreModal]);
+
+  console.log(careerData, "career data");
 
   return (
     <>
@@ -42,10 +51,10 @@ const CareerData = ({ pageNum, getPageNumber }) => {
             </thead>
 
             <tbody>
-              {careerData?.map((teacher, i) => (
+              {careerData?.map((career, i) => (
                 <CareerCard
                   key={i}
-                  data={teacher}
+                  data={career}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
                   setOpenMoreModal={setOpenMoreModal}

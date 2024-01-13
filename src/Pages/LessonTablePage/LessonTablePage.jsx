@@ -75,65 +75,21 @@ const LessonTablePage = () => {
 
   return (
     <div className="details-page teachers-page ">
-      {userData.role === "super-admin" ? (
-        <>
-          <GlobalHead
-            searchData={searchData}
-            openModal={openModal}
-            DATA_SEARCH_VALUE={"LESSON_TABLE_SEARCH_VALUE"}
-            dataSearchValues={lessonTableSearchValues}
-            statusType="lesson-table"
-            search={false}
-          />
-        </>
-      ) : (
-        <>
-          {userData.map((data, i) => {
-            const { profile, power } = data;
-            return (
-              profile === "lessonTable" && (
-                <span key={i}>
-                  <GlobalHead
-                    searchData={searchData}
-                    openModal={openModal}
-                    DATA_SEARCH_VALUE={"LESSON_TABLE_SEARCH_VALUE"}
-                    dataSearchValues={lessonTableSearchValues}
-                    statusType="lesson-table"
-                    search={false}
-                    power={power}
-                  />
-                </span>
-              )
-            );
-          })}
-        </>
-      )}
-      {userData?.role === "super-admin" ? (
-        <>
-          <LessonTableData
-            pageNum={lastPage}
-            getPageNumber={getPageNumber}
-            userData={userData}
-          />
-        </>
-      ) : (
-        <>
-          {userData?.map((data, i) => {
-            const { profile, power } = data;
-            return (
-              profile === "lessonTable" && (
-                <span key={i}>
-                  <LessonTableData
-                    pageNum={lastPage}
-                    getPageNumber={getPageNumber}
-                    userData={data}
-                  />
-                </span>
-              )
-            );
-          })}
-        </>
-      )}
+      <GlobalHead
+        searchData={searchData}
+        openModal={openModal}
+        DATA_SEARCH_VALUE={"LESSON_TABLE_SEARCH_VALUE"}
+        dataSearchValues={lessonTableSearchValues}
+        statusType="lesson-table"
+        search={false}
+        profile={"lessonTable"}
+      />
+
+      <LessonTableData
+        pageNum={lastPage}
+        getPageNumber={getPageNumber}
+        userData={userData}
+      />
     </div>
   );
 };

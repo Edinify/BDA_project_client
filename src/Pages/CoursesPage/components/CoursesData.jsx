@@ -1,44 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CourseCard from "./CourseCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 
 const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
   const { courses, totalPages } = useSelector(
     (state) => state.coursesPagination
   );
   const { loading } = useSelector((state) => state.coursesPagination);
+  const [openMoreModal, setOpenMoreModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
 
-  const tableHead =
-    userData.power === "only-show"
-      ? [{ id: 1, label: "Fənn adı" }]
-      : userData.power === "update"
-      ? [
-          { id: 1, label: "Fənn adı" },
-          { id: 2, label: "" },
-        ]
-      : [
-          { id: 1, label: "Fənn adı" },
-          { id: 2, label: "" },
-        ];
+  const tableHead = [
+    { id: 1, label: "Fənn adı" },
+    { id: 2, label: "" },
+  ];
+
+  useEffect(() => {
+    if (openMoreModal) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "overlay";
+    }
+  }, [openMoreModal]);
+
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
         <>
+          {openMoreModal && (
+            <MoreModal
+              setOpenMoreModal={setOpenMoreModal}
+              type="courses"
+              userData={userData}
+            />
+          )}
+
           {openConfirmModal && (
             <ConfirmModal
               setOpenConfirmModal={setOpenConfirmModal}
               type="courses"
             />
           )}
-          <table className={`details-table  courses-table ${
+          <table
+            className={`details-table  courses-table ${
               userData.power === "only-show" ? "only-show" : "update"
-            } `}>
+            } `}
+          >
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
@@ -56,6 +69,7 @@ const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
                   mode="desktop"
                   cellNumber={i + 1 + (coursePageNum - 1) * 10}
                   setOpenConfirmModal={setOpenConfirmModal}
+                  setOpenMoreModal={setOpenMoreModal}
                 />
               ))}
             </tbody>

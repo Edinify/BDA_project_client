@@ -18,6 +18,7 @@ export const Routing = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const [notFound, setNotFound] = useState(false);
 
   const { auth } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.user);
@@ -25,7 +26,7 @@ export const Routing = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const token = localStorage.getItem("auth");
 
-  console.log(user, "user");
+  console.log(user);
 
   useEffect(() => {
     if (token) {
@@ -49,7 +50,7 @@ export const Routing = () => {
           navigate("/teacher-panel/home");
         }
       } else if (user.role === "worker" && !notFound) {
-        navigate("/consultation/appointed");
+        if (location.pathname === "/login") navigate("/consultation/appointed");
       }
     } else if (forgetPassword.login) {
       navigate("/login");
@@ -63,14 +64,6 @@ export const Routing = () => {
       }
     }
   }, [auth, user, forgetPassword]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("auth");
-    // if (token) {
-    //   dispatch(profileGetImage());
-    // }
-  }, [dispatch]);
-  const [notFound, setNotFound] = useState(false);
 
   return (
     <div className={userData ? "main-container" : ""}>

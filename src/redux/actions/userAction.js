@@ -25,7 +25,7 @@ API.interceptors.request.use((req) => {
 export const userAction = () => async (dispatch) => {
   try {
     const { data } = await API.get("/auth");
-    // console.log(data, "user action");
+    console.log(data, "user action");
     dispatch({ type: USER_ACTION_TYPE.ADD_USER, payload: data });
     localStorage.setItem("userData", JSON.stringify(data));
   } catch (error) {

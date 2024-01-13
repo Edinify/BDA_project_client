@@ -13,24 +13,14 @@ const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
   );
   const { loading } = useSelector((state) => state.teachersPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
-  const [openConfirmModal, setOpenConfirmModal] = useState(false);
-  const tableHead =
-    userData.power === "only-show"
-      ? [
-          { id: 1, label: "Təlimçi adı" },
-          { id: 2, label: "Fənn" },
-          { id: 3, label: "Email" },
-          { id: 4, label: "Telefon nömrəsi" },
-          { id: 6, label: "" },
-        ]
-      : [
-          { id: 1, label: "Təlimçi adı" },
-          { id: 2, label: "Fənn" },
-          { id: 3, label: "Email" },
-          { id: 4, label: "Telefon nömrəsi" },
-          { id: 6, label: "" },
-          { id: 8, label: "" },
-        ];
+  const { openConfirmModal } = useSelector((state) => state.teachersModal);
+  const tableHead = [
+    { id: 1, label: "Təlimçi adı" },
+    { id: 2, label: "Fənn" },
+    { id: 3, label: "Email" },
+    { id: 4, label: "Telefon nömrəsi" },
+    { id: 6, label: "" },
+  ];
 
   useEffect(() => {
     if (openMoreModal) {
@@ -53,12 +43,7 @@ const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
               userData={userData}
             />
           )}
-          {openConfirmModal && (
-            <ConfirmModal
-              setOpenConfirmModal={setOpenConfirmModal}
-              type="teacher"
-            />
-          )}
+          {openConfirmModal && <ConfirmModal type="teacher" />}
           <table
             className={`details-table  teacher-table ${
               userData.power === "only-show" ? "only-show" : "update"
@@ -81,7 +66,6 @@ const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
                   teacher={userData}
                   cellNumber={i + 1 + (teacherPageNum - 1) * 10}
                   setOpenMoreModal={setOpenMoreModal}
-                  setOpenConfirmModal={setOpenConfirmModal}
                 />
               ))}
             </tbody>
@@ -96,7 +80,6 @@ const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
                 teacher={userData}
                 cellNumber={i + 1 + (teacherPageNum - 1) * 10}
                 setOpenMoreModal={setOpenMoreModal}
-                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>

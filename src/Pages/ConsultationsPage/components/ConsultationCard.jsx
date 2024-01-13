@@ -105,20 +105,15 @@ const ConsultationCard = ({
             {constStatusList.find((item) => item.key === data.status)?.name ||
               ""}
           </td>
-          <td className="more" onClick={openMoreModal}>
-            Ətraflı
+          <td>
+            <UpdateDeleteModal
+              updateItem={updateItem}
+              deleteItem={deleteItem}
+              data={data}
+              openConfirmModal={openConfirmModal}
+              openMoreModal={openMoreModal}
+            />
           </td>
-          {consultation.power !== "only-show" ? (
-            <td>
-              <UpdateDeleteModal
-                updateItem={updateItem}
-                deleteItem={deleteItem}
-                data={data}
-                openConfirmModal={openConfirmModal}
-                state={consultation}
-              />
-            </td>
-          ) : null}
         </tr>
       ) : (
         <div className="content-box">

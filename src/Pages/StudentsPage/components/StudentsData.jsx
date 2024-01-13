@@ -12,14 +12,9 @@ const StudentsData = ({ studentPageNum, getPageNumber, userData }) => {
   );
   const { loading } = useSelector((state) => state.studentsPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
-  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const { openConfirmModal } = useSelector((state) => state.studentsModal);
 
-  const tableHead =
-    userData.power === "only-show"
-      ? ["Tələbə adı", "Ixtisas", "Mobil nömrə", "Qrup", ""]
-      : userData.power === "update"
-      ? ["Tələbə adı", "Ixtisas", "Mobil nömrə", "Qrup", "", ""]
-      : ["Tələbə adı", "Ixtisas", "Mobil nömrə", "Qrup", "", ""];
+  const tableHead = ["Tələbə adı", "Ixtisas", "Mobil nömrə", "Qrup", ""];
 
   useEffect(() => {
     if (openMoreModal) {
@@ -36,15 +31,14 @@ const StudentsData = ({ studentPageNum, getPageNumber, userData }) => {
       ) : (
         <>
           {openMoreModal && (
-            <MoreModal setOpenMoreModal={setOpenMoreModal} type="student" userData={userData} />
-          )}
-
-          {openConfirmModal && (
-            <ConfirmModal
-              setOpenConfirmModal={setOpenConfirmModal}
+            <MoreModal
+              setOpenMoreModal={setOpenMoreModal}
               type="student"
+              userData={userData}
             />
           )}
+
+          {openConfirmModal && <ConfirmModal type="student" />}
           <table
             className={`details-table  student-table ${
               userData.power === "only-show" ? "only-show" : "update"
@@ -65,7 +59,6 @@ const StudentsData = ({ studentPageNum, getPageNumber, userData }) => {
                   mode="desktop"
                   student={userData}
                   setOpenMoreModal={setOpenMoreModal}
-                  setOpenConfirmModal={setOpenConfirmModal}
                   cellNumber={i + 1 + (studentPageNum - 1) * 10}
                 />
               ))}
@@ -80,7 +73,6 @@ const StudentsData = ({ studentPageNum, getPageNumber, userData }) => {
                 mode="tablet"
                 student={userData}
                 setOpenMoreModal={setOpenMoreModal}
-                setOpenConfirmModal={setOpenConfirmModal}
                 cellNumber={i + 1 + (studentPageNum - 1) * 10}
               />
             ))}

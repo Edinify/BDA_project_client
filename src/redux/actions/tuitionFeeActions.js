@@ -79,17 +79,14 @@ const toastError = (message) => {
   });
 };
 
-
-
 export const getTuitionFeePaginationAction =
-  (pageNumber, searchQuery) =>
-  async (dispatch) => {
+  (pageNumber, searchQuery) => async (dispatch) => {
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
         `/?page=${pageNumber}&searchQuery=${searchQuery}`
       );
-      // console.log(data);
+      console.log(data, "salam get tuition fee actionnnnnn");
       dispatch({
         type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_LAST_PAGE,
         payload: pageNumber,
@@ -98,7 +95,6 @@ export const getTuitionFeePaginationAction =
         type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_PAGINATION,
         payload: data,
       });
-      
     } catch (error) {
       console.log(error);
       const originalRequest = error.config;
@@ -136,3 +132,53 @@ export const getTuitionFeePaginationAction =
     }
   };
 
+export const updateTuitionFeeAction =
+  (newData, page = 1, searchValue = "") =>
+  async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(`/payment`, newData);
+
+      console.log(data, "salam tuition fee action");
+      dispatch({ type: TUITION_FEE_MODAL_ACTION_TYPE.CLOSE_CONFIRM_MODAL });
+      dispatch(getTuitionFeePaginationAction(page, searchValue));
+
+      toastSuccess("Təhsil haqqı yeniləndi");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          // const { data } = await API.patch(`/${_id}`, teacherData);
+          // dispatch({
+          //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
+          //   payload: data,
+          // });
+          // dispatch({
+          //   type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
+          //   payload: false,
+          // });
+          toastSuccess("Xəta baş verdi!");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      if (error?.response?.data?.key === "email-already-exist") {
+        toastError("Bu email ilə istifadəçi mövcuddur");
+      }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan təlimçi yenilənə bilməz");
+      }
+    } finally {
+      dispatch(modalLoading(false));
+    }
+  };

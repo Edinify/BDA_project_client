@@ -6,57 +6,46 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const WorkersData = ({userData, pageNum, getPageNumber}) => {
+const WorkersData = ({ userData, pageNum, getPageNumber }) => {
   const { workers, totalPages, loading } = useSelector(
     (state) => state.workersPagination
   );
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [openMoreModal, setOpenMoreModal] = useState(false);
 
-  const tableHead =
-    userData.power ==="only-show"?
-
-   [
-    "Ad soyad",
-    "Fin kod",
-    "Email",
-    "Mobil nömrə",
-    "Pozisiya",
-    ""
-  ]
-  :
-  [
+  const tableHead = [
     "Ad soyad",
     "Fin kod",
     "Email",
     "Mobil nömrə",
     "Pozisiya",
     "",
-    ""
-  ]
+  ];
+
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
         <>
-        {openMoreModal &&(
-          <MoreModal 
-          userData={userData}
-          setOpenMoreModal={setOpenMoreModal}
-          type="worker"
-           />
-        )}
+          {openMoreModal && (
+            <MoreModal
+              userData={userData}
+              setOpenMoreModal={setOpenMoreModal}
+              type="worker"
+            />
+          )}
           {openConfirmModal && (
             <ConfirmModal
               setOpenConfirmModal={setOpenConfirmModal}
               type="workers"
             />
           )}
-            <table
+          <table
             className={`details-table  teacher-table ${
               userData.power === "only-show" ? "only-show" : "update"
-            } `}>
+            } `}
+          >
             <thead>
               <tr>
                 {tableHead.map((head, i) => (

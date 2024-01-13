@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as CloseIcon } from "../../assets/icons/more-modal/x-close.svg";
 import "moment/locale/az";
 import StudentConfirmModal from "./components/StudentConfirmModal/StudentConfirmModal";
@@ -9,9 +9,13 @@ import CoursesConfirmModal from "./components/CoursesConfirmModal/CoursesConfirm
 import SyllabusConfirmModal from "./components/SyllabusConfirmModal/SyllabusConfirmModal";
 import WorkersConfirmModal from "./components/WorkersConfirmModal/WorkersConfirmModal";
 import GroupsConfirmModal from "./components/GroupsConfirmModal/GroupsConfirmModal";
-const ConfirmModal = ({ setOpenConfirmModal, type }) => {
-  const { teachersModalData } = useSelector((state) => state.teachersModal);
-  const { studentsModalData } = useSelector((state) => state.studentsModal);
+import TuitionFeeConfirmModal from "./components/TuitionFeeConfirmModal/TuitionFeeConfirmModal";
+import {
+  STUDENTS_MODAL_ACTION_TYPE,
+  TEACHERS_MODAL_ACTION_TYPE,
+  TUITION_FEE_MODAL_ACTION_TYPE,
+} from "../../redux/actions-type";
+const ConfirmModal = ({ type }) => {
   const { coursesModalData } = useSelector((state) => state.coursesModal);
   // const { tuitionFeeModalData } = useSelector((state) => state.tuitionFeeModal);
   const { consultationModalData } = useSelector(
@@ -23,13 +27,16 @@ const ConfirmModal = ({ setOpenConfirmModal, type }) => {
   const { syllabusModalData } = useSelector((state) => state.syllabusModal);
   const { workerModalData } = useSelector((state) => state.workerModal);
   const { groupModalData } = useSelector((state) => state.groupModal);
+  const dispatch = useDispatch();
 
   const getTypeHeader = (type) => {
     switch (type) {
       case "teacher":
+        return "Təlimçi məlumatları";
       case "student":
+        return "Tələbə məlumatları";
       case "consultation":
-        return "Şəxsi məlumatlar";
+        return "Təlimçi məlumatlar";
       case "lesson-table":
         return "Qrup məlumatları";
       case "courses":
@@ -40,30 +47,57 @@ const ConfirmModal = ({ setOpenConfirmModal, type }) => {
         return "Əməkdaş məlumatları";
       case "groups":
         return "Qrup məlumatları";
+      case "tuitionFee":
+        return "Ödəniş məlumatları";
       default:
         return "";
     }
   };
 
+  const closeConfirmModal = () => {
+    switch (type) {
+      case "teacher":
+        return dispatch({
+          type: TEACHERS_MODAL_ACTION_TYPE.CLOSE_TEACHER_CONFIRM_MODAL,
+        });
+      case "student":
+        return dispatch({
+          type: STUDENTS_MODAL_ACTION_TYPE.CLOSE_STUDENT_CONFIRM_MODAL,
+        });
+      case "consultation":
+        return "Təlimçi məlumatlar";
+      case "lesson-table":
+        return "Qrup məlumatları";
+      case "courses":
+        return "Fənn məlumatları";
+      case "syllabus":
+        return "Sillabus məlumatları";
+      case "workers":
+        return "Əməkdaş məlumatları";
+      case "groups":
+        return "Qrup məlumatları";
+      case "tuitionFee":
+        return dispatch({
+          type: TUITION_FEE_MODAL_ACTION_TYPE.CLOSE_CONFIRM_MODAL,
+        });
+      default:
+        return "";
+    }
+  };
 
   return (
     <div className="more-modal">
       <div className="more-modal-con">
-        <div className="more-modal-header">
-         <h2>{getTypeHeader(type)}</h2>
+        <div className="more-modal-header" style={{ marginBottom: "20px" }}>
+          <h2>{getTypeHeader(type)}</h2>
           <div className="more-modal-header-icons">
             <div className="header-icon-close">
-              <CloseIcon onClick={() => setOpenConfirmModal(false)} />
+              <CloseIcon onClick={closeConfirmModal} />
             </div>
           </div>
         </div>
-
-        {type === "student" && (
-          <StudentConfirmModal studentsModalData={studentsModalData} />
-        )}
-        {type === "teacher" && (
-          <TeacherConfirmModal teachersModalData={teachersModalData} />
-        )}
+        {type === "student" && <StudentConfirmModal />}
+        {type === "teacher" && <TeacherConfirmModal />}
         {type === "consultation" && (
           <ConsultationConfirmModal
             consultationModalData={consultationModalData}
@@ -86,16 +120,7 @@ const ConfirmModal = ({ setOpenConfirmModal, type }) => {
         {type === "groups" && (
           <GroupsConfirmModal groupModalData={groupModalData} />
         )}
-
-        {/* {type === "tuitionFee" && (
-          <TuitionFeeMoreModal tuitionFeeModalData={tuitionFeeModalData} />
-        )}
-       
-        )}  */}
-        <div className="confirm-btns">
-          <button className="cancel">Ləğv et</button>
-          <button className="confirm">Təsdiqlə</button>
-        </div>
+        {type === "tuitionFee" && <TuitionFeeConfirmModal />}
       </div>
     </div>
   );

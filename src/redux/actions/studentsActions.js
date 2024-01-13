@@ -9,16 +9,16 @@ import { apiRoot } from "../../apiRoot";
 
 const refreshApi = axios.create({
   baseURL: `${apiRoot}/user/auth/refresh_token`,
-  withCredentials:true
+  withCredentials: true,
 });
 
 const API = axios.create({
   baseURL: `${apiRoot}/student`,
-  withCredentials:true
+  withCredentials: true,
 });
 const REGISTERAPI = axios.create({
   baseURL: `${apiRoot}/user/auth`,
-  withCredentials:true
+  withCredentials: true,
 });
 
 API.interceptors.request.use((req) => {
@@ -82,8 +82,10 @@ const toastError = (message) => {
 export const getStudentsAction = (payload) => async (dispatch) => {
   dispatch(setLoadingStudentsAction(true));
   try {
-    const { data } = await API.get(`/?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}`);
-    if(payload.studentsCount > 0) {
+    const { data } = await API.get(
+      `/?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}`
+    );
+    if (payload.studentsCount > 0) {
       dispatch({
         type: STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_ALL,
         payload: data,
@@ -107,8 +109,10 @@ export const getStudentsAction = (payload) => async (dispatch) => {
             AccessToken: token?.data?.accesstoken,
           })
         );
-        const { data } = await API.get(`/?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}`);
-        if(payload.studentsCount > 0) {
+        const { data } = await API.get(
+          `/?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}`
+        );
+        if (payload.studentsCount > 0) {
           dispatch({
             type: STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_ALL,
             payload: data,
@@ -119,7 +123,6 @@ export const getStudentsAction = (payload) => async (dispatch) => {
             payload: data,
           });
         }
-  
       } catch (error) {
         console.log(error);
         if (error?.response?.status === 401) {
@@ -135,9 +138,11 @@ export const getStudentsAction = (payload) => async (dispatch) => {
 export const getActiveStudentsAction = (payload) => async (dispatch) => {
   dispatch(setLoadingStudentsAction(true));
   try {
-    const { data } = await API.get(`/active?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}&courseId=${payload.courseId}`);
+    const { data } = await API.get(
+      `/active?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}&courseId=${payload.courseId}`
+    );
     // console.log(data);
-    if(payload.studentsCount > 0) {
+    if (payload.studentsCount > 0) {
       dispatch({
         type: STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_ALL,
         payload: data,
@@ -161,8 +166,10 @@ export const getActiveStudentsAction = (payload) => async (dispatch) => {
             AccessToken: token?.data?.accesstoken,
           })
         );
-        const { data } = await API.get(`/active?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}&courseId=${payload.courseId}`);
-        if(payload.studentsCount > 0) {
+        const { data } = await API.get(
+          `/active?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}&courseId=${payload.courseId}`
+        );
+        if (payload.studentsCount > 0) {
           dispatch({
             type: STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_ALL,
             payload: data,
@@ -173,7 +180,6 @@ export const getActiveStudentsAction = (payload) => async (dispatch) => {
             payload: data,
           });
         }
-  
       } catch (error) {
         console.log(error);
         if (error?.response?.status === 401) {
@@ -183,7 +189,7 @@ export const getActiveStudentsAction = (payload) => async (dispatch) => {
     }
   } finally {
     dispatch(setLoadingStudentsAction(false));
-    dispatch(setLoadingAllStudentsAction(false))
+    dispatch(setLoadingAllStudentsAction(false));
   }
 };
 
@@ -193,7 +199,7 @@ export const getstudentsByCourseIdAction = (payload) => async (dispatch) => {
     const { data } = await API.get(
       `/by/course?courseId=${payload.courseId}&day=${payload.day}&time=${payload.time}&role=${payload.role}&date=${payload.date}&studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}`
     );
-    if(payload.studentsCount > 0) {
+    if (payload.studentsCount > 0) {
       dispatch({
         type: STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_BY_COURSE,
         payload: data,
@@ -220,7 +226,7 @@ export const getstudentsByCourseIdAction = (payload) => async (dispatch) => {
         const { data } = await API.get(
           `/by/course?courseId=${payload.courseId}&day=${payload.day}&time=${payload.time}&role=${payload.role}&date=${payload.date}`
         );
-        if(payload.studentsCount > 0) {
+        if (payload.studentsCount > 0) {
           dispatch({
             type: STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_BY_COURSE,
             payload: data,
@@ -241,8 +247,6 @@ export const getstudentsByCourseIdAction = (payload) => async (dispatch) => {
     dispatch(setLoadingStudentsAction(false));
   }
 };
-
-
 
 export const getStudentsPaginationAction =
   (pageNumber, searchQuery, status = "all") =>
@@ -401,42 +405,160 @@ export const updateStudentsAction = (_id, studentData) => async (dispatch) => {
   }
 };
 
-export const deleteStudentAction = ({_id, pageNumber, searchQuery, status}) => async (dispatch) => {
-  try {
-    await API.delete(`/${_id}`);
-    dispatch(getStudentsPaginationAction(pageNumber, searchQuery, status));
-    dispatch({ type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT, payload: _id });
-    toastSuccess("Tələbə silindi");
-  } catch (error) {
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
+export const deleteStudentAction =
+  ({ _id, pageNumber, searchQuery, status }) =>
+  async (dispatch) => {
+    try {
+      await API.delete(`/${_id}`);
+      dispatch(getStudentsPaginationAction(pageNumber, searchQuery, status));
+      dispatch({
+        type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT,
+        payload: _id,
+      });
+      toastSuccess("Tələbə silindi");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
 
-        await API.delete(`/${_id}`);
-        dispatch(getStudentsPaginationAction(pageNumber, searchQuery, status));
-        dispatch({
-          type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT,
-          payload: _id,
-        });
-        toastSuccess("Tələbə silindi");
-      } catch (error) {
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
+          await API.delete(`/${_id}`);
+          dispatch(
+            getStudentsPaginationAction(pageNumber, searchQuery, status)
+          );
+          dispatch({
+            type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT,
+            payload: _id,
+          });
+          toastSuccess("Tələbə silindi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
         }
       }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan tələbə silinə bilməz");
+      }
+      console.log(error);
+      toastError(error?.response?.data.message);
     }
-    if (error?.response?.data?.key === "has-current-week-lessons") {
-      toastError("Cari həftədə  dərsi olan tələbə silinə bilməz");
+  };
+
+export const confirmStudentChangesAction =
+  (_id, studentData) => async (dispatch) => {
+    dispatch(studentModalLoading(true));
+    try {
+      const { data } = await API.patch(`/changes/confirm/${_id}`, studentData);
+      dispatch({
+        type: STUDENTS_ALL_ACTIONS_TYPE.UPDATE_STUDENT,
+        payload: data,
+      });
+      dispatch({
+        type: STUDENTS_MODAL_ACTION_TYPE.CLOSE_STUDENT_CONFIRM_MODAL,
+      });
+      toastSuccess("Yeniliklər təstiqləndi");
+    } catch (error) {
+      const originalRequest = error.config;
+
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, studentData);
+          dispatch({
+            type: STUDENTS_ALL_ACTIONS_TYPE.UPDATE_STUDENT,
+            payload: data,
+          });
+          dispatch({
+            type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Tələbə yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      console.log(error);
+      if (error?.response?.data?.key === "email-already-exist") {
+        // dispatch({type:STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,payload:true})
+        toastError("Bu email ilə istifadəçi mövcuddur");
+      }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan tələbə yenilənə bilməz");
+      }
+    } finally {
+      dispatch(studentModalLoading(false));
     }
-    console.log(error);
-    toastError(error?.response?.data.message);
-  }
-};
+  };
+
+export const cancelStudentChangesAction =
+  (_id, studentData) => async (dispatch) => {
+    console.log(studentData);
+    dispatch(studentModalLoading(true));
+    try {
+      const { data } = await API.patch(`/changes/cancel/${_id}`, studentData);
+      dispatch({
+        type: STUDENTS_ALL_ACTIONS_TYPE.UPDATE_STUDENT,
+        payload: data,
+      });
+      dispatch({
+        type: STUDENTS_MODAL_ACTION_TYPE.CLOSE_STUDENT_CONFIRM_MODAL,
+      });
+      toastSuccess("Yeniliklər ləğv edildi!");
+    } catch (error) {
+      const originalRequest = error.config;
+
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, studentData);
+          dispatch({
+            type: STUDENTS_ALL_ACTIONS_TYPE.UPDATE_STUDENT,
+            payload: data,
+          });
+          dispatch({
+            type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Tələbə yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      console.log(error);
+      if (error?.response?.data?.key === "email-already-exist") {
+        // dispatch({type:STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,payload:true})
+        toastError("Bu email ilə istifadəçi mövcuddur");
+      }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan tələbə yenilənə bilməz");
+      }
+    } finally {
+      dispatch(studentModalLoading(false));
+    }
+  };

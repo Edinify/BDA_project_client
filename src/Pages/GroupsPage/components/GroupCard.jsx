@@ -5,7 +5,14 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { deleteGroupAction } from "../../../redux/actions/groupsActions";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
-const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal,group }) => {
+const GroupCard = ({
+  data,
+  mode,
+  cellNumber,
+  setOpenConfirmModal,
+  group,
+  setOpenMoreModal,
+}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { groupData, lastPage } = useSelector(
@@ -20,14 +27,7 @@ const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal,group }) => {
           })
           .join(", ")
       : "boş";
-  let students =
-    Array.isArray(data?.students) && data?.students.length > 0
-      ? data?.students
-          .map((item) => {
-            return `${item.fullName}`;
-          })
-          .join(", ")
-      : "boş";
+
   let lessonDates = data.lessonDate.map((item, index) => (
     <span className="lesson-date" key={index}>
       gün: {item.day}, saat: {item.time} <br />
@@ -38,7 +38,6 @@ const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal,group }) => {
     { key: "Qrup adı", value: data?.name },
     { key: "İxtisas", value: data?.course.name },
     { key: "Təlimçilər", value: teachers },
-    { key: "Tələbələr", value: students },
     {
       key: "Başlama tarixi",
       value: moment(data.startDate).locale("az").format("DD MMMM YYYY"),
@@ -67,12 +66,17 @@ const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal,group }) => {
     dispatch(deleteGroupAction({ _id, pageNumber, searchQuery, completed }));
   };
 
+  const openMoreModal = () => {
+    updateItem("more");
+    setOpenMoreModal(true);
+  };
+
   const openConfirmModal = () => {
     setOpenConfirmModal(true);
     updateItem("more");
   };
 
-  console.log(group,"grouppp")
+  console.log(group, "grouppp");
 
   return (
     <>
@@ -99,12 +103,6 @@ const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal,group }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{students}</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td>
-            <div className="td-con">
               <div className="table-scroll-text">{lessonDates}</div>
               <div className="right-fade"></div>
             </div>
@@ -125,21 +123,17 @@ const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal,group }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-         {group?.power !=="only-show"?(
+
           <td>
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
               openConfirmModal={openConfirmModal}
+              openMoreModal={openMoreModal}
               state={group}
             />
           </td>
-         )
-         :
-         null
-        }
-          
         </tr>
       ) : (
         <div className="content-box">
@@ -154,9 +148,7 @@ const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal,group }) => {
               ))}
             </ul>
           </div>
-          {group.power === "only-show" ? (
-            null
-          ) : (
+          {group.power === "only-show" ? null : (
             <div className="right">
               <UpdateDeleteModal
                 updateItem={updateItem}
@@ -165,7 +157,6 @@ const GroupCard = ({ data, mode, cellNumber, setOpenConfirmModal,group }) => {
                 openConfirmModal={openConfirmModal}
                 state={group}
               />
-              
             </div>
           )}
         </div>

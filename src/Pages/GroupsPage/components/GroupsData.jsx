@@ -6,36 +6,32 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const GroupsData = ({ pageNum, getPageNumber,userData }) => {
+const GroupsData = ({ pageNum, getPageNumber, userData }) => {
+  const [openMoreModal, setOpenMoreModal] = useState(false);
+
   const dispatch = useDispatch();
   const { groupData, totalPages, loading } = useSelector(
     (state) => state.groupsPagination
   );
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
 
-  const tableHead =
-  userData?.power==="only-show"?
-
-  [
+  const tableHead = [
     "Qrup adı",
     "İxtisas",
     "Təlimçilər",
-    "Tələbələr",
-    "Dərs günləri",
-    "Başlama tarixi",
-    "Bitmə tarixi",
-  ]
-  :
-   [
-    "Qrup adı",
-    "İxtisas",
-    "Təlimçilər",
-    "Tələbələr",
     "Dərs günləri",
     "Başlama tarixi",
     "Bitmə tarixi",
     "",
-  ]
+  ];
+
+  useEffect(() => {
+    if (openMoreModal) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "overlay";
+    }
+  }, [openMoreModal]);
 
   return (
     <>
@@ -43,15 +39,25 @@ const GroupsData = ({ pageNum, getPageNumber,userData }) => {
         <Loading />
       ) : (
         <>
-        {openConfirmModal && (
+          {openMoreModal && (
+            <MoreModal
+              setOpenMoreModal={setOpenMoreModal}
+              type="group"
+              userData={userData}
+            />
+          )}
+
+          {openConfirmModal && (
             <ConfirmModal
               setOpenConfirmModal={setOpenConfirmModal}
               type="groups"
             />
           )}
-          <table className={`details-table  teacher-table ${
+          <table
+            className={`details-table  teacher-table ${
               userData.power === "only-show" ? "only-show" : "update"
-            } `}>
+            } `}
+          >
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
@@ -69,6 +75,7 @@ const GroupsData = ({ pageNum, getPageNumber,userData }) => {
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
                   setOpenConfirmModal={setOpenConfirmModal}
+                  setOpenMoreModal={setOpenMoreModal}
                 />
               ))}
             </tbody>

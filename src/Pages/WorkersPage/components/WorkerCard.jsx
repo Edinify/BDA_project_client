@@ -10,9 +10,8 @@ const WorkerCard = ({
   worker,
   cellNumber,
   setOpenConfirmModal,
-  setOpenMoreModal
+  setOpenMoreModal,
 }) => {
-
   const dispatch = useDispatch();
   const { workers, lastPage } = useSelector((state) => state.workersPagination);
   const { workersSearchValues } = useSelector((state) => state.searchValues);
@@ -86,23 +85,17 @@ const WorkerCard = ({
               <div className="right-fade"></div>
             </div>
           </td> */}
-          <td className="more" onClick={openMoreModal}>
-            Ətraflı
-          </td>
-         {worker.power !=="only-show"?(
+
           <td>
             <UpdateDeleteModal
-                  updateItem={updateItem}
-                  deleteItem={deleteItem}
-                  data={data}
-                  openConfirmModal={openConfirmModal}
-                  state={worker}
-                />
+              updateItem={updateItem}
+              deleteItem={deleteItem}
+              data={data}
+              openConfirmModal={openConfirmModal}
+              state={worker}
+              openMoreModal={openMoreModal}
+            />
           </td>
-         )
-         :null
-        }
-         
         </tr>
       ) : (
         <div className="content-box">

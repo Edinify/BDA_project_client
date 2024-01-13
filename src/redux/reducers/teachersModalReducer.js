@@ -20,6 +20,7 @@ const initialState = {
   },
   teachersOpenModal: false,
   teachersModalLoading: false,
+  openConfirmModal: false,
 };
 
 export const teachersModalReducer = (state = initialState, action) => {
@@ -29,6 +30,7 @@ export const teachersModalReducer = (state = initialState, action) => {
         ...state,
         teachersModalData: action.payload.data,
         teachersOpenModal: action.payload.openModal,
+        openConfirmModal: action.payload.confirmModal,
       };
     case TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL:
       return {
@@ -39,6 +41,18 @@ export const teachersModalReducer = (state = initialState, action) => {
       return {
         ...state,
         teachersModalLoading: action.payload,
+      };
+    case TEACHERS_MODAL_ACTION_TYPE.CLOSE_TEACHER_CONFIRM_MODAL:
+      return {
+        ...state,
+        ...initialState,
+      };
+    case TEACHERS_MODAL_ACTION_TYPE.OPEN_TEACHER_CONFIRM_MODAL:
+      return {
+        ...state,
+        teachersModalData: action.payload.data,
+        teachersOpenModal: action.payload.openModal,
+        openConfirmModal: action.payload.confirmModal,
       };
     default:
       return state;

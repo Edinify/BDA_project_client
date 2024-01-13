@@ -7,17 +7,25 @@ import DeleteItemModal from "../DeleteItemModal/DeleteItemModal";
 const UpdateDeleteModal = ({
   updateItem = () => {},
   deleteItem = () => {},
-  state,
+  openMoreModal,
   data,
   dataType = "",
   openConfirmModal,
+  profil,
 }) => {
-  // 
+  //
 
   // console.log(state,"admin")
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { funcComp } = useSelector((state) => state.funcComponent);
+  const { user } = useSelector((state) => state.user);
+  const [updateBtn, setUpdateBtn] = useState(false);
+  const [confirmBtn, setConfirmBtn] = useState(false);
+  const [changesBtn, setChangesBtn] = useState(false);
+  const [paymentsBtn, setPaymentsBtn] = useState(false);
+  const [deleteBtn, setDeleteBtn] = useState(false);
+
   const modalRef = useRef(null);
 
   const handleClickOutside = () => {
@@ -49,6 +57,34 @@ const UpdateDeleteModal = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (user?.role === "super-admin") {
+      setUpdateBtn(true);
+      setDeleteBtn(true);
+    } else if (user?.role === "worker") {
+      const power = user?.profiles?.find(
+        (item) => item.profile === profil
+      )?.power;
+
+      if (power === "all") {
+        setConfirmBtn(true);
+        setDeleteBtn(true);
+      }
+
+      if (power === "update") {
+        setChangesBtn(true);
+      }
+
+      if (profil === "tuitionFee" && power === "all") {
+        setPaymentsBtn(true);
+      }
+
+      if (power !== "only-show") {
+        setUpdateBtn(true);
+      }
+    }
+  }, [user]);
+
   return (
     <div className="func-component">
       <MoreIcon className="more-icon" onMouseDown={handleToggleModal} />
@@ -60,15 +96,33 @@ const UpdateDeleteModal = ({
         ref={modalRef}
       >
         <>
-          {dataType !== "feedback" && (
+          {dataType !== "feedback" && profil !== "tuitionFee" && updateBtn && (
             <h4 onClick={() => updateItem()}>Yenilə</h4>
           )}
-          {(state?.role === "super-admin" || state?.power === "all") && (
+          {confirmBtn && (
             <h4 className="confirm" onClick={openConfirmModal}>
               Təsdiqlə
             </h4>
           )}
-          {state?.power !== "update" && (
+
+          {changesBtn && (
+            <h4 className="confirm" onClick={openConfirmModal}>
+              Yeniləmələr
+            </h4>
+          )}
+
+          {paymentsBtn && (
+            <h4 className="confirm" onClick={openConfirmModal}>
+              Ödənişlər
+            </h4>
+          )}
+
+          {profil !== "syllabus" && (
+            <h4 className="confirm" onClick={() => openMoreModal()}>
+              Ətraflı
+            </h4>
+          )}
+          {deleteBtn && profil !== "careers" && (
             <h4
               className={`delete-func ${dataType === "branches" ? "only" : ""}`}
               onClick={() => setShowDeleteModal(true)}

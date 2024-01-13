@@ -22,7 +22,6 @@ const TeachersPage = () => {
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
 
-
   const getPageNumber = (pageNumber) => {
     setTeacherPageNum(pageNumber);
     if (teachersSearchValues) {
@@ -121,63 +120,27 @@ const TeachersPage = () => {
 
   return (
     <div className="details-page teachers-page ">
-      {userData?.role === "super-admin" ? (
-        <>
-          <GlobalHead
-            searchData={searchData}
-            openModal={openModal}
-            DATA_SEARCH_VALUE={"TEACHERS_SEARCH_VALUE"}
-            dataSearchValues={teachersSearchValues}
-            statusType="teacher"
-          />
-        </>
-      ) : (
-        <>
-          {userData.map((data, i) => {
-            const { profile, power } = data;
-            return profile === "teachers" && power === "all" ? (
-              <span>
-                <GlobalHead
-                  searchData={searchData}
-                  openModal={openModal}
-                  DATA_SEARCH_VALUE={"STUDENTS_SEARCH_VALUE"}
-                  dataSearchValues={teachersSearchValues}
-                  statusType="teacher"
-                />
-              </span>
-            ) : (
-              ""
-            );
-          })}
-        </>
-      )}
+      <GlobalHead
+        searchData={searchData}
+        openModal={openModal}
+        DATA_SEARCH_VALUE={"TEACHERS_SEARCH_VALUE"}
+        dataSearchValues={teachersSearchValues}
+        statusType="teacher"
+        profile={"teachers"}
+      />
 
-      {userData?.role === "super-admin" ? (
-        <>
-          <TeachersData
-            teacherPageNum={teacherPageNum}
-            getPageNumber={getPageNumber}
-            userData={userData}
-          />
-        </>
-      ) : (
-        <>
-          {userData.map((data, i) => {
-            const { profile, power } = data;
-            return (
-              profile === "teachers" && (
-                <span key={i}>
-                  <TeachersData
-                    teacherPageNum={teacherPageNum}
-                    getPageNumber={getPageNumber}
-                    userData={data}
-                  />
-                </span>
-              )
-            );
-          })}
-        </>
-      )}
+      <HeadTabs
+        firstRoute={"/teachers"}
+        secondRoute={"/teachers/mentors"}
+        firstPathname={"Müəllimlər"}
+        secondPathname={"Mentorlar"}
+      />
+
+      <TeachersData
+        teacherPageNum={teacherPageNum}
+        getPageNumber={getPageNumber}
+        userData={userData}
+      />
     </div>
   );
 };

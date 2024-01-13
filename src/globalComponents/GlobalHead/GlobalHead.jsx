@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./globalHead.css";
 import { ReactComponent as PlusIcon } from "../../assets/icons/Plus.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { StatusDropdown } from "./StatusDropdown/StatusDropdown";
 import Search from "./Search/Search";
 import { CoursesDropdown } from "./CoursesDropdown/CoursesDropdown";
@@ -15,8 +15,23 @@ const GlobalHead = ({
   statusType,
   search = true,
   addBtn = true,
-  power,
+  profile,
 }) => {
+  const { user } = useSelector((state) => state.user);
+  const [showAddBtn, setShowAddBtn] = useState(false);
+
+  useEffect(() => {
+    if (user.role === "super-admin") {
+      console.log(2);
+      setShowAddBtn(true);
+    } else if (user.role === "worker") {
+      const checkPower =
+        user?.profiles?.find((item) => item.profile === profile)?.power ===
+        "all";
+      setShowAddBtn(checkPower);
+    }
+  });
+
   return (
     <div className="details-header">
       <div className="container">
@@ -44,15 +59,11 @@ const GlobalHead = ({
                 <GroupsDropdown deviceType="desktop" />
               )}
             </div>
-            {addBtn && (
-              <>
-                {power === "only-show" ? null : power === "update" ? null : (
-                  <button className="add-detail" onClick={openModal}>
-                    <PlusIcon />
-                    Əlavə et
-                  </button>
-                )}
-              </>
+            {addBtn && showAddBtn && (
+              <button className="add-detail" onClick={openModal}>
+                <PlusIcon />
+                Əlavə et
+              </button>
             )}
           </div>
           {statusType === "teacher" && (

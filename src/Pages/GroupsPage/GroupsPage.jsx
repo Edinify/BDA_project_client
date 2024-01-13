@@ -54,34 +54,13 @@ const GroupsPage = () => {
 
   return (
     <div className="details-page teachers-page ">
-      {userData?.role === "super-admin" ? (
-        <>
-          <GlobalHead
-            searchData={searchData}
-            openModal={openModal}
-            DATA_SEARCH_VALUE={"GROUPS_SEARCH_VALUE"}
-            dataSearchValues={groupsSearchValues}
-          />
-        </>
-      ) : (
-        <>
-          {userData?.map((data) => {
-            const { profile, power } = data;
-            return profile === "groups" && power === "all" ? (
-              <span>
-                <GlobalHead
-                  searchData={searchData}
-                  openModal={openModal}
-                  DATA_SEARCH_VALUE={"GROUPS_SEARCH_VALUE"}
-                  dataSearchValues={groupsSearchValues}
-                />
-              </span>
-            ) : (
-              ""
-            );
-          })}
-        </>
-      )}
+      <GlobalHead
+        searchData={searchData}
+        openModal={openModal}
+        DATA_SEARCH_VALUE={"GROUPS_SEARCH_VALUE"}
+        dataSearchValues={groupsSearchValues}
+        profile={"groups"}
+      />
 
       <HeadTabs
         firstRoute={"/groups/waiting"}
@@ -89,30 +68,12 @@ const GroupsPage = () => {
         firstPathname={"Yığılan qruplar"}
         secondPathname={"Mövcud qruplar"}
       />
-      {userData?.role === "super-admin" ? (
-        <GroupsData
-          pageNum={lastPage}
-          getPageNumber={getPageNumber}
-          userData={userData}
-        />
-      ) : (
-        <>
-          {userData?.map((data, i) => {
-            const { profile, power } = data;
-            return (
-              profile === "groups" && (
-                <span key={i}>
-                  <GroupsData
-                    pageNum={lastPage}
-                    getPageNumber={getPageNumber}
-                    userData={data}
-                  />
-                </span>
-              )
-            );
-          })}
-        </>
-      )}
+
+      <GroupsData
+        pageNum={lastPage}
+        getPageNumber={getPageNumber}
+        userData={userData}
+      />
     </div>
   );
 };

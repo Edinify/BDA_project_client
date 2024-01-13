@@ -11,11 +11,7 @@ const CoursePage = () => {
   const { lastPage } = useSelector((state) => state.coursesPagination);
   const { coursesSearchValues } = useSelector((state) => state.searchValues);
   const [coursePageNum, setCoursePageNum] = useState(1);
-  let userData = JSON.parse(localStorage.getItem("userData"));
-  userData =
-    userData.role !== "super-admin"
-      ? userData.profiles
-      : JSON.parse(localStorage.getItem("userData"));
+  const { user } = useSelector((state) => state.user);
 
   const openModal = () => {
     dispatch({
@@ -53,63 +49,20 @@ const CoursePage = () => {
 
   return (
     <div className="details-page courses ">
-      {userData?.role === "super-admin" ? (
-        <>
-          <GlobalHead
-            searchData={searchData}
-            openModal={openModal}
-            DATA_SEARCH_VALUE={"COURSES_SEARCH_VALUE"}
-            dataSearchValues={coursesSearchValues}
-          />
-        </>
-      ) : (
-        <>
-          {userData.map((data, i) => {
-            const { profile, power } = data;
+      <GlobalHead
+        searchData={searchData}
+        openModal={openModal}
+        DATA_SEARCH_VALUE={"COURSES_SEARCH_VALUE"}
+        dataSearchValues={coursesSearchValues}
+        profile="courses"
+      />
 
-            return profile === "courses" && power === "all" ? (
-              <span key={i}>
-                <GlobalHead
-                  searchData={searchData}
-                  openModal={openModal}
-                  DATA_SEARCH_VALUE={"COURSES_SEARCH_VALUE"}
-                  dataSearchValues={coursesSearchValues}
-                />
-              </span>
-            ) : (
-              ""
-            );
-          })}
-        </>
-      )}
+      <CoursesData
+        userData={user}
+        pageNum={lastPage}
+        getPageNumber={getPageNumber}
+      />
 
-      {userData?.role === "super-admin" ? (
-        <>
-          <CoursesData
-            userData={userData}
-            pageNum={lastPage}
-            getPageNumber={getPageNumber}
-          />
-        </>
-      ) : (
-        <>
-          {userData?.map((data, i) => {
-            const { profile, power } = data;
-
-            return (
-              profile === "courses" && (
-                <span key={i}>
-                  <CoursesData
-                    userData={data}
-                    coursePageNum={coursePageNum}
-                    getPageNumber={getPageNumber}
-                  />
-                </span>
-              )
-            );
-          })}
-        </>
-      )}
       {/* <GlobalHead 
       searchData={searchData} 
       openModal={openModal} 

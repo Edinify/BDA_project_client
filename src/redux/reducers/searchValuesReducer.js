@@ -56,7 +56,7 @@ export const searchValuesReducer = (state = initialState, action) => {
         ...state,
         studentSearchValues: action.payload,
       };
-    case SEARCH_VALUES_ACTION_TYPES.TUITON_FEE_SEARCH_VALUE:
+    case SEARCH_VALUES_ACTION_TYPES.TUITION_FEE_SEARCH_VALUE:
       return {
         ...state,
         tuitionFeeSearchValues: action.payload,
