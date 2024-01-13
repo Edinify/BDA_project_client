@@ -4,6 +4,7 @@ const initialState = {
   coursesModalData: { name: "" },
   coursesOpenModal: false,
   coursesModalLoading: false,
+  openConfirmModal: false,
 };
 
 export const coursesModalReducer = (state = initialState, action) => {
@@ -13,7 +14,7 @@ export const coursesModalReducer = (state = initialState, action) => {
         ...state,
         coursesModalData: action.payload.data,
         coursesOpenModal: action.payload.openModal,
-      };
+              };
     case COURSES_MODAL_ACTION_TYPE.COURSE_OPEN_MODAL:
       return {
         ...state,
@@ -23,6 +24,18 @@ export const coursesModalReducer = (state = initialState, action) => {
       return {
         ...state,
         coursesModalLoading: action.payload,
+      };
+    case COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL:
+      return {
+        ...state,
+        ...initialState,
+      };
+    case COURSES_MODAL_ACTION_TYPE.OPEN_COURSE_CONFIRM_MODAL:
+      return {
+        ...state,
+        coursesModalData: action.payload.data,
+        coursesOpenModal: action.payload.openModal,
+        openConfirmModal: action.payload.confirmModal,
       };
     default:
       return state;

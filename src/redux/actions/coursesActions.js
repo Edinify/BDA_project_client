@@ -247,3 +247,56 @@ export const deleteCoursesAction = ({_id, pageNumber, searchQuery}) => async (di
     toastError(error?.response?.data.message);
   }
 };
+
+
+export const confirmCourseChangesAction =
+  (_id, courseData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(`/changes/confirm/${_id}`, courseData);
+
+      // dispatch({
+      //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
+      //   payload: data,
+      // });
+      dispatch({
+        type: COURSES_ALL_ACTIONS_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
+      });
+      toastSuccess("Yeniliklər təstiqləndi");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, courseData);
+          // dispatch({
+          //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
+          //   payload: data,
+          // });
+          dispatch({
+            type: COURSES_ALL_ACTIONS_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
+          });
+          toastSuccess("fənn təstiqləndi!");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      if (error?.response?.data?.key === "email-already-exist") {
+        toastError("Bu email ilə istifadəçi mövcuddur");
+      }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan təlimçi yenilənə bilməz");
+      }
+    } finally {
+      dispatch(modalLoading(false));
+    }
+  };

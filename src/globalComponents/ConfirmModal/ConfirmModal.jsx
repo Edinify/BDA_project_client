@@ -11,12 +11,13 @@ import WorkersConfirmModal from "./components/WorkersConfirmModal/WorkersConfirm
 import GroupsConfirmModal from "./components/GroupsConfirmModal/GroupsConfirmModal";
 import TuitionFeeConfirmModal from "./components/TuitionFeeConfirmModal/TuitionFeeConfirmModal";
 import {
+  COURSES_MODAL_ACTION_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
   TEACHERS_MODAL_ACTION_TYPE,
   TUITION_FEE_MODAL_ACTION_TYPE,
 } from "../../redux/actions-type";
 const ConfirmModal = ({ type }) => {
-  const { coursesModalData } = useSelector((state) => state.coursesModal);
+  // const { coursesModalData } = useSelector((state) => state.coursesModal);
   // const { tuitionFeeModalData } = useSelector((state) => state.tuitionFeeModal);
   const { consultationModalData } = useSelector(
     (state) => state.consultationModal
@@ -55,6 +56,7 @@ const ConfirmModal = ({ type }) => {
   };
 
   const closeConfirmModal = () => {
+    // console.log(coursesModalData)
     switch (type) {
       case "teacher":
         return dispatch({
@@ -69,7 +71,9 @@ const ConfirmModal = ({ type }) => {
       case "lesson-table":
         return "Qrup məlumatları";
       case "courses":
-        return "Fənn məlumatları";
+        return  dispatch({
+          type: COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
+        });
       case "syllabus":
         return "Sillabus məlumatları";
       case "workers":
@@ -109,7 +113,7 @@ const ConfirmModal = ({ type }) => {
           />
         )}
         {type === "courses" && (
-          <CoursesConfirmModal coursesModalData={coursesModalData} />
+          <CoursesConfirmModal  />
         )}
         {type === "syllabus" && (
           <SyllabusConfirmModal syllabusModalData={syllabusModalData} />

@@ -12,13 +12,11 @@ const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
   );
   const { loading } = useSelector((state) => state.coursesPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
-  const [openConfirmModal, setOpenConfirmModal] = useState(false);
-
+  const { openConfirmModal } = useSelector((state) => state.coursesModal);
   const tableHead = [
     { id: 1, label: "Fənn adı" },
     { id: 2, label: "" },
   ];
-
   useEffect(() => {
     if (openMoreModal) {
       document.body.style.overflowY = "hidden";
@@ -43,7 +41,6 @@ const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
 
           {openConfirmModal && (
             <ConfirmModal
-              setOpenConfirmModal={setOpenConfirmModal}
               type="courses"
             />
           )}
@@ -68,7 +65,7 @@ const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
                   course={userData}
                   mode="desktop"
                   cellNumber={i + 1 + (coursePageNum - 1) * 10}
-                  setOpenConfirmModal={setOpenConfirmModal}
+     
                   setOpenMoreModal={setOpenMoreModal}
                 />
               ))}
@@ -84,7 +81,7 @@ const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
                 course={userData}
                 mode="mobile"
                 cellNumber={i + 1 + (coursePageNum - 1) * 10}
-                setOpenConfirmModal={setOpenConfirmModal}
+    
               />
             ))}
           </div>
