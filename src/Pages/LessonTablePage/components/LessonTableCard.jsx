@@ -179,6 +179,7 @@ const LessonTableCard = ({
                 data={data}
                 state={lesson}
                 openConfirmModal={openConfirmModal}
+                profil={"lessonTable"}
               />
             </div>
           )}

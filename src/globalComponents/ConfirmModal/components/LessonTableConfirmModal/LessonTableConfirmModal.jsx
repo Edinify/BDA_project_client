@@ -1,10 +1,13 @@
 import moment from "moment";
 import "moment/locale/az";
 import { useCustomHook } from "../../../GlobalFunctions/globalFunctions";
+import { useSelector } from "react-redux";
 
-const LessonTableConfirmModal = ({ lessonTableModalData }) => {
+const LessonTableConfirmModal = ({  }) => {
   const { weeksArrFullName } = useCustomHook();
-
+  const { lessonTableModalData } = useSelector(
+    (state) => state.lessonTableModal
+  );
   const lessonDay = lessonTableModalData.date
     ? `${moment(lessonTableModalData.date)
         .locale("az")

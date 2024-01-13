@@ -15,6 +15,7 @@ import {
   STUDENTS_MODAL_ACTION_TYPE,
   TEACHERS_MODAL_ACTION_TYPE,
   TUITION_FEE_MODAL_ACTION_TYPE,
+  LESSON_TABLE_MODAL_ACTION_TYPE
 } from "../../redux/actions-type";
 const ConfirmModal = ({ type }) => {
   // const { coursesModalData } = useSelector((state) => state.coursesModal);
@@ -22,9 +23,9 @@ const ConfirmModal = ({ type }) => {
   const { consultationModalData } = useSelector(
     (state) => state.consultationModal
   );
-  const { lessonTableModalData } = useSelector(
-    (state) => state.lessonTableModal
-  );
+  // const { lessonTableModalData } = useSelector(
+  //   (state) => state.lessonTableModal
+  // );
   const { syllabusModalData } = useSelector((state) => state.syllabusModal);
   const { workerModalData } = useSelector((state) => state.workerModal);
   const { groupModalData } = useSelector((state) => state.groupModal);
@@ -69,7 +70,9 @@ const ConfirmModal = ({ type }) => {
       case "consultation":
         return "Təlimçi məlumatlar";
       case "lesson-table":
-        return "Qrup məlumatları";
+        return dispatch({
+          type: LESSON_TABLE_MODAL_ACTION_TYPE.CLOSE_LESSON_CONFIRM_MODAL,
+        });
       case "courses":
         return  dispatch({
           type: COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
@@ -109,7 +112,6 @@ const ConfirmModal = ({ type }) => {
         )}
         {type === "lesson-table" && (
           <LessonTableConfirmModal
-            lessonTableModalData={lessonTableModalData}
           />
         )}
         {type === "courses" && (
