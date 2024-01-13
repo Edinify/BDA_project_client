@@ -8,12 +8,11 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
 const GroupsData = ({ pageNum, getPageNumber, userData }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
-
   const dispatch = useDispatch();
   const { groupData, totalPages, loading } = useSelector(
     (state) => state.groupsPagination
   );
-  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const { openConfirmModal } = useSelector((state) => state.groupModal);
 
   const tableHead = [
     "Qrup adı",
@@ -47,12 +46,8 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
             />
           )}
 
-          {openConfirmModal && (
-            <ConfirmModal
-              setOpenConfirmModal={setOpenConfirmModal}
-              type="groups"
-            />
-          )}
+          {openConfirmModal && <ConfirmModal type="groups" />}
+
           <table
             className={`details-table  teacher-table ${
               userData.power === "only-show" ? "only-show" : "update"
@@ -74,7 +69,6 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
                   group={userData}
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
-                  setOpenConfirmModal={setOpenConfirmModal}
                   setOpenMoreModal={setOpenMoreModal}
                 />
               ))}
@@ -89,7 +83,6 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
                 group={userData}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
-                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>

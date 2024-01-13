@@ -236,7 +236,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
     dispatch({
       type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
       payload: false,
-    }); 
+    });
     toastSuccess("Yeni əməkdaş yaradıldı");
   } catch (error) {
     const originalRequest = error.config;
@@ -357,5 +357,94 @@ export const deleteGroupAction =
       }
       console.log(error);
       toastError(error?.response?.data.message);
+    }
+  };
+
+export const confirmGroupChangesAction =
+  (_id, groupData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(`/changes/confirm/${_id}`, groupData);
+      dispatch({ type: GROUP_ALL_ACTIONS_TYPE.UPDATE_GROUP, payload: data });
+      dispatch({
+        type: GROUP_MODAL_ACTION_TYPE.CLOSE_GROUP_CONFIRM_MODAL,
+      });
+      toastSuccess("Yeniliklər təstiqləndi!");
+    } catch (error) {
+      const originalRequest = error.config;
+      console.log(error);
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, groupData);
+          dispatch({
+            type: GROUP_ALL_ACTIONS_TYPE.UPDATE_GROUP,
+            payload: data,
+          });
+          dispatch({
+            type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Qrup yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+    } finally {
+      dispatch(modalLoading(false));
+    }
+  };
+
+export const cancelGroupChangesAction =
+  (_id, groupData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(`/changes/cancel/${_id}`, groupData);
+      dispatch({ type: GROUP_ALL_ACTIONS_TYPE.UPDATE_GROUP, payload: data });
+      dispatch({
+        type: GROUP_MODAL_ACTION_TYPE.CLOSE_GROUP_CONFIRM_MODAL,
+        payload: false,
+      });
+      toastSuccess("Yeniliklər ləğv edildi!");
+    } catch (error) {
+      const originalRequest = error.config;
+      console.log(error);
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, groupData);
+          dispatch({
+            type: GROUP_ALL_ACTIONS_TYPE.UPDATE_GROUP,
+            payload: data,
+          });
+          dispatch({
+            type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Qrup yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+    } finally {
+      dispatch(modalLoading(false));
     }
   };

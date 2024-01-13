@@ -11,6 +11,7 @@ import WorkersConfirmModal from "./components/WorkersConfirmModal/WorkersConfirm
 import GroupsConfirmModal from "./components/GroupsConfirmModal/GroupsConfirmModal";
 import TuitionFeeConfirmModal from "./components/TuitionFeeConfirmModal/TuitionFeeConfirmModal";
 import {
+  GROUP_MODAL_ACTION_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
   TEACHERS_MODAL_ACTION_TYPE,
   TUITION_FEE_MODAL_ACTION_TYPE,
@@ -26,7 +27,6 @@ const ConfirmModal = ({ type }) => {
   );
   const { syllabusModalData } = useSelector((state) => state.syllabusModal);
   const { workerModalData } = useSelector((state) => state.workerModal);
-  const { groupModalData } = useSelector((state) => state.groupModal);
   const dispatch = useDispatch();
 
   const getTypeHeader = (type) => {
@@ -75,7 +75,9 @@ const ConfirmModal = ({ type }) => {
       case "workers":
         return "Əməkdaş məlumatları";
       case "groups":
-        return "Qrup məlumatları";
+        return dispatch({
+          type: GROUP_MODAL_ACTION_TYPE.CLOSE_GROUP_CONFIRM_MODAL,
+        });
       case "tuitionFee":
         return dispatch({
           type: TUITION_FEE_MODAL_ACTION_TYPE.CLOSE_CONFIRM_MODAL,
@@ -117,9 +119,7 @@ const ConfirmModal = ({ type }) => {
         {type === "workers" && (
           <WorkersConfirmModal workerModalData={workerModalData} />
         )}
-        {type === "groups" && (
-          <GroupsConfirmModal groupModalData={groupModalData} />
-        )}
+        {type === "groups" && <GroupsConfirmModal />}
         {type === "tuitionFee" && <TuitionFeeConfirmModal />}
       </div>
     </div>
