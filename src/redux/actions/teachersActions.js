@@ -183,7 +183,7 @@ export const getTeachersPaginationAction =
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
-      console.log(role, "teacher role");
+      // console.log(role, "teacher role");
       const { data } = await API.get(
         `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&role=${role}`
       );
@@ -660,8 +660,7 @@ export const confirmTeacherChangesAction =
             payload: data,
           });
           dispatch({
-            type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
-            payload: false,
+            type: TEACHERS_MODAL_ACTION_TYPE.CLOSE_TEACHER_CONFIRM_MODAL,
           });
           toastSuccess("Təlimçi təstiqləndi!");
         } catch (error) {

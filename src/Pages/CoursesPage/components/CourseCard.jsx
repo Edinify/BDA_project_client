@@ -37,8 +37,14 @@ const CourseCard = ({
   };
 
   const openConfirmModal = () => {
-    setOpenConfirmModal(true);
-    updateItem("more");
+    dispatch({
+      type: COURSES_MODAL_ACTION_TYPE.OPEN_COURSE_CONFIRM_MODAL,
+      payload: {
+        data: data,
+        openModal: false,
+        confirmModal: true,
+      },
+    });
   };
   // console.log(course)
   return (
@@ -61,6 +67,7 @@ const CourseCard = ({
                 state={course}
                 openConfirmModal={openConfirmModal}
                 openMoreModal={openMoreModal}
+                profil={"courses"}
               />
             </td>
           ) : null}

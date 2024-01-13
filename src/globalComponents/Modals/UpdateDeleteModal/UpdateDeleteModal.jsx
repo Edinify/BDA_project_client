@@ -36,6 +36,8 @@ const UpdateDeleteModal = ({
   };
 
   const handleToggleModal = (e) => {
+
+    
     e.stopPropagation();
     if (funcComp === data._id) {
       dispatch({
@@ -72,6 +74,7 @@ const UpdateDeleteModal = ({
       }
 
       if (power === "update") {
+        console.log(power)
         setChangesBtn(true);
       }
 
@@ -84,7 +87,7 @@ const UpdateDeleteModal = ({
       }
     }
   }, [user]);
-
+  // console.log(user)
   return (
     <div className="func-component">
       <MoreIcon className="more-icon" onMouseDown={handleToggleModal} />
