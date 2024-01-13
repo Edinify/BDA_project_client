@@ -67,7 +67,7 @@ const UpdateDeleteModal = ({
       const power = user?.profiles?.find(
         (item) => item.profile === profil
       )?.power;
-
+        console.log(power)
       if (power === "all") {
         setConfirmBtn(true);
         setDeleteBtn(true);

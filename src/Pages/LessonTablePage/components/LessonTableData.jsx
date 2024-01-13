@@ -13,7 +13,7 @@ const LessonTableData = ({ pageNum, getPageNumber ,userData}) => {
   );
   const { openStudentModal } = useSelector((state) => state.lessonTableModal);
 
-  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const { openConfirmModal } = useSelector((state) => state.lessonTableModal);
   const [students, setStudents] = useState({ data: [], lessonId: "" });
   const [updatedResultData, setUpdatedResultData] = useState("");
 
@@ -57,7 +57,6 @@ const LessonTableData = ({ pageNum, getPageNumber ,userData}) => {
 
           {openConfirmModal && (
             <ConfirmModal
-              setOpenConfirmModal={setOpenConfirmModal}
               type="lesson-table"
             />
           )}
@@ -82,7 +81,6 @@ const LessonTableData = ({ pageNum, getPageNumber ,userData}) => {
                   mode="desktop"
                   cellNumber={i + 1 + (pageNum - 1) * 10}
                   setStudents={setStudents}
-                  setOpenConfirmModal={setOpenConfirmModal}
                 />
               ))}
             </tbody>
@@ -97,7 +95,6 @@ const LessonTableData = ({ pageNum, getPageNumber ,userData}) => {
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
                 setStudents={setStudents}
-                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>

@@ -31,6 +31,18 @@ export const lessonTableModalReducer = (state = initialState, action) => {
         ...state,
         openStudentModal: action.payload,
       };
+    case LESSON_TABLE_MODAL_ACTION_TYPE.CLOSE_LESSON_CONFIRM_MODAL:
+    return {
+      ...state,
+      ...initialState,
+    };
+    case LESSON_TABLE_MODAL_ACTION_TYPE.OPEN_LESSON_CONFIRM_MODAL:
+      return {
+        ...state,
+        lessonTableModalData: action.payload.data,
+        lessonTableOpenModal: action.payload.openModal,
+        openConfirmModal: action.payload.confirmModal,
+      };
     default:
       return state;
   }
