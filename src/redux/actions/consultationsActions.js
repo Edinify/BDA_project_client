@@ -194,7 +194,7 @@ export const createConsultationAction =
     dispatch(modalLoading(true));
     try {
       const { data } = await API.post("/", consultationData);
-      dispatch(getConsultationPaginationAction(data.lastPage, "", 'appointed'));
+      dispatch(getConsultationPaginationAction(data.lastPage, "", "appointed"));
       dispatch({
         type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_OPEN_MODAL,
         payload: false,
@@ -215,7 +215,9 @@ export const createConsultationAction =
           );
 
           const { data } = await API.post("/", consultationData);
-          dispatch(getConsultationPaginationAction(data.lastPage, "", 'appointed'));
+          dispatch(
+            getConsultationPaginationAction(data.lastPage, "", "appointed")
+          );
           dispatch({
             type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_OPEN_MODAL,
             payload: false,
@@ -328,5 +330,107 @@ export const deleteConsultationAction =
       }
       console.log(error);
       toastError(error?.response?.data.message);
+    }
+  };
+
+export const confirmConsultationChangesAction =
+  (_id, consultationData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(
+        `/changes/confirm/${_id}`,
+        consultationData
+      );
+      dispatch({
+        type: CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_CONSULTATION,
+        payload: data,
+      });
+      dispatch({
+        type: CONSULTATION_MODAL_ACTION_TYPE.CLOSE_CONSULTATION_CONFIRM_MODAL,
+      });
+      toastSuccess("Yeniləmələr təstiqləndi!");
+    } catch (error) {
+      const originalRequest = error.config;
+
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, consultationData);
+          dispatch({
+            type: CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_CONSULTATION,
+            payload: data,
+          });
+          dispatch({
+            type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("konsultasiya yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      console.log(error);
+    } finally {
+      dispatch(modalLoading(false));
+    }
+  };
+
+export const cancelConsultationChangesAction =
+  (_id, consultationData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(
+        `/changes/cancel/${_id}`,
+        consultationData
+      );
+      dispatch({
+        type: CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_CONSULTATION,
+        payload: data,
+      });
+      dispatch({
+        type: CONSULTATION_MODAL_ACTION_TYPE.CLOSE_CONSULTATION_CONFIRM_MODAL,
+      });
+      toastSuccess("Yeniləmələr ləğv edildi!");
+    } catch (error) {
+      const originalRequest = error.config;
+
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, consultationData);
+          dispatch({
+            type: CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_CONSULTATION,
+            payload: data,
+          });
+          dispatch({
+            type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("konsultasiya yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      console.log(error);
+    } finally {
+      dispatch(modalLoading(false));
     }
   };

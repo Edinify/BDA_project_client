@@ -31,7 +31,11 @@ const ConsultationModal = () => {
   // formik
   const formik = useFormik({
     initialValues: {
-      studentName: modalData.studentName ? modalData.studentName : "",
+      studentName: modalData?.studentName || "",
+      contactDate: modalData?.contactDate || "",
+      constDate: modalData?.constDate || "",
+      constTime: modalData?.constTime || "",
+      course: modalData?.course || "",
     },
     validationSchema: ValidationSchema,
   });
@@ -115,32 +119,36 @@ const ConsultationModal = () => {
               updateModalState={updateModalState}
               formik={formik}
             />
-            <Persona
-              modalData={modalData}
-              updateModalState={updateModalState}
-              formik={formik}
-            />
             <Knowledge
               modalData={modalData}
               updateModalState={updateModalState}
               formik={formik}
             />
-            <CancelReason
-              modalData={modalData}
-              updateModalState={updateModalState}
-              formik={formik}
-            />
-            <InputField
-              inputName="addInfo"
-              formik={formik}
-              modalData={modalData}
-              updateModalState={updateModalState}
-            />
-             <Status
-              modalData={modalData}
-              updateModalState={updateModalState}
-              formik={formik}
-            />
+            {modalData?._id && (
+              <>
+                <CancelReason
+                  modalData={modalData}
+                  updateModalState={updateModalState}
+                  formik={formik}
+                />
+                <Persona
+                  modalData={modalData}
+                  updateModalState={updateModalState}
+                  formik={formik}
+                />
+                <InputField
+                  inputName="addInfo"
+                  formik={formik}
+                  modalData={modalData}
+                  updateModalState={updateModalState}
+                />
+                <Status
+                  modalData={modalData}
+                  updateModalState={updateModalState}
+                  formik={formik}
+                />
+              </>
+            )}
           </div>
         </Box>
 

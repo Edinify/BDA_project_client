@@ -4,13 +4,7 @@ import { SYLLABUS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteSyllabusAction } from "../../../redux/actions/syllabusActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
-const SyllabusCard = ({
-  data,
-  mode,
-  cellNumber,
-  setOpenConfirmModal,
-  syllabus,
-}) => {
+const SyllabusCard = ({ data, mode, syllabus }) => {
   const dispatch = useDispatch();
   const { selectedCourse } = useSelector((state) => state.syllabusCourse);
 
@@ -39,10 +33,15 @@ const SyllabusCard = ({
   };
 
   const openConfirmModal = () => {
-    setOpenConfirmModal(true);
-    updateItem("more");
+    dispatch({
+      type: SYLLABUS_MODAL_ACTION_TYPE.OPEN_SYLLABUS_CONFIRM_MODAL,
+      payload: {
+        data: data,
+        openModal: false,
+        confirmModal: true,
+      },
+    });
   };
-
   return (
     <>
       {mode === "desktop" ? (
@@ -54,7 +53,6 @@ const SyllabusCard = ({
               <div className="right-fade"></div>
             </div>
           </td>
-          {/* {syllabus.power} */}
 
           <td>
             <UpdateDeleteModal

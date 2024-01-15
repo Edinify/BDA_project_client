@@ -7,13 +7,7 @@ import { deleteConsultationAction } from "../../../redux/actions/consultationsAc
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import { useLocation } from "react-router-dom";
 
-const ConsultationCard = ({
-  mode,
-  setOpenMoreModal,
-  data,
-  setOpenConfirmModal,
-  consultation,
-}) => {
+const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { constStatusList } = useCustomHook();
@@ -78,10 +72,17 @@ const ConsultationCard = ({
   };
 
   const openConfirmModal = () => {
-    setOpenConfirmModal(true);
-    updateItem("more");
+    dispatch({
+      type: CONSULTATION_MODAL_ACTION_TYPE.OPEN_CONSULTATION_CONFIRM_MODAL,
+      payload: {
+        data: data,
+        openModal: false,
+        confirmModal: true,
+      },
+    });
   };
 
+  console.log(constStatusList, "consttttttttttt");
   return (
     <>
       {mode === "desktop" ? (
@@ -101,7 +102,15 @@ const ConsultationCard = ({
               : ""}
           </td>
           <td>{data?.constTime}</td>
-          <td>
+          <td
+            style={
+              data?.status === "sold"
+                ? { backgroundColor: "#d4ffbf" }
+                : data?.status === "cancelled"
+                ? { backgroundColor: "#ffced1" }
+                : { backgroundColor: "#d2c3fe" }
+            }
+          >
             {constStatusList.find((item) => item.key === data.status)?.name ||
               ""}
           </td>
@@ -112,6 +121,7 @@ const ConsultationCard = ({
               data={data}
               openConfirmModal={openConfirmModal}
               openMoreModal={openMoreModal}
+              profil={"consultation"}
             />
           </td>
         </tr>

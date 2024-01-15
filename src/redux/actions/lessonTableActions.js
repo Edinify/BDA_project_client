@@ -68,7 +68,6 @@ const toastError = (message) => {
   });
 };
 
-
 const pageLoading = (loadingValue) => ({
   type: LESSON_TABLE_ALL_ACTIONS_TYPE.LESSON_TABLE_LOADING,
   payload: loadingValue,
@@ -86,7 +85,7 @@ export const getLessonTablePaginationAction =
       const { data } = await API.get(
         `/?page=${pageNumber}&searchQuery=${searchQuery}&groupId=${groupId}`
       );
-      
+
       dispatch({
         type: LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_TABLE_LAST_PAGE,
         payload: pageNumber,
@@ -273,5 +272,111 @@ export const deleteLessonTableAction =
       }
       console.log(error);
       toastError(error?.response?.data.message);
+    }
+  };
+
+export const confirmLessonTableChangesAction =
+  (_id, lessonTableData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+
+    try {
+      const { data } = await API.patch(
+        `/changes/confirm/${_id}`,
+        lessonTableData
+      );
+
+      dispatch({
+        type: LESSON_TABLE_ALL_ACTIONS_TYPE.UPDATE_LESSON_TABLE,
+        payload: data,
+      });
+      dispatch({
+        type: LESSON_TABLE_MODAL_ACTION_TYPE.CLOSE_LESSON_CONFIRM_MODAL,
+        payload: false,
+      });
+
+      toastSuccess("Yeniləmələr təstiqləndi!");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, lessonTableData);
+          dispatch({
+            type: LESSON_TABLE_ALL_ACTIONS_TYPE.UPDATE_LESSON_TABLE,
+            payload: data,
+          });
+          dispatch({
+            type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Dərs yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+    } finally {
+      dispatch(modalLoading(false));
+    }
+  };
+
+export const cancelLessonTableChangesAction =
+  (_id, lessonTableData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+
+    try {
+      const { data } = await API.patch(
+        `/changes/cancel/${_id}`,
+        lessonTableData
+      );
+
+      dispatch({
+        type: LESSON_TABLE_ALL_ACTIONS_TYPE.UPDATE_LESSON_TABLE,
+        payload: data,
+      });
+      dispatch({
+        type: LESSON_TABLE_MODAL_ACTION_TYPE.CLOSE_LESSON_CONFIRM_MODAL,
+        payload: false,
+      });
+
+      toastSuccess("Yeniləmələr ləğv edildi!");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, lessonTableData);
+          dispatch({
+            type: LESSON_TABLE_ALL_ACTIONS_TYPE.UPDATE_LESSON_TABLE,
+            payload: data,
+          });
+          dispatch({
+            type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Dərs yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+    } finally {
+      dispatch(modalLoading(false));
     }
   };

@@ -13,6 +13,7 @@ import SuperAdminPanelRoute from "./SuperAdminPanelRoute";
 // import AdminPanelRoute from "./AdminPanelRoute";
 // import TeacherPanelRoute from "./TeacherPanelRoute";
 import WorkerPanelRoute from "./WorkerPanelRoute";
+import TeacherPanelRoute from "./TeacherPanelRoute";
 
 export const Routing = () => {
   const dispatch = useDispatch();
@@ -27,44 +28,78 @@ export const Routing = () => {
   const token = localStorage.getItem("auth");
 
   console.log(user);
-
+  console.log(auth);
   useEffect(() => {
     if (token) {
+      console.log(1);
       if (!user._id) {
+        console.log(2);
         dispatch(userAction());
-      }
-      if (user.role === "super-admin" && !notFound) {
+      } else if (user.role === "super-admin" && !notFound) {
+        console.log(3);
         if (location.pathname.startsWith("/login")) {
           navigate("/");
-        } else {
-          return () => {};
-        }
-      } else if (user.role === "admin" && !notFound) {
-        if (location.pathname.startsWith("/login")) {
-          navigate("/");
-        } else {
-          return () => {};
         }
       } else if (user.role === "teacher" && !notFound) {
+        console.log(4);
         if (location.pathname.startsWith("/login")) {
-          navigate("/teacher-panel/home");
+          navigate("/teacher-panel");
         }
       } else if (user.role === "worker" && !notFound) {
-        if (location.pathname === "/login") navigate("/consultation/appointed");
+        let profile = user?.profiles[0]?.profile;
+        if (location.pathname.startsWith("/login")) {
+          switch (profile) {
+            case "tuitionFee":
+              navigate("/tuitionFee");
+              break;
+            case "students":
+              navigate("/students");
+              break;
+            case "courses":
+              navigate("/courses");
+              break;
+            case "teachers":
+              navigate("/teachers");
+              break;
+            case "consultation":
+              navigate("/consultation/appointed");
+              break;
+            case "groups":
+              navigate("/groups/current");
+              break;
+            case "career":
+              navigate("/career");
+              break;
+            case "syllabus":
+              navigate("/syllabus");
+              break;
+            case "lessonTable":
+              navigate("/lessonTable");
+              break;
+            default:
+              navigate("/not-found");
+              break;
+          }
+        }
       }
     } else if (forgetPassword.login) {
+      console.log(6);
       navigate("/login");
     } else {
       if (forgetPassword.email) {
+        console.log(7);
         navigate("/forget");
       } else if (forgetPassword.otp) {
+        console.log(8);
         navigate("/send");
       } else if (forgetPassword.changePassword) {
+        console.log(9);
         navigate("/change");
       }
     }
   }, [auth, user, forgetPassword]);
 
+  console.log(location.pathname, "pathname");
   return (
     <div className={userData ? "main-container" : ""}>
       {userData && <Sidebar />}
@@ -77,12 +112,11 @@ export const Routing = () => {
             path="*"
             element={<NotFoundPage setNotFound={setNotFound} />}
           />
-
           {LoginRoute()}
           {userData?.role === "super-admin" && SuperAdminPanelRoute()}
-          {/* {userData?.role === "admin" && AdminPanelRoute()}
-          {userData?.role === "teacher" && TeacherPanelRoute()} */}
-          {userData?.role === "worker" && WorkerPanelRoute()}
+          {/* {{userData?.role === "admin" && AdminPanelRoute()} */}
+          {userData?.role === "teacher" && TeacherPanelRoute()}
+          {user?.role === "worker" && WorkerPanelRoute(user)}
         </Routes>
       </div>
     </div>

@@ -7,7 +7,7 @@ import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import StudentLessonModal from "./StudentLessonModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 
-const LessonTableData = ({ pageNum, getPageNumber ,userData}) => {
+const LessonTableData = ({ pageNum, getPageNumber, userData }) => {
   const { lessonTableData, totalPages, loading } = useSelector(
     (state) => state.lessonTablePagination
   );
@@ -18,27 +18,18 @@ const LessonTableData = ({ pageNum, getPageNumber ,userData}) => {
   const [updatedResultData, setUpdatedResultData] = useState("");
 
   const tableHead =
-  userData?.power ==="only-show"?
-  [
-    "Dərs günü",
-    "Dərs saatı",
-    "Mövzu",
-    "Müəllim",
-    "Status",
-    "Tələbələr",
-  ]
-  :
-   [
-    "Dərs günü",
-    "Dərs saatı",
-    "Mövzu",
-    "Müəllim",
-    "Mentor",
-    "Status",
-    "Tələbələr",
-    "",
-  ]
-
+    userData?.power === "only-show"
+      ? ["Dərs günü", "Dərs saatı", "Mövzu", "Müəllim", "Status", "Tələbələr"]
+      : [
+          "Dərs günü",
+          "Dərs saatı",
+          "Mövzu",
+          "Müəllim",
+          "Mentor",
+          "Tələbələr",
+          "Status",
+          "",
+        ];
 
   return (
     <>
@@ -55,15 +46,13 @@ const LessonTableData = ({ pageNum, getPageNumber ,userData}) => {
             />
           )}
 
-          {openConfirmModal && (
-            <ConfirmModal
-              type="lesson-table"
-            />
-          )}
+          {openConfirmModal && <ConfirmModal type="lesson-table" />}
 
-          <table  className={`details-table  teacher-table ${
-              userData.power === "only-show" ? "only-show" : "update"
-            } `}>
+          <table
+            className={`details-table  teacher-table ${
+              userData?.power === "only-show" ? "only-show" : "update"
+            } `}
+          >
             <thead>
               <tr>
                 {tableHead.map((head, i) => (

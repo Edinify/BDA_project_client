@@ -2,17 +2,21 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as ArrowIcon } from "../../../assets/icons/arrow-down-dropdown.svg";
 import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg";
+import { DROPDOWN_GROUP_ACTIONS_TYPE } from "../../../redux/actions-type";
 import {
-  DROPDOWN_GROUP_ACTIONS_TYPE,
-} from "../../../redux/actions-type";
-import { getGroupsAction } from "../../../redux/actions/groupsActions";
+  getGroupsAction,
+  getGroupsWithTeacherAction,
+} from "../../../redux/actions/groupsActions";
 import { getLessonTablePaginationAction } from "../../../redux/actions/lessonTableActions";
 
 export const GroupsDropdown = ({ deviceType = "" }) => {
   const dispatch = useDispatch();
-  const { groupData: dataList } = useSelector((state) => state.groupsPagination);
+  const { groupData: dataList } = useSelector(
+    (state) => state.groupsPagination
+  );
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { user } = useSelector((state) => state.user);
 
   const getCourse = (group) => {
     setDropdownOpen(false);
@@ -24,8 +28,12 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
   };
 
   useEffect(() => {
-    dispatch(getGroupsAction());
-  }, []);
+    if (user?.role == "teacher") {
+      dispatch(getGroupsWithTeacherAction(user._id));
+    } else {
+      dispatch(getGroupsAction());
+    }
+  }, [user]);
 
   return (
     <div

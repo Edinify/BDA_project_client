@@ -6,13 +6,7 @@ import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActio
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
 
-const LessonTableCard = ({
-  data,
-  mode,
-  setOpenConfirmModal,
-  setStudents,
-  lesson,
-}) => {
+const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
   const { lessonTableData, lastPage } = useSelector(
@@ -69,6 +63,7 @@ const LessonTableCard = ({
           date: data?.date,
           time: data?.time,
           topic: data?.topic,
+          status: data?.status,
         },
         openModal: modalType !== "more" ? true : false,
       },
@@ -83,8 +78,14 @@ const LessonTableCard = ({
   };
 
   const openConfirmModal = () => {
-    setOpenConfirmModal(true);
-    updateItem("more");
+    dispatch({
+      type: LESSON_TABLE_MODAL_ACTION_TYPE.OPEN_LESSON_CONFIRM_MODAL,
+      payload: {
+        data: data,
+        openModal: false,
+        confirmModal: true,
+      },
+    });
   };
 
   return (
@@ -123,15 +124,6 @@ const LessonTableCard = ({
               <div className="right-fade"></div>
             </div>
           </td>
-          <td>
-            <div className="td-con">
-              <div className="table-scroll-text">
-                {lessonStatusList.find((item) => item.key === data.status)
-                  .name || ""}
-              </div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
           <td className="student-length">
             <div
               onClick={() => {
@@ -143,8 +135,26 @@ const LessonTableCard = ({
               }}
               className="td-con"
             >
-              <div className="table-scroll-text">{data.students.length}</div>
+              <div className="table-scroll-text">
+                {data.students.length} ...
+              </div>
               <div className="right-fade"></div>
+            </div>
+          </td>
+          <td
+            style={
+              data.status === "unviewed"
+                ? { backgroundColor: "#d2c3fe" }
+                : data.status === "confirmed"
+                ? { backgroundColor: "#d4ffbf" }
+                : { backgroundColor: "#ffced1" }
+            }
+          >
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {lessonStatusList.find((item) => item.key === data.status)
+                  .name || ""}
+              </div>
             </div>
           </td>
 
@@ -155,6 +165,7 @@ const LessonTableCard = ({
               data={data}
               openConfirmModal={openConfirmModal}
               state={lesson}
+              profil={"lessonTable"}
             />
           </td>
         </tr>
@@ -171,7 +182,7 @@ const LessonTableCard = ({
               ))}
             </ul>
           </div>
-          {lesson.power === "only-show" ? null : (
+          {lesson?.power === "only-show" ? null : (
             <div className="right">
               <UpdateDeleteModal
                 updateItem={updateItem}

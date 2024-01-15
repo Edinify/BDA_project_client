@@ -5,6 +5,7 @@ const initialState = {
   lessonTableOpenModal: false,
   openStudentModal: false,
   lessonTableModalLoading: false,
+  openConfirmModal: false,
 };
 
 export const lessonTableModalReducer = (state = initialState, action) => {
@@ -32,15 +33,16 @@ export const lessonTableModalReducer = (state = initialState, action) => {
         openStudentModal: action.payload,
       };
     case LESSON_TABLE_MODAL_ACTION_TYPE.CLOSE_LESSON_CONFIRM_MODAL:
-    return {
-      ...state,
-      ...initialState,
-    };
+      return {
+        ...state,
+        ...initialState,
+      };
     case LESSON_TABLE_MODAL_ACTION_TYPE.OPEN_LESSON_CONFIRM_MODAL:
       return {
         ...state,
         lessonTableModalData: action.payload.data,
         lessonTableOpenModal: action.payload.openModal,
+        openStudentModal: false,
         openConfirmModal: action.payload.confirmModal,
       };
     default:

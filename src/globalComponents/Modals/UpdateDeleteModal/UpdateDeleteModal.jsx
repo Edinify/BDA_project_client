@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FUNC_COMPONENT_ACTION_TYPE } from "../../../redux/actions-type";
 import { ReactComponent as MoreIcon } from "../../../assets/icons/more.svg";
 import DeleteItemModal from "../DeleteItemModal/DeleteItemModal";
+
 const UpdateDeleteModal = ({
   updateItem = () => {},
   deleteItem = () => {},
@@ -25,6 +26,7 @@ const UpdateDeleteModal = ({
   const [changesBtn, setChangesBtn] = useState(false);
   const [paymentsBtn, setPaymentsBtn] = useState(false);
   const [deleteBtn, setDeleteBtn] = useState(false);
+  const [badge, setBadge] = useState(false);
 
   const modalRef = useRef(null);
 
@@ -36,8 +38,6 @@ const UpdateDeleteModal = ({
   };
 
   const handleToggleModal = (e) => {
-
-    
     e.stopPropagation();
     if (funcComp === data._id) {
       dispatch({
@@ -67,15 +67,20 @@ const UpdateDeleteModal = ({
       const power = user?.profiles?.find(
         (item) => item.profile === profil
       )?.power;
-        console.log(power)
+
       if (power === "all") {
         setConfirmBtn(true);
         setDeleteBtn(true);
       }
 
-      if (power === "update") {
-        console.log(power)
+      if (power === "update" && profil !== "tuitionFee") {
         setChangesBtn(true);
+      }
+
+      if ((power === "all" || power === "update") && data?.changes?._id) {
+        setBadge(true);
+      } else {
+        setBadge(false);
       }
 
       if (profil === "tuitionFee" && power === "all") {
@@ -85,13 +90,27 @@ const UpdateDeleteModal = ({
       if (power !== "only-show") {
         setUpdateBtn(true);
       }
+    } else if (user?.role === "teacher") {
+      setUpdateBtn(true);
     }
-  }, [user]);
+  });
   // console.log(user)
   return (
     <div className="func-component">
+      {badge && (
+        <div
+          style={{
+            width: "9px",
+            height: "9px",
+            borderRadius: "50%",
+            backgroundColor: "#ff462a",
+            position: "absolute",
+            right: "12px",
+            top: "-5px",
+          }}
+        ></div>
+      )}
       <MoreIcon className="more-icon" onMouseDown={handleToggleModal} />
-
       <div
         className={`delete-update-modal ${
           funcComp === data._id ? "active" : ""
@@ -104,13 +123,41 @@ const UpdateDeleteModal = ({
           )}
           {confirmBtn && (
             <h4 className="confirm" onClick={openConfirmModal}>
-              Təsdiqlə
+              <div style={{ position: "relative" }}>
+                <span>Təstiqlə</span>
+                <div
+                  style={{
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    backgroundColor: "#ff462a",
+                    position: "absolute",
+                    right: "-7px",
+                    top: "0px",
+                    display: badge ? "block" : "none",
+                  }}
+                ></div>
+              </div>
             </h4>
           )}
 
           {changesBtn && (
             <h4 className="confirm" onClick={openConfirmModal}>
-              Yeniləmələr
+              <div style={{ position: "relative" }}>
+                <span>Yeniləmələr</span>
+                <div
+                  style={{
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    backgroundColor: "#ff462a",
+                    position: "absolute",
+                    right: "-7px",
+                    top: "0px",
+                    display: badge ? "block" : "none",
+                  }}
+                ></div>
+              </div>
             </h4>
           )}
 
@@ -120,7 +167,7 @@ const UpdateDeleteModal = ({
             </h4>
           )}
 
-          {profil !== "syllabus" && (
+          {profil !== "syllabus" && profil !== "lessonTable" && (
             <h4 className="confirm" onClick={() => openMoreModal()}>
               Ətraflı
             </h4>

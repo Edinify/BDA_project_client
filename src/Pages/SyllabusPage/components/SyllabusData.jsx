@@ -9,7 +9,8 @@ const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
   const { syllabusData, totalPages, loading } = useSelector(
     (state) => state.syllabusPagination
   );
-  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const { openConfirmModal } = useSelector((state) => state.syllabusModal);
+
   const tableHead = ["No", "Mövzü", ""];
 
   return (
@@ -18,12 +19,8 @@ const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
         <Loading />
       ) : (
         <>
-          {openConfirmModal && (
-            <ConfirmModal
-              setOpenConfirmModal={setOpenConfirmModal}
-              type="syllabus"
-            />
-          )}
+          {openConfirmModal && <ConfirmModal type="syllabus" />}
+
           <table className="details-table syllabus-table">
             <thead>
               <tr>
@@ -41,7 +38,6 @@ const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
                   mode="desktop"
                   syllabus={userData}
                   cellNumber={i + 1 + (pageNum - 1) * 10}
-                  setOpenConfirmModal={setOpenConfirmModal}
                 />
               ))}
             </tbody>
@@ -55,7 +51,6 @@ const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
                 syllabus={userData}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
-                setOpenConfirmModal={setOpenConfirmModal}
               />
             ))}
           </div>
