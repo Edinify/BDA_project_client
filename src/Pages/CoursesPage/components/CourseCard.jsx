@@ -86,6 +86,7 @@ const CourseCard = ({
                 data={data}
                 state={course}
                 openConfirmModal={openConfirmModal}
+                openMoreModal={openMoreModal}
               />
             </div>
           )}

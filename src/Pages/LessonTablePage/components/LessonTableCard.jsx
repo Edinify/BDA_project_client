@@ -20,17 +20,13 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
         weeksArrFullName[moment(new Date(data.date)).day()]
       }`
     : "";
-
-  // let students =
-  //   Array.isArray(data.students) && data.students.length > 0
-  // ? data.students
-  //         .map((item) => {
-  //           return `${item.student.fullName} `;
-  //         })
-  //         .join(", ")
-  //     : "boş";
-
-  // console.log(students, "students");
+  const openStudentsList=()=>{
+    setStudents({ data: data.students, lessonId: data._id });
+    dispatch({
+      type: LESSON_TABLE_MODAL_ACTION_TYPE.STUDENT_MODAL,
+      payload: true,
+    });
+  }
   const listData = [
     {
       key: "Dərs günü",
@@ -49,7 +45,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
       value:
         lessonStatusList.find((item) => item.key === data.status).name || "",
     },
-    { key: "Tələbələr", value: "students" },
+    { key: "Tələbələr", value: data.students.length, onClick:openStudentsList ,className:"student-count"},
   ];
   const updateItem = (modalType) => {
     dispatch({
@@ -87,6 +83,12 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
       },
     });
   };
+
+
+
+  console.log(lesson,"pow")
+
+
 
   return (
     <>
@@ -126,13 +128,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
           </td>
           <td className="student-length">
             <div
-              onClick={() => {
-                setStudents({ data: data.students, lessonId: data._id });
-                dispatch({
-                  type: LESSON_TABLE_MODAL_ACTION_TYPE.STUDENT_MODAL,
-                  payload: true,
-                });
-              }}
+              onClick={openStudentsList}
               className="td-con"
             >
               <div className="table-scroll-text">
@@ -175,8 +171,8 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
             <h3>{data.group.name}</h3>
             <ul>
               {listData.map((item, index) => (
-                <li key={index}>
-                  <span className="type">{item.key}</span>
+                <li onClick={item.onClick} key={index} className={item.className} >
+                  <span  className="type">{item.key}</span>
                   <p>{item.value}</p>
                 </li>
               ))}

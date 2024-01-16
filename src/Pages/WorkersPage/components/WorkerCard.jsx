@@ -120,11 +120,7 @@ const WorkerCard = ({
               </li> */}
             </ul>
           </div>
-          {worker.power === "only-show" ? (
-            <div className="more-content">
-              <span onClick={openMoreModal}>Ətraflı</span>
-            </div>
-          ) : (
+          
             <div className="right">
               <UpdateDeleteModal
                 updateItem={updateItem}
@@ -132,12 +128,13 @@ const WorkerCard = ({
                 data={data}
                 openConfirmModal={openConfirmModal}
                 state={worker}
+                openMoreModal={openMoreModal}
               />
-              <div className="more-content">
+              {/* <div className="more-content">
                 <span onClick={openMoreModal}>Ətraflı</span>
-              </div>
+              </div> */}
             </div>
-          )}
+          
         </div>
       )}
     </>

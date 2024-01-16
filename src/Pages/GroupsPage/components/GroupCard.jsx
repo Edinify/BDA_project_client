@@ -150,11 +150,13 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
           {group.power === "only-show" ? null : (
             <div className="right">
               <UpdateDeleteModal
-                updateItem={updateItem}
-                deleteItem={deleteItem}
-                data={data}
-                openConfirmModal={openConfirmModal}
-                state={group}
+               updateItem={updateItem}
+               deleteItem={deleteItem}
+               data={data}
+               openConfirmModal={openConfirmModal}
+               openMoreModal={openMoreModal}
+               state={group}
+               profil={"groups"}
               />
             </div>
           )}

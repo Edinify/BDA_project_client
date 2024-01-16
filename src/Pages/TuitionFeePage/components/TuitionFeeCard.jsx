@@ -206,12 +206,15 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
             </ul>
           </div>
           <div className="right">
-            {/* <UpdateDeleteModal
+            <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
-            /> */}
-            <span onClick={() => openMoreModal()}>Ətraflı</span>
+              openMoreModal={openMoreModal}
+              openConfirmModal={openConfirmModal}
+              profil={"tuitionFee"}
+            />
+            {/* <span onClick={() => openMoreModal()}>Ətraflı</span> */}
           </div>
         </div>
       )}

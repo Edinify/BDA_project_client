@@ -83,6 +83,7 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
                 group={userData}
                 mode="tablet"
                 cellNumber={i + 1 + (pageNum - 1) * 10}
+                setOpenMoreModal={setOpenMoreModal}
               />
             ))}
           </div>

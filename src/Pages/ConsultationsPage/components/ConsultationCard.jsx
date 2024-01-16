@@ -122,6 +122,7 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
               openConfirmModal={openConfirmModal}
               openMoreModal={openMoreModal}
               profil={"consultation"}
+              state={consultation}
             />
           </td>
         </tr>
@@ -150,10 +151,12 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
                 data={data}
                 openConfirmModal={openConfirmModal}
                 state={consultation}
+                profil={"consultation"}
+                openMoreModal={openMoreModal}
               />
-              <div className="more-content">
+              {/* <div className="more-content">
                 <span onClick={openMoreModal}>Ətraflı</span>
-              </div>
+              </div> */}
             </div>
           )}
         </div>

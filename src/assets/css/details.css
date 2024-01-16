@@ -50,7 +50,7 @@
 .details-table tr td.email {
   text-transform: lowercase;
 }
-.details-table tr td.student-length{
+.details-table tr td.student-length {
   cursor: pointer;
 }
 .details-table tr td.salary {
@@ -79,32 +79,29 @@
 .details-table.career-table tr td:last-child,
 .details-table.career-table tr th:last-child {
   text-align: unset;
-  width: auto;
+  /* width: auto; */
 }
 .tuition-fee-page .details-table tr th {
   text-align: center;
 }
 
 .details-table.courses-table tr th:first-child,
-.details-table.courses-table tr td:first-child
-{
+.details-table.courses-table tr td:first-child {
   width: 80%;
 }
 
 .details-table.courses-table.only-show tr th:last-child,
-.details-table.courses-table.only-show tr td:last-child
-{
+.details-table.courses-table.only-show tr td:last-child {
   text-align: start;
 }
 
 .details-table.courses-table.update tr th:first-child,
-.details-table.courses-table.update tr td:first-child
-{
+.details-table.courses-table.update tr td:first-child {
   width: 100%;
 }
 
 .details-table.syllabus-table tr th:nth-child(2),
-.details-table.syllabus-table tr td:nth-child(2){
+.details-table.syllabus-table tr td:nth-child(2) {
   width: 100%;
 }
 /* stimulations */
@@ -119,35 +116,29 @@
 }
 
 /* only-show */
-.details-table.student-table.only-show tr th ,
-.details-table.student-table.only-show tr td 
-{
+.details-table.student-table.only-show tr th,
+.details-table.student-table.only-show tr td {
   width: auto;
 }
-.details-table.student-table.only-show tr th:last-child ,
+.details-table.student-table.only-show tr th:last-child,
 .details-table.student-table.only-show tr td:last-child,
-.details-table.teacher-table.only-show tr th:last-child ,
-.details-table.teacher-table.only-show tr td:last-child
-
-{
+.details-table.teacher-table.only-show tr th:last-child,
+.details-table.teacher-table.only-show tr td:last-child {
   width: auto;
   width: 120px;
 }
-.details-table.student-table.only-show tr th:nth-last-child(2) ,
+.details-table.student-table.only-show tr th:nth-last-child(2),
 .details-table.student-table.only-show tr th:nth-last-child(3),
-.details-table.teacher-table.only-show tr th:nth-last-child(2) ,
-.details-table.teacher-table.only-show tr th:nth-last-child(3)
-{
+.details-table.teacher-table.only-show tr th:nth-last-child(2),
+.details-table.teacher-table.only-show tr th:nth-last-child(3) {
   width: auto;
   width: 200px;
 }
 
-
-.details-table.student-table.update tr th:nth-last-child(2) ,
+.details-table.student-table.update tr th:nth-last-child(2),
 .details-table.student-table.update tr th:nth-last-child(3),
-.details-table.teacher-table.update tr th:nth-last-child(2) ,
-.details-table.teacher-table.update tr th:nth-last-child(3)
-{
+.details-table.teacher-table.update tr th:nth-last-child(2),
+.details-table.teacher-table.update tr th:nth-last-child(3) {
   width: auto;
   width: 200px;
 }
@@ -243,9 +234,9 @@
 .details-list-tablet {
   display: none;
 }
-.finance-page .details-list-tablet {
-  /* border-top: 0.5px solid var(--neutrals-300, #ddd); */
-}
+/* .finance-page .details-list-tablet {
+  border-top: 0.5px solid var(--neutrals-300, #ddd);
+} */
 .stimulations-page .details-list-tablet {
   border-top: 0.5px solid var(--neutrals-300, #ddd);
 }
@@ -283,7 +274,7 @@
   .details-table.syllabus-table tr th:first-child {
     width: 50px;
   }
-  .details-table tr td:last-child, 
+  .details-table tr td:last-child,
   .details-table tr th:last-child {
     width: 40px;
   }
@@ -311,6 +302,13 @@
   .details-list-tablet .content-box .left {
     overflow: hidden;
   }
+
+  .details-list-tablet .content-box .left .student-count {
+    border-bottom: 1px solid;
+    cursor: pointer;
+    width: 100px;
+  }
+
   .details-list-tablet .content-box .left h3 {
     font-size: 16px;
     color: var(--neutrals-900);
@@ -361,7 +359,8 @@
   .details-list-tablet .content-box .right {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    /* justify-content: space-between; */
     align-items: flex-end;
     position: absolute;
     right: 16px;
@@ -372,12 +371,12 @@
     height: 100%;
     padding: 12px 0;
   }
-  .details-list-tablet  .content-box .right.courses {
+  .details-list-tablet .content-box .right.courses {
     flex-direction: row;
     align-items: center;
   }
 
-  .details-list-tablet .content-box .right .more-content{
+  .details-list-tablet .content-box .right .more-content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -401,9 +400,9 @@
     justify-content: center;
   }
   .details-table.syllabus-table tr th:nth-child(2),
-.details-table.syllabus-table tr td:nth-child(2){
-  width: auto;
-}
+  .details-table.syllabus-table tr td:nth-child(2) {
+    width: auto;
+  }
 }
 
 @media screen and (max-width: 500px) {

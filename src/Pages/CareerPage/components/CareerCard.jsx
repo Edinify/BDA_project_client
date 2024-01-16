@@ -126,14 +126,16 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               ))}
             </ul>
           </div>
-          {/* <div className="right">
+           <div className="right">
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
+              openMoreModal={openMoreModal}
+              profil={"careers"}
             />
-            <span onClick={() => openMoreModal()}>Ətraflı</span>
-          </div> */}
+         
+          </div> 
         </div>
       )}
     </>

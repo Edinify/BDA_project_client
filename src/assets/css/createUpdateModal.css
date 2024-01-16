@@ -23,7 +23,7 @@
   border: 1px;
 }
 
-.create-update-modal-con .student-lesson-modal{
+.create-update-modal-con .student-lesson-modal {
   width: 448px;
   max-height: 80%;
   padding: 16px;
@@ -35,14 +35,13 @@
   border: 1px;
 }
 
-.create-update-modal-con  .confirm-btn{
+.create-update-modal-con .confirm-btn {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-
 }
 
-.create-update-modal-con  .confirm-btn button {
+.create-update-modal-con .confirm-btn button {
   background-color: var(--primary-500);
   border-radius: 8px;
   padding: 10px 24px;
@@ -52,16 +51,16 @@
   font-size: 16px;
   font-weight: 600;
 }
-.create-update-modal.teacher-modal{
+.create-update-modal.teacher-modal {
   width: 500px;
 }
-.create-update-modal.teacher-modal .modal-buttons{
+.create-update-modal.teacher-modal .modal-buttons {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 20px;
 }
-.create-update-modal.teacher-modal .create-update-modal-btn button{
+.create-update-modal.teacher-modal .create-update-modal-btn button {
   margin: 0;
 }
 
@@ -651,11 +650,11 @@
   }
 }
 
-@media screen and (max-width:600px) {
-  .create-update-modal.teacher-modal .modal-buttons .create-update-modal-btn{
+@media screen and (max-width: 600px) {
+  .create-update-modal.teacher-modal .modal-buttons .create-update-modal-btn {
     width: 100%;
   }
-  .create-update-modal.teacher-modal .create-update-modal-btn button{
+  .create-update-modal.teacher-modal .create-update-modal-btn button {
     width: 100%;
   }
 }

@@ -81,6 +81,7 @@ const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
                 course={userData}
                 mode="mobile"
                 cellNumber={i + 1 + (coursePageNum - 1) * 10}
+                setOpenMoreModal={setOpenMoreModal}
     
               />
             ))}
