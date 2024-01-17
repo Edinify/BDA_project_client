@@ -76,12 +76,14 @@ const modalLoading = (loadingValue) => ({
   payload: loadingValue,
 });
 
-
 export const getAllSyllabusAction = (courseId) => async (dispatch) => {
   try {
     const { data } = await API.get(`/all?courseId=${courseId}`);
-    console.log(data)
-    dispatch({ type: SYLLABUS_ALL_ACTIONS_TYPE.GET_ACTIVE_SYLLABUS, payload: data });
+    console.log(data);
+    dispatch({
+      type: SYLLABUS_ALL_ACTIONS_TYPE.GET_ACTIVE_SYLLABUS,
+      payload: data,
+    });
   } catch (error) {
     console.log(error);
     const originalRequest = error.config;
@@ -96,7 +98,10 @@ export const getAllSyllabusAction = (courseId) => async (dispatch) => {
           })
         );
         const { data } = await API.get(`/all?courseId=${courseId}`);
-        dispatch({ type: SYLLABUS_ALL_ACTIONS_TYPE.GET_ACTIVE_SYLLABUS, payload: data });
+        dispatch({
+          type: SYLLABUS_ALL_ACTIONS_TYPE.GET_ACTIVE_SYLLABUS,
+          payload: data,
+        });
       } catch (error) {
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
@@ -143,8 +148,7 @@ export const getSyllabusActiveAction = () => async (dispatch) => {
 };
 
 export const getSyllabusPaginationAction =
-  (pageNumber, searchQuery, courseId) =>
-  async (dispatch) => {
+  (pageNumber, searchQuery, courseId) => async (dispatch) => {
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
@@ -200,7 +204,9 @@ export const createSyllabusAction = (syllabusData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/", syllabusData);
-    dispatch(getSyllabusPaginationAction(data.lastPage, "", syllabusData.courseId));
+    dispatch(
+      getSyllabusPaginationAction(data.lastPage, "", syllabusData.courseId)
+    );
     dispatch({
       type: SYLLABUS_MODAL_ACTION_TYPE.SYLLABUS_OPEN_MODAL,
       payload: false,
@@ -219,7 +225,9 @@ export const createSyllabusAction = (syllabusData) => async (dispatch) => {
           })
         );
         const { data } = await API.post("/", syllabusData);
-        dispatch(getSyllabusPaginationAction(data.lastPage, "", syllabusData.courseId));
+        dispatch(
+          getSyllabusPaginationAction(data.lastPage, "", syllabusData.courseId)
+        );
         dispatch({
           type: SYLLABUS_MODAL_ACTION_TYPE.SYLLABUS_OPEN_MODAL,
           payload: false,
@@ -242,7 +250,10 @@ export const updateSyllabusAction = (_id, syllabusData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
     const { data } = await API.patch(`/${_id}`, syllabusData);
-    dispatch({ type: SYLLABUS_ALL_ACTIONS_TYPE.UPDATE_SYLLABUS, payload: data });
+    dispatch({
+      type: SYLLABUS_ALL_ACTIONS_TYPE.UPDATE_SYLLABUS,
+      payload: data,
+    });
     dispatch({
       type: SYLLABUS_MODAL_ACTION_TYPE.SYLLABUS_OPEN_MODAL,
       payload: false,
@@ -287,43 +298,152 @@ export const updateSyllabusAction = (_id, syllabusData) => async (dispatch) => {
   }
 };
 
-export const deleteSyllabusAction = ({_id, pageNumber, searchQuery, courseId}) => async (dispatch) => {
-  try {
-    await API.delete(`/${_id}`);
-    dispatch(getSyllabusPaginationAction(pageNumber, searchQuery, courseId));
-    dispatch({ type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS, payload: _id });
-    toastSuccess("İşçi silindi");
-  } catch (error) {
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-        await API.delete(`/${_id}`);
-        dispatch(getSyllabusPaginationAction(pageNumber, searchQuery, courseId));
-        dispatch({
-          type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
-          payload: _id,
-        });
-        toastSuccess("İşçi silindi");
-      } catch (error) {
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
+export const deleteSyllabusAction =
+  ({ _id, pageNumber, searchQuery, courseId }) =>
+  async (dispatch) => {
+    try {
+      await API.delete(`/${_id}`);
+      dispatch(getSyllabusPaginationAction(pageNumber, searchQuery, courseId));
+      dispatch({
+        type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
+        payload: _id,
+      });
+      toastSuccess("İşçi silindi");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          await API.delete(`/${_id}`);
+          dispatch(
+            getSyllabusPaginationAction(pageNumber, searchQuery, courseId)
+          );
+          dispatch({
+            type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
+            payload: _id,
+          });
+          toastSuccess("İşçi silindi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
         }
       }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan sillabus silinə bilməz");
+      }
+      console.log(error);
+      toastError(error?.response?.data.message);
     }
-    if (error?.response?.data?.key === "has-current-week-lessons") {
-      toastError("Cari həftədə  dərsi olan sillabus silinə bilməz");
+  };
+
+export const confirmSyllabusChangesAction =
+  (_id, syllabusData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(`/changes/confirm/${_id}`, syllabusData);
+      dispatch({
+        type: SYLLABUS_ALL_ACTIONS_TYPE.UPDATE_SYLLABUS,
+        payload: data,
+      });
+      dispatch({
+        type: SYLLABUS_MODAL_ACTION_TYPE.CLOSE_SYLLABUS_CONFIRM_MODAL,
+      });
+      toastSuccess("Yeniləmələr təstiqləndi!");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, syllabusData);
+          dispatch({
+            type: SYLLABUS_ALL_ACTIONS_TYPE.UPDATE_SYLLABUS,
+            payload: data,
+          });
+          dispatch({
+            type: SYLLABUS_MODAL_ACTION_TYPE.SYLLABUS_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("İşçi yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      if (error?.response?.data?.key === "email-already-exist") {
+        toastError("Bu email ilə istifadəçi mövcuddur");
+      }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan sillabus yenilənə bilməz");
+      }
+    } finally {
+      dispatch(modalLoading(false));
     }
-    console.log(error);
-    toastError(error?.response?.data.message);
-  }
-};
+  };
 
-
+export const cancelSyllabusChangesAction =
+  (_id, syllabusData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(`/changes/cancel/${_id}`, syllabusData);
+      dispatch({
+        type: SYLLABUS_ALL_ACTIONS_TYPE.UPDATE_SYLLABUS,
+        payload: data,
+      });
+      dispatch({
+        type: SYLLABUS_MODAL_ACTION_TYPE.CLOSE_SYLLABUS_CONFIRM_MODAL,
+      });
+      toastSuccess("Yeniləmələr ləğv edildi!");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, syllabusData);
+          dispatch({
+            type: SYLLABUS_ALL_ACTIONS_TYPE.UPDATE_SYLLABUS,
+            payload: data,
+          });
+          dispatch({
+            type: SYLLABUS_MODAL_ACTION_TYPE.SYLLABUS_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("İşçi yeniləndi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      if (error?.response?.data?.key === "email-already-exist") {
+        toastError("Bu email ilə istifadəçi mövcuddur");
+      }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan sillabus yenilənə bilməz");
+      }
+    } finally {
+      dispatch(modalLoading(false));
+    }
+  };

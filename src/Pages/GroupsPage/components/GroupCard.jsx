@@ -5,14 +5,7 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { deleteGroupAction } from "../../../redux/actions/groupsActions";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
-const GroupCard = ({
-  data,
-  mode,
-  cellNumber,
-  setOpenConfirmModal,
-  group,
-  setOpenMoreModal,
-}) => {
+const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { groupData, lastPage } = useSelector(
@@ -72,10 +65,15 @@ const GroupCard = ({
   };
 
   const openConfirmModal = () => {
-    setOpenConfirmModal(true);
-    updateItem("more");
+    dispatch({
+      type: GROUP_MODAL_ACTION_TYPE.OPEN_GROUP_CONFIRM_MODAL,
+      payload: {
+        data: data,
+        openModal: false,
+        confirmModal: true,
+      },
+    });
   };
-
   console.log(group, "grouppp");
 
   return (
@@ -132,6 +130,7 @@ const GroupCard = ({
               openConfirmModal={openConfirmModal}
               openMoreModal={openMoreModal}
               state={group}
+              profil={"groups"}
             />
           </td>
         </tr>

@@ -75,7 +75,6 @@ const reducers = combineReducers({
   tuitionFeeModal: tuitionFeeModalReducer,
   consultationPagination: consultationPaginationReducer,
   consultationModal: consultationModalReducer,
-  groupModal: groupModalReducer,
   workerModal: workerModalReducer,
   workersPagination: workersPaginationReducer,
   groupModal: groupModalReducer,
@@ -96,7 +95,7 @@ const reducers = combineReducers({
   studentStatus: studentStatusReducer,
   teacherStatus: teacherStatusReducer,
   dropdownGroup: dropdownGroupReducer,
-  mentors: mentorsReducer
+  mentors: mentorsReducer,
 });
 // test
 

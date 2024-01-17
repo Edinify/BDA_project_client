@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 
-const Status = () => {
+const Status = ({ updateModalState, modalData }) => {
   const confirmedStatusList = [
-    { status: "unviewed", label: "Baxılmayıb" },
-    { status: "confirmed", label: "Təsdiqlənib" },
-    { status: "cancelled", label: "İmtina edilib" },
+    { status: "unviewed", label: "Gözləmədə" },
+    { status: "confirmed", label: "Keçirilib" },
+    { status: "cancelled", label: "Ləğv edilib" },
   ];
 
-  const [selectedStatus, setSelectedStatus] = useState(null);
-
   const handleStatusClick = (status) => {
-    setSelectedStatus(status);
+    updateModalState("status", status);
   };
 
+  console.log(modalData, "modal data in status");
   return (
     <>
       <div className="modal-select">
@@ -20,7 +19,7 @@ const Status = () => {
           {confirmedStatusList.map((item, i) => (
             <li
               key={i}
-              className={item.status === selectedStatus ? "active" : ""}
+              className={item.status === modalData?.status ? "active" : ""}
               onClick={() => handleStatusClick(item.status)}
               id={item.status}
             >

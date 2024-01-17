@@ -40,7 +40,10 @@ const Sidebar = () => {
             <SidebarTeacher closeSidebar={closeSidebar} />
           )}
           {userData?.role === "worker" && (
-            <SidebarWorkers closeSidebar={closeSidebar} profiles={userData.profiles} />
+            <SidebarWorkers
+              closeSidebar={closeSidebar}
+              profiles={userData.profiles}
+            />
           )}
         </div>
       </div>

@@ -10,6 +10,7 @@ import WorkersPage from "../Pages/WorkersPage/WorkersPage";
 import CareerPage from "../Pages/CareerPage/CareerPage";
 import SyllabusPage from "../Pages/SyllabusPage/SyllabusPage";
 import LessonTablePage from "../Pages/LessonTablePage/LessonTablePage";
+import FinancePage from "../Pages/SalesPage/FinancePage";
 
 const SuperAdminPanelRoute = () => {
   return (
@@ -26,6 +27,7 @@ const SuperAdminPanelRoute = () => {
       <Route path="/workers" element={<WorkersPage />} />
       <Route path="/career" element={<CareerPage />} />
       <Route path="/syllabus" element={<SyllabusPage />} />
+      <Route path="/sales" element={<FinancePage />} />
       <Route path="/" element={<LessonTablePage />} />
     </>
   );

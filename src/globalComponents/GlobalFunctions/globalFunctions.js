@@ -78,9 +78,9 @@ export function useCustomHook() {
     },
   ];
   const lessonStatusList = [
-    { name: "Baxılmayıb", key: "unviewed" },
-    { name: "Təsdiqləndi", key: "confirmed" },
-    { name: "Ləğv edildi", key: "cancelled" },
+    { name: "Gözləyir", key: "unviewed" },
+    { name: "Keçirilib", key: "confirmed" },
+    { name: "Ləğv edilib", key: "cancelled" },
   ];
   const fineTypeList = [
     { name: "Şifahi xəbərdarlıq", key: "verbalWarning" },
@@ -182,7 +182,7 @@ export function useCustomHook() {
       icon: <MainPanelIcon />,
     },
     { id: 11, name: "Sillabus", key: "syllabus", icon: <SyllabusIcon /> },
-    {id:12,name:"Cədvəl",key:"lessonTable", icon:<TableIcon /> }
+    { id: 12, name: "Cədvəl", key: "lessonTable", icon: <TableIcon /> },
   ];
   const generalProfilePowerList = [
     { name: "Tam-səlahiyyətli", key: "all" },

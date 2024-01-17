@@ -10,7 +10,7 @@ import { apiRoot } from "../../apiRoot";
 
 const API = axios.create({
   baseURL: `${apiRoot}/course`,
-  withCredentials:true
+  withCredentials: true,
 });
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("auth")) {
@@ -24,7 +24,7 @@ API.interceptors.request.use((req) => {
 
 const refreshApi = axios.create({
   baseURL: `${apiRoot}/user/auth/refresh_token`,
-  withCredentials:true
+  withCredentials: true,
 });
 
 const toastSuccess = (message) => {
@@ -64,7 +64,6 @@ const courseModalOpen = (value) => ({
   type: COURSES_MODAL_ACTION_TYPE.COURSE_OPEN_MODAL,
   payload: value,
 });
-
 
 export const getAllCoursesAction = () => async (dispatch) => {
   try {
@@ -120,8 +119,8 @@ export const getCoursesPaginationAction =
           }
         }
       }
-      if (error?.response?.status === 403){
-        dispatch(logoutAction())
+      if (error?.response?.status === 403) {
+        dispatch(logoutAction());
       }
     } finally {
       dispatch(pageLoading(false));
@@ -158,8 +157,8 @@ export const createCoursesAction = (courseData) => async (dispatch) => {
         }
       }
     }
-    if (error?.response?.status === 403){
-      dispatch(logoutAction())
+    if (error?.response?.status === 403) {
+      dispatch(logoutAction());
     }
     console.log(error);
     if (error?.response?.data?.key === "course-already-exists") {
@@ -212,42 +211,43 @@ export const updateCoursesAction = (_id, courseData) => async (dispatch) => {
   }
 };
 
-export const deleteCoursesAction = ({_id, pageNumber, searchQuery}) => async (dispatch) => {
-  try {
-    await API.delete(`/${_id}`);
-    dispatch(getCoursesPaginationAction(pageNumber, searchQuery));
-    dispatch({ type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE, payload: _id });
-    toastSuccess("Fənn silindi");
-  } catch (error) {
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
-        );
-        await API.delete(`/${_id}`);
-        dispatch(getCoursesPaginationAction(pageNumber, searchQuery));
-        dispatch({
-          type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE,
-          payload: _id,
-        });
-        toastSuccess("Fənn silindi");
-      } catch (error) {
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
+export const deleteCoursesAction =
+  ({ _id, pageNumber, searchQuery }) =>
+  async (dispatch) => {
+    try {
+      await API.delete(`/${_id}`);
+      dispatch(getCoursesPaginationAction(pageNumber, searchQuery));
+      dispatch({ type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE, payload: _id });
+      toastSuccess("Fənn silindi");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          await API.delete(`/${_id}`);
+          dispatch(getCoursesPaginationAction(pageNumber, searchQuery));
+          dispatch({
+            type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE,
+            payload: _id,
+          });
+          toastSuccess("Fənn silindi");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
         }
       }
+      console.log(error);
+      toastError(error?.response?.data.message);
     }
-    console.log(error);
-    toastError(error?.response?.data.message);
-  }
-};
-
+  };
 
 export const confirmCourseChangesAction =
   (_id, courseData) => async (dispatch) => {
@@ -255,14 +255,12 @@ export const confirmCourseChangesAction =
     try {
       const { data } = await API.patch(`/changes/confirm/${_id}`, courseData);
 
-      // dispatch({
-      //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
-      //   payload: data,
-      // });
+      dispatch({ type: COURSES_ALL_ACTIONS_TYPE.UPDATE_COURSE, payload: data });
+
       dispatch({
-        type: COURSES_ALL_ACTIONS_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
+        type: COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
       });
-      toastSuccess("Yeniliklər təstiqləndi");
+      toastSuccess("Yeniliklər təstiqləndi!");
     } catch (error) {
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -281,7 +279,57 @@ export const confirmCourseChangesAction =
           //   payload: data,
           // });
           dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
+            type: COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
+          });
+          toastSuccess("fənn təstiqləndi!");
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+      if (error?.response?.data?.key === "email-already-exist") {
+        toastError("Bu email ilə istifadəçi mövcuddur");
+      }
+      if (error?.response?.data?.key === "has-current-week-lessons") {
+        toastError("Cari həftədə  dərsi olan təlimçi yenilənə bilməz");
+      }
+    } finally {
+      dispatch(modalLoading(false));
+    }
+  };
+
+export const cancelCourseChangesAction =
+  (_id, courseData) => async (dispatch) => {
+    dispatch(modalLoading(true));
+    try {
+      const { data } = await API.patch(`/changes/cancel/${_id}`, courseData);
+
+      dispatch({ type: COURSES_ALL_ACTIONS_TYPE.UPDATE_COURSE, payload: data });
+
+      dispatch({
+        type: COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
+      });
+      toastSuccess("Yeniliklər təstiqləndi!");
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await API.patch(`/${_id}`, courseData);
+          // dispatch({
+          //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
+          //   payload: data,
+          // });
+          dispatch({
+            type: COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
           });
           toastSuccess("fənn təstiqləndi!");
         } catch (error) {

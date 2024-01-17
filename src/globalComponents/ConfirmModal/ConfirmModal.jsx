@@ -11,24 +11,16 @@ import WorkersConfirmModal from "./components/WorkersConfirmModal/WorkersConfirm
 import GroupsConfirmModal from "./components/GroupsConfirmModal/GroupsConfirmModal";
 import TuitionFeeConfirmModal from "./components/TuitionFeeConfirmModal/TuitionFeeConfirmModal";
 import {
+  GROUP_MODAL_ACTION_TYPE,
   COURSES_MODAL_ACTION_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
   TEACHERS_MODAL_ACTION_TYPE,
   TUITION_FEE_MODAL_ACTION_TYPE,
-  LESSON_TABLE_MODAL_ACTION_TYPE
+  LESSON_TABLE_MODAL_ACTION_TYPE,
+  SYLLABUS_MODAL_ACTION_TYPE,
+  CONSULTATION_MODAL_ACTION_TYPE,
 } from "../../redux/actions-type";
 const ConfirmModal = ({ type }) => {
-  // const { coursesModalData } = useSelector((state) => state.coursesModal);
-  // const { tuitionFeeModalData } = useSelector((state) => state.tuitionFeeModal);
-  const { consultationModalData } = useSelector(
-    (state) => state.consultationModal
-  );
-  // const { lessonTableModalData } = useSelector(
-  //   (state) => state.lessonTableModal
-  // );
-  const { syllabusModalData } = useSelector((state) => state.syllabusModal);
-  const { workerModalData } = useSelector((state) => state.workerModal);
-  const { groupModalData } = useSelector((state) => state.groupModal);
   const dispatch = useDispatch();
 
   const getTypeHeader = (type) => {
@@ -40,13 +32,11 @@ const ConfirmModal = ({ type }) => {
       case "consultation":
         return "Təlimçi məlumatlar";
       case "lesson-table":
-        return "Qrup məlumatları";
+        return "Dərs məlumatları";
       case "courses":
         return "Fənn məlumatları";
       case "syllabus":
         return "Sillabus məlumatları";
-      case "workers":
-        return "Əməkdaş məlumatları";
       case "groups":
         return "Qrup məlumatları";
       case "tuitionFee":
@@ -57,7 +47,6 @@ const ConfirmModal = ({ type }) => {
   };
 
   const closeConfirmModal = () => {
-    // console.log(coursesModalData)
     switch (type) {
       case "teacher":
         return dispatch({
@@ -68,21 +57,25 @@ const ConfirmModal = ({ type }) => {
           type: STUDENTS_MODAL_ACTION_TYPE.CLOSE_STUDENT_CONFIRM_MODAL,
         });
       case "consultation":
-        return "Təlimçi məlumatlar";
+        return dispatch({
+          type: CONSULTATION_MODAL_ACTION_TYPE.CLOSE_CONSULTATION_CONFIRM_MODAL,
+        });
       case "lesson-table":
         return dispatch({
           type: LESSON_TABLE_MODAL_ACTION_TYPE.CLOSE_LESSON_CONFIRM_MODAL,
         });
       case "courses":
-        return  dispatch({
+        return dispatch({
           type: COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
         });
       case "syllabus":
-        return "Sillabus məlumatları";
-      case "workers":
-        return "Əməkdaş məlumatları";
+        return dispatch({
+          type: SYLLABUS_MODAL_ACTION_TYPE.CLOSE_SYLLABUS_CONFIRM_MODAL,
+        });
       case "groups":
-        return "Qrup məlumatları";
+        return dispatch({
+          type: GROUP_MODAL_ACTION_TYPE.CLOSE_GROUP_CONFIRM_MODAL,
+        });
       case "tuitionFee":
         return dispatch({
           type: TUITION_FEE_MODAL_ACTION_TYPE.CLOSE_CONFIRM_MODAL,
@@ -105,27 +98,11 @@ const ConfirmModal = ({ type }) => {
         </div>
         {type === "student" && <StudentConfirmModal />}
         {type === "teacher" && <TeacherConfirmModal />}
-        {type === "consultation" && (
-          <ConsultationConfirmModal
-            consultationModalData={consultationModalData}
-          />
-        )}
-        {type === "lesson-table" && (
-          <LessonTableConfirmModal
-          />
-        )}
-        {type === "courses" && (
-          <CoursesConfirmModal  />
-        )}
-        {type === "syllabus" && (
-          <SyllabusConfirmModal syllabusModalData={syllabusModalData} />
-        )}
-        {type === "workers" && (
-          <WorkersConfirmModal workerModalData={workerModalData} />
-        )}
-        {type === "groups" && (
-          <GroupsConfirmModal groupModalData={groupModalData} />
-        )}
+        {type === "consultation" && <ConsultationConfirmModal />}
+        {type === "lesson-table" && <LessonTableConfirmModal />}
+        {type === "courses" && <CoursesConfirmModal />}
+        {type === "syllabus" && <SyllabusConfirmModal />}
+        {type === "groups" && <GroupsConfirmModal />}
         {type === "tuitionFee" && <TuitionFeeConfirmModal />}
       </div>
     </div>

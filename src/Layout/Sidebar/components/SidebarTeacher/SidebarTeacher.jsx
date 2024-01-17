@@ -7,7 +7,7 @@ const SidebarTeacher = ({ closeSidebar }) => {
   const location = useLocation();
   return (
     <ul className="sidebar-nav-list">
-      <li>
+      {/* <li>
         <Link
           onClick={closeSidebar}
           to="/teacher-panel/home"
@@ -18,7 +18,7 @@ const SidebarTeacher = ({ closeSidebar }) => {
           <HomeIcon />
           Home
         </Link>
-      </li>
+      </li> */}
       <li>
         <Link
           onClick={closeSidebar}

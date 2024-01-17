@@ -4,6 +4,7 @@ const initialState = {
   groupModalData: {},
   groupOpenModal: false,
   groupModalLoading: false,
+  openConfirmModal: false,
 };
 
 export const groupModalReducer = (state = initialState, action) => {
@@ -23,6 +24,19 @@ export const groupModalReducer = (state = initialState, action) => {
       return {
         ...state,
         groupModalLoading: action.payload,
+      };
+
+    case GROUP_MODAL_ACTION_TYPE.CLOSE_GROUP_CONFIRM_MODAL:
+      return {
+        ...state,
+        ...initialState,
+      };
+    case GROUP_MODAL_ACTION_TYPE.OPEN_GROUP_CONFIRM_MODAL:
+      return {
+        ...state,
+        groupModalData: action.payload.data,
+        groupOpenModal: action.payload.openModal,
+        openConfirmModal: action.payload.confirmModal,
       };
     default:
       return state;

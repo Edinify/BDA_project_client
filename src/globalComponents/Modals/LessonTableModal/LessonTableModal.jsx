@@ -136,12 +136,7 @@ const LessonTableModal = () => {
 
         {modalData?._id ? (
           <div className="modal-buttons">
-            <Status
-            //  updatedResultData={updatedResultData}
-            //  setUpdatedResultData={setUpdatedResultData}
-            //  futureLesson={futureLesson}
-            //  user={user}
-            />
+            <Status updateModalState={updateModalState} modalData={modalData} />
 
             <SubmitBtn
               formik={formik}

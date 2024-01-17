@@ -14,15 +14,15 @@ import LessonTablePage from "../Pages/LessonTablePage/LessonTablePage";
 import { useSelector } from "react-redux";
 import Loading from "../globalComponents/Loading/Loading";
 
-const WorkersPanelRoute = () => {
-  const { user } = useSelector((state) => state.user);
+const WorkersPanelRoute = (user) => {
+  // const { user } = useSelector((state) => state.user);
   const profiles = user?.profiles?.reduce(
     (profilesObj, item) => ({ ...profilesObj, [item.profile]: true }),
     {}
   );
 
-  // console.log(user, "user");
-  // console.log(profiles, "profiles in worker roter");
+  console.log(user, "user");
+  console.log(profiles, "profiles in worker roter");
 
   return (
     <>
@@ -61,8 +61,6 @@ const WorkersPanelRoute = () => {
           <Route path="/groups/waiting" element={<GroupsPage />} />
         </>
       )}
-
-      {profiles?.workers && <Route path="/workers" element={<WorkersPage />} />}
 
       {profiles?.career && <Route path="/career" element={<CareerPage />} />}
 
