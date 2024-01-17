@@ -91,6 +91,12 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
+        <NavLink to="/sales" onClick={closeSidebar}>
+          <ExpensesIcon />
+          Satış
+        </NavLink>
+      </li>
+      <li>
         <NavLink to="/career" onClick={closeSidebar}>
           <CareerIcon />
           Karyera

@@ -14,8 +14,8 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
     { key: "Qrup", value: data.group.name },
     { key: "Ixtisas", value: data.group.course.name },
     // { key: "Tələbənin adı", value: data.fullName },
-    { key: "Portfolio linki", value: "" },
-    { key: "CV linki", value: "" },
+    { key: "Portfolio linki", value: data?.portfolioLink || "" },
+    { key: "CV linki", value: data?.cvLink || "" },
     { key: "Mobil Nömrə", value: data.phone },
     {
       key: "Müqavilə başlama tarixi",
@@ -47,7 +47,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
       lastPage > 1 ? (careerData.length > 1 ? lastPage : lastPage - 1) : 1;
     const _id = data._id;
     const searchQuery = careerSearchValues;
-    dispatch(deleteCareerAction({ _id, pageNumber, searchQuery }));
+    // dispatch(deleteCareerAction({ _id, pageNumber, searchQuery }));
   };
   const openMoreModal = () => {
     updateItem("more");
@@ -58,6 +58,12 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
     <>
       {mode === "desktop" ? (
         <tr>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">{data.fullName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>
@@ -73,19 +79,15 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone">{data.fullName}</div>
+              <div className="table-scroll-text phone">
+                {data.portfolioLink}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone"></div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td>
-            <div className="td-con">
-              <div className="table-scroll-text phone"></div>
+              <div className="table-scroll-text phone">{data.cvLink}</div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -95,12 +97,17 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td>
+          <td
+            style={
+              data.status
+                ? { backgroundColor: "#d2c3fe" }
+                : { backgroundColor: "#d4ffbf" }
+            }
+          >
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
                 {data.status ? "Davam edir" : "Məzun"}
               </div>
-              <div className="right-fade"></div>
             </div>
           </td>
           <td>

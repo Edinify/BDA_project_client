@@ -9,7 +9,13 @@ import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 
 const SubmitBtn = ({ formik, modalData, funcType }) => {
   const dispatch = useDispatch();
-  const { careerModalLoading: modalLoading } = useSelector((state) => state.careerModal);
+  const { careerModalLoading: modalLoading } = useSelector(
+    (state) => state.careerModal
+  );
+
+  const { lastPage } = useSelector((state) => state.careerPagination);
+  const { careerSearchValues } = useSelector((state) => state.searchValues);
+
   const [isDisabled, setIsDisabled] = useState(() => {
     if (funcType === "update") {
       return false;
@@ -18,36 +24,23 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
     }
   });
   const dataCreate = () => {
-    dispatch({
-      type: SEARCH_VALUES_ACTION_TYPES.CAREER_SEARCH_VALUE,
-      payload: "",
-    });
-    if (modalData?._id) {
-      dispatch(updateCareerAction(modalData?._id, modalData));
-    } else {
-      dispatch({
-        type: SEARCH_VALUES_ACTION_TYPES.CAREER_SEARCH_VALUE,
-        payload: "",
-      });
-      dispatch(
-        createCareerAction({
-          ...modalData,
-        })
-      );
-    }
+    dispatch(updateCareerAction(modalData, lastPage, careerSearchValues));
   };
 
   useEffect(() => {
     setIsDisabled(() => {
       if (funcType === "update") {
         if (Object.keys(formik.errors).length === 0 && modalData?.fullName) {
+          console.log(1);
           return false;
         } else if (
           Object.keys(formik.errors).length === 1 &&
           formik.errors.password === "Bu xana tələb olunur."
         ) {
+          console.log(2);
           return false;
         } else {
+          console.log(3);
           return true;
         }
       } else {
@@ -63,10 +56,7 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
   return (
     <div>
       <div className="create-update-modal-btn">
-        <button
-          disabled={isDisabled || modalLoading}
-          onClick={dataCreate}
-        >
+        <button disabled={isDisabled || modalLoading} onClick={dataCreate}>
           {modalLoading ? (
             <LoadingBtn />
           ) : funcType === "update" ? (

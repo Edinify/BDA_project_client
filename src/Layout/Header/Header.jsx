@@ -34,8 +34,10 @@ export const Header = () => {
         return "Konsultasiya";
       case "/syllabus":
         return "Sillabus";
+      case "/sales":
+        return "Satış";
       case "/":
-        case "/lessonTable":
+      case "/lessonTable":
         return "Dərs cədvəli";
       default:
         return "";

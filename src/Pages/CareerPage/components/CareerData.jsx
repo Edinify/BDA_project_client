@@ -12,14 +12,14 @@ const CareerData = ({ pageNum, getPageNumber }) => {
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const tableHead = [
+    "Tələbənin adı",
     "Qrup",
     "Ixtisas",
-    "Tələbənin adı",
     "Portfolio linki",
     "CV linki",
     "Mobil Nömrə",
     "Status",
-    ""
+    "",
   ];
 
   useEffect(() => {
