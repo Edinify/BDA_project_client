@@ -19,9 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set environment variables
-        run: |
-        process.env.CI=false
 
       - name: Install Dependencies
         run: npm --force install
