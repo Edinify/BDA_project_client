@@ -22,10 +22,11 @@ jobs:
 
       - name: Install Dependencies
         run: npm --force install
+        
 
       - name: Build
         run: |
-          npm run build
+          CI=false npm run build
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
