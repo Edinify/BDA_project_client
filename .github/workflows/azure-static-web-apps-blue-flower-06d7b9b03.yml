@@ -21,7 +21,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-        echo "process.env.CI=false" >> $GITHUB_ENV
+        process.env.CI=false
 
       - name: Install Dependencies
         run: npm --force install
