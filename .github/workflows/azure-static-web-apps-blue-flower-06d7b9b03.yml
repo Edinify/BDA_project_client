@@ -19,6 +19,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set environment variables
+        run: |
+        echo "process.env.CI=false" >> $GITHUB_ENV
+
       - name: Install Dependencies
         run: npm --force install
 
