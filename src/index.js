@@ -20,6 +20,9 @@ import "./assets/css/pages/salaryPage.css";
 import "./assets/css/pages/stimulationPage.css";
 
 
+
+
+
 import App from "./App";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
