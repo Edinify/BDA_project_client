@@ -6,9 +6,14 @@ import {
 } from "../../../../../redux/actions/teachersActions";
 import { SEARCH_VALUES_ACTION_TYPES } from "../../../../../redux/actions-type";
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
+import { useLocation } from "react-router-dom";
 
 const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  console.log(location.pathname, "locatiooooooooooooooooooooooooooonnn");
+
   const { teachersModalLoading } = useSelector((state) => state.teachersModal);
   const [isDisabled, setIsDisabled] = useState(() => {
     if (funcType === "update") {
@@ -37,7 +42,12 @@ const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
       const courses = modalData?.courses.map((item) => {
         return item._id;
       });
-      dispatch(createTeacherAction({ ...modalData, courses: courses }));
+      dispatch(
+        createTeacherAction(
+          { ...modalData, courses: courses },
+          location.pathname
+        )
+      );
     }
   };
 

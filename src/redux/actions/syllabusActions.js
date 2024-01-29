@@ -214,6 +214,11 @@ export const createSyllabusAction = (syllabusData) => async (dispatch) => {
     toastSuccess("Yeni sillabus yaradıldı");
   } catch (error) {
     const originalRequest = error.config;
+
+    if (error?.response?.data?.key === "syllabus-already-exists") {
+      toastError("Bu nömrəli mövzu artıq mövcuddur");
+    }
+
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
@@ -261,6 +266,11 @@ export const updateSyllabusAction = (_id, syllabusData) => async (dispatch) => {
     toastSuccess("İşçi yeniləndi");
   } catch (error) {
     const originalRequest = error.config;
+
+    if (error?.response?.data?.key === "syllabus-already-exists") {
+      toastError("Bu nömrəli mövzu artıq mövcuddur");
+    }
+
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {

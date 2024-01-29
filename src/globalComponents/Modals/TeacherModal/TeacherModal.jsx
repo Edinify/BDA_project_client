@@ -113,7 +113,7 @@ const TeacherModal = () => {
               <FormControlLabel
                 value={"mentor"}
                 control={<Radio checked={modalData?.role === "mentor"} />}
-                label="Mentor"
+                label="Tyutor"
                 sx={{
                   "& .MuiSvgIcon-root": {
                     fontSize: 28,

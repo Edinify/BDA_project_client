@@ -99,14 +99,14 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           </td>
           <td
             style={
-              data.status
+              !data.status
                 ? { backgroundColor: "#d2c3fe" }
                 : { backgroundColor: "#d4ffbf" }
             }
           >
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {data.status ? "Davam edir" : "Məzun"}
+                {!data.status ? "Davam edir" : "Məzun"}
               </div>
             </div>
           </td>

@@ -1,5 +1,5 @@
 .finance-page .finance-date-filter-con {
-  display: inline-block;
+  display: flex;
   position: relative;
   margin-bottom: 24px;
 }
@@ -63,7 +63,11 @@
 }
 
 @media screen and (max-width: 690px) {
-  .finance-page .finance-date-filter-co :where(.css-dev-only-do-not-override-1jr9qlj).ant-picker-dropdown .ant-picker-panel-container .ant-picker-panels {
+  .finance-page
+    .finance-date-filter-co
+    :where(.css-dev-only-do-not-override-1jr9qlj).ant-picker-dropdown
+    .ant-picker-panel-container
+    .ant-picker-panels {
     flex-direction: column !important;
   }
 }
@@ -85,7 +89,6 @@
     display: flex;
   }
 }
-
 
 @media screen and (max-width: 400px) {
   .finance-page .finance-date-filter-con .date-filter .apply-btn {

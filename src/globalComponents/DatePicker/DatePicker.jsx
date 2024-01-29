@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import DatePicker from "react-datepicker";
 import { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import az from 'date-fns/locale/az'; 
+import az from "date-fns/locale/az";
 import "./datePicker.css";
 import { ReactComponent as CalendarIcon } from "../../assets/icons/calendar.svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import moment from "moment";
 import { useCustomHook } from "../GlobalFunctions/globalFunctions";
 
 export const DatePick = () => {
-  registerLocale('az', az);
+  registerLocale("az", az);
   const dispatch = useDispatch();
   const { startWeek, endWeek } = useCustomHook();
   const [selectedStartDate, setSelectedStartDate] = useState(null);
@@ -20,7 +20,6 @@ export const DatePick = () => {
   const { endDate } = useSelector((state) => state.datepicker);
   const startDateRef = useRef(null);
   const endDateRef = useRef(null);
-
 
   const handleStartDateChange = (date) => {
     if (date) {
@@ -86,7 +85,7 @@ export const DatePick = () => {
             onChange={handleStartDateChange}
             dateFormat="dd/MM/yyyy"
             placeholderText="dd/mm/yyyy"
-            value={startDate &&  moment(startDate).format("DD/ MM/ YYYY")}
+            value={startDate && moment(startDate).format("DD/ MM/ YYYY")}
           />
           <h4>-dan</h4>
         </div>

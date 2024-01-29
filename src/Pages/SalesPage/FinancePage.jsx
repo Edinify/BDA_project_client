@@ -6,36 +6,34 @@ import FinanceDataHead from "./components/FinanceDataHead/FinanceDataHead";
 import FinanceData from "./components/FinanceData/FinanceData";
 import { useFinanceCustomHook } from "./utils";
 import { useSelector } from "react-redux";
+import LeadData from "./components/FinanceData/leadData/LeadData";
+import { CoursesDropdown } from "../../globalComponents/GlobalHead/CoursesDropdown/CoursesDropdown";
 
 const FinancePage = () => {
-  const { expensesActivateGet } = useSelector((state) => state.expensesModal);
-  const { incomesActivateGet } = useSelector((state) => state.incomesModal);
-  const { getAllDefaultData, getFinanceDataAfterUpdate, getFinanceDataAfterCreate } = useFinanceCustomHook()
+  const { leadActivateGet } = useSelector((state) => state.leadModal);
+  const { courseId } = useSelector((state) => state.salesData);
+  const {
+    getAllDefaultData,
+    getFinanceDataAfterUpdate,
+    getFinanceDataAfterCreate,
+  } = useFinanceCustomHook();
 
   useEffect(() => {
-    if(expensesActivateGet === 'update') {
-      getFinanceDataAfterUpdate()
-    } else if (expensesActivateGet === 'create') {
-      getFinanceDataAfterCreate('expenses')
-    } else if(expensesActivateGet === 'delete') {
-      getFinanceDataAfterUpdate()
+    console.log(leadActivateGet, "lead activate get");
+    if (leadActivateGet === "update" || leadActivateGet === "delete") {
+      getFinanceDataAfterUpdate();
+    } else if (leadActivateGet === "create") {
+      getFinanceDataAfterCreate();
     }
-  }, [expensesActivateGet])
+  }, [leadActivateGet]);
 
   useEffect(() => {
-    if(incomesActivateGet === 'update') {
-      getFinanceDataAfterUpdate()
-    } else if (incomesActivateGet === 'create') {
-      getFinanceDataAfterCreate('incomes')
-    } else if(incomesActivateGet === 'delete') {
-      getFinanceDataAfterUpdate()
-    }
-  }, [incomesActivateGet])
+    getFinanceDataAfterUpdate();
+  }, [courseId]);
 
   useEffect(() => {
-    getAllDefaultData()
-  }, [])
-
+    getAllDefaultData();
+  }, []);
 
   return (
     <div className="finance-page">
@@ -52,7 +50,7 @@ const FinancePage = () => {
 
       <div className="finance-bottom">
         <FinanceDataHead />
-        <FinanceData />
+        <LeadData />
       </div>
     </div>
   );

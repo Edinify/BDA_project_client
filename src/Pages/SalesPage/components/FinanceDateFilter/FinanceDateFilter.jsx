@@ -6,6 +6,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import DateRangeModal from "../../../../globalComponents/Modals/DateRangeModal/DateRangeModal";
 import { useFinanceCustomHook } from "../../utils";
+import { CoursesDropdown } from "../CoursesDropdown/CoursesDropdown";
+
 
 const FinanceDateFilter = () => {
   const dispatch = useDispatch();
@@ -101,12 +103,14 @@ const FinanceDateFilter = () => {
             ))}
           </Swiper>
         </div>
+        <CoursesDropdown />
       </div>
 
       {openCalendar && (
         <DateRangeModal
           applyFilter={applyFilter}
           setOpenCalendar={setOpenCalendar}
+          type="months"
         />
       )}
     </>

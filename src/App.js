@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Routing } from "./routing";
 import TeacherModal from "./globalComponents/Modals/TeacherModal/TeacherModal";
 import { CourseModal } from "./globalComponents/Modals/CourseModal/CourseModal";
+import { LeadModal } from "./globalComponents/Modals/LeadModal/LeadModal";
 import { StudentModal } from "./globalComponents/Modals/StudentModal/StudentModal";
 import { TuitionFeeModal } from "./globalComponents/Modals/TuitionFeeModal/TuitionFeeModal";
 import { ToastContainer } from "react-toastify";
@@ -32,6 +33,7 @@ function App() {
   );
   const { syllabusOpenModal } = useSelector((state) => state.syllabusModal);
   const { careerOpenModal } = useSelector((state) => state.careerModal);
+  const { leadOpenModal } = useSelector((state) => state.leadModal);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -61,6 +63,8 @@ function App() {
   useEffect(() => {
     dispatch(userAction());
   }, []);
+
+  console.log(leadOpenModal, "lead open modal");
   return (
     <div className="App">
       <Routing />
@@ -74,6 +78,7 @@ function App() {
       {careerOpenModal && <CareerModal />}
       {lessonTableOpenModal && <LessonTableModal />}
       {groupOpenModal && <GroupModal />}
+      {leadOpenModal && <LeadModal />}
       {/* <LessonModal /> */}
       <ToastContainer />
     </div>

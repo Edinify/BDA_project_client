@@ -183,7 +183,11 @@ export const getTeachersPaginationAction =
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
-      // console.log(role, "teacher role");
+      console.log(pageNumber, "pageNumber");
+      console.log(searchQuery, "searchQuery");
+      console.log(status, "status");
+      console.log(role, "role");
+
       const { data } = await API.get(
         `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&role=${role}`
       );
@@ -234,52 +238,79 @@ export const getTeachersPaginationAction =
     }
   };
 
-export const createTeacherAction = (teacherData) => async (dispatch) => {
-  dispatch(modalLoading(true));
-  try {
-    const { data } = await API.post("/", teacherData);
-    dispatch(getTeachersPaginationAction(data.lastPage, "", "all"));
-    dispatch({
-      type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
-      payload: false,
-    });
-    // dispatch({ type: TEACHER_ALL_ACTIONS_TYPE.CREATE_TEACHER, payload: data });
-    toastSuccess("Yeni təlimçi yaradıldı");
-  } catch (error) {
-    const originalRequest = error.config;
-    if (error?.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const token = await refreshApi.get("/");
-        localStorage.setItem(
-          "auth",
-          JSON.stringify({
-            AccessToken: token.data.accesstoken,
-          })
+export const createTeacherAction =
+  (teacherData, pathName) => async (dispatch) => {
+    dispatch(modalLoading(true));
+
+    console.log(pathName, "path name");
+    try {
+      const { data } = await API.post("/", teacherData);
+
+      if (pathName === "/teachers" && data.teacher.role === "teacher") {
+        dispatch(
+          getTeachersPaginationAction(
+            data.lastPage,
+            "",
+            "all",
+            data.teacher.role
+          )
         );
-        const { data } = await REGISTERAPI.post("/teacher/sign", teacherData);
-        dispatch(getTeachersPaginationAction(data.lastPage, "", "all"));
-        dispatch({
-          type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
-          payload: false,
-        });
-        toastSuccess("Yeni təlimçi yaradıldı");
-      } catch (error) {
-        console.log(error);
-        if (error?.response?.status === 401) {
-          return dispatch(logoutAction());
+      } else if (pathName !== "/teachers" && data.teacher.role === "mentor") {
+        dispatch(
+          getTeachersPaginationAction(
+            data.lastPage,
+            "",
+            "all",
+            data.teacher.role
+          )
+        );
+      }
+
+      dispatch({
+        type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
+        payload: false,
+      });
+
+      if (data.teacher.role === "teacher") {
+        toastSuccess("Yeni müəllim yaradıldı");
+      } else if (data.teacher.role === "mentor") {
+        toastSuccess("Yeni tyutor yaradıldı");
+      }
+    } catch (error) {
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+          const { data } = await REGISTERAPI.post("/teacher/sign", teacherData);
+          dispatch(getTeachersPaginationAction(data.lastPage, "", "all"));
+          dispatch({
+            type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
+            payload: false,
+          });
+          toastSuccess("Yeni təlimçi yaradıldı");
+        } catch (error) {
+          console.log(error);
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
         }
       }
-    }
 
-    if (error?.response?.data?.key === "email-already-exist") {
-      toastError("Bu email ilə istifadəçi mövcuddur");
+      if (error?.response?.data?.key === "email-already-exist") {
+        toastError("Bu email ilə istifadəçi mövcuddur");
+      }
+      console.log(error);
+    } finally {
+      dispatch(modalLoading(false));
     }
-    console.log(error);
-  } finally {
-    dispatch(modalLoading(false));
-  }
-};
+  };
 
 export const updateTeacherAction = (_id, teacherData) => async (dispatch) => {
   dispatch(modalLoading(true));

@@ -1,11 +1,16 @@
 import axios from "axios";
-import { FINANCE_ACTIONS_TYPE } from "../actions-type";
+import {
+  FINANCE_ACTIONS_TYPE,
+  LEAD_ACTION_TYPE,
+  LEAD_MODAL_ACTION_TYPE,
+  SALES_ACTIONS_TYPE,
+} from "../actions-type";
 import { apiRoot } from "../../apiRoot";
 import { logoutAction } from "./auth";
 
 const API = axios.create({
-  baseURL: `${apiRoot}/finance`,
-  withCredentials:true
+  baseURL: `${apiRoot}/sales`,
+  withCredentials: true,
 });
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("auth")) {
@@ -19,22 +24,35 @@ API.interceptors.request.use((req) => {
 
 const refreshApi = axios.create({
   baseURL: `${apiRoot}/user/auth/refresh_token`,
-  withCredentials:true
+  withCredentials: true,
 });
 
-export const getFinanceChartAction =
-  (startDate, endDate, monthCount) => async (dispatch) => {
-    console.log('tttttttttttttttttt')
+const pageLoading = (loadingValue) => ({
+  type: LEAD_ACTION_TYPE.LEAD_LOADING,
+  payload: loadingValue,
+});
+
+export const getSalesChartAction =
+  (startDate, endDate, monthCount, courseId = "") =>
+  async (dispatch) => {
     try {
+      console.log("sssssssssssssssssssssssssssss");
+      dispatch(pageLoading(true));
       const { data } = await API.get(
         `/chart/?startDate=${startDate || ""}&endDate=${
           endDate || ""
-        }&monthCount=${monthCount}`
+        }&monthCount=${monthCount}&courseId=${courseId}`
       );
       dispatch({
-        type: FINANCE_ACTIONS_TYPE.GET_FINANCE_CHART,
+        type: SALES_ACTIONS_TYPE.GET_SALES_CHART,
         payload: data,
       });
+
+      dispatch({
+        type: LEAD_MODAL_ACTION_TYPE.LEAD_MODAL_ACTIVATE_GET,
+        payload: false,
+      });
+      dispatch(pageLoading(false));
     } catch (error) {
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {

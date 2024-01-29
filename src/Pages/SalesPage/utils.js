@@ -1,6 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteIncomesAction, getIncomePaginationAction } from "../../redux/actions/incomeActions";
-import { deleteExpensesAction, getExpensesPaginationAction } from "../../redux/actions/expensesAction";
+import {
+  deleteIncomesAction,
+  getIncomePaginationAction,
+} from "../../redux/actions/incomeActions";
+import {
+  deleteExpensesAction,
+  getExpensesPaginationAction,
+} from "../../redux/actions/expensesAction";
 import {
   getFinanceChartAction,
   getFinanceDataAction,
@@ -11,210 +17,51 @@ import {
   FINANCE_FILTER_ACTION_TYPE,
   INCOMES_MODAL_ACTION_TYPE,
 } from "../../redux/actions-type";
+import { getSalesChartAction } from "../../redux/actions/salesAction";
+import {
+  deleteLeadAction,
+  getLeadPaginationAction,
+} from "../../redux/actions/leadActions";
 
 export const useFinanceCustomHook = () => {
   const dispatch = useDispatch();
-  const {
-    financeMonthsFilter,
-    financeChooseDate,
-    financeIncomeCategory,
-    financeIncomeSorting,
-    financeExpenseCategory,
-    financeExpenseSorting,
-  } = useSelector((state) => state.financeDateFilter);
-  const { expensesData, lastPage: expensesPageNum } = useSelector(
-    (state) => state.expensesData
+  const { financeMonthsFilter, financeChooseDate } = useSelector(
+    (state) => state.financeDateFilter
   );
-  const {
-    incomes,
-    lastPage: incomesPageNum,
-  } = useSelector((state) => state.incomes);
+
+  const { courseId } = useSelector((state) => state.salesData);
+
+  const { leads, lastPage: leadPageNum } = useSelector((state) => state.leads);
+
   const getAllDefaultData = () => {
-    dispatch(getFinanceChartAction("", "", 3));
-    dispatch(getFinanceDataAction("", "", 1));
-    dispatch(getIncomePaginationAction(1, "", "", 1, "", "oldest"));
-    dispatch(getExpensesPaginationAction(1, "", "", 1, "", "oldest"));
+    dispatch(getSalesChartAction("", "", 1));
+    dispatch(getLeadPaginationAction(1, "", "", 1));
   };
+
   const getAllDataByMonth = (monthCount) => {
-    if (monthCount === 1) {
-      dispatch(getFinanceChartAction("", "", 3));
-    } else {
-      dispatch(getFinanceChartAction("", "", monthCount));
-    }
-
-    dispatch(getFinanceDataAction("", "", monthCount));
-
-    dispatch(
-      getIncomePaginationAction(
-        1,
-        "",
-        "",
-        monthCount ? monthCount : 1, //month
-        financeIncomeCategory
-          ? financeIncomeCategory !== "all"
-            ? financeIncomeCategory.key
-            : ""
-          : "",
-        financeIncomeSorting ? financeIncomeSorting.key : "oldest"
-      )
-    );
-
-    dispatch(
-      getExpensesPaginationAction(
-        1,
-        "",
-        "",
-        monthCount ? monthCount : 1, //month
-        financeExpenseCategory
-          ? financeExpenseCategory !== "all"
-            ? financeExpenseCategory.key
-            : ""
-          : "",
-        financeExpenseSorting ? financeExpenseSorting.key : "oldest"
-      )
-    );
+    dispatch(getSalesChartAction("", "", monthCount));
+    dispatch(getLeadPaginationAction(1, "", "", monthCount));
   };
+
   const getAllDataByDateRange = (startDate, endDate) => {
     const start = moment(startDate).format("YYYY-MM");
     const end = moment(endDate).format("YYYY-MM");
 
-    dispatch(getFinanceChartAction(start, end, ""));
-    dispatch(getFinanceDataAction(start, end, ""));
-
-    dispatch(
-      getIncomePaginationAction(
-        1,
-        startDate,
-        endDate,
-        "", //month
-        financeIncomeCategory
-          ? financeIncomeCategory !== "all"
-            ? financeIncomeCategory.key
-            : ""
-          : "",
-        financeIncomeSorting ? financeIncomeSorting.key : "oldest"
-      )
-    );
-
-    dispatch(
-      getExpensesPaginationAction(
-        1,
-        startDate,
-        endDate,
-        "", //month
-        financeExpenseCategory
-          ? financeExpenseCategory !== "all"
-            ? financeExpenseCategory.key
-            : ""
-          : "",
-        financeExpenseSorting ? financeExpenseSorting.key : "oldest"
-      )
-    );
-  };
-  const getFilteredIncomes = (sorting, category) => {
-    if (financeChooseDate.startDate && financeChooseDate.endDate) {
-      dispatch(
-        getIncomePaginationAction(
-          1,
-          financeChooseDate.startDate,
-          financeChooseDate.endDate,
-          "", //month
-          category ? (category !== "all" ? category : "") : "",
-          sorting ? sorting : "oldest"
-        )
-      );
-    } else {
-      dispatch(
-        getIncomePaginationAction(
-          1,
-          "",
-          "",
-          financeMonthsFilter ? financeMonthsFilter : 1, //month
-          category ? (category !== "all" ? category : "") : "",
-          sorting ? sorting : "oldest"
-        )
-      );
-    }
-  };
-  const getFilteredExpenses = (sorting, category) => {
-    if (financeChooseDate.startDate && financeChooseDate.endDate) {
-      dispatch(
-        getExpensesPaginationAction(
-          1,
-          financeChooseDate.startDate,
-          financeChooseDate.endDate,
-          "", //month
-          category ? (category !== "all" ? category : "") : "",
-          sorting ? sorting : "oldest"
-        )
-      );
-    } else {
-      dispatch(
-        getExpensesPaginationAction(
-          1,
-          "",
-          "",
-          financeMonthsFilter ? financeMonthsFilter : 1, //month
-          category ? (category !== "all" ? category : "") : "",
-          sorting ? sorting : "oldest"
-        )
-      );
-    }
+    dispatch(getSalesChartAction(start, end, ""));
+    dispatch(getLeadPaginationAction(1, start, end, ""));
   };
 
   const getFinanceDataAfterUpdate = () => {
-    dispatch({
-      type: EXPENSES_MODAL_ACTION_TYPE.EXPENSES_MODAL_ACTIVATE_GET,
-      payload: false,
-    });
-    dispatch({
-      type: INCOMES_MODAL_ACTION_TYPE.INCOMES_MODAL_ACTIVATE_GET,
-      payload: false,
-    });
     if (financeChooseDate.startDate && financeChooseDate.endDate) {
       const start = moment(financeChooseDate.startDate).format("YYYY-MM");
       const end = moment(financeChooseDate.endDate).format("YYYY-MM");
-      dispatch(getFinanceChartAction(start, end, ""));
-      dispatch(getFinanceDataAction(start, end, ""));
+      dispatch(getSalesChartAction(start, end, "", courseId));
     } else {
-      if (financeMonthsFilter === 1) {
-        dispatch(getFinanceChartAction("", "", 3));
-      } else {
-        dispatch(
-          getFinanceChartAction(
-            "",
-            "",
-            financeMonthsFilter ? financeMonthsFilter : 3
-          )
-        );
-      }
-      dispatch(
-        getFinanceDataAction(
-          "",
-          "",
-          financeMonthsFilter ? financeMonthsFilter : 1
-        )
-      );
+      dispatch(getSalesChartAction("", "", financeMonthsFilter || 1, courseId));
     }
   };
-  const getFinanceDataAfterCreate = (dataType) => {
-    dispatch({
-      type: EXPENSES_MODAL_ACTION_TYPE.EXPENSES_MODAL_ACTIVATE_GET,
-      payload: false,
-    });
-    dispatch({
-      type: INCOMES_MODAL_ACTION_TYPE.INCOMES_MODAL_ACTIVATE_GET,
-      payload: false,
-    });
-    if (dataType === "expenses") {
-      dispatch(getIncomePaginationAction(1, "", "", 1, "", "oldest"));
-    } else if (dataType === "incomes") {
-      dispatch(getExpensesPaginationAction(1, "", "", 1, "", "oldest"));
-    }
 
-    dispatch({
-      type: FINANCE_FILTER_ACTION_TYPE.ClEAR_CATEGORY_SORT,
-    });
+  const getFinanceDataAfterCreate = () => {
     dispatch({
       type: FINANCE_FILTER_ACTION_TYPE.GET_MONTHS_FILTER,
       payload: { financeMonthsFilter: 1 },
@@ -226,81 +73,32 @@ export const useFinanceCustomHook = () => {
         name: "Cari ay",
       },
     });
-    dispatch(getFinanceChartAction("", "", 3));
-    dispatch(getFinanceDataAction("", "", 1));
-  };
-
-  const deleteExpense = (_id) => {
-    const pageNum = expensesPageNum > 1 ? (expensesData.length > 1 ? expensesPageNum : expensesPageNum - 1) : 1;
-
-    if (financeChooseDate.startDate && financeChooseDate.endDate) {
-      dispatch(
-        deleteExpensesAction(
-          _id,
-          pageNum,
-          financeChooseDate.startDate,
-          financeChooseDate.endDate,
-          "", //month
-          financeExpenseCategory
-            ? financeExpenseCategory !== "all"
-              ? financeExpenseCategory.key
-              : ""
-            : "",
-          financeExpenseSorting ? financeExpenseSorting.key : "oldest"
-        )
-      );
-    } else {
-      dispatch(
-        deleteExpensesAction(
-          _id,
-          pageNum,
-          "",
-          "",
-          financeMonthsFilter ? financeMonthsFilter : 1, //month
-          financeExpenseCategory
-            ? financeExpenseCategory !== "all"
-              ? financeExpenseCategory.key
-              : ""
-            : "",
-          financeExpenseSorting ? financeExpenseSorting.key : "oldest"
-        )
-      );
-    }
+    dispatch(getSalesChartAction("", "", 1, courseId));
   };
 
   const deleteIncome = (_id) => {
-    const pageNum = incomesPageNum > 1 ? (incomes.length > 1 ? incomesPageNum : incomesPageNum - 1) : 1;
+    const pageNum =
+      (leadPageNum > 1 && (leads.length > 1 ? leadPageNum : leadPageNum - 1)) ||
+      1;
 
     if (financeChooseDate.startDate && financeChooseDate.endDate) {
       dispatch(
-        deleteIncomesAction(
+        deleteLeadAction(
           _id,
           pageNum,
           financeChooseDate.startDate,
           financeChooseDate.endDate,
-          "", //month
-          financeIncomeCategory
-            ? financeIncomeCategory !== "all"
-              ? financeIncomeCategory.key
-              : ""
-            : "",
-          financeIncomeSorting ? financeIncomeSorting.key : "oldest"
+          "" //month,
         )
       );
     } else {
       dispatch(
-        deleteIncomesAction(
+        deleteLeadAction(
           _id,
           pageNum,
           "",
           "",
-          financeMonthsFilter ? financeMonthsFilter : 1, //month
-          financeIncomeCategory
-            ? financeIncomeCategory !== "all"
-              ? financeIncomeCategory.key
-              : ""
-            : "",
-          financeIncomeSorting ? financeIncomeSorting.key : "oldest"
+          financeMonthsFilter ? financeMonthsFilter : 1 //month,
         )
       );
     }
@@ -310,11 +108,8 @@ export const useFinanceCustomHook = () => {
     getAllDefaultData,
     getAllDataByMonth,
     getAllDataByDateRange,
-    getFilteredIncomes,
-    getFilteredExpenses,
     getFinanceDataAfterCreate,
     getFinanceDataAfterUpdate,
-    deleteExpense,
-    deleteIncome
+    deleteIncome,
   };
 };

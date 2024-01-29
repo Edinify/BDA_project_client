@@ -1,14 +1,13 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import IncomesData from "./IncomesData/IncomesData";
-import ExpensesData from "./ExpensesData/ExpensesData";
+import LeadData from "./leadData/LeadData";
 
 const FinanceData = () => {
   const location = useLocation();
 
   return (
     <div>
-      <IncomesData />
+      <LeadData />
     </div>
   );
 };
