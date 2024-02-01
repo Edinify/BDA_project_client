@@ -12,6 +12,7 @@ const initialState = {
   tuitionFeeSearchValues: "",
   consultationSearchValues: "",
   coursesSearchValues: "",
+  eventsSearchValues: "",
   salariesSearchValues: "",
   bonusSearchValues: "",
   fineSearchValues: "",
@@ -70,6 +71,11 @@ export const searchValuesReducer = (state = initialState, action) => {
       return {
         ...state,
         coursesSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.EVENTS_SEARCH_VALUE:
+      return {
+        ...state,
+        eventsSearchValues: action.payload,
       };
     case SEARCH_VALUES_ACTION_TYPES.SALARIES_SEARCH_VALUE:
       return {

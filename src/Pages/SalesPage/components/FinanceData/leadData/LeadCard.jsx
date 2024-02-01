@@ -50,6 +50,7 @@ const LeadCard = ({ data, mode, cellNumber }) => {
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
+              profil={"sales"}
             />
           </td>
         </tr>
@@ -75,6 +76,7 @@ const LeadCard = ({ data, mode, cellNumber }) => {
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
+              profil={"sales"}
             />
           </div>
         </div>

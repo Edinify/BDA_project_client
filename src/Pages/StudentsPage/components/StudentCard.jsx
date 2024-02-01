@@ -154,10 +154,9 @@ const StudentCard = ({
                 state={student}
                 setOpenConfirmModal={setOpenConfirmModal}
                 openConfirmModal={openConfirmModal}
+                openMoreModal={openMoreModal}
+                profil={"students"}
               />
-              <div className="more-content">
-                <span onClick={openMoreModal}>Ətraflı</span>
-              </div>
             </div>
           )}
         </div>

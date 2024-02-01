@@ -14,6 +14,7 @@ import { ReactComponent as FeedBacksIcon } from "../../../../assets/icons/sideba
 import { ReactComponent as AdminIcon } from "../../../../assets/icons/sidebar/users-01.svg";
 import { ReactComponent as GroupIcon } from "../../../../assets/icons/sidebar/group-svgrepo-com.svg";
 import { ReactComponent as CareerIcon } from "../../../../assets/icons/sidebar/work-case-filled-svgrepo-com (1).svg";
+import { ReactComponent as EventsIcon } from "../../../../assets/icons/sidebar/events.svg";
 import { ReactComponent as SyllabusIcon } from "../../../../assets/icons/sidebar/syllabus-svgrepo-com.svg";
 
 const SidebarSuperAdmin = ({ closeSidebar }) => {
@@ -101,6 +102,12 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         <NavLink to="/career" onClick={closeSidebar}>
           <CareerIcon />
           Karyera
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/event" onClick={closeSidebar}>
+          <EventsIcon />
+          Tədbirlər
         </NavLink>
       </li>
     </ul>

@@ -128,11 +128,9 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
                 data={data}
                 state={teacher}
                 openConfirmModal={openConfirmModal}
+                openMoreModal={openMoreModal}
                 profil={"teachers"}
               />
-              <div className="more-content">
-                <span onClick={openMoreModal}>Ətraflı</span>
-              </div>
             </div>
           )}
         </div>

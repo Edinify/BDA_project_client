@@ -52,11 +52,14 @@ import mentorsReducer from "./reducers/mentorsReducer";
 import { salesReducer } from "./reducers/salesReducer";
 import { leadReducer } from "./reducers/leadReducer";
 import { leadModalReducer } from "./reducers/leadModalReducer";
+import { eventsPaginationReducer } from "./reducers/eventsPaginationReducer";
+import { eventModalReducer } from "./reducers/eventModalReducer";
 
 const initialState = {};
 const reducers = combineReducers({
   teachersPagination: teacherPaginationReducer,
   coursesPagination: coursesPaginationReducer,
+  eventsPagination: eventsPaginationReducer,
   studentsPagination: StudentsPaginationReducer,
   auth: authReducer,
   changePass: changePasswordReducer,
@@ -71,6 +74,7 @@ const reducers = combineReducers({
   allCourses: allCoursesReducer,
   funcComponent: funcComponentReducer,
   coursesModal: coursesModalReducer,
+  eventModal: eventModalReducer,
   studentsModal: studentsModalReducer,
   teachersModal: teachersModalReducer,
   openSidebar: sidebarOpenReducer,

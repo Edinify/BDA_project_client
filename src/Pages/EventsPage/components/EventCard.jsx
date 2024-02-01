@@ -1,0 +1,191 @@
+import { useDispatch, useSelector } from "react-redux";
+import { EVENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
+import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
+import { deleteEventAction } from "../../../redux/actions/eventsActions";
+import moment from "moment";
+
+const EventCard = ({
+  data,
+  mode,
+  userData,
+  cellNumber,
+  setOpenConfirmModal,
+  setOpenMoreModal,
+}) => {
+  const dispatch = useDispatch();
+  const { events, lastPage } = useSelector((state) => state.eventsPagination);
+  const { eventsSearchValues } = useSelector((state) => state.searchValues);
+
+  const purposes = [
+    { key: "new-qrup", value: "Yeni qrup" },
+    { key: "conversation", value: "Müzakirə" },
+    { key: "meet-up", value: "Meet-up" },
+    { key: "community", value: "Community görüşü" },
+    { key: "meeting", value: "Tanışlıq" },
+    { key: "thesis-defense", value: "Diplom müdafiəsi" },
+  ];
+
+  const eventDate = data.date
+    ? moment(data.date).locale("az").format("DD.MM.YYYY")
+    : "";
+  const updateItem = (modalType) => {
+    dispatch({
+      type: EVENTS_MODAL_ACTION_TYPE.GET_EVENTS_MODAL,
+      payload: {
+        data: data,
+        openModal: modalType !== "more" ? true : false,
+      },
+    });
+  };
+  const deleteItem = () => {
+    const pageNumber =
+      lastPage > 1 ? (events.length > 1 ? lastPage : lastPage - 1) : 1;
+    const _id = data._id;
+    const searchQuery = eventsSearchValues;
+    dispatch(deleteEventAction({ _id, pageNumber, searchQuery }));
+  };
+
+  const openMoreModal = () => {
+    updateItem("more");
+    setOpenMoreModal(true);
+  };
+
+  const openConfirmModal = () => {
+    dispatch({
+      type: EVENTS_MODAL_ACTION_TYPE.OPEN_EVENT_CONFIRM_MODAL,
+      payload: {
+        data: data,
+        openModal: false,
+        confirmModal: true,
+      },
+    });
+  };
+  console.log(userData, "blablablabla 999999999999999");
+  return (
+    <>
+      {mode === "desktop" ? (
+        <tr className="class-table">
+          <td>
+            <div className="td-con">
+              <div className="cell-number">{cellNumber}.</div>
+              <div className="table-scroll-text">{data?.eventName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{eventDate}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data?.time}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data?.visitor}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data?.speaker}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data?.participantsCount}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td
+            style={
+              data.status
+                ? { backgroundColor: "#d4ffbf" }
+                : { backgroundColor: "#d2c3fe" }
+            }
+          >
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {(data?.status && "Keçirilib") || "Gözləmədə"}
+              </div>
+            </div>
+          </td>
+          {userData?.power !== "only-show" ? (
+            <td>
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                openConfirmModal={openConfirmModal}
+                openMoreModal={openMoreModal}
+                profil={"events"}
+              />
+            </td>
+          ) : null}
+        </tr>
+      ) : (
+        <div className="content-box">
+          <div className="left">
+            <h3 className="name">{data?.eventName || ""}</h3>
+            <ul>
+              <li>
+                <span className="type">Tədbir adı:</span>
+                <p>{data?.eventName || ""}</p>
+              </li>
+              <li>
+                <span className="type">Qonaq:</span>
+                <p>{data?.visitor || ""}</p>
+              </li>
+              <li>
+                <span className="type">Spiker:</span>
+                <p>{data?.speaker || ""}</p>
+              </li>
+              <li>
+                <span className="type">Məkan:</span>
+                <p>{data?.place || ""}</p>
+              </li>
+              <li>
+                <span className="type">Vaxt:</span>
+                <p>{eventDate}</p>
+              </li>
+              <li>
+                <span className="type">Saat:</span>
+                <p>{data?.time || ""}</p>
+              </li>
+              <li>
+                <span className="type">Status:</span>
+                <p
+                  style={
+                    data?.status ? { color: "#07bc0c" } : { color: "#704eff" }
+                  }
+                >
+                  {data?.status ? "Keçirilib" : "Gözləmədə"}
+                </p>
+              </li>
+            </ul>
+          </div>
+
+          {userData.power === "only-show" ? null : (
+            <div className="right">
+              <UpdateDeleteModal
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                openConfirmModal={openConfirmModal}
+                openMoreModal={openMoreModal}
+                profil={"events"}
+              />
+            </div>
+          )}
+        </div>
+      )}
+    </>
+  );
+};
+
+export default EventCard;

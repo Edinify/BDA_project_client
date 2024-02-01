@@ -155,6 +155,8 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
                 data={data}
                 openConfirmModal={openConfirmModal}
                 state={group}
+                openMoreModal={openMoreModal}
+                profil={"groups"}
               />
             </div>
           )}
