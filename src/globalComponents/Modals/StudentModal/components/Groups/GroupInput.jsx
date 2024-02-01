@@ -44,6 +44,7 @@ const GroupInput = ({
       ...groupData[foundIndex],
       [key]: value,
     };
+    console.log(groupData);
     updateModalState("groups", groupData);
   };
 

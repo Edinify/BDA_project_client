@@ -1,34 +1,47 @@
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import React from "react";
 
 export default function Status({ data, setInputValue, formik, addGroupData }) {
-  const changeSector = (e, value) => {
+  const changeSector = (value) => {
     addGroupData("status", value);
-    setInputValue("status", true);
+    setInputValue("status", value);
   };
 
+  console.log(data.status, "data in status component");
   return (
     <div style={{ marginTop: "16px" }}>
       <label className="radio-sector-title"></label>
       <div className="radio-sector-con department">
-        <label>
-          <input
-            type="radio"
-            name="status"
-            checked={data?.status ? true : false}
-            onChange={(e) => changeSector(e, true)}
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          sx={{
+            "& .MuiSvgIcon-root": {
+              fontSize: 28,
+            },
+            "& .MuiFormControlLabel-label": {
+              fontSize: 14,
+            },
+          }}
+        >
+          <FormControlLabel
+            value="wait"
+            control={<Radio checked={data?.status} />}
+            label="Məzun"
+            onClick={() => {
+              changeSector(true);
+            }}
           />
-          Məzun
-        </label>
-
-        <label>
-          <input
-            type="radio"
-            name="language"
-            checked={!data?.status ? true : false}
-            onChange={(e) => changeSector(e, false)}
+          <FormControlLabel
+            value="paid"
+            control={<Radio checked={!data?.status} />}
+            label="Davam edir"
+            onClick={() => {
+              changeSector(false);
+            }}
           />
-          Davam edir
-        </label>
+        </RadioGroup>
       </div>
       {formik.errors.sector && (
         <small className="validation-err-message sector">

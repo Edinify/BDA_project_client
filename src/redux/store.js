@@ -49,6 +49,9 @@ import { lessonTablePaginationReducer } from "./reducers/lessonTablePaginationRe
 import { groupsPaginationReducer } from "./reducers/groupsPaginationReducer";
 import { dropdownGroupReducer } from "./reducers/dropdownGroupReducer";
 import mentorsReducer from "./reducers/mentorsReducer";
+import { salesReducer } from "./reducers/salesReducer";
+import { leadReducer } from "./reducers/leadReducer";
+import { leadModalReducer } from "./reducers/leadModalReducer";
 
 const initialState = {};
 const reducers = combineReducers({
@@ -87,10 +90,13 @@ const reducers = combineReducers({
   careerModal: careerModalReducer,
   careerPagination: careerPaginationReducer,
   financeData: financeReducer,
+  salesData: salesReducer,
   expensesData: expensesReducer,
   incomes: incomeReducer,
+  leads: leadReducer,
   expensesModal: expensesModalReducer,
   incomesModal: incomesModalReducer,
+  leadModal: leadModalReducer,
   financeDateFilter: financeFilterReducer,
   studentStatus: studentStatusReducer,
   teacherStatus: teacherStatusReducer,

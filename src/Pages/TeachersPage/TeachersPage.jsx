@@ -133,7 +133,7 @@ const TeachersPage = () => {
         firstRoute={"/teachers"}
         secondRoute={"/teachers/mentors"}
         firstPathname={"Müəllimlər"}
-        secondPathname={"Mentorlar"}
+        secondPathname={"Tyutorlar"}
       />
 
       <TeachersData

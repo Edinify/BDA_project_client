@@ -12,27 +12,16 @@ import InputField from "./components/Inputs/InputField";
 
 const CareerModal = () => {
   const dispatch = useDispatch();
-  const { workerModalData: modalData } = useSelector(
-    (state) => state.workerModal
+  const { careerModalData: modalData } = useSelector(
+    (state) => state.careerModal
   );
-  const [classIcon, setClassIcon] = useState(false);
-  const inputNameArr1 = [
-    "birthday",
-    "phone",
-    "position",
-    "profils",
-    "email",
-    "password",
-  ];
+
   // formik
   const formik = useFormik({
-    initialValues: {
-      fullName: modalData.fullName ? modalData.fullName : "",
-      email: modalData.email ? modalData.email : "",
-      birthday: modalData?.birthday ? modalData?.birthday : "",
-    },
+    initialValues: {},
     validationSchema: ValidationSchema,
   });
+
   const setInputValue = useCallback(
     (key, value) =>
       formik.setValues({
@@ -58,9 +47,6 @@ const CareerModal = () => {
       payload: { data: {}, openModal: false },
     });
   };
-  const changeIcon = () => {
-    setClassIcon(!classIcon);
-  };
 
   return (
     <div className="create-update-modal-con teacher-modal">
@@ -82,37 +68,24 @@ const CareerModal = () => {
         >
           <div className="create-update-modal-form">
             <InputField
-              inputName="fullName"
+              inputName="portfolioLink"
               formik={formik}
               modalData={modalData}
               updateModalState={updateModalState}
             />
-            <div className="input-couples">
-              {inputNameArr1.map((name, index) => (
-                <InputField
-                  key={index}
-                  inputName={name}
-                  formik={formik}
-                  modalData={modalData}
-                  updateModalState={updateModalState}
-                />
-              ))}
-            </div>
+            <InputField
+              inputName="cvLink"
+              formik={formik}
+              modalData={modalData}
+              updateModalState={updateModalState}
+            />
           </div>
         </Box>
 
-        {modalData?._id ? (
-          <div className="create-update-modal-btn-con">
-            <Status modalData={modalData} updateModalState={updateModalState} />
-            <SubmitBtn
-              formik={formik}
-              modalData={modalData}
-              funcType="update"
-            />
-          </div>
-        ) : (
-          <SubmitBtn formik={formik} modalData={modalData} funcType="create" />
-        )}
+        <div className="create-update-modal-btn-con">
+          <div></div>
+          <SubmitBtn formik={formik} modalData={modalData} funcType="update" />
+        </div>
 
         {modalData?._id && (
           <div className="joined-time">

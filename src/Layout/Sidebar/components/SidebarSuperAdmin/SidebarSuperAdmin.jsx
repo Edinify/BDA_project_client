@@ -8,6 +8,7 @@ import { ReactComponent as StudentsIcon } from "../../../../assets/icons/student
 import { ReactComponent as TableIcon } from "../../../../assets/icons/tableIcon.svg";
 import { ReactComponent as SalaryIcon } from "../../../../assets/icons/salaryIcon.svg";
 import { ReactComponent as ExpensesIcon } from "../../../../assets/icons/expensenIcon.svg";
+import { ReactComponent as SalesIcon } from "../../../../assets/icons/sidebar/sales.svg";
 import { ReactComponent as IncomesIcon } from "../../../../assets/icons/incomesIcon.svg";
 import { ReactComponent as FeedBacksIcon } from "../../../../assets/icons/sidebar/feedbacks-icon.svg";
 import { ReactComponent as AdminIcon } from "../../../../assets/icons/sidebar/users-01.svg";
@@ -88,6 +89,12 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         <NavLink to="/tuition-fee" onClick={closeSidebar}>
           <ExpensesIcon />
           Təhsil haqqı
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/sales" onClick={closeSidebar}>
+          <SalesIcon />
+          Satış
         </NavLink>
       </li>
       <li>

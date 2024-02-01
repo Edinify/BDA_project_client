@@ -16,76 +16,24 @@ export default function InputField({
   const [viewPass, setViewPass] = useState(true);
   const inputData = [
     {
-      inputName: "fullName",
-      label: "Ad soyad",
+      inputName: "portfolioLink",
+      label: "Portfolio linki",
       type: "text",
-      marginTop: "0",
-      marginBottom: "0",
+      marginTop: "10px",
+      marginBottom: "10px",
       inputValue: modalData[inputName] || "",
     },
     {
-      inputName: "birthday",
-      label: "Doğum tarixi",
-      type: "date",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue:
-        modalData[inputName] && inputName === "birthday"
-          ? moment(modalData[inputName]).format("YYYY-MM-DD")
-          : "",
-      className: "birthday-input",
-    },
-    {
-      inputName: "phone",
-      label: "Telefon nömrəsi",
-      type: "tel",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "role",
-      label: "Rol",
+      inputName: "cvLink",
+      label: "CV linki",
       type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
+      marginTop: "10px",
+      marginBottom: "10px",
       inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "position",
-      label: "Pozisiya",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "profils",
-      label: "Profils",
-      type: "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "email",
-      label: "Email",
-      type: "email",
-      marginTop: "24px",
-      marginBottom: "0",
-      inputValue: modalData[inputName] || "",
-    },
-    {
-      inputName: "password",
-      label: !modalData._id ? "Şifrə" : "Şifrəni dəyiş",
-      type: viewPass ? "password" : "text",
-      marginTop: "24px",
-      marginBottom: "0",
-      paddingRight: "50px",
-      className: "password-input",
     },
   ];
 
+  console.log(modalData,'lllllllllll')
   return (
     <div
       className={

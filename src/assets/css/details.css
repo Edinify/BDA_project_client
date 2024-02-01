@@ -76,14 +76,20 @@
   width: 60px;
   border-right: none;
 }
-.details-table.career-table tr td:last-child,
+/* .details-table.career-table tr td:last-child,
 .details-table.career-table tr th:last-child {
   text-align: unset;
-  /* width: auto; */
-}
+  width: auto;
+} */
 .tuition-fee-page .details-table tr th {
   text-align: center;
 }
+
+
+.tuition-fee-page .details-table tr th:nth-last-child(4)  {
+  width: 100px;
+}
+
 
 .details-table.courses-table tr th:first-child,
 .details-table.courses-table tr td:first-child {

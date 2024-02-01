@@ -24,6 +24,7 @@ const refreshApi = axios.create({
 
 export const getFinanceChartAction =
   (startDate, endDate, monthCount) => async (dispatch) => {
+    console.log('tttttttttttttttttt')
     try {
       const { data } = await API.get(
         `/chart/?startDate=${startDate || ""}&endDate=${

@@ -60,6 +60,7 @@ const CoursePage = () => {
       <CoursesData
         userData={user}
         pageNum={lastPage}
+        coursePageNum={coursePageNum}
         getPageNumber={getPageNumber}
       />
 
