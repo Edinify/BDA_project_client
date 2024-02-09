@@ -77,7 +77,7 @@ const UpdateDeleteModal = ({
         setChangesBtn(true);
       }
 
-      if ((power === "all" || power === "update") && data?.changes?._id) {
+      if ((power === "all" || power === "update") && data?.changes?._id&& profil !== "tuitionFee") {
         setBadge(true);
       } else {
         setBadge(false);

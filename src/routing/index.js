@@ -21,8 +21,7 @@ export const Routing = () => {
   const navigate = useNavigate();
   const [notFound, setNotFound] = useState(false);
 
-
-  // 
+  //
   const { auth } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.user);
   const forgetPassword = useSelector((state) => state.forgetPassword);
@@ -77,6 +76,9 @@ export const Routing = () => {
               break;
             case "lessonTable":
               navigate("/lessonTable");
+              break;
+            case "events":
+              navigate("/events");
               break;
             default:
               navigate("/not-found");

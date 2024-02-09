@@ -54,9 +54,11 @@ import { leadReducer } from "./reducers/leadReducer";
 import { leadModalReducer } from "./reducers/leadModalReducer";
 import { eventsPaginationReducer } from "./reducers/eventsPaginationReducer";
 import { eventModalReducer } from "./reducers/eventModalReducer";
+import { dashboardReducer } from "./reducers/dashboardReducer";
 
 const initialState = {};
 const reducers = combineReducers({
+  dashboardData: dashboardReducer,
   teachersPagination: teacherPaginationReducer,
   coursesPagination: coursesPaginationReducer,
   eventsPagination: eventsPaginationReducer,

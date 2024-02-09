@@ -67,6 +67,7 @@ const StudentCard = ({
     });
   };
 
+  console.log(data.groups,'hhdddddddddddddddddd')
   return (
     <>
       {mode === "desktop" ? (
@@ -133,8 +134,8 @@ const StudentCard = ({
               <ul>
                 {data.groups.map((groupsData) => (
                   <li key={groupsData.group._id}>
-                    <span>Qrup adı: {groupsData.group.name}</span>
-                    Qrup ixtisası: {groupsData.group.course.name} <br />
+                    <span>Qrup adı: {groupsData?.group?.name}</span>
+                    Qrup ixtisası: {groupsData.group?.course?.name} <br />
                     Ümumi ödəniş: {groupsData.totalAmount} <br />
                   </li>
                 ))}
