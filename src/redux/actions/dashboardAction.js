@@ -21,12 +21,12 @@ const refreshApi = axios.create({
   withCredentials: true,
 });
 
-export const getDashboardConfirmedLessonsAction =
+export const getAllStudentsCountAction =
   (startDate = "", endDate = "", monthCount) =>
   async (dispatch) => {
     try {
       const { data } = await API.get(
-        `/confirmed/?startDate=${startDate || ""}&endDate=${
+        `/all-students/?startDate=${startDate || ""}&endDate=${
           endDate || ""
         }&monthCount=${monthCount || ""}`
       );
@@ -70,15 +70,17 @@ export const getDashboardConfirmedLessonsAction =
     }
   };
 
-export const getDashboardCancelledLessonsAction =
+export const getActiveStudentsCountAction =
   (startDate = "", endDate = "", monthCount) =>
   async (dispatch) => {
     try {
       const { data } = await API.get(
-        `/cancelled/?startDate=${startDate || ""}&endDate=${
+        `/active-students/?startDate=${startDate || ""}&endDate=${
           endDate || ""
         }&monthCount=${monthCount || ""}`
       );
+
+      console.log(data);
       dispatch({
         type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_CANCELLED_LESSONS,
         payload: data,
@@ -116,12 +118,12 @@ export const getDashboardCancelledLessonsAction =
     }
   };
 
-export const getDashboardUnviewedLessonsAction =
+export const getAllGroupsAction =
   (startDate = "", endDate = "", monthCount) =>
   async (dispatch) => {
     try {
       const { data } = await API.get(
-        `/unviewed/?startDate=${startDate || ""}&endDate=${
+        `/all-groups/?startDate=${startDate || ""}&endDate=${
           endDate || ""
         }&monthCount=${monthCount || ""}`
       );
@@ -162,9 +164,55 @@ export const getDashboardUnviewedLessonsAction =
     }
   };
 
-export const getDashboardFinanceAction = () => async (dispatch) => {
+export const getAllEventsAction =
+  (startDate = "", endDate = "", monthCount) =>
+  async (dispatch) => {
+    try {
+      const { data } = await API.get(
+        `/events/?startDate=${startDate || ""}&endDate=${
+          endDate || ""
+        }&monthCount=${monthCount || ""}`
+      );
+      dispatch({
+        type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_EVENTS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+
+          const { data } = await API.get(
+            `/unviewed/?startDate=${startDate || ""}&endDate=${
+              endDate || ""
+            }&monthCount=${monthCount || ""}`
+          );
+          dispatch({
+            type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_UNVIEWED_LESSONS,
+            payload: data,
+          });
+        } catch (error) {
+          console.log(error);
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+    }
+  };
+
+export const getDashboardConsultationsDataAction = () => async (dispatch) => {
   try {
-    const { data } = await API.get("/finance");
+    const { data } = await API.get("/consult-statistic");
     dispatch({
       type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_FINANCE,
       payload: data,

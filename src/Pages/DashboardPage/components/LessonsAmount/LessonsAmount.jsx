@@ -5,34 +5,34 @@ import { ReactComponent as Xicon } from "../../../../assets/icons/dashboard/x-cl
 import { ReactComponent as HelpCircle } from "../../../../assets/icons/dashboard/help-circle-dashboard.svg";
 import { ReactComponent as DotsIcon } from "../../../../assets/icons/dashboard/dots-horizontal-dashboard.svg";
 import {
-  getDashboardCancelledLessonsAction,
-  getDashboardConfirmedLessonsAction,
+  getActiveStudentsCountAction,
+  getAllEventsAction,
+  getAllStudentsCountAction,
 } from "../../../../redux/actions/dashboardAction";
 import DateDropdown from "../../../../globalComponents/DateDropdown/DateDropdown";
 import DateRangeModal from "../../../../globalComponents/Modals/DateRangeModal/DateRangeModal";
 
 const LessonsAmount = () => {
   const dispatch = useDispatch();
-  const { confirmedLessonsData, cancelledLessonsData, unviewedLessonsData } =
-    useSelector((state) => state.dashboardData);
+  const {
+    confirmedLessonsData,
+    cancelledLessonsData,
+    unviewedLessonsData,
+    eventsData,
+  } = useSelector((state) => state.dashboardData);
   const [openUnviewedLessons, setUnviewedLessons] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
   const [openDropdownCancelled, setOpenDropdownCancelled] = useState(false);
   const [openDropdownConfirmed, setOpenDropdownConfirmed] = useState(false);
-  const unvieweLessonsCount =
-    unviewedLessonsData?.length > 0 &&
-    unviewedLessonsData.reduce((total, item) => {
-      return total + item?.lessons?.length;
-    }, 0);
 
   const applyConfirmedFilter = (startDate, endDate) => {
-    dispatch(getDashboardConfirmedLessonsAction(startDate, endDate, ""));
+    dispatch(getAllEventsAction(startDate, endDate, ""));
     setOpenCalendar(false);
     setOpenDropdownCancelled(false);
     setOpenDropdownConfirmed(false);
   };
   const applyCancelledFilter = (startDate, endDate) => {
-    dispatch(getDashboardCancelledLessonsAction(startDate, endDate, ""));
+    dispatch(getActiveStudentsCountAction(startDate, endDate, ""));
     setOpenCalendar(false);
     setOpenDropdownCancelled(false);
     setOpenDropdownConfirmed(false);
@@ -45,10 +45,10 @@ const LessonsAmount = () => {
     }
   };
   const applyMonthsConfirmedFilter = (option) => {
-    dispatch(getDashboardConfirmedLessonsAction("", "", option.key));
+    dispatch(getAllEventsAction("", "", option.key));
   };
   const applyMonthsCancelledFilter = (option) => {
-    dispatch(getDashboardCancelledLessonsAction("", "", option.key));
+    dispatch(getActiveStudentsCountAction("", "", option.key));
   };
 
   useEffect(() => {
@@ -79,8 +79,9 @@ const LessonsAmount = () => {
 
           <div className="right">
             <div className="top">
-              <h2 className="title">Təsdiqlənmiş dərslər</h2>
-              <DateDropdown
+              <h2 className="title">Tələbələr</h2>
+
+              {/* { <DateDropdown
                 optionType={"date"}
                 calendar={true}
                 setOpenCalendar={setOpenCalendar}
@@ -88,7 +89,7 @@ const LessonsAmount = () => {
                 openDropdown={openDropdownConfirmed}
                 setOpenDropdown={setOpenDropdownConfirmed}
                 applyMonthsFilter={applyMonthsConfirmedFilter}
-              />
+              />} */}
             </div>
             <p className="amount">
               {confirmedLessonsData ? confirmedLessonsData : 0}
@@ -103,8 +104,8 @@ const LessonsAmount = () => {
 
           <div className="right">
             <div className="top">
-              <h2 className="title">Ləvğ edilmiş dərslər</h2>
-              <DateDropdown
+              <h2 className="title">Aktiv tələbələr</h2>
+              {/* <DateDropdown
                 optionType={"date"}
                 calendar={true}
                 setOpenCalendar={setOpenCalendar}
@@ -112,7 +113,7 @@ const LessonsAmount = () => {
                 openDropdown={openDropdownCancelled}
                 setOpenDropdown={setOpenDropdownCancelled}
                 applyMonthsFilter={applyMonthsCancelledFilter}
-              />
+              /> */}
             </div>
             <p className="amount">
               {cancelledLessonsData ? cancelledLessonsData : 0}
@@ -127,14 +128,35 @@ const LessonsAmount = () => {
 
           <div className="right">
             <div className="top">
-              <h2 className="title">Baxılmamış dərslər</h2>
-              <DotsIcon
-                onClick={() => setUnviewedLessons(!openUnviewedLessons)}
-              />
+              <h2 className="title">Qruplar</h2>
             </div>
             <p className="amount">
-              {unvieweLessonsCount ? unvieweLessonsCount : 0}
+              {unviewedLessonsData ? unviewedLessonsData : 0}
             </p>
+          </div>
+        </div>
+        <div className="content-box">
+          <div className="left green">
+            <CheckIcon />
+          </div>
+
+          <div className="right">
+            <div className="top">
+              <h2 className="title">Tədbirlər</h2>
+
+              {
+                <DateDropdown
+                  optionType={"date"}
+                  calendar={true}
+                  setOpenCalendar={setOpenCalendar}
+                  openCalendar={openCalendar}
+                  openDropdown={openDropdownConfirmed}
+                  setOpenDropdown={setOpenDropdownConfirmed}
+                  applyMonthsFilter={applyMonthsConfirmedFilter}
+                />
+              }
+            </div>
+            <p className="amount">{eventsData ? eventsData : 0}</p>
           </div>
         </div>
       </section>

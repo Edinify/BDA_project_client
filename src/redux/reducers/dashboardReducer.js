@@ -4,10 +4,11 @@ const initialState = {
   dashboardData: "",
   confirmedLessonsData: null,
   cancelledLessonsData: null,
-  unviewedLessonsData: [],
+  unviewedLessonsData: 0,
+  eventsData: 0,
   dashboardFinanceData: {},
   courseStatistic: {},
-  advertising: {},
+  advertising: [],
   leadboard: {},
   dashboardStudentsAmount: {},
 };
@@ -33,6 +34,11 @@ export const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         unviewedLessonsData: action.payload,
+      };
+    case DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_EVENTS:
+      return {
+        ...state,
+        eventsData: action.payload,
       };
     case DASHBOARD_ACTIONS_TYPE.UPDATE_DASHBOARD_UNVIEWED_LESSONS:
       return {

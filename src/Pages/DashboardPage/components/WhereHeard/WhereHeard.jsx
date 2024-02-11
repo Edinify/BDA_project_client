@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DateDropdown from "../../../../globalComponents/DateDropdown/DateDropdown"
+import DateDropdown from "../../../../globalComponents/DateDropdown/DateDropdown";
 import DateRangeModal from "../../../../globalComponents/Modals/DateRangeModal/DateRangeModal";
 import { getDashboardAdvertisingAction } from "../../../../redux/actions/dashboardAction";
 
@@ -9,24 +9,18 @@ const WhereHeard = ({ dashboardKeys }) => {
   const { advertising } = useSelector((state) => state.dashboardData);
   const [openCalendar, setOpenCalendar] = useState(false);
   const [openDateDropdown, setOpenDateDropdown] = useState(false);
-  const selectedWhereComingList = [
-    { name: "Tədbir", key: "event" },
-    { name: "Instagram", key: "instagram" },
-    { name: "Tövsiyə", key: "referral" },
-    { name: "Çöl reklamı", key: "externalAds" },
-    { name: "Digər", key: "other" },
-  ];
 
   const applyFilter = (startDate, endDate) => {
-    dispatch(getDashboardAdvertisingAction(startDate, endDate, ''));
+    dispatch(getDashboardAdvertisingAction(startDate, endDate, ""));
     setOpenCalendar(false);
     setOpenDateDropdown(false);
   };
 
   const applyMonthsFilter = (option) => {
-    dispatch(getDashboardAdvertisingAction('', '', option.key));
+    dispatch(getDashboardAdvertisingAction("", "", option.key));
   };
 
+  console.log(advertising, "bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 
   return (
     <>
@@ -34,7 +28,7 @@ const WhereHeard = ({ dashboardKeys }) => {
         <div className="content-box">
           <div className="top">
             <h2 className="title">Bizi haradan eşidiblər?</h2>
-            <DateDropdown
+            {/* <DateDropdown
               optionType={"date"}
               calendar={true}
               setOpenCalendar={setOpenCalendar}
@@ -42,17 +36,16 @@ const WhereHeard = ({ dashboardKeys }) => {
               openDropdown={openDateDropdown}
               setOpenDropdown={setOpenDateDropdown}
               applyMonthsFilter={applyMonthsFilter}
-            />
+            /> */}
           </div>
 
           <div className="bottom">
-            {advertising?.length > 0 && advertising?.map((item, index) => (
+            {advertising?.map((item, index) => (
               <div key={index} className="linear-con">
-                <h5>{selectedWhereComingList.find((data) => data.key === item.name).name } | {item.value}%</h5>
-                <div
-                  style={{ width: `${item.value}%` }}
-                  className="line"
-                ></div>
+                <h5>
+                  {item.name}| {item.value}%
+                </h5>
+                <div style={{ width: `${item.value}%` }} className="line"></div>
               </div>
             ))}
           </div>

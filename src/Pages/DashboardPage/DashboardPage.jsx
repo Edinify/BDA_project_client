@@ -10,12 +10,13 @@ import { useCustomHook } from "../../globalComponents/GlobalFunctions/globalFunc
 import {
   getDashboarLeadboarddAction,
   getDashboardAdvertisingAction,
-  getDashboardCancelledLessonsAction,
-  getDashboardConfirmedLessonsAction,
+  getActiveStudentsCountAction,
+  getAllStudentsCountAction,
   getDashboardCourseStatisticAction,
-  getDashboardFinanceAction,
+  getDashboardConsultationsDataAction,
   getDashboardStudentsAmountAction,
-  getDashboardUnviewedLessonsAction,
+  getAllGroupsAction,
+  getAllEventsAction,
 } from "../../redux/actions/dashboardAction";
 
 export const Dashboard = () => {
@@ -23,10 +24,11 @@ export const Dashboard = () => {
   const [dashboardKeys, setDashboardKeys] = useState({});
 
   useEffect(() => {
-    dispatch(getDashboardFinanceAction());
-    dispatch(getDashboardConfirmedLessonsAction("", "", 1));
-    dispatch(getDashboardCancelledLessonsAction("", "", 1));
-    dispatch(getDashboardUnviewedLessonsAction("", "", 1));
+    dispatch(getDashboardConsultationsDataAction());
+    dispatch(getAllStudentsCountAction("", "", 1));
+    dispatch(getActiveStudentsCountAction("", "", 1));
+    dispatch(getAllGroupsAction("", "", 1));
+    dispatch(getAllEventsAction("", "", 1));
     dispatch(getDashboardCourseStatisticAction("", "", 1));
     dispatch(getDashboardAdvertisingAction("", "", 1));
     dispatch(getDashboardStudentsAmountAction("", "", 3));
