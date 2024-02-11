@@ -50,7 +50,7 @@ const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
           {openConfirmModal && <ConfirmModal type="consultation" />}
 
           <div className="table-con">
-            <table className="details-table ">
+            <table className="details-table consultation-page ">
               <thead>
                 <tr>
                   {tableHead.map((head, i) => (

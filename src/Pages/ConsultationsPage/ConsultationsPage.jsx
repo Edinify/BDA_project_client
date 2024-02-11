@@ -70,7 +70,7 @@ const ConsultationsPage = () => {
   }, []);
 
   return (
-    <div className="details-page tuition-fee-page">
+    <div className="details-page ">
       <GlobalHead
         searchData={searchData}
         openModal={openModal}

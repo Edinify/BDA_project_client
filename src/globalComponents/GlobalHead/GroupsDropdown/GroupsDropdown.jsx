@@ -28,12 +28,12 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
   };
 
   useEffect(() => {
-    if (user?.role == "teacher") {
+    if (user?.role === "teacher") {
       dispatch(getGroupsWithTeacherAction(user._id));
     } else {
       dispatch(getGroupsAction());
     }
-  }, [user]);
+  }, []);
 
   return (
     <div

@@ -16,6 +16,8 @@ const CareerModal = () => {
     (state) => state.careerModal
   );
 
+
+  console.log(modalData,"modal data")
   // formik
   const formik = useFormik({
     initialValues: {},

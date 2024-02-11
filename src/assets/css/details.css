@@ -234,7 +234,21 @@
     rgba(255, 255, 255, 0.1) 100%
   );
 }
+
+.details-table.consultation-page tr th:nth-last-child(4),
+.details-table.consultation-page tr td:nth-last-child(4),
+.details-table.consultation-page tr th:nth-last-child(3),
+.details-table.consultation-page tr td:nth-last-child(3)
+ {
+  text-align: center;
+  
+}
+
+
 /* details-table END*/
+
+
+
 
 /* details-tablet*/
 .details-list-tablet {
