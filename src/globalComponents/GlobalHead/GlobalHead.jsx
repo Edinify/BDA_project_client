@@ -6,6 +6,7 @@ import { StatusDropdown } from "./StatusDropdown/StatusDropdown";
 import Search from "./Search/Search";
 import { CoursesDropdown } from "./CoursesDropdown/CoursesDropdown";
 import { GroupsDropdown } from "./GroupsDropdown/GroupsDropdown";
+import { DatePick } from "../../globalComponents/DatePicker/DatePicker";
 
 const GlobalHead = ({
   searchData,
@@ -46,6 +47,7 @@ const GlobalHead = ({
                   DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
                 />
               )}
+
               {statusType === "teacher" && (
                 <StatusDropdown statusType="teacher" deviceType="desktop" />
               )}
@@ -56,14 +58,35 @@ const GlobalHead = ({
                 <CoursesDropdown deviceType="desktop" />
               )}
               {statusType === "lesson-table" && (
-                <GroupsDropdown deviceType="desktop" />
+                <div className="lesson-table-header-container">
+                  <div className="lesson-table-status">
+                    <GroupsDropdown deviceType="desktop" />
+                    <StatusDropdown
+                      statusType="lesson-table"
+                      deviceType="desktop"
+                    />
+                  </div>
+                  <div className="lesson-table-datepick">
+                    <DatePick />
+                  </div>
+                </div>
               )}
             </div>
             {addBtn && showAddBtn && (
-              <button className="add-detail" onClick={openModal}>
-                <PlusIcon />
-                Əlavə et
-              </button>
+              <div className="lesson-table-add-btn" >
+                {statusType === "lesson-table" && (
+                  <button className="add-detail" onClick={openModal}>
+                    <PlusIcon />
+                    Əlavə et
+                  </button>
+                )}
+                {statusType !== "lesson-table" && (
+                  <button className="add-detail" onClick={openModal}>
+                    <PlusIcon />
+                    Əlavə et
+                  </button>
+                )}
+              </div>
             )}
           </div>
           {statusType === "teacher" && (

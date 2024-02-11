@@ -10,6 +10,8 @@
   display: flex;
   justify-content: space-between;
 }
+
+
 .details-header-content .details-header-content-left {
   display: flex;
   align-items: center;
@@ -68,6 +70,58 @@
   display: none;
 }
 
+.details-header-content-left .lesson-table-header-container{
+  display: flex;
+  align-items: center;
+}
+
+.details-header-content-left .lesson-table-header-container .lesson-table-status {
+  display: flex;
+  align-items: center;
+}
+
+.details-header-content-left .lesson-table-header-container .date-container{
+  margin-left: 10px;
+}
+
+.details-header-content-left .lesson-table-header-container .date-container .date-container .from{
+  width: 292px;
+}
+
+
+@media screen and (max-width:1400px) {
+
+  .lesson-page .details-header-content .details-header-content-left{
+    width: 100%;
+  }
+  .lesson-page .details-header-content .add-detail{
+    margin-top: 10px;
+  }
+
+  .lesson-page .details-header-content{
+    display: flex;
+    flex-direction: column;
+  }
+  .details-header-content-left .lesson-table-header-container{
+    flex-direction: column;
+    width: 100%;
+  }
+  .details-header-content-left .lesson-table-header-container .lesson-table-status{
+    width: 100%;
+  }
+  .details-header-content-left .lesson-table-header-container .lesson-table-datepick{
+    width: 100%;
+    margin-top: 10px;
+  }
+
+.details-header-content .details-header-content-left .dropdown-name{
+  width: 50%;
+}
+.lesson-table-add-btn{
+  display: flex;
+  justify-content: flex-end;
+}
+}
 @media screen and (max-width: 780px) {
   .details-header-content {
     flex-direction: row;

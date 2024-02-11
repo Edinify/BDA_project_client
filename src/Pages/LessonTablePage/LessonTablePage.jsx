@@ -74,7 +74,7 @@ const LessonTablePage = () => {
   };
 
   return (
-    <div className="details-page teachers-page ">
+    <div className="details-page lesson-page ">
       <GlobalHead
         searchData={searchData}
         openModal={openModal}

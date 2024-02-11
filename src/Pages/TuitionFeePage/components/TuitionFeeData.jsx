@@ -53,7 +53,7 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
           {openConfirmModal && <ConfirmModal type="tuitionFee" />}
 
           <div className="table-con">
-            <table className="details-table  student-table">
+            <table className="details-table ">
               <thead>
                 <tr>
                   {tableHead.map((head, i) => (

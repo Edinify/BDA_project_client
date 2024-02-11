@@ -85,6 +85,12 @@
   text-align: center;
 }
 
+
+.tuition-fee-page .details-table tr th:nth-last-child(4)  {
+  width: 100px;
+}
+
+
 .details-table.courses-table tr th:first-child,
 .details-table.courses-table tr td:first-child {
   width: 80%;
@@ -228,15 +234,29 @@
     rgba(255, 255, 255, 0.1) 100%
   );
 }
+
+.details-table.consultation-page tr th:nth-last-child(4),
+.details-table.consultation-page tr td:nth-last-child(4),
+.details-table.consultation-page tr th:nth-last-child(3),
+.details-table.consultation-page tr td:nth-last-child(3)
+ {
+  text-align: center;
+  
+}
+
+
 /* details-table END*/
+
+
+
 
 /* details-tablet*/
 .details-list-tablet {
   display: none;
 }
-.finance-page .details-list-tablet {
-  /* border-top: 0.5px solid var(--neutrals-300, #ddd); */
-}
+/* .finance-page .details-list-tablet {
+  border-top: 0.5px solid var(--neutrals-300, #ddd);
+} */
 .stimulations-page .details-list-tablet {
   border-top: 0.5px solid var(--neutrals-300, #ddd);
 }
@@ -302,6 +322,13 @@
   .details-list-tablet .content-box .left {
     overflow: hidden;
   }
+
+  .details-list-tablet .content-box .left .student-count {
+    border-bottom: 1px solid;
+    cursor: pointer;
+    width: 100px;
+  }
+
   .details-list-tablet .content-box .left h3 {
     font-size: 16px;
     color: var(--neutrals-900);
@@ -352,7 +379,8 @@
   .details-list-tablet .content-box .right {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    /* justify-content: space-between; */
     align-items: flex-end;
     position: absolute;
     right: 16px;

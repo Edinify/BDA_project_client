@@ -113,7 +113,7 @@ const StudentCard = ({
               state={student}
               openConfirmModal={openConfirmModal}
               openMoreModal={openMoreModal}
-              profil={"students"}
+              profil="students"
             />
           </td>
         </tr>

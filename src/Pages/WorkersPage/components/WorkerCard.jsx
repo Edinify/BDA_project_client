@@ -120,11 +120,7 @@ const WorkerCard = ({
               </li> */}
             </ul>
           </div>
-          {worker.power === "only-show" ? (
-            <div className="more-content">
-              <span onClick={openMoreModal}>Ətraflı</span>
-            </div>
-          ) : (
+          
             <div className="right">
               <UpdateDeleteModal
                 updateItem={updateItem}
@@ -135,7 +131,7 @@ const WorkerCard = ({
                 openMoreModal={openMoreModal}
               />
             </div>
-          )}
+          
         </div>
       )}
     </>
