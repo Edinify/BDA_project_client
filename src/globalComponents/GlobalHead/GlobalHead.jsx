@@ -49,7 +49,14 @@ const GlobalHead = ({
               )}
 
               {statusType === "teacher" && (
+                <div className="teacher-header-filter" >
                 <StatusDropdown statusType="teacher" deviceType="desktop" />
+                <GroupsDropdown deviceType="desktop" />
+                <div className="lesson-table-btn-container teacher ">
+                    <button className="add-detail">Tətbiq et</button>
+                  </div>
+                </div>
+
               )}
               {/* {statusType === "student" && (
                 <StatusDropdown statusType="student" deviceType="desktop" />
@@ -57,6 +64,18 @@ const GlobalHead = ({
               {statusType === "syllabus" && (
                 <CoursesDropdown deviceType="desktop" />
               )}
+              {statusType === "student" && (
+            <div className="student-filter-header" >
+                <CoursesDropdown deviceType="desktop" />
+                <GroupsDropdown deviceType="desktop" />
+                <div className="lesson-table-btn-container student ">
+                    <button className="add-detail">Tətbiq et</button>
+                  </div>
+            </div>
+
+            // <StatusDropdown statusType="student" deviceType="mobile" />
+          
+          )}
               {statusType === "lesson-table" && (
                 <div className="lesson-table-header-container">
                   <div className="lesson-table-status">
@@ -75,10 +94,17 @@ const GlobalHead = ({
             {addBtn && showAddBtn && (
               <div className="lesson-table-add-btn" >
                 {statusType === "lesson-table" && (
-                  <button className="add-detail" onClick={openModal}>
-                    <PlusIcon />
-                    Əlavə et
-                  </button>
+                  // <button className="add-detail" onClick={openModal}>
+                  //   <PlusIcon />
+                  //   Əlavə et
+                  // </button>
+                  <div className="lesson-table-btn-container" >
+                   <button className="add-detail">
+                   Tətbiq et
+                 </button>
+
+                 </div>
+                  
                 )}
                 {statusType !== "lesson-table" && (
                   <button className="add-detail" onClick={openModal}>
@@ -92,14 +118,18 @@ const GlobalHead = ({
           {statusType === "teacher" && (
             <StatusDropdown statusType="teacher" deviceType="mobile" />
           )}
-          {/* {statusType === "student" && (
-            <StatusDropdown statusType="student" deviceType="mobile" />
-          )} */}
+          
           {statusType === "syllabus" && <CoursesDropdown deviceType="mobile" />}
           {statusType === "lesson-table" && (
             <GroupsDropdown deviceType="mobile" />
           )}
         </div>
+        {statusType==="lesson-table" &&
+        <div className="apply-btn">
+         <button className="add-detail" onClick={openModal}>
+         Əlavə et
+       </button>
+       </div> }
       </div>
     </div>
   );
