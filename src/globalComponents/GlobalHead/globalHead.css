@@ -88,6 +88,51 @@
   width: 292px;
 }
 
+.lesson-page .apply-btn,
+.teachers-page  .apply-btn
+{
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+.lesson-page .apply-btn .add-detail,
+.teachers-page .apply-btn .add-detail
+ {
+  background-color: var(--primary-500);
+  border-radius: 8px;
+  padding: 10px 24px;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  white-space: nowrap;
+}
+
+/* student -page */
+
+.details-page.students-page .student-filter-header{
+  width: 100%;
+  display: flex;
+}
+
+/* teacher-page */
+
+.details-page.teachers-page .teacher-header-filter{
+  width: 100%;
+  display: flex;
+}
+.lesson-table-btn-container.teacher,
+.lesson-table-btn-container.student
+{
+  margin-left: 10px;
+} 
+
 
 @media screen and (max-width:1400px) {
 
