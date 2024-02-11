@@ -77,7 +77,7 @@ const UpdateDeleteModal = ({
         setChangesBtn(true);
       }
 
-      if ((power === "all" || power === "update") && data?.changes?._id) {
+      if ((power === "all" || power === "update") && data?.changes?._id&& profil !== "tuitionFee") {
         setBadge(true);
       } else {
         setBadge(false);
@@ -167,12 +167,14 @@ const UpdateDeleteModal = ({
             </h4>
           )}
 
-          {profil !== "syllabus" && profil !== "lessonTable" && (
-            <h4 className="confirm" onClick={() => openMoreModal()}>
-              Ətraflı
-            </h4>
-          )}
-          {deleteBtn && profil !== "careers" && (
+          {profil !== "syllabus" &&
+            profil !== "lessonTable" &&
+            profil !== "sales" && (
+              <h4 className="confirm" onClick={() => openMoreModal()}>
+                Ətraflı
+              </h4>
+            )}
+          {deleteBtn && profil !== "careers" && profil !== "tuitionFee" && (
             <h4
               className={`delete-func ${dataType === "branches" ? "only" : ""}`}
               onClick={() => setShowDeleteModal(true)}

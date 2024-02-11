@@ -87,6 +87,7 @@ const CourseCard = ({
                 state={course}
                 openConfirmModal={openConfirmModal}
                 openMoreModal={openMoreModal}
+                profil={"courses"}
               />
             </div>
           )}

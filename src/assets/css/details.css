@@ -272,7 +272,7 @@
   border-bottom: 0.5px solid var(--neutrals-300, #ddd);
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 700px) {
   .details-table {
     display: none;
   }

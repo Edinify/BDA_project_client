@@ -30,7 +30,7 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
 
   const listData = [
     { key: "Qrup adı", value: data?.name },
-    { key: "İxtisas", value: data?.course.name },
+    { key: "İxtisas", value: data?.course?.name },
     { key: "Təlimçilər", value: teachers },
     {
       key: "Başlama tarixi",
@@ -90,7 +90,7 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data?.course.name}</div>
+              <div className="table-scroll-text">{data?.course?.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -151,13 +151,13 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
           {group.power === "only-show" ? null : (
             <div className="right">
               <UpdateDeleteModal
-               updateItem={updateItem}
-               deleteItem={deleteItem}
-               data={data}
-               openConfirmModal={openConfirmModal}
-               openMoreModal={openMoreModal}
-               state={group}
-               profil={"groups"}
+                updateItem={updateItem}
+                deleteItem={deleteItem}
+                data={data}
+                openConfirmModal={openConfirmModal}
+                state={group}
+                openMoreModal={openMoreModal}
+                profil={"groups"}
               />
             </div>
           )}

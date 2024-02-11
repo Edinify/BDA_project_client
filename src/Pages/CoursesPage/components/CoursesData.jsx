@@ -39,11 +39,7 @@ const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
             />
           )}
 
-          {openConfirmModal && (
-            <ConfirmModal
-              type="courses"
-            />
-          )}
+          {openConfirmModal && <ConfirmModal type="courses" />}
           <table
             className={`details-table  courses-table ${
               userData.power === "only-show" ? "only-show" : "update"
@@ -65,7 +61,6 @@ const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
                   course={userData}
                   mode="desktop"
                   cellNumber={i + 1 + (coursePageNum - 1) * 10}
-     
                   setOpenMoreModal={setOpenMoreModal}
                 />
               ))}
@@ -82,7 +77,6 @@ const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
                 mode="mobile"
                 cellNumber={i + 1 + (coursePageNum - 1) * 10}
                 setOpenMoreModal={setOpenMoreModal}
-    
               />
             ))}
           </div>

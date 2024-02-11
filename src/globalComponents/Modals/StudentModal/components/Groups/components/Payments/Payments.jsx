@@ -46,7 +46,7 @@ const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
         />
       </RadioGroup>
 
-      <div className="input-couples">
+      <div className="input-couples-student">
         <Payment
           inputName={"payment"}
           formik={formik}
@@ -57,6 +57,14 @@ const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
         />
         <Payment
           inputName={"paymentDate"}
+          formik={formik}
+          setInputValue={setInputValue}
+          data={data}
+          addPayments={addPayments}
+          index={index}
+        />
+        <Payment
+          inputName={"paidDate"}
           formik={formik}
           setInputValue={setInputValue}
           data={data}

@@ -11,6 +11,7 @@ import WorkersPage from "../Pages/WorkersPage/WorkersPage";
 import CareerPage from "../Pages/CareerPage/CareerPage";
 import SyllabusPage from "../Pages/SyllabusPage/SyllabusPage";
 import LessonTablePage from "../Pages/LessonTablePage/LessonTablePage";
+import EventsPage from "../Pages/EventsPage/EventsPage";
 import { useSelector } from "react-redux";
 import Loading from "../globalComponents/Loading/Loading";
 
@@ -70,6 +71,7 @@ const WorkersPanelRoute = (user) => {
       {profiles?.lessonTable && (
         <Route path="/lessonTable" element={<LessonTablePage />} />
       )}
+      {profiles?.events && <Route path="/events" element={<EventsPage />} />}
     </>
   );
 };

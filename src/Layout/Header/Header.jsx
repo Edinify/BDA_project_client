@@ -41,6 +41,10 @@ export const Header = () => {
       case "/":
       case "/lessonTable":
         return "Dərs cədvəli";
+      case "/event":
+        return "Tədbirlər";
+      case "/dashboard":
+        return "İdarəetmə paneli";
       default:
         return "";
     }

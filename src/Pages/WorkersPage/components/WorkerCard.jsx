@@ -130,9 +130,6 @@ const WorkerCard = ({
                 state={worker}
                 openMoreModal={openMoreModal}
               />
-              {/* <div className="more-content">
-                <span onClick={openMoreModal}>Ətraflı</span>
-              </div> */}
             </div>
           
         </div>

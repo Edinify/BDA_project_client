@@ -16,10 +16,12 @@ import ConsultationModal from "./globalComponents/Modals/ConsultationModal/Consu
 import LessonTableModal from "./globalComponents/Modals/LessonTableModal/LessonTableModal";
 import LessonModal from "./globalComponents/Modals/LessonModal/LessonModal";
 import { userAction } from "./redux/actions/userAction";
+import { EventModal } from "./globalComponents/Modals/EventModal/EventModal";
 
 //
 function App() {
   const { coursesOpenModal } = useSelector((state) => state.coursesModal);
+  const { eventsOpenModal } = useSelector((state) => state.eventModal);
   const { studentsOpenModal } = useSelector((state) => state.studentsModal);
   const { tuitionFeeOpenModal } = useSelector((state) => state.tuitionFeeModal);
   const { consultationOpenModal } = useSelector(
@@ -69,6 +71,7 @@ function App() {
     <div className="App">
       <Routing />
       {coursesOpenModal && <CourseModal />}
+      {eventsOpenModal && <EventModal />}
       {studentsOpenModal && <StudentModal />}
       {tuitionFeeOpenModal && <TuitionFeeModal />}
       {consultationOpenModal && <ConsultationModal />}

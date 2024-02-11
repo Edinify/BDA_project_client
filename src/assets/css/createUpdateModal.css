@@ -173,6 +173,12 @@
   column-gap: 10px;
 }
 
+.create-update-modal-form .input-couples-student {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 10px;
+}
+
 .create-update-modal-form .dropdown-input {
   display: flex;
   position: relative;
@@ -675,6 +681,12 @@
     grid-template-columns: auto;
     gap: 0;
   }
+
+  .create-update-modal-form .input-couples-student {
+    grid-template-columns: auto;
+    gap: 0;
+  }
+
   .create-update-modal-btn {
     width: 100%;
     margin-top: 24px;
