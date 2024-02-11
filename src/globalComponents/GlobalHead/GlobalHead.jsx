@@ -7,6 +7,7 @@ import Search from "./Search/Search";
 import { CoursesDropdown } from "./CoursesDropdown/CoursesDropdown";
 import { GroupsDropdown } from "./GroupsDropdown/GroupsDropdown";
 import { DatePick } from "../../globalComponents/DatePicker/DatePicker";
+import { TeachersDropdown } from "./TeachersDropdown/TeachersDropdown";
 
 const GlobalHead = ({
   searchData,
@@ -51,6 +52,7 @@ const GlobalHead = ({
               {statusType === "teacher" && (
                 <div className="teacher-header-filter" >
                 <StatusDropdown statusType="teacher" deviceType="desktop" />
+                <CoursesDropdown deviceType="desktop" />
                 <GroupsDropdown deviceType="desktop" />
                 <div className="lesson-table-btn-container teacher ">
                     <button className="add-detail">Tətbiq et</button>
@@ -75,6 +77,19 @@ const GlobalHead = ({
 
             // <StatusDropdown statusType="student" deviceType="mobile" />
           
+          )}
+          {statusType==="groups"&&(
+            <div className="groups-filter-header" >
+               <CoursesDropdown deviceType="desktop" />
+               <TeachersDropdown deviceType="desktop" />
+            </div>
+          )}
+
+          {statusType==="tutionFee" &&(
+            <div className="tution-fee-filter-header" >
+            <CoursesDropdown deviceType="desktop" />
+            <GroupsDropdown deviceType="desktop" />
+         </div>
           )}
               {statusType === "lesson-table" && (
                 <div className="lesson-table-header-container">

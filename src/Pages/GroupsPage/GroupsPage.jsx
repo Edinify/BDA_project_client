@@ -53,13 +53,14 @@ const GroupsPage = () => {
   console.log(lastPage, "last page");
 
   return (
-    <div className="details-page teachers-page ">
+    <div className="details-page groups-page ">
       <GlobalHead
         searchData={searchData}
         openModal={openModal}
         DATA_SEARCH_VALUE={"GROUPS_SEARCH_VALUE"}
         dataSearchValues={groupsSearchValues}
         profile={"groups"}
+        statusType="groups"
       />
 
       <HeadTabs
