@@ -401,7 +401,7 @@ export const confirmGroupChangesAction =
       dispatch({
         type: GROUP_MODAL_ACTION_TYPE.CLOSE_GROUP_CONFIRM_MODAL,
       });
-      toastSuccess("Yeniliklər təstiqləndi!");
+      toastSuccess("Yeniliklər təsdiqləndi!");
     } catch (error) {
       const originalRequest = error.config;
       console.log(error);

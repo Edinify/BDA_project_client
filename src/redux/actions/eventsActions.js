@@ -254,7 +254,7 @@ export const confirmEventChangesAction =
       dispatch({
         type: EVENTS_MODAL_ACTION_TYPE.CLOSE_EVENT_CONFIRM_MODAL,
       });
-      toastSuccess("Yeniliklər təstiqləndi!");
+      toastSuccess("Yeniliklər təsdiqləndi!");
     } catch (error) {
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -275,7 +275,7 @@ export const confirmEventChangesAction =
           dispatch({
             type: EVENTS_MODAL_ACTION_TYPE.CLOSE_EVENT_CONFIRM_MODAL,
           });
-          toastSuccess("fənn təstiqləndi!");
+          toastSuccess("fənn təsdiqləndi!");
         } catch (error) {
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
@@ -304,7 +304,7 @@ export const cancelCourseChangesAction =
       dispatch({
         type: EVENTS_MODAL_ACTION_TYPE.CLOSE_EVENT_CONFIRM_MODAL,
       });
-      toastSuccess("Yeniliklər təstiqləndi!");
+      toastSuccess("Yeniliklər təsdiqləndi!");
     } catch (error) {
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -325,7 +325,7 @@ export const cancelCourseChangesAction =
           dispatch({
             type: EVENTS_MODAL_ACTION_TYPE.CLOSE_EVENT_CONFIRM_MODAL,
           });
-          toastSuccess("fənn təstiqləndi!");
+          toastSuccess("fənn təsdiqləndi!");
         } catch (error) {
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());

@@ -366,7 +366,7 @@ export const confirmSyllabusChangesAction =
       dispatch({
         type: SYLLABUS_MODAL_ACTION_TYPE.CLOSE_SYLLABUS_CONFIRM_MODAL,
       });
-      toastSuccess("Yeniləmələr təstiqləndi!");
+      toastSuccess("Yeniləmələr təsdiqləndi!");
     } catch (error) {
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {

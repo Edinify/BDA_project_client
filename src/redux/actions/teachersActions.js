@@ -672,7 +672,7 @@ export const confirmTeacherChangesAction =
       dispatch({
         type: TEACHERS_MODAL_ACTION_TYPE.CLOSE_TEACHER_CONFIRM_MODAL,
       });
-      toastSuccess("Yeniliklər təstiqləndi");
+      toastSuccess("Yeniliklər təsdiqləndi");
     } catch (error) {
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -693,7 +693,7 @@ export const confirmTeacherChangesAction =
           dispatch({
             type: TEACHERS_MODAL_ACTION_TYPE.CLOSE_TEACHER_CONFIRM_MODAL,
           });
-          toastSuccess("Təlimçi təstiqləndi!");
+          toastSuccess("Təlimçi təsdiqləndi!");
         } catch (error) {
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());

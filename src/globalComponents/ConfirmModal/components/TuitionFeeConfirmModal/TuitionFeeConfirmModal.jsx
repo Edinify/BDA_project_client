@@ -90,7 +90,7 @@ const TuitionFeeConfirmModal = () => {
                 <FormControlLabel
                   value="confirm"
                   control={<Radio checked={item?.status === "confirm"} />}
-                  label="Təstiqləndi"
+                  label="təsdiqləndi"
                   disabled={item?.status === "wait"}
                   onClick={() => {
                     togglePaymentStatus({ ...item, status: "confirm" });

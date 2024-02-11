@@ -294,7 +294,7 @@ export const confirmLessonTableChangesAction =
         payload: false,
       });
 
-      toastSuccess("Yeniləmələr təstiqləndi!");
+      toastSuccess("Yeniləmələr təsdiqləndi!");
     } catch (error) {
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {

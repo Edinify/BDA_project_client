@@ -35,7 +35,7 @@ const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
         <FormControlLabel
           value="confirm"
           control={<Radio checked={data?.status === "confirm"} />}
-          label="Təstiqləndi"
+          label="təsdiqləndi"
           disabled
         />
         <FormControlLabel

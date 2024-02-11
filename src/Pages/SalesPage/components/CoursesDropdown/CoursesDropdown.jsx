@@ -44,7 +44,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
         }}
       >
         <h2>
-          {dataList.find((item) => item._id === courseId)?.name || "Ixtisaslar"}
+          {dataList.find((item) => item._id === courseId)?.name || "İxtisaslar"}
         </h2>
         <div className="arrow-icon">
           <ArrowIcon />

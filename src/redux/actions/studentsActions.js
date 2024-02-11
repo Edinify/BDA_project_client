@@ -464,7 +464,7 @@ export const confirmStudentChangesAction =
       dispatch({
         type: STUDENTS_MODAL_ACTION_TYPE.CLOSE_STUDENT_CONFIRM_MODAL,
       });
-      toastSuccess("Yeniliklər təstiqləndi");
+      toastSuccess("Yeniliklər təsdiqləndi");
     } catch (error) {
       const originalRequest = error.config;
 

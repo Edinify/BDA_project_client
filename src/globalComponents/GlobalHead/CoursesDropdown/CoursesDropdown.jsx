@@ -37,7 +37,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
         className="dropdown-head"
         onClick={() => setDropdownOpen(!dropdownOpen)}
       >
-        <h2>{selectedCourse ? selectedCourse.name : "Ixtisaslar"}</h2>
+        <h2>{selectedCourse ? selectedCourse.name : "İxtisaslar"}</h2>
         <div className="arrow-icon">
           <ArrowIcon />
         </div>

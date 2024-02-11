@@ -26,7 +26,7 @@ const StudentCard = ({
           .join(", ")
       : "boş";
   const listData = [
-    { key: "Ixtisas", value: courses },
+    { key: "İxtisas", value: courses },
     {
       key: "Mobil nömrə",
       value: data.phone ? data.phone : "boş",
@@ -134,7 +134,7 @@ const StudentCard = ({
                 {data.groups.map((groupsData) => (
                   <li key={groupsData.group._id}>
                     <span>Qrup adı: {groupsData.group.name}</span>
-                    Qrup ixtisası: {groupsData.group.course.name} <br />
+                    Qrup İxtisası: {groupsData.group.course.name} <br />
                     Ümumi ödəniş: {groupsData.totalAmount} <br />
                   </li>
                 ))}

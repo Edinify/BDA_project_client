@@ -38,7 +38,7 @@ const SyllabusPage = () => {
         payload: { data: {}, openModal: true },
       });
     } else {
-      toast.error("Ixtisas seçməlisiniz", {
+      toast.error("İxtisas seçməlisiniz", {
         position: "top-right",
         autoClose: 2000,
         toastClassName: "custom-toast",
@@ -58,7 +58,7 @@ const SyllabusPage = () => {
         getSyllabusPaginationAction(1, syllabusSearchValues, selectedCourse._id)
       );
     } else {
-      toast.error("Ixtisas seçməlisiniz", {
+      toast.error("İxtisas seçməlisiniz", {
         position: "top-right",
         autoClose: 2000,
         toastClassName: "custom-toast",

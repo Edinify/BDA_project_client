@@ -124,7 +124,7 @@ const UpdateDeleteModal = ({
           {confirmBtn && (
             <h4 className="confirm" onClick={openConfirmModal}>
               <div style={{ position: "relative" }}>
-                <span>Təstiqlə</span>
+                <span>təsdiqlə</span>
                 <div
                   style={{
                     width: "8px",

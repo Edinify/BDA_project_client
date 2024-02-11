@@ -32,7 +32,7 @@ const LessonTableConfirmModal = ({}) => {
 
   const beforeDataList = [
     { title: "Qrup", value: lessonTableModalData?.group?.name },
-    { title: "Ixtisas", value: lessonTableModalData?.group?.course?.name },
+    { title: "İxtisas", value: lessonTableModalData?.group?.course?.name },
     {
       title: "Mövzu",
       value: `${lessonTableModalData?.topic?.orderNumber}. ${lessonTableModalData?.topic?.name}`,
@@ -46,7 +46,7 @@ const LessonTableConfirmModal = ({}) => {
 
   const newDataList = [
     { title: "Qrup", value: lessonTableModalData?.group?.name },
-    { title: "Ixtisas", value: lessonTableModalData?.group?.course?.name },
+    { title: "İxtisas", value: lessonTableModalData?.group?.course?.name },
     {
       title: "Mövzu",
       value: `${lessonTableModalData?.topic?.orderNumber}. ${lessonTableModalData?.topic?.name}`,
@@ -139,7 +139,7 @@ const LessonTableConfirmModal = ({}) => {
                   )
                 }
               >
-                {(lessonTableModalLoading && <LoadingBtn />) || "Təstiqlə"}
+                {(lessonTableModalLoading && <LoadingBtn />) || "təsdiqlə"}
               </button>
             </div>
           )}

@@ -171,7 +171,7 @@ const TeacherConfirmModal = () => {
                   )
                 }
               >
-                {(teachersModalLoading && <LoadingBtn />) || "Təstiqlə"}
+                {(teachersModalLoading && <LoadingBtn />) || "təsdiqlə"}
               </button>
             </div>
           )}

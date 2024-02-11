@@ -14,7 +14,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
   const tableHead = [
     "Tələbənin adı",
     "Qrup",
-    "Ixtisas",
+    "İxtisas",
     "Portfolio linki",
     "CV linki",
     "Mobil Nömrə",

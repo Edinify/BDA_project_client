@@ -167,7 +167,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
                     : currentPayment?.status === "paid"
                     ? "ödənildi"
                     : currentPayment?.status === "confirm"
-                    ? "təstiqləndi"
+                    ? "təsdiqləndi"
                     : currentPayment?.status === "cancel"
                     ? "ləğv edildi"
                     : ""}

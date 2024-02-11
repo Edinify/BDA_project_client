@@ -14,7 +14,7 @@ const StudentsData = ({ studentPageNum, getPageNumber, userData }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.studentsModal);
 
-  const tableHead = ["Tələbə adı", "Ixtisas", "Mobil nömrə", "Qrup", ""];
+  const tableHead = ["Tələbə adı", "İxtisas", "Mobil nömrə", "Qrup", ""];
 
   useEffect(() => {
     if (openMoreModal) {
