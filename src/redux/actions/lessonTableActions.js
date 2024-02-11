@@ -78,12 +78,13 @@ const modalLoading = (loadingValue) => ({
 });
 
 export const getLessonTablePaginationAction =
-  (pageNumber, searchQuery, groupId) => async (dispatch) => {
+  (pageNumber, searchQuery, groupId,startDate,endDate) => async (dispatch) => {
     dispatch(pageLoading(true));
     // console.log(pageNumber, searchQuery, groupId);
     try {
       const { data } = await API.get(
-        `/?page=${pageNumber}&searchQuery=${searchQuery}&groupId=${groupId}`
+        `/?page=${pageNumber}&searchQuery=${searchQuery}&groupId=${groupId}
+        &startDate=${startDate}&endDate=${endDate}`
       );
 
       dispatch({
