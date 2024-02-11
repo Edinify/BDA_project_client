@@ -5,6 +5,7 @@ import { ReactComponent as CoursesIcon } from "../../assets/icons/coursesIcon.sv
 import { ReactComponent as TeachersIcon } from "../../assets/icons/teachersIcon.svg";
 import { ReactComponent as StudentsIcon } from "../../assets/icons/studentsIcon.svg";
 import { ReactComponent as TableIcon } from "../../assets/icons/tableIcon.svg";
+import { ReactComponent as EventIcon } from "../../assets/icons/sidebar/events.svg";
 import { ReactComponent as SalaryIcon } from "../../assets/icons/salaryIcon.svg";
 import { ReactComponent as ExpensesIcon } from "../../assets/icons/expensenIcon.svg";
 import { ReactComponent as IncomesIcon } from "../../assets/icons/incomesIcon.svg";
@@ -183,6 +184,7 @@ export function useCustomHook() {
     },
     { id: 11, name: "Sillabus", key: "syllabus", icon: <SyllabusIcon /> },
     { id: 12, name: "Cədvəl", key: "lessonTable", icon: <TableIcon /> },
+    { id: 13, name: "Tədbirlər", key: "events", icon: <EventIcon /> },
   ];
   const generalProfilePowerList = [
     { name: "Tam-səlahiyyətli", key: "all" },

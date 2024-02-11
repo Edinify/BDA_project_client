@@ -91,7 +91,7 @@ const GroupInput = ({
   return (
     <li className="group-li">
       <div className="top">
-        {index + 1}. {data?.group?.name}, {data?.group?.course.name}
+        {index + 1}. {data?.group?.name}, {data?.group?.course?.name}
         <div className="minus-icon-con">
           <MinusIcon
             className="minus-icon"

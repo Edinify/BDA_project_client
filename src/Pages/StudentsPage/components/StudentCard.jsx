@@ -67,6 +67,7 @@ const StudentCard = ({
     });
   };
 
+  console.log(data.groups,'hhdddddddddddddddddd')
   return (
     <>
       {mode === "desktop" ? (

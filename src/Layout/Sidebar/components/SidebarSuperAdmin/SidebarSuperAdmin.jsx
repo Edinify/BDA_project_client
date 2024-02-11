@@ -28,6 +28,12 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
   return (
     <ul className="sidebar-nav-list">
       <li>
+        <NavLink to="/dashboard" onClick={closeSidebar}>
+          <DashboardIcon />
+          İdarəetmə paneli
+        </NavLink>
+      </li>
+      <li>
         <NavLink to="/" onClick={closeSidebar} className="admin">
           <TableIcon />
           Cədvəl

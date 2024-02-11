@@ -51,7 +51,7 @@ const PaymentType = ({ formik, data, addPaymentType }) => {
               openDropdown ? "active" : ""
             }`}
           >
-            {data.group.course.payments.map((item) => (
+            {data.group?.course?.payments?.map((item) => (
               <li key={item.paymentType} onClick={() => addData(item)}>
                 <h4>
                   {item.paymentType}, ödəniş: {item.payment}

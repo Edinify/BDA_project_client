@@ -23,6 +23,17 @@ export default function Payment({
           : "",
     },
     {
+      inputName: "paidDate",
+      label: "Ödədiyi tarix",
+      type: "date",
+      marginTop: "10px",
+      marginBottom: "0",
+      inputValue:
+        data[inputName] && inputName === "paidDate"
+          ? moment(data[inputName]).format("YYYY-MM-DD")
+          : "",
+    },
+    {
       inputName: "payment",
       label: "Ödəniş",
       type: "number",
