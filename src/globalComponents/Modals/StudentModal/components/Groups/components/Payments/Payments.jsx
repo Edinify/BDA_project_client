@@ -20,33 +20,17 @@ const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
           value="wait"
           control={<Radio checked={data?.status === "wait"} />}
           label="Ödənilməyib"
-          onClick={() => {
-            addPayments("status", "wait", index);
-          }}
+          disabled
         />
         <FormControlLabel
           value="paid"
           control={<Radio checked={data?.status === "paid"} />}
           label="Ödənildi"
-          onClick={() => {
-            addPayments("status", "paid", index);
-          }}
-        />
-        <FormControlLabel
-          value="confirm"
-          control={<Radio checked={data?.status === "confirm"} />}
-          label="Təstiqləndi"
-          disabled
-        />
-        <FormControlLabel
-          value="cancel"
-          control={<Radio checked={data?.status === "cancel"} />}
-          label="Ləğv edildi"
           disabled
         />
       </RadioGroup>
 
-      <div className="input-couples-student">
+      <div className="input-couples">
         <Payment
           inputName={"payment"}
           formik={formik}
@@ -57,14 +41,6 @@ const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
         />
         <Payment
           inputName={"paymentDate"}
-          formik={formik}
-          setInputValue={setInputValue}
-          data={data}
-          addPayments={addPayments}
-          index={index}
-        />
-        <Payment
-          inputName={"paidDate"}
           formik={formik}
           setInputValue={setInputValue}
           data={data}
