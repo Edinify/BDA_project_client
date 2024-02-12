@@ -32,7 +32,7 @@ const GlobalHead = ({
         "all";
       setShowAddBtn(checkPower);
     }
-  });
+  },[]);
 
   return (
     <div className="details-header">
