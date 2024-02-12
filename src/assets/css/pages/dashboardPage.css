@@ -32,6 +32,13 @@
 .dashboard-main > .left section {
   margin-bottom: 12px;
 }
+
+.dashboard-main .where-heard{
+  height: 400px;
+  overflow-y: scroll;
+}
+
+
 .dashboard-main > .left .content-box,
 .dashboard-main > .right > .top .content-box,
 .dashboard-main .lessons-amount .content-box,
@@ -261,7 +268,7 @@
   > .bottom
   .linear-con:nth-child(6)
   h5 {
-  color: var(--neutrals-400);
+  color: var(--tertiary-500);
 }
 .dashboard-main
   .where-heard
@@ -269,8 +276,165 @@
   > .bottom
   .linear-con:nth-child(6)
   .line {
-  background-color: var(--neutrals-400);
+  background-color: var(--tertiary-500);
 }
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(7)
+  h5 {
+  color: var(--secondary-300);
+}
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(7)
+  .line {
+  background-color: var(--secondary-400);
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(8)
+  h5 {
+  color: var(--error-800);
+}
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(8)
+  .line {
+  background-color: var(--error-800);
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(9)
+  h5 {
+  /* color: var(--error-300); */
+  color: #2596be;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(9)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: #2596be;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(10)
+  h5 {
+  /* color: var(--error-300); */
+  color: #49be25;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(10)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: #49be25;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(11)
+  h5 {
+  /* color: var(--error-300); */
+  color: skyblue;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(11)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: skyblue;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(12)
+  h5 {
+  /* color: var(--error-300); */
+  color: orange;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(12)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: orange;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(13)
+  h5 {
+  /* color: var(--error-300); */
+  color: purple;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(13)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: purple;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(14)
+  h5 {
+  /* color: var(--error-300); */
+  color: var(--neutrals-900);
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(14)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: var(--neutrals-900);
+}
+
+
+
 
 /* STUDENTS AMOUNT */
 .dashboard-main .students-amount {
