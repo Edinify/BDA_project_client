@@ -8,9 +8,9 @@ import { toast } from "react-toastify";
 
 const LessonTablePage = () => {
   const dispatch = useDispatch();
-  const { lastPage } = useSelector((state) => state.lessonTablePagination);
-  const { datepicker } = useSelector((state) => state);
-  console.log(datepicker)
+  const { lastPage,status } = useSelector((state) => state.lessonTablePagination);
+  const { startDate,endDate } = useSelector((state) => state.datepicker);
+  console.log(startDate,endDate)
   const { lessonTableSearchValues } = useSelector(
     (state) => state.searchValues
   );
@@ -20,20 +20,31 @@ const LessonTablePage = () => {
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
-
-  console.log(selectedGroup, "selected group");
+  const filterLessons = () => dispatch(
+    getLessonTablePaginationAction(
+      1,
+      lessonTableSearchValues,
+      selectedGroup._id,
+      startDate,
+      endDate,
+      status
+    )
+  )
   const getPageNumber = (pageNumber) => {
     if (lessonTableSearchValues) {
       dispatch(
         getLessonTablePaginationAction(
           pageNumber,
           lessonTableSearchValues,
-          selectedGroup._id
+          selectedGroup._id,
+          '',
+          ''
         )
       );
     } else {
       dispatch(
-        getLessonTablePaginationAction(pageNumber, "", selectedGroup._id)
+        getLessonTablePaginationAction(pageNumber, "", selectedGroup._id,'',
+        '')
       );
     }
   };
@@ -70,7 +81,9 @@ const LessonTablePage = () => {
       getLessonTablePaginationAction(
         1,
         lessonTableSearchValues,
-        selectedGroup._id
+        selectedGroup._id,
+        '',
+        ''
       )
     );
   };
@@ -80,6 +93,7 @@ const LessonTablePage = () => {
       <GlobalHead
         searchData={searchData}
         openModal={openModal}
+        filter={filterLessons}
         DATA_SEARCH_VALUE={"LESSON_TABLE_SEARCH_VALUE"}
         dataSearchValues={lessonTableSearchValues}
         statusType="lesson-table"

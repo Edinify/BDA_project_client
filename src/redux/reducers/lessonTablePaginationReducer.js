@@ -5,6 +5,7 @@ const initialState = {
   totalPages: 1,
   lastPage: "",
   loading: false,
+  status:""
 };
 
 export const lessonTablePaginationReducer = (state = initialState, action) => {
@@ -44,6 +45,11 @@ export const lessonTablePaginationReducer = (state = initialState, action) => {
       return {
         // ...state,
         lastPage: action.payload,
+      };
+    case LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_STATUS:
+      return {
+        ...state,
+        status: action.payload,
       };
     default:
       return state;

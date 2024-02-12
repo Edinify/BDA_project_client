@@ -11,6 +11,7 @@ import { DatePick } from "../../globalComponents/DatePicker/DatePicker";
 const GlobalHead = ({
   searchData,
   openModal,
+  filter,
   DATA_SEARCH_VALUE,
   dataSearchValues,
   statusType,
@@ -53,7 +54,7 @@ const GlobalHead = ({
                 <StatusDropdown statusType="teacher" deviceType="desktop" />
                 <GroupsDropdown deviceType="desktop" />
                 <div className="lesson-table-btn-container teacher ">
-                    <button className="add-detail">Tətbiq et</button>
+                    <button className="add-detail" onClick={() => filter()}>Tətbiq et</button>
                   </div>
                 </div>
 
@@ -69,7 +70,7 @@ const GlobalHead = ({
                 <CoursesDropdown deviceType="desktop" />
                 <GroupsDropdown deviceType="desktop" />
                 <div className="lesson-table-btn-container student ">
-                    <button className="add-detail">Tətbiq et</button>
+                    <button className="add-detail" onClick={() => filter()}>Tətbiq et</button>
                   </div>
             </div>
 
@@ -94,12 +95,8 @@ const GlobalHead = ({
             {addBtn && showAddBtn && (
               <div className="lesson-table-add-btn" >
                 {statusType === "lesson-table" && (
-                  // <button className="add-detail" onClick={openModal}>
-                  //   <PlusIcon />
-                  //   Əlavə et
-                  // </button>
                   <div className="lesson-table-btn-container" >
-                   <button className="add-detail">
+                   <button className="add-detail" onClick={() => filter()}>
                    Tətbiq et
                  </button>
 

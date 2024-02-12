@@ -22,6 +22,20 @@ const TeachersPage = () => {
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
 
+
+  const filterTeachers = () => dispatch(
+    getTeachersPaginationAction(
+      1,
+      teachersSearchValues,
+      teacherStatus
+        ? teacherStatus !== "all"
+          ? teacherStatus
+          : "all"
+        : "all",
+      role,
+    )
+  )
+
   const getPageNumber = (pageNumber) => {
     setTeacherPageNum(pageNumber);
     if (teachersSearchValues) {
@@ -123,6 +137,7 @@ const TeachersPage = () => {
       <GlobalHead
         searchData={searchData}
         openModal={openModal}
+        filter={filterTeachers}
         DATA_SEARCH_VALUE={"TEACHERS_SEARCH_VALUE"}
         dataSearchValues={teachersSearchValues}
         statusType="teacher"

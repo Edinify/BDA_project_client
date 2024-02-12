@@ -5,6 +5,7 @@ import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg"
 import {
   STUDENT_STATUS_FILTER_ACTION_TYPE,
   TEACHER_STATUS_FILTER_ACTION_TYPE,
+  LESSON_TABLE_ALL_ACTIONS_TYPE
 } from "../../../redux/actions-type";
 
 export const StatusDropdown = ({ statusType, deviceType = '' }) => {
@@ -58,11 +59,16 @@ export const StatusDropdown = ({ statusType, deviceType = '' }) => {
   }, []);
   
   const handleClick = (item) => {
+    console.log(item.key)
+    dispatch({
+      type: LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_STATUS,
+      payload: item.key,
+    });
     getCategory(item);
   };
 
   const filterItems = filterData[statusType] || [];
-
+  
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("");
 
