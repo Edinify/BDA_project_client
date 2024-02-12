@@ -132,7 +132,17 @@
 {
   margin-left: 10px;
 } 
+/* tution fee */
+.details-page.tuition-fee-page .tution-fee-filter-header{
+  width: 100%;
+  display:flex;
+}
 
+/* groups */
+.details-page.groups-page .groups-filter-header{
+  width: 100%;
+  display:flex;
+}
 
 @media screen and (max-width:1400px) {
 

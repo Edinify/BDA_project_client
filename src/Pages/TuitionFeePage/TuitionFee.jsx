@@ -48,6 +48,7 @@ const TuitionFeePage = () => {
         DATA_SEARCH_VALUE={"TUITION_FEE_SEARCH_VALUE"}
         dataSearchValues={tuitionFeeSearchValues}
         profile={"tuitionFee"}
+        statusType="tutionFee"
       />
       <TuitionFeeData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>
