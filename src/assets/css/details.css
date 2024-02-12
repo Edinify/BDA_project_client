@@ -85,11 +85,27 @@
   text-align: center;
 }
 
-
-.tuition-fee-page .details-table tr th:nth-last-child(4)  {
-  width: 100px;
+.tuition-fee-page .details-table tr th:nth-last-child(4) {
+  width: 80px;
 }
 
+.tuition-fee-page .details-table tr th:nth-last-child(3) {
+  width: 160px;
+}
+.tuition-fee-page .details-table tr th:nth-last-child(2) {
+  width: 130px;
+}
+
+.tuition-fee-page .details-table tr th:nth-last-child(6) {
+  width: 130px;
+}
+.tuition-fee-page .details-table tr th:nth-last-child(7) {
+  width: 130px;
+}
+
+.tuition-fee-page .details-table tr th:nth-last-child(5) {
+  width: 130px;
+}
 
 .details-table.courses-table tr th:first-child,
 .details-table.courses-table tr td:first-child {
@@ -125,13 +141,12 @@
 .details-table.lesson-table tr th:nth-last-child(3),
 .details-table.lesson-table tr td:nth-last-child(3),
 .details-table.lesson-table tr th:nth-child(2),
-.details-table.lesson-table tr td:nth-child(2)
-{
+.details-table.lesson-table tr td:nth-child(2) {
   width: 120px;
 }
 
 .details-table.lesson-table tr th:nth-last-child(2),
-.details-table.lesson-table tr td:nth-last-child(2){
+.details-table.lesson-table tr td:nth-last-child(2) {
   width: 140px;
 }
 
@@ -252,17 +267,11 @@
 .details-table.consultation-page tr th:nth-last-child(4),
 .details-table.consultation-page tr td:nth-last-child(4),
 .details-table.consultation-page tr th:nth-last-child(3),
-.details-table.consultation-page tr td:nth-last-child(3)
- {
+.details-table.consultation-page tr td:nth-last-child(3) {
   text-align: center;
-  
 }
 
-
 /* details-table END*/
-
-
-
 
 /* details-tablet*/
 .details-list-tablet {

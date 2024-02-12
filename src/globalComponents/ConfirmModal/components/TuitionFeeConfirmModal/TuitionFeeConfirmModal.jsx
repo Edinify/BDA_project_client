@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import "moment/locale/az";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +24,9 @@ const TuitionFeeConfirmModal = () => {
     payment: "",
     paymentDate: "",
   });
+  const [currentPayment, setCurrentPayment] = useState(0);
+  const [payments, setPayments] = useState([]);
+  const [paidAmount, setPaidAmount] = useState(0);
 
   console.log(tuitionFeeSearchValues, "tuitionFeeSearchValues");
   console.log(paidData);
@@ -54,20 +57,67 @@ const TuitionFeeConfirmModal = () => {
   };
 
   const addPayment = () => {
+    const checkPaids = Array.isArray(tuitionFeeModalData.paids);
     dispatch({
       type: TUITION_FEE_MODAL_ACTION_TYPE.UPDATE_TUITION_FEE_PAYMENTS,
       payload: {
         data: {
           ...tuitionFeeModalData,
-          paids: [...tuitionFeeModalData.paids, paidData],
+          paids: checkPaids
+            ? [...tuitionFeeModalData.paids, paidData]
+            : [paidData],
         },
         openModal: false,
         openConfirmModal: "openConfirmModal",
       },
     });
+
+    setPaidData({
+      payment: "",
+      paymentDate: "",
+    });
   };
 
-  console.log(tuitionFeeModalData);
+  useEffect(() => {
+    const totalConfirmedPayment = tuitionFeeModalData?.paids?.reduce(
+      (value, item) => value + parseFloat(item?.confirmed ? item.payment : 0),
+      0
+    );
+    const currDate = new Date();
+
+    const calcedPayments = tuitionFeeModalData?.payments.map(
+      (item, index, array) => {
+        const totalPayment = array
+          .filter((item, i) => i <= index)
+          .reduce((total, item) => total + item.payment, 0);
+
+        if (totalConfirmedPayment - totalPayment >= 0) {
+          return { ...item, paid: true, rest: 0 };
+        } else {
+          return {
+            ...item,
+            paid: false,
+            rest: totalPayment - totalConfirmedPayment,
+          };
+        }
+      }
+    );
+
+    const currPayment =
+      calcedPayments.find(
+        (item) => new Date(item.paymentDate).getMonth() === currDate.getMonth()
+      )?.rest || 0;
+
+    console.log(currPayment, "curretn payment");
+
+    setCurrentPayment(currPayment);
+
+    setPayments(calcedPayments);
+
+    setPaidAmount(totalConfirmedPayment);
+  }, [tuitionFeeModalData.paids]);
+
+  console.log(payments, "ssssssssssssssssssssss");
   return (
     <div style={{ marginTop: "30px" }}>
       <div>
@@ -77,15 +127,22 @@ const TuitionFeeConfirmModal = () => {
         </div>
         <div style={{ display: "flex" }}>
           <h2>Ödənilən məbləğ:</h2>
-          <h2>{0} AZN</h2>
+          <h2>
+            {paidAmount}
+            AZN
+          </h2>
         </div>
         <div style={{ display: "flex" }}>
           <h2>Qalıq: </h2>
-          <h2>{1600} AZN</h2>
+          <h2>{tuitionFeeModalData?.totalAmount - paidAmount} AZN</h2>
+        </div>
+        <div style={{ display: "flex" }}>
+          <h2>Cari ödəniş: </h2>
+          <h2>{currentPayment} AZN</h2>
         </div>
       </div>
       <h2 style={{ marginTop: "20px" }}>Ödəniş cədvəli:</h2>
-      {tuitionFeeModalData?.payments?.map((item) => {
+      {payments?.map((item) => {
         return (
           <div
             key={item._id}
@@ -109,6 +166,9 @@ const TuitionFeeConfirmModal = () => {
                   ? moment(item.paymentDate).locale("az").format("DD.MM.YYYY")
                   : ""}
               </h2>
+
+              <h2>{item.paid ? "ödənildi" : "ödənilməyib"}</h2>
+              <h2>{(item.rest > item.payment && item.payment) || item.rest}</h2>
 
               <h2>{item.payment} AZN</h2>
             </div>
@@ -138,7 +198,7 @@ const TuitionFeeConfirmModal = () => {
 
       <div style={{ marginTop: "40px" }} className="tution-fee-confirm-modal">
         <h2 style={{ marginBottom: "40px" }}>Ödənişlər:</h2>
-        <Paids />
+        <Paids tuitionFeeModalData={tuitionFeeModalData} />
         <div>
           <Box>
             <div
@@ -204,7 +264,7 @@ const TuitionFeeConfirmModal = () => {
               />
               <div className="right">
                 <button
-                  disabled={false}
+                  disabled={!paidData.payment || !paidData.paymentDate}
                   onClick={addPayment}
                   className="add-class"
                 >

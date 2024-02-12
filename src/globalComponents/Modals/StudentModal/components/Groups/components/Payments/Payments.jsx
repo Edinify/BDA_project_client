@@ -6,7 +6,7 @@ const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
   console.log(data, "data in paymentsss");
   return (
     <div style={{ borderTop: "1px solid gray", padding: "20px 0" }}>
-      <RadioGroup
+      {/* <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
@@ -28,7 +28,7 @@ const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
           label="Ödənildi"
           disabled
         />
-      </RadioGroup>
+      </RadioGroup> */}
 
       <div className="input-couples">
         <Payment

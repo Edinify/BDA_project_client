@@ -10,7 +10,6 @@ const WhereHeard = ({ dashboardKeys }) => {
   const [openCalendar, setOpenCalendar] = useState(false);
   const [openDateDropdown, setOpenDateDropdown] = useState(false);
 
-
   const applyFilter = (startDate, endDate) => {
     dispatch(getDashboardAdvertisingAction(startDate, endDate, ""));
     setOpenCalendar(false);
@@ -21,7 +20,7 @@ const WhereHeard = ({ dashboardKeys }) => {
     dispatch(getDashboardAdvertisingAction("", "", option.key));
   };
 
-  // console.log(advertising, "bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+  console.log(advertising, "bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 
   return (
     <>

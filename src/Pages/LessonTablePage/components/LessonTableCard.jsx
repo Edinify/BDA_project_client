@@ -17,16 +17,20 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
   );
   const lessonDay = data.date
     ? `${moment(data.date).locale("az").format("DD.MM.YYYY")}, ${
-        weeksArrFullName[moment(new Date(data.date)).day()]
+        weeksArrFullName[
+          moment(new Date(data.date)).day() === 7
+            ? 0
+            : moment(new Date(data.date)).day()
+        ]
       }`
     : "";
-  const openStudentsList=()=>{
+  const openStudentsList = () => {
     setStudents({ data: data.students, lessonId: data._id });
     dispatch({
       type: LESSON_TABLE_MODAL_ACTION_TYPE.STUDENT_MODAL,
       payload: true,
     });
-  }
+  };
   const listData = [
     {
       key: "Dərs günü",
@@ -45,7 +49,12 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
       value:
         lessonStatusList.find((item) => item.key === data.status).name || "",
     },
-    { key: "Tələbələr", value: data.students.length, onClick:openStudentsList ,className:"student-count"},
+    {
+      key: "Tələbələr",
+      value: data.students.length,
+      onClick: openStudentsList,
+      className: "student-count",
+    },
   ];
   const updateItem = (modalType) => {
     dispatch({
@@ -84,11 +93,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
     });
   };
 
-
-
-  console.log(lesson,"pow")
-
-
+  console.log(lesson, "pow");
 
   return (
     <>
@@ -127,10 +132,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
             </div>
           </td>
           <td className="student-length">
-            <div
-              onClick={openStudentsList}
-              className="td-con"
-            >
+            <div onClick={openStudentsList} className="td-con">
               <div className="table-scroll-text">
                 {data.students.length} ...
               </div>
@@ -171,8 +173,12 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
             <h3>{data.group.name}</h3>
             <ul>
               {listData.map((item, index) => (
-                <li onClick={item.onClick} key={index} className={item.className} >
-                  <span  className="type">{item.key}</span>
+                <li
+                  onClick={item.onClick}
+                  key={index}
+                  className={item.className}
+                >
+                  <span className="type">{item.key}</span>
                   <p>{item.value}</p>
                 </li>
               ))}

@@ -16,6 +16,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   );
   const { tuitionFeeSearchValues } = useSelector((state) => state.searchValues);
   const [currentPayment, setCurrentPayment] = useState(null);
+  const [totalRest, setTotalRest] = useState();
 
   const listData = [
     { key: "Qrup", value: `${data.group.name} - ${data.group.course.name}` },
@@ -80,22 +81,23 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
 
   useEffect(() => {
     const currentDate = new Date();
+    const totalConfirmedPayment = data?.paids?.reduce(
+      (value, item) => value + parseFloat(item?.confirmed ? item.payment : 0),
+      0
+    );
 
-    for (let paymentItem of data.payments) {
-      const paymentDate = new Date(paymentItem.paymentDate);
+    const currIndex = data.payments.findIndex(
+      (item) => new Date(item.paymentDate).getMonth() === currentDate.getMonth()
+    );
 
-      if (
-        paymentDate.getMonth() === currentDate.getMonth() &&
-        paymentDate.getFullYear() === currentDate.getFullYear()
-      ) {
-        setCurrentPayment({
-          ...paymentItem,
-          paymentDate: moment(paymentDate).format("DD.MM.YYYY"),
-        });
-        break;
-      }
-    }
-  }, []);
+    const totalPayment = data.payments
+      .filter((item, i) => i <= currIndex)
+      .reduce((total, item) => total + item.payment, 0);
+
+    setCurrentPayment(totalPayment - totalConfirmedPayment);
+    console.log(data.totalAmount);
+    setTotalRest((data?.totalAmount || 0) - (totalConfirmedPayment || 0));
+  });
 
   return (
     <>
@@ -135,9 +137,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
           <td>
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {discountReasonList.find(
-                  (item) => item.key === data?.discountReason
-                )?.name || ""}
+                {totalRest + " AZN"}
               </div>
               <div className="right-fade"></div>
             </div>
@@ -145,11 +145,12 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
           <td>
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {data.discount || 0}%
+                {data?.discount || 0}%
               </div>
               <div className="right-fade"></div>
             </div>
           </td>
+
           <td>
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
@@ -158,27 +159,17 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td>
+          <td
+            style={
+              currentPayment <= 0
+                ? { backgroundColor: "#d4ffbf" }
+                : { backgroundColor: "#ffced1" }
+            }
+          >
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                <p>
-                  {currentPayment?.status === "wait"
-                    ? " ödənilməyib"
-                    : currentPayment?.status === "paid"
-                    ? "ödənildi"
-                    : currentPayment?.status === "confirm"
-                    ? "təstiqləndi"
-                    : currentPayment?.status === "cancel"
-                    ? "ləğv edildi"
-                    : ""}
-                </p>
-                <p>
-                  {currentPayment?.payment
-                    ? currentPayment?.payment + " AZN"
-                    : ""}
-                </p>
+                <p>{currentPayment > 0 ? currentPayment : 0} AZN</p>
               </div>
-              <div className="right-fade"></div>
             </div>
           </td>
           <td>
