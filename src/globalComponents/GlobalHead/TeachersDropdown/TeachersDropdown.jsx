@@ -3,19 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as ArrowIcon } from "../../../assets/icons/arrow-down-dropdown.svg";
 import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg";
 import { DROPDOWN_TEACHER_ACTIONS_TYPE } from "../../../redux/actions-type";
-import { getGroupsWithTeacherAction } from "../../../redux/actions/groupsActions";
-import { getLessonTablePaginationAction } from "../../../redux/actions/lessonTableActions";
 import { getAllTeachersAction } from "../../../redux/actions/teachersActions";
 
 export const TeachersDropdown = ({ deviceType = "" }) => {
   const dispatch = useDispatch();
-  const { groupData: dataList } = useSelector(
-    (state) => state.groupsPagination
-  );
   const { selectedTeacher } = useSelector((state) => state.dropdownTeacher);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  console.log(selectedTeacher, "selected");
   const { teachers } = useSelector((state) => state.teachersPagination);
 
   const getTeacher = (teacher) => {
@@ -24,7 +18,6 @@ export const TeachersDropdown = ({ deviceType = "" }) => {
       type: DROPDOWN_TEACHER_ACTIONS_TYPE.SELECT_TEACHER,
       payload: teacher,
     });
-    // dispatch(getLessonTablePaginationAction(1, "", teacher._id));
   };
 
   useEffect(() => {

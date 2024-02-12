@@ -128,7 +128,9 @@
   display: flex;
 }
 .lesson-table-btn-container.teacher,
-.lesson-table-btn-container.student
+.lesson-table-btn-container.student,
+.lesson-table-btn-container.groups,
+.lesson-table-btn-container.tution
 {
   margin-left: 10px;
 } 
@@ -210,6 +212,10 @@
   }
   .details-header-container .dropdown-name.mobile {
     display: inline-block;
+  }
+
+  .lesson-table-btn-container.desktop{
+    display: none;
   }
 }
 

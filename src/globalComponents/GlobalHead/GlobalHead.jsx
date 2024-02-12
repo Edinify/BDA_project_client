@@ -58,7 +58,6 @@ const GlobalHead = ({
                     <button className="add-detail" onClick={() => filter()}>Tətbiq et</button>
                   </div>
                 </div>
-
               )}
               {/* {statusType === "student" && (
                 <StatusDropdown statusType="student" deviceType="desktop" />
@@ -73,24 +72,29 @@ const GlobalHead = ({
                 <div className="lesson-table-btn-container student ">
                     <button className="add-detail" onClick={() => filter()}>Tətbiq et</button>
                   </div>
-            </div>
+                </div>
 
-            // <StatusDropdown statusType="student" deviceType="mobile" />
-          
-          )}
-          {statusType==="groups"&&(
-            <div className="groups-filter-header" >
-               <CoursesDropdown deviceType="desktop" />
-               <TeachersDropdown deviceType="desktop" />
-            </div>
-          )}
+                // <StatusDropdown statusType="student" deviceType="mobile" />
+              )}
+              {statusType === "groups" && (
+                <div className="groups-filter-header">
+                  <CoursesDropdown deviceType="desktop" />
+                  <TeachersDropdown deviceType="desktop" />
+                  <div className="lesson-table-btn-container groups ">
+                    <button className="add-detail">Tətbiq et</button>
+                  </div>
+                </div>
+              )}
 
-          {statusType==="tutionFee" &&(
-            <div className="tution-fee-filter-header" >
-            <CoursesDropdown deviceType="desktop" />
-            <GroupsDropdown deviceType="desktop" />
-         </div>
-          )}
+              {statusType === "tutionFee" && (
+                <div className="tution-fee-filter-header">
+                  <CoursesDropdown deviceType="desktop" />
+                  <GroupsDropdown deviceType="desktop" />
+                  <div className="lesson-table-btn-container tution ">
+                    <button className="add-detail">Tətbiq et</button>
+                  </div>
+                </div>
+              )}
               {statusType === "lesson-table" && (
                 <div className="lesson-table-header-container">
                   <div className="lesson-table-status">
@@ -101,13 +105,13 @@ const GlobalHead = ({
                     />
                   </div>
                   <div className="lesson-table-datepick">
-                    <DatePick />
+                    <DatePick deviceType="desktop" />
                   </div>
                 </div>
               )}
             </div>
             {addBtn && showAddBtn && (
-              <div className="lesson-table-add-btn" >
+              <div className="lesson-table-add-btn">
                 {statusType === "lesson-table" && (
                   <div className="lesson-table-btn-container" >
                    <button className="add-detail" onClick={() => filter()}>
@@ -129,18 +133,19 @@ const GlobalHead = ({
           {statusType === "teacher" && (
             <StatusDropdown statusType="teacher" deviceType="mobile" />
           )}
-          
+
           {statusType === "syllabus" && <CoursesDropdown deviceType="mobile" />}
           {statusType === "lesson-table" && (
             <GroupsDropdown deviceType="mobile" />
           )}
         </div>
-        {statusType==="lesson-table" &&
-        <div className="apply-btn">
-         <button className="add-detail" onClick={openModal}>
-         Əlavə et
-       </button>
-       </div> }
+        {statusType === "lesson-table" && (
+          <div className="apply-btn">
+            <button className="add-detail" onClick={openModal}>
+              Əlavə et
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
