@@ -23,6 +23,17 @@
   align-items: center;
   width: 100%;
 }
+
+.details-header-content.teacher .details-header-content-left {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.teahcer-page-add-btn{
+  display: flex;
+  justify-content: flex-end;
+}
 .details-header-content .search-input-con {
   position: relative;
   display: flex;
@@ -134,6 +145,7 @@
 .details-page.teachers-page .teacher-header-filter {
   width: 100%;
   display: flex;
+  margin-top: 8px;
 }
 .lesson-table-btn-container.teacher,
 .lesson-table-btn-container.student,
