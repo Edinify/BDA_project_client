@@ -251,6 +251,41 @@
   cursor: unset;
 }
 
+.tution-fee-confirm-modal .add-class {
+  background-color: white;
+  color: #462aff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  cursor: pointer;
+  /* margin: 30px 10px 0 20px; */
+  transition: 0.3s;
+  height: 50.25px;
+  border-radius: 4px;
+  border: 1px solid var(--primary-500);
+  padding: 11px 12px;
+  /* color: var(--primary-500);
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid var(--primary-500);
+  padding: 11px 12px; */
+}
+
+.tution-fee-confirm-modal .add-class svg {
+  font-size: 24px;
+}
+
+.tution-fee-confirm-modal .add-class:hover {
+  color: #3226f8;
+}
+.tution-fee-confirm-modal .add-class:disabled {
+  color: #b29bff;
+  border-color: #b29bff;
+  background-color: white;
+  cursor: unset;
+}
+
 .create-update-modal-form .validation-err-message {
   font-size: 11px;
   color: red;
