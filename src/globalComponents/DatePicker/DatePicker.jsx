@@ -10,7 +10,7 @@ import { DATEPICKER_ACTION_TYPE } from "../../redux/actions-type";
 import moment from "moment";
 import { useCustomHook } from "../GlobalFunctions/globalFunctions";
 
-export const DatePick = () => {
+export const DatePick = ({deviceType=""}) => {
   registerLocale("az", az);
   const dispatch = useDispatch();
   const { startWeek, endWeek } = useCustomHook();
@@ -70,7 +70,7 @@ export const DatePick = () => {
 
   return (
     <>
-      <div className="date-container">
+      <div className={`date-container ${deviceType}`}>
         <div className="date-picker-a from ">
           <CalendarIcon
             onClick={() => startDateRef.current.setOpen(true)}

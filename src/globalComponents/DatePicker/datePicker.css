@@ -62,6 +62,12 @@
 }
 }
 
+@media screen and (max-width:780px) {
+  .date-container.desktop{
+    display: none;
+  }
+}
+
 @media screen and (max-width: 1100px) {
   .react-datepicker__input-container input {
     font-size: 15px;

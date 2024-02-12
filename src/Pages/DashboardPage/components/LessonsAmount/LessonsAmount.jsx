@@ -135,7 +135,7 @@ const LessonsAmount = () => {
             </p>
           </div>
         </div>
-        <div className="content-box">
+        <div className="content-box events">
           <div className="left green">
             <CheckIcon />
           </div>

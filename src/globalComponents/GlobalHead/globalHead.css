@@ -211,6 +211,10 @@
   .details-header-container .dropdown-name.mobile {
     display: inline-block;
   }
+
+  .lesson-table-btn-container.desktop{
+    display: none;
+  }
 }
 
 @media screen and (max-width: 500px) {

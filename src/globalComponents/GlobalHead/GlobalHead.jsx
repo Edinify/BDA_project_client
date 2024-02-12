@@ -101,7 +101,7 @@ const GlobalHead = ({
                     />
                   </div>
                   <div className="lesson-table-datepick">
-                    <DatePick />
+                    <DatePick deviceType="desktop"  />
                   </div>
                 </div>
               )}
@@ -113,7 +113,7 @@ const GlobalHead = ({
                   //   <PlusIcon />
                   //   Əlavə et
                   // </button>
-                  <div className="lesson-table-btn-container" >
+                  <div className="lesson-table-btn-container desktop " >
                    <button className="add-detail">
                    Tətbiq et
                  </button>

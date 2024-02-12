@@ -315,9 +315,9 @@
     margin-bottom: 0;
     margin-right: 8px;
   }
-  .dashboard-main .lessons-amount .content-box:last-child {
+  /* .dashboard-main .lessons-amount .content-box:last-child {
     margin-right: 0;
-  }
+  } */
   .dashboard-main > .left .content-box,
   .dashboard-main > .right > .top .content-box,
   .dashboard-main .lessons-amount .content-box,
@@ -356,6 +356,11 @@
     .top
     .diff-pointer {
     font-size: 8px;
+  }
+
+  .dashboard-main .lessons-amount .content-box.events{
+    margin: 0;
+    margin: 8px 8px 0 0;
   }
 
   /* FINANCE */
@@ -440,6 +445,8 @@
   .dashboard-main .students-amount .content-box > .top .title {
     font-size: 18px;
   }
+  
+  
 }
 
 @media screen and (max-width: 700px) {
@@ -462,9 +469,9 @@
     flex-direction: column;
     padding: 6px;
   }
-  .dashboard-main .lessons-amount .content-box:last-child {
+  /* .dashboard-main .lessons-amount .content-box:last-child {
     margin-right: 0;
-  }
+  } */
   .dashboard-main .lessons-amount .content-box > .left {
     width: 100%;
     height: 32px;
@@ -492,6 +499,9 @@
   }
   .dashboard-main .lessons-amount .content-box > .right .top svg {
     display: none;
+  }
+  .dashboard-main .lessons-amount .content-box.events{
+    margin-top: 8px;
   }
 
   /* FINANCE STATISTICS */
