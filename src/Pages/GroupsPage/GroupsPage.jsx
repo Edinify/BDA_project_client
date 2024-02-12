@@ -12,14 +12,26 @@ const GroupsPage = () => {
   const location = useLocation();
   const { lastPage } = useSelector((state) => state.groupsPagination);
   const { groupsSearchValues } = useSelector((state) => state.searchValues);
+  const {courseId } = useSelector((state) => state.studentStatus);
+  const { selectedTeacher } = useSelector((state) => state.dropdownTeacher);
   const [completed, setCompleted] = useState(true);
-
+  console.log(selectedTeacher)
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =
     userData.role !== "super-admin"
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
 
+  
+    const filterGroup = () => dispatch(
+      getGroupsPaginationAction(
+        1,
+        groupsSearchValues, 
+        completed,
+        courseId,
+        selectedTeacher._id
+      )
+    )   
   const getPageNumber = (pageNumber) => {
     if (groupsSearchValues) {
       dispatch(
@@ -50,13 +62,12 @@ const GroupsPage = () => {
     }
   }, [location.pathname]);
 
-  console.log(lastPage, "last page");
-
   return (
     <div className="details-page groups-page ">
       <GlobalHead
         searchData={searchData}
         openModal={openModal}
+        filter={filterGroup}
         DATA_SEARCH_VALUE={"GROUPS_SEARCH_VALUE"}
         dataSearchValues={groupsSearchValues}
         profile={"groups"}

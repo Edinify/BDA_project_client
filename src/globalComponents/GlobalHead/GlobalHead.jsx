@@ -54,7 +54,6 @@ const GlobalHead = ({
                 <div className="teacher-header-filter" >
                 <StatusDropdown statusType="teacher" deviceType="desktop" />
                 <CoursesDropdown deviceType="desktop" />
-                <GroupsDropdown deviceType="desktop" />
                 <div className="lesson-table-btn-container teacher ">
                     <button className="add-detail" onClick={() => filter()}>Tətbiq et</button>
                   </div>

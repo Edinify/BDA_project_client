@@ -179,7 +179,7 @@ export const getTeachersByCourseId = (courseId) => async (dispatch) => {
 };
 
 export const getTeachersPaginationAction =
-  (pageNumber, searchQuery, status = "all", role,groupId) =>
+  (pageNumber, searchQuery, status = "all", role,courseId) =>
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
@@ -189,7 +189,7 @@ export const getTeachersPaginationAction =
       console.log(role, "role");
 
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&role=${role}&groupId=${groupId || ""}`
+        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
       );
 
       dispatch({

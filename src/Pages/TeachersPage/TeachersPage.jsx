@@ -13,6 +13,7 @@ const TeachersPage = () => {
   const { lastPage } = useSelector((state) => state.teachersPagination);
   const { teachersSearchValues } = useSelector((state) => state.searchValues);
   const { teacherStatus } = useSelector((state) => state.teacherStatus);
+  const {courseId } = useSelector((state) => state.studentStatus);
   const [teacherPageNum, setTeacherPageNum] = useState(1);
   const [role, setRole] = useState("teacher");
 
@@ -33,6 +34,7 @@ const TeachersPage = () => {
           : "all"
         : "all",
       role,
+      courseId
     )
   )
 

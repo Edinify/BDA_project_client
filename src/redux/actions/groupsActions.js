@@ -207,11 +207,11 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
 };
 
 export const getGroupsPaginationAction =
-  (pageNumber, searchQuery, completed) => async (dispatch) => {
+  (pageNumber, searchQuery, completed,courseId, selectedId) => async (dispatch) => {
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
-        `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&completed=${completed}`
+        `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&completed=${completed}&courseId=${courseId}&selectedId=${selectedId}`
       );
       dispatch({
         type: GROUP_ALL_ACTIONS_TYPE.GET_GROUP_LAST_PAGE,
