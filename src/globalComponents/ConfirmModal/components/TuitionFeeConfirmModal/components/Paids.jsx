@@ -1,17 +1,8 @@
-import { DataGrid } from "@mui/x-data-grid";
 import {
   Box,
   Card,
   Checkbox,
-  Container,
-  FormControlLabel,
-  Paper,
-  Switch,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
+
   Typography,
 } from "@mui/material";
 import { useState } from "react";
@@ -51,7 +42,14 @@ function Paids() {
 
   return (
     <Box sx={{ width: "100%", marginBottom: "40px" }}>
-      <Card sx={{boxShadow:"none",borderBottom:"0.1px solid ",borderRadius:0}}  className="paids-container">
+      <Card
+        sx={{
+          boxShadow: "none",
+          borderBottom: "0.1px solid ",
+          borderRadius: 0,
+        }}
+        className="paids-container"
+      >
         <Checkbox
           color="primary"
           onChange={handleChange}
@@ -64,8 +62,8 @@ function Paids() {
           size="large"
         />
         {/* <div className="paids-content"> */}
-          <Typography>11.02.2024</Typography>
-          <Typography>100AZN</Typography>
+        <Typography>11.02.2024</Typography>
+        <Typography>100AZN</Typography>
         {/* </div> */}
         <div className="minus-icon-con">
           <MinusIcon className="minus-icon" />
