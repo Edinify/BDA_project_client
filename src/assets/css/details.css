@@ -121,6 +121,20 @@
   border-top: 0.5px solid var(--neutrals-500);
 }
 
+/* lesson table */
+.details-table.lesson-table tr th:nth-last-child(3),
+.details-table.lesson-table tr td:nth-last-child(3),
+.details-table.lesson-table tr th:nth-child(2),
+.details-table.lesson-table tr td:nth-child(2)
+{
+  width: 120px;
+}
+
+.details-table.lesson-table tr th:nth-last-child(2),
+.details-table.lesson-table tr td:nth-last-child(2){
+  width: 140px;
+}
+
 /* only-show */
 .details-table.student-table.only-show tr th,
 .details-table.student-table.only-show tr td {

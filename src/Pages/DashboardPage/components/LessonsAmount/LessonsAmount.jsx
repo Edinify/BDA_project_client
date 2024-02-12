@@ -4,6 +4,10 @@ import { ReactComponent as CheckIcon } from "../../../../assets/icons/dashboard/
 import { ReactComponent as Xicon } from "../../../../assets/icons/dashboard/x-close.svg";
 import { ReactComponent as HelpCircle } from "../../../../assets/icons/dashboard/help-circle-dashboard.svg";
 import { ReactComponent as DotsIcon } from "../../../../assets/icons/dashboard/dots-horizontal-dashboard.svg";
+import {ReactComponent as StudentsIcon} from "../../../../assets/icons/dashboard/students-svgrepo-com.svg"
+import {ReactComponent as ActiveStudentsIcon} from "../../../../assets/icons/dashboard/active-students-svgrepo-com.svg"
+import {ReactComponent as EventsIcon} from "../../../../assets/icons/dashboard/events-svgrepo-com.svg"
+import {ReactComponent as GroupsIcon} from "../../../../assets/icons/dashboard/groups-svgrepo-com.svg"
 import {
   getActiveStudentsCountAction,
   getAllEventsAction,
@@ -74,7 +78,8 @@ const LessonsAmount = () => {
       <section className="lessons-amount">
         <div className="content-box">
           <div className="left green">
-            <CheckIcon />
+            {/* <CheckIcon /> */}
+            <StudentsIcon/>
           </div>
 
           <div className="right">
@@ -99,7 +104,7 @@ const LessonsAmount = () => {
 
         <div className="content-box cancelled-lessons">
           <div className="left red">
-            <Xicon />
+          <ActiveStudentsIcon/>
           </div>
 
           <div className="right">
@@ -123,7 +128,7 @@ const LessonsAmount = () => {
 
         <div className="content-box">
           <div className="left grey">
-            <HelpCircle />
+            <GroupsIcon />
           </div>
 
           <div className="right">
@@ -137,7 +142,7 @@ const LessonsAmount = () => {
         </div>
         <div className="content-box events">
           <div className="left green">
-            <CheckIcon />
+            <EventsIcon />
           </div>
 
           <div className="right">

@@ -33,6 +33,15 @@ const StudentCard = ({
     },
   ];
 
+  let groupName =
+    Array.isArray(data.groups) && data.groups.length > 0
+      ? data.groups
+          .map((group) => {
+            return `${group.group.name}`;
+          })
+          .join(",")
+      : "boş";
+
   const updateItem = (modalType) => {
     dispatch({
       type: STUDENTS_MODAL_ACTION_TYPE.GET_STUDENTS_MODAL,
@@ -67,7 +76,7 @@ const StudentCard = ({
     });
   };
 
-  console.log(data.groups,'hhdddddddddddddddddd')
+  // console.log(data.groups, "hhdddddddddddddddddd");
   return (
     <>
       {mode === "desktop" ? (
@@ -94,11 +103,12 @@ const StudentCard = ({
           <td>
             <div className="td-con">
               <div className="table-scroll-text">
-                {data.groups.map((item) => (
+                {groupName}
+                {/* {data.groups.map((item) => (
                   <p key={item.group._id}>
                     {item.group.name} <br />
                   </p>
-                ))}
+                ))} */}
               </div>
               <div className="right-fade"></div>
             </div>

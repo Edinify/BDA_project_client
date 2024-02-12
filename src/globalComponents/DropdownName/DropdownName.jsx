@@ -137,7 +137,7 @@ export const DropdownName = () => {
 
   return (
     <div
-      className={`global-category-dropdown dropdown-name name ${
+      className={`global-category-dropdown dropdown-name   name ${
         dropdownOpen ? "active" : ""
       }`}
     >

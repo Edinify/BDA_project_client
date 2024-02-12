@@ -21,6 +21,8 @@ const GroupInput = ({
     (item) => item.group._id === data.group._id
   );
 
+  console.log(data,"dataaaaaaa")
+
   const addPaymentType = (item) => {
     groupData[foundIndex] = {
       ...groupData[foundIndex],

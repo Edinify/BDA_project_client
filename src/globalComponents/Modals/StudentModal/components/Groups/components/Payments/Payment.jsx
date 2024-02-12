@@ -87,6 +87,7 @@ export default function Payment({
           setShrink(!!e.target.value);
         }}
         onFocus={() => setShrink(true)}
+        disabled={data?.status === "paid"}
       />
 
       {formik.errors[inputName] && formik.touched[inputName] && (
