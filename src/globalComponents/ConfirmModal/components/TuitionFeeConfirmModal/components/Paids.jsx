@@ -1,4 +1,4 @@
-import { DataGrid } from "@mui/x-data-grid";
+// import { DataGrid } from "@mui/x-data-grid";
 import { Box, Card, Checkbox, Typography } from "@mui/material";
 import { useState } from "react";
 import { ReactComponent as MinusIcon } from "../../../../../assets/icons/minus-cirlce.svg";

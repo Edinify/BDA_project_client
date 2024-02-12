@@ -66,10 +66,6 @@ const GlobalHead = ({
               {statusType === "teacher" && (
                 <div className="teacher-header-filter-container">
                   <div className="teahcer-page-add-btn">
-                    <button className="add-detail" onClick={openModal}>
-                      <PlusIcon />
-                      Əlavə et
-                    </button>
                   </div>
                   <div className="teacher-header-filter">
                   {search && (
@@ -94,9 +90,6 @@ const GlobalHead = ({
                   </div>
                 </div>
               )}
-              {/* {statusType === "student" && (
-                <StatusDropdown statusType="student" deviceType="desktop" />
-              )} */}
               {statusType === "syllabus" && (
                 <CoursesDropdown deviceType="desktop" />
               )}
@@ -163,11 +156,6 @@ const GlobalHead = ({
                         <DatePick deviceType="desktop" />
                       </div>
                     </div>
-                    <div className="lesson-page-apply-btn">
-                      <div className="lesson-table-btn-container lesson-page ">
-                        <button className="add-detail">Tətbiq et</button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               )}
@@ -201,13 +189,6 @@ const GlobalHead = ({
             <GroupsDropdown deviceType="mobile" />
           )}
         </div>
-        {/* {statusType === "lesson-table" && (
-          <div className="apply-btn">
-            <button className="add-detail" onClick={openModal}>
-              Əlavə et
-            </button>
-          </div>
-        )} */}
       </div>
     </div>
   );
