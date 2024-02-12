@@ -52,36 +52,43 @@ const GlobalHead = ({
             }`}
           >
             <div className="details-header-content-left">
-              {location.pathname==="/teachers" ? null :
-              search && (
-                <Search
-                  searchData={searchData}
-                  dataSearchValues={dataSearchValues}
-                  className="search-input-con desktop"
-                  DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
-                />
-              )
-}
+              {location.pathname === "/teachers"
+                ? null
+                : search && (
+                    <Search
+                      searchData={searchData}
+                      dataSearchValues={dataSearchValues}
+                      className="search-input-con desktop"
+                      DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+                    />
+                  )}
 
               {statusType === "teacher" && (
-                <div className="teacher-header-filter-container">
-                  <div className="teahcer-page-add-btn">
-                  </div>
-                  <div className="teacher-header-filter">
-                  {search && (
-                <Search
-                  searchData={searchData}
-                  dataSearchValues={dataSearchValues}
-                  className="search-input-con desktop"
-                  DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
-                />
-              )}
+                <div
+                  className="teacher-header-filter-container"
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  {/* <div className="teahcer-page-add-btn"></div> */}
+                  <div
+                    className="teacher-header-filter"
+                    style={{ marginTop: 0 }}
+                  >
+                    {search && (
+                      <Search
+                        searchData={searchData}
+                        dataSearchValues={dataSearchValues}
+                        className="search-input-con desktop"
+                        DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+                      />
+                    )}
                     <StatusDropdown statusType="teacher" deviceType="desktop" />
                     <CoursesDropdown deviceType="desktop" />
                     <GroupsDropdown deviceType="desktop" />
 
-                    <div className="lesson-table-btn-container teacher ">
-                      <button className="add-detail"  onClick={() => filter()}>Tətbiq et</button>
+                    <div className="lesson-table-btn-container teacher">
+                      <button className="add-detail" onClick={() => filter()}>
+                        Tətbiq et
+                      </button>
                     </div>
                     <div className="circle-icon">
                       <p className="filter-count">10</p>
@@ -94,11 +101,13 @@ const GlobalHead = ({
                 <CoursesDropdown deviceType="desktop" />
               )}
               {statusType === "student" && (
-            <div className="student-filter-header" >
-                <CoursesDropdown deviceType="desktop" />
-                <GroupsDropdown deviceType="desktop" />
-                <div className="lesson-table-btn-container student ">
-                    <button className="add-detail" onClick={() => filter()}>Tətbiq et</button>
+                <div className="student-filter-header">
+                  <CoursesDropdown deviceType="desktop" />
+                  <GroupsDropdown deviceType="desktop" />
+                  <div className="lesson-table-btn-container student ">
+                    <button className="add-detail" onClick={() => filter()}>
+                      Tətbiq et
+                    </button>
                   </div>
                   <div className="circle-icon">
                     <p className="filter-count">10</p>
@@ -113,7 +122,9 @@ const GlobalHead = ({
                   <CoursesDropdown deviceType="desktop" />
                   <TeachersDropdown deviceType="desktop" />
                   <div className="lesson-table-btn-container groups ">
-                    <button className="add-detail" onClick={() => filter()}>Tətbiq et</button>
+                    <button className="add-detail" onClick={() => filter()}>
+                      Tətbiq et
+                    </button>
                   </div>
                   <div className="circle-icon">
                     <p className="filter-count">10</p>
@@ -127,7 +138,9 @@ const GlobalHead = ({
                   <CoursesDropdown deviceType="desktop" />
                   <GroupsDropdown deviceType="desktop" />
                   <div className="lesson-table-btn-container tution ">
-                    <button className="add-detail" onClick={() => filter()}>Tətbiq et</button>
+                    <button className="add-detail" onClick={() => filter()}>
+                      Tətbiq et
+                    </button>
                   </div>
                   <div className="circle-icon">
                     <p className="filter-count">10</p>
@@ -155,6 +168,14 @@ const GlobalHead = ({
                       <div className="lesson-table-datepick">
                         <DatePick deviceType="desktop" />
                       </div>
+                      <div
+                        className="lesson-table-btn-container"
+                        style={{ marginLeft: "16px" }}
+                      >
+                        <button className="add-detail" onClick={() => filter()}>
+                          Tətbiq et
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -162,15 +183,13 @@ const GlobalHead = ({
             </div>
             {addBtn && showAddBtn && (
               <div className="lesson-table-add-btn">
-                {statusType === "lesson-table" && (
-                  <div className="lesson-table-btn-container" >
-                   <button className="add-detail" onClick={() => filter()}>
-                   Tətbiq et
-                 </button>
-
-                 </div>
-                  
-                )}
+                {/* {statusType === "lesson-table" && (
+                  <div className="lesson-table-btn-container">
+                    <button className="add-detail" onClick={() => filter()}>
+                      Tətbiq et
+                    </button>
+                  </div>
+                )} */}
                 {statusType !== "lesson-table" && (
                   <button className="add-detail" onClick={openModal}>
                     <PlusIcon />

@@ -9,6 +9,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .details-header-content .details-header-content-left {
@@ -30,7 +31,7 @@
   width: 100%;
 }
 
-.teahcer-page-add-btn{
+.teahcer-page-add-btn {
   display: flex;
   justify-content: flex-end;
 }
@@ -154,7 +155,7 @@
   margin-left: 10px;
 }
 
-.details-header .circle-icon{
+.details-header .circle-icon {
   display: flex;
   align-items: center;
   margin: 0 10px;
@@ -166,9 +167,8 @@
   font-size: 14px;
   color: var(--secondary-900);
   font-weight: bold;
-
 }
-.details-header .circle-icon svg{
+.details-header .circle-icon svg {
   transform: rotate(90deg);
 }
 /* tution fee */
