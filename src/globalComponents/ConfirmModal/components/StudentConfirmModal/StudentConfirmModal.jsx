@@ -123,7 +123,7 @@ const StudentConfirmModal = () => {
               }}
             >
               <div className="work-inform-con">
-                <h2>Qrup adi: {item?.group?.name}</h2>
+                <h2>Qrup adı: {item?.group?.name}</h2>
                 <h3>
                   Yekun məbləğ: <span>{item?.totalAmount}</span>
                 </h3>
@@ -197,7 +197,7 @@ const StudentConfirmModal = () => {
                           : item?.status === "paid"
                           ? "ödənildi"
                           : item?.status === "confirm"
-                          ? "təstiqləndi"
+                          ? "təsdiqləndi"
                           : "ləğv edildi"}{" "}
                       </span>
                     </li>
@@ -305,7 +305,7 @@ const StudentConfirmModal = () => {
                           : item?.status === "paid"
                           ? "ödənildi"
                           : item?.status === "confirm"
-                          ? "təstiqləndi"
+                          ? "təsdiqləndi"
                           : "ləğv edildi"}{" "}
                       </span>
                     </li>
@@ -349,7 +349,7 @@ const StudentConfirmModal = () => {
                   )
                 }
               >
-                {(studentsModalLoading && <LoadingBtn />) || "Təstiqlə"}
+                {(studentsModalLoading && <LoadingBtn />) || "təsdiqlə"}
               </button>
             </div>
           )}

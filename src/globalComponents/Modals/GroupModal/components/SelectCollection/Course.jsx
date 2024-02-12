@@ -43,7 +43,7 @@ const Course = ({ formik, modalData, updateModalState }) => {
                 style: { fontSize: "12px", color: "#3F3F3F" },
               }}
               fullWidth
-              label="Ixtisas"
+              label="İxtisas"
               autoComplete="off"
               disabled
               value={inputValue}

@@ -32,6 +32,13 @@
 .dashboard-main > .left section {
   margin-bottom: 12px;
 }
+
+.dashboard-main .where-heard{
+  height: 400px;
+  overflow-y: scroll;
+}
+
+
 .dashboard-main > .left .content-box,
 .dashboard-main > .right > .top .content-box,
 .dashboard-main .lessons-amount .content-box,
@@ -47,7 +54,7 @@
 
 /* LESSON AMOUNT FINANCE STATISTICS */
 .dashboard-main .finance-statictics .tablet-last-box {
-    display: none;
+  display: none;
 }
 .dashboard-main .lessons-amount .content-box,
 .dashboard-main .finance-statictics .content-box.finance {
@@ -78,7 +85,8 @@
   background-color: rgba(240, 59, 42, 0.1);
 }
 .dashboard-main .lessons-amount .content-box > .left.grey {
-  background-color: rgba(113, 113, 113, 0.1);
+  /* background-color: rgba(113, 113, 113, 0.1); */
+  background-color: rgba(251, 160, 19, 0.1);
 }
 .dashboard-main .finance-statictics .content-box.finance > .left.blue {
   background-color: rgba(5, 165, 234, 0.1);
@@ -107,17 +115,32 @@
   font-size: 16px;
   font-weight: 600;
 }
-.dashboard-main .finance-statictics .content-box.finance > .right .top .diff-pointer {
+.dashboard-main
+  .finance-statictics
+  .content-box.finance
+  > .right
+  .top
+  .diff-pointer {
   font-size: 10px;
   font-weight: 500;
   border-radius: 12px;
   padding: 2px 4px;
 }
-.dashboard-main .finance-statictics .content-box.finance > .right .top .diff-pointer.plus {
+.dashboard-main
+  .finance-statictics
+  .content-box.finance
+  > .right
+  .top
+  .diff-pointer.plus {
   color: #00bc85;
   background-color: rgba(0, 188, 133, 0.1);
 }
-.dashboard-main .finance-statictics .content-box.finance > .right .top .diff-pointer.minus {
+.dashboard-main
+  .finance-statictics
+  .content-box.finance
+  > .right
+  .top
+  .diff-pointer.minus {
   color: var(--error-600);
   background-color: rgba(240, 59, 42, 0.1);
 }
@@ -129,7 +152,6 @@
 }
 
 /* LESSON STATISITCS */
-
 
 /* WHERE HEARD */
 .dashboard-main .where-heard .content-box > .top {
@@ -160,36 +182,260 @@
   height: 8px;
   border-radius: 4px;
 }
-.dashboard-main .where-heard .content-box > .bottom .linear-con:nth-child(1) h5 {
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(1)
+  h5 {
   color: #00bc85;
 }
-.dashboard-main .where-heard .content-box > .bottom .linear-con:nth-child(1) .line {
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(1)
+  .line {
   background-color: #00bc85;
 }
-.dashboard-main .where-heard .content-box > .bottom .linear-con:nth-child(2) h5 {
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(2)
+  h5 {
   color: var(--secondary-500);
 }
-.dashboard-main .where-heard .content-box > .bottom .linear-con:nth-child(2) .line {
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(2)
+  .line {
   background-color: var(--secondary-500);
 }
-.dashboard-main .where-heard .content-box > .bottom .linear-con:nth-child(3) h5 {
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(3)
+  h5 {
   color: var(--tertiary-600);
 }
-.dashboard-main .where-heard .content-box > .bottom .linear-con:nth-child(3) .line {
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(3)
+  .line {
   background-color: var(--tertiary-600);
 }
-.dashboard-main .where-heard .content-box > .bottom .linear-con:nth-child(4) h5 {
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(4)
+  h5 {
   color: #fb1616;
 }
-.dashboard-main .where-heard .content-box > .bottom .linear-con:nth-child(4) .line {
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(4)
+  .line {
   background-color: #fb1616;
 }
-.dashboard-main .where-heard .content-box > .bottom .linear-con:nth-child(5) h5 {
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(5)
+  h5 {
   color: var(--neutrals-400);
 }
-.dashboard-main .where-heard .content-box > .bottom .linear-con:nth-child(5) .line {
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(5)
+  .line {
   background-color: var(--neutrals-400);
 }
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(6)
+  h5 {
+  color: var(--tertiary-500);
+}
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(6)
+  .line {
+  background-color: var(--tertiary-500);
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(7)
+  h5 {
+  color: var(--secondary-300);
+}
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(7)
+  .line {
+  background-color: var(--secondary-400);
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(8)
+  h5 {
+  color: var(--error-800);
+}
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(8)
+  .line {
+  background-color: var(--error-800);
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(9)
+  h5 {
+  /* color: var(--error-300); */
+  color: #2596be;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(9)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: #2596be;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(10)
+  h5 {
+  /* color: var(--error-300); */
+  color: #49be25;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(10)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: #49be25;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(11)
+  h5 {
+  /* color: var(--error-300); */
+  color: skyblue;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(11)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: skyblue;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(12)
+  h5 {
+  /* color: var(--error-300); */
+  color: orange;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(12)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: orange;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(13)
+  h5 {
+  /* color: var(--error-300); */
+  color: purple;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(13)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: purple;
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(14)
+  h5 {
+  /* color: var(--error-300); */
+  color: var(--neutrals-900);
+}
+
+.dashboard-main
+  .where-heard
+  .content-box
+  > .bottom
+  .linear-con:nth-child(14)
+  .line {
+  /* background-color: var(--error-300); */
+  background-color: var(--neutrals-900);
+}
+
+
+
 
 /* STUDENTS AMOUNT */
 .dashboard-main .students-amount {
@@ -216,7 +462,6 @@
   height: 85%;
 }
 
-
 @media screen and (min-width: 700px) and (max-width: 1280px) {
   .dashboard-main.desktop {
     display: none;
@@ -235,9 +480,9 @@
     margin-bottom: 0;
     margin-right: 8px;
   }
-  .dashboard-main .lessons-amount .content-box:last-child {
+  /* .dashboard-main .lessons-amount .content-box:last-child {
     margin-right: 0;
-  }
+  } */
   .dashboard-main > .left .content-box,
   .dashboard-main > .right > .top .content-box,
   .dashboard-main .lessons-amount .content-box,
@@ -247,13 +492,13 @@
   .dashboard-main > .finance-statictics .content-box.finance {
     padding: 8px;
   }
-  .dashboard-main .lessons-amount .content-box>.left, 
-  .dashboard-main .finance-statictics .content-box.finance>.left {
+  .dashboard-main .lessons-amount .content-box > .left,
+  .dashboard-main .finance-statictics .content-box.finance > .left {
     margin-right: 6px;
     padding: 6.43px;
   }
-  .dashboard-main .lessons-amount .content-box>.left svg, 
-  .dashboard-main .finance-statictics .content-box.finance>.left svg {
+  .dashboard-main .lessons-amount .content-box > .left svg,
+  .dashboard-main .finance-statictics .content-box.finance > .left svg {
     width: 23px;
     height: 23px;
   }
@@ -262,17 +507,26 @@
     font-size: 14px;
   }
   .dashboard-main .lessons-amount .content-box > .right .amount,
-  .dashboard-main .finance-statictics .content-box.finance > .right .amount  {
+  .dashboard-main .finance-statictics .content-box.finance > .right .amount {
     font-size: 18px;
   }
-  .dashboard-main .lessons-amount .content-box > .right .top, 
+  .dashboard-main .lessons-amount .content-box > .right .top,
   .dashboard-main .finance-statictics .content-box.finance > .right .top {
     margin-bottom: 0;
   }
-  .dashboard-main .finance-statictics .content-box.finance > .right .top .diff-pointer {
+  .dashboard-main
+    .finance-statictics
+    .content-box.finance
+    > .right
+    .top
+    .diff-pointer {
     font-size: 8px;
   }
 
+  .dashboard-main .lessons-amount .content-box.events{
+    margin: 0;
+    margin: 8px 8px 0 0;
+  }
 
   /* FINANCE */
   .dashboard-main .finance-statictics {
@@ -308,19 +562,45 @@
     margin-right: 0;
     margin-bottom: 12px;
   }
-  
+
   /* WHERE HEARD LESSON STATISTICS */
   .dashboard-main .finance-statictics .tablet-last-box .lesson-statistics {
     margin-bottom: 12px;
   }
-  .dashboard-main .finance-statictics .tablet-last-box .lesson-statistics .content-box > .top .title, 
-  .dashboard-main .finance-statictics .tablet-last-box .where-heard .content-box > .top .title {
+  .dashboard-main
+    .finance-statictics
+    .tablet-last-box
+    .lesson-statistics
+    .content-box
+    > .top
+    .title,
+  .dashboard-main
+    .finance-statictics
+    .tablet-last-box
+    .where-heard
+    .content-box
+    > .top
+    .title {
     font-size: 16px;
   }
-  .dashboard-main .finance-statictics .tablet-last-box .where-heard .content-box > .bottom .linear-con h5 {
+  .dashboard-main
+    .finance-statictics
+    .tablet-last-box
+    .where-heard
+    .content-box
+    > .bottom
+    .linear-con
+    h5 {
     font-size: 12px;
   }
-  .dashboard-main .finance-statictics .tablet-last-box .where-heard .content-box > .bottom .linear-con .line {
+  .dashboard-main
+    .finance-statictics
+    .tablet-last-box
+    .where-heard
+    .content-box
+    > .bottom
+    .linear-con
+    .line {
     height: 6px;
   }
 
@@ -330,6 +610,8 @@
   .dashboard-main .students-amount .content-box > .top .title {
     font-size: 18px;
   }
+  
+  
 }
 
 @media screen and (max-width: 700px) {
@@ -352,9 +634,9 @@
     flex-direction: column;
     padding: 6px;
   }
-  .dashboard-main .lessons-amount .content-box:last-child {
+  /* .dashboard-main .lessons-amount .content-box:last-child {
     margin-right: 0;
-  }
+  } */
   .dashboard-main .lessons-amount .content-box > .left {
     width: 100%;
     height: 32px;
@@ -383,7 +665,9 @@
   .dashboard-main .lessons-amount .content-box > .right .top svg {
     display: none;
   }
-
+  .dashboard-main .lessons-amount .content-box.events{
+    margin-top: 8px;
+  }
 
   /* FINANCE STATISTICS */
   .dashboard-main .finance-statictics {
@@ -421,7 +705,12 @@
   .dashboard-main .finance-statictics .content-box.finance > .right .title {
     font-size: 12px;
   }
-  .dashboard-main .finance-statictics .content-box.finance > .right .top .diff-pointer {
+  .dashboard-main
+    .finance-statictics
+    .content-box.finance
+    > .right
+    .top
+    .diff-pointer {
     display: none;
   }
 
@@ -453,7 +742,3 @@
     margin-bottom: 16px;
   }
 }
-
-
-
-  

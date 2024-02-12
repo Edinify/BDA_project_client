@@ -6,7 +6,7 @@ const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
   console.log(data, "data in paymentsss");
   return (
     <div style={{ borderTop: "1px solid gray", padding: "20px 0" }}>
-      <RadioGroup
+      {/* <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
@@ -20,31 +20,15 @@ const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
           value="wait"
           control={<Radio checked={data?.status === "wait"} />}
           label="Ödənilməyib"
-          onClick={() => {
-            addPayments("status", "wait", index);
-          }}
+          disabled
         />
         <FormControlLabel
           value="paid"
           control={<Radio checked={data?.status === "paid"} />}
           label="Ödənildi"
-          onClick={() => {
-            addPayments("status", "paid", index);
-          }}
-        />
-        <FormControlLabel
-          value="confirm"
-          control={<Radio checked={data?.status === "confirm"} />}
-          label="Təstiqləndi"
           disabled
         />
-        <FormControlLabel
-          value="cancel"
-          control={<Radio checked={data?.status === "cancel"} />}
-          label="Ləğv edildi"
-          disabled
-        />
-      </RadioGroup>
+      </RadioGroup> */}
 
       <div className="input-couples">
         <Payment

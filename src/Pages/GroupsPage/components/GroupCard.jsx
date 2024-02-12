@@ -23,13 +23,14 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
 
   let lessonDates = data.lessonDate.map((item, index) => (
     <span className="lesson-date" key={index}>
-      gün: {item.day}, saat: {item.time} <br />
+      gün: {item.day}, saat: {item.time}  {item.practical ? "(Praktika)" : ""}  <br />
+     
     </span>
   ));
 
   const listData = [
     { key: "Qrup adı", value: data?.name },
-    { key: "İxtisas", value: data?.course.name },
+    { key: "İxtisas", value: data?.course?.name },
     { key: "Təlimçilər", value: teachers },
     {
       key: "Başlama tarixi",
@@ -89,7 +90,7 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data?.course.name}</div>
+              <div className="table-scroll-text">{data?.course?.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>

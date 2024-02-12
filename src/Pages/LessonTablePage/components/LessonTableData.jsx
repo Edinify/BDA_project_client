@@ -49,7 +49,7 @@ const LessonTableData = ({ pageNum, getPageNumber, userData }) => {
           {openConfirmModal && <ConfirmModal type="lesson-table" />}
 
           <table
-            className={`details-table  teacher-table ${
+            className={`details-table  lesson-table ${
               userData?.power === "only-show" ? "only-show" : "update"
             } `}
           >

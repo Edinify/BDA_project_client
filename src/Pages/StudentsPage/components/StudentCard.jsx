@@ -26,12 +26,21 @@ const StudentCard = ({
           .join(", ")
       : "boş";
   const listData = [
-    { key: "Ixtisas", value: courses },
+    { key: "İxtisas", value: courses },
     {
       key: "Mobil nömrə",
       value: data.phone ? data.phone : "boş",
     },
   ];
+
+  let groupName =
+    Array.isArray(data.groups) && data.groups.length > 0
+      ? data.groups
+          .map((group) => {
+            return `${group.group.name}`;
+          })
+          .join(",")
+      : "boş";
 
   const updateItem = (modalType) => {
     dispatch({
@@ -67,6 +76,7 @@ const StudentCard = ({
     });
   };
 
+  // console.log(data.groups, "hhdddddddddddddddddd");
   return (
     <>
       {mode === "desktop" ? (
@@ -93,11 +103,12 @@ const StudentCard = ({
           <td>
             <div className="td-con">
               <div className="table-scroll-text">
-                {data.groups.map((item) => (
+                {groupName}
+                {/* {data.groups.map((item) => (
                   <p key={item.group._id}>
                     {item.group.name} <br />
                   </p>
-                ))}
+                ))} */}
               </div>
               <div className="right-fade"></div>
             </div>
@@ -112,7 +123,7 @@ const StudentCard = ({
               state={student}
               openConfirmModal={openConfirmModal}
               openMoreModal={openMoreModal}
-              profil={"students"}
+              profil="students"
             />
           </td>
         </tr>
@@ -134,7 +145,7 @@ const StudentCard = ({
                 {data.groups.map((groupsData) => (
                   <li key={groupsData.group._id}>
                     <span>Qrup adı: {groupsData.group.name}</span>
-                    Qrup ixtisası: {groupsData.group.course.name} <br />
+                    Qrup İxtisası: {groupsData.group.course.name} <br />
                     Ümumi ödəniş: {groupsData.totalAmount} <br />
                   </li>
                 ))}

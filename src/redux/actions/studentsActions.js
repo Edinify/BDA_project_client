@@ -249,12 +249,13 @@ export const getstudentsByCourseIdAction = (payload) => async (dispatch) => {
 };
 
 export const getStudentsPaginationAction =
-  (pageNumber, searchQuery, status = "all") =>
+  (pageNumber, searchQuery, status = "all",courseId = "",groupId = "") =>
   async (dispatch) => {
     dispatch(setLoadingStudentsAction(true));
+    console.log(courseId,groupId)
     try {
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}`
+        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}`
       );
       dispatch({
         type: STUDENTS_ALL_ACTIONS_TYPE.GET_STUDENT_LAST_PAGE,
@@ -464,7 +465,7 @@ export const confirmStudentChangesAction =
       dispatch({
         type: STUDENTS_MODAL_ACTION_TYPE.CLOSE_STUDENT_CONFIRM_MODAL,
       });
-      toastSuccess("Yeniliklər təstiqləndi");
+      toastSuccess("Yeniliklər təsdiqləndi");
     } catch (error) {
       const originalRequest = error.config;
 

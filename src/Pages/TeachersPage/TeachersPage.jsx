@@ -13,6 +13,7 @@ const TeachersPage = () => {
   const { lastPage } = useSelector((state) => state.teachersPagination);
   const { teachersSearchValues } = useSelector((state) => state.searchValues);
   const { teacherStatus } = useSelector((state) => state.teacherStatus);
+  const {courseId } = useSelector((state) => state.studentStatus);
   const [teacherPageNum, setTeacherPageNum] = useState(1);
   const [role, setRole] = useState("teacher");
 
@@ -21,6 +22,21 @@ const TeachersPage = () => {
     userData.role !== "super-admin"
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
+
+
+  const filterTeachers = () => dispatch(
+    getTeachersPaginationAction(
+      1,
+      teachersSearchValues,
+      teacherStatus
+        ? teacherStatus !== "all"
+          ? teacherStatus
+          : "all"
+        : "all",
+      role,
+      courseId
+    )
+  )
 
   const getPageNumber = (pageNumber) => {
     setTeacherPageNum(pageNumber);
@@ -123,6 +139,7 @@ const TeachersPage = () => {
       <GlobalHead
         searchData={searchData}
         openModal={openModal}
+        filter={filterTeachers}
         DATA_SEARCH_VALUE={"TEACHERS_SEARCH_VALUE"}
         dataSearchValues={teachersSearchValues}
         statusType="teacher"

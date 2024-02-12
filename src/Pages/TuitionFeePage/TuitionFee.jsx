@@ -9,14 +9,27 @@ const TuitionFeePage = () => {
   const dispatch = useDispatch();
   const { lastPage } = useSelector((state) => state.tuitionFeePagination);
   const { tuitionFeeSearchValues } = useSelector((state) => state.searchValues);
+  const {courseId } = useSelector((state) => state.studentStatus);
+  const { selectedGroup } = useSelector((state) => state.dropdownGroup);
+
+  const filterTuition = () => dispatch(
+    getTuitionFeePaginationAction(
+      1,
+      tuitionFeeSearchValues, 
+      courseId,
+      selectedGroup._id
+    )
+  ) 
+
+  console.log(selectedGroup)
 
   const getPageNumber = (pageNumber) => {
     if (tuitionFeeSearchValues) {
       dispatch(
-        getTuitionFeePaginationAction(pageNumber, tuitionFeeSearchValues, "all")
+        getTuitionFeePaginationAction(pageNumber, tuitionFeeSearchValues, "all","","")
       );
     } else {
-      dispatch(getTuitionFeePaginationAction(pageNumber, "", "all"));
+      dispatch(getTuitionFeePaginationAction(pageNumber, "", "all","",""));
     }
   };
   const openModal = () => {
@@ -44,10 +57,12 @@ const TuitionFeePage = () => {
       <GlobalHead
         searchData={searchData}
         openModal={openModal}
+        filter={filterTuition}
         addBtn={false}
         DATA_SEARCH_VALUE={"TUITION_FEE_SEARCH_VALUE"}
         dataSearchValues={tuitionFeeSearchValues}
         profile={"tuitionFee"}
+        statusType="tutionFee"
       />
       <TuitionFeeData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>

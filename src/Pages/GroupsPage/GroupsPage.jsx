@@ -12,21 +12,33 @@ const GroupsPage = () => {
   const location = useLocation();
   const { lastPage } = useSelector((state) => state.groupsPagination);
   const { groupsSearchValues } = useSelector((state) => state.searchValues);
+  const {courseId } = useSelector((state) => state.studentStatus);
+  const { selectedTeacher } = useSelector((state) => state.dropdownTeacher);
   const [completed, setCompleted] = useState(true);
-
+  console.log(selectedTeacher)
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =
     userData.role !== "super-admin"
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
 
+  
+    const filterGroup = () => dispatch(
+      getGroupsPaginationAction(
+        1,
+        groupsSearchValues, 
+        completed,
+        courseId,
+        selectedTeacher._id
+      )
+    )   
   const getPageNumber = (pageNumber) => {
     if (groupsSearchValues) {
       dispatch(
-        getGroupsPaginationAction(pageNumber, groupsSearchValues, completed)
+        getGroupsPaginationAction(pageNumber, groupsSearchValues, completed,'','')
       );
     } else {
-      dispatch(getGroupsPaginationAction(pageNumber, "", completed));
+      dispatch(getGroupsPaginationAction(pageNumber, "", completed,'',''));
     }
   };
   const openModal = () => {
@@ -37,29 +49,29 @@ const GroupsPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getGroupsPaginationAction(1, groupsSearchValues, completed));
+    dispatch(getGroupsPaginationAction(1, groupsSearchValues, completed,'',''));
   };
 
   useEffect(() => {
     if (location.pathname === "/groups/current") {
-      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", true));
+      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", true,'',''));
       setCompleted(true);
     } else if (location.pathname === "/groups/waiting") {
-      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", false));
+      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", false,'',''));
       setCompleted(false);
     }
   }, [location.pathname]);
 
-  console.log(lastPage, "last page");
-
   return (
-    <div className="details-page teachers-page ">
+    <div className="details-page groups-page ">
       <GlobalHead
         searchData={searchData}
         openModal={openModal}
+        filter={filterGroup}
         DATA_SEARCH_VALUE={"GROUPS_SEARCH_VALUE"}
         dataSearchValues={groupsSearchValues}
         profile={"groups"}
+        statusType="groups"
       />
 
       <HeadTabs

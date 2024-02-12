@@ -10,10 +10,29 @@
   display: flex;
   justify-content: space-between;
 }
+
 .details-header-content .details-header-content-left {
   display: flex;
   align-items: center;
   width: 80%;
+  /* width: 100%; */
+}
+
+.details-header-content.lesson-page .details-header-content-left {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.details-header-content.teacher .details-header-content-left {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.teahcer-page-add-btn{
+  display: flex;
+  justify-content: flex-end;
 }
 .details-header-content .search-input-con {
   position: relative;
@@ -68,6 +87,169 @@
   display: none;
 }
 
+.details-header-content-left .lesson-table-header-content {
+  display: flex;
+  align-items: center;
+}
+
+.details-header-content-left .lesson-table-header-content .lesson-table-status {
+  display: flex;
+  align-items: center;
+}
+
+.details-header-content-left .lesson-table-header-content .date-container {
+  margin-left: 10px;
+}
+
+.details-header-content-left
+  .lesson-table-header-content
+  .date-container
+  .date-container
+  .from {
+  width: 292px;
+}
+
+.lesson-page .apply-btn,
+.teachers-page .apply-btn {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+.lesson-page .apply-btn .add-detail,
+.teachers-page .apply-btn .add-detail {
+  background-color: var(--primary-500);
+  border-radius: 8px;
+  padding: 10px 24px;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  white-space: nowrap;
+}
+
+/* student -page */
+
+.details-page.students-page .student-filter-header {
+  width: 100%;
+  display: flex;
+}
+
+/* teacher-page */
+
+.details-page.teachers-page .teacher-header-filter {
+  width: 100%;
+  display: flex;
+  margin-top: 8px;
+}
+.lesson-table-btn-container.teacher,
+.lesson-table-btn-container.student,
+.lesson-table-btn-container.groups,
+.lesson-table-btn-container.tution {
+  margin-left: 10px;
+}
+
+.details-header .circle-icon{
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+  position: relative;
+}
+.details-header .circle-icon .filter-count {
+  position: absolute;
+  right: 8px;
+  font-size: 14px;
+  color: var(--secondary-900);
+  font-weight: bold;
+
+}
+.details-header .circle-icon svg{
+  transform: rotate(90deg);
+}
+/* tution fee */
+.details-page.tuition-fee-page .tution-fee-filter-header {
+  width: 100%;
+  display: flex;
+}
+
+/* groups */
+.details-page.groups-page .groups-filter-header {
+  width: 100%;
+  display: flex;
+}
+
+/* lesson  page */
+
+.details-page .lesson-page-header-container {
+  width: 100%;
+}
+.details-page .lesson-page-header-container .lesson-page-add-btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.details-page .lesson-page-header-container .lesson-page-filter-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+/* .details-page .lesson-page-header-container .lesson-page-filter-container.teacher{
+  justify-content: flex-start;
+}
+.details-page .lesson-page-header-container .lesson-page-filter-container.teacher .lesson-page-apply-btn{
+  margin-left: 8px;
+} */
+
+@media screen and (max-width: 1400px) {
+  .lesson-page .details-header-content .details-header-content-left {
+    width: 100%;
+  }
+  .lesson-page .details-header-content .add-detail {
+    margin-top: 10px;
+  }
+
+  .lesson-page .details-header-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .details-header-content-left .lesson-table-header-content {
+    flex-direction: column;
+    width: 100%;
+  }
+  .details-header-content-left
+    .lesson-table-header-content
+    .lesson-table-status {
+    width: 100%;
+  }
+  .details-header-content-left
+    .lesson-table-header-content
+    .lesson-table-datepick {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .details-header-content .details-header-content-left .dropdown-name {
+    width: 50%;
+  }
+  .lesson-table-add-btn {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .details-page .lesson-page-header-container .lesson-page-filter-container {
+    flex-direction: column;
+  }
+  .details-page .lesson-page-header-container .lesson-page-apply-btn {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
 @media screen and (max-width: 780px) {
   .details-header-content {
     flex-direction: row;
@@ -101,6 +283,10 @@
   }
   .details-header-container .dropdown-name.mobile {
     display: inline-block;
+  }
+
+  .lesson-table-btn-container.desktop {
+    display: none;
   }
 }
 

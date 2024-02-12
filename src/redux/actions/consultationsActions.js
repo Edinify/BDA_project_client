@@ -348,7 +348,7 @@ export const confirmConsultationChangesAction =
       dispatch({
         type: CONSULTATION_MODAL_ACTION_TYPE.CLOSE_CONSULTATION_CONFIRM_MODAL,
       });
-      toastSuccess("Yeniləmələr təstiqləndi!");
+      toastSuccess("Yeniləmələr təsdiqləndi!");
     } catch (error) {
       const originalRequest = error.config;
 

@@ -247,7 +247,7 @@ const ConsultationConfirmModal = () => {
                   )
                 }
               >
-                {(consultationModalLoading && <LoadingBtn />) || "Təstiqlə"}
+                {(consultationModalLoading && <LoadingBtn />) || "təsdiqlə"}
               </button>
             </div>
           )}

@@ -22,6 +22,8 @@ export const Header = () => {
         return "Tələbələr";
       case "/teachers":
         return "Təlimçilər";
+      case "/teachers/mentors":
+        return "Təlimçilər";
       case "/courses":
         return "Fənlər";
       case "/tuition-fee":
@@ -41,6 +43,8 @@ export const Header = () => {
         return "Dərs cədvəli";
       case "/event":
         return "Tədbirlər";
+      case "/dashboard":
+        return "İdarəetmə paneli";
       default:
         return "";
     }

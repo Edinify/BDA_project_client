@@ -122,6 +122,7 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
               openConfirmModal={openConfirmModal}
               openMoreModal={openMoreModal}
               profil={"consultation"}
+              state={consultation}
             />
           </td>
         </tr>

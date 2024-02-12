@@ -179,7 +179,7 @@ export const getTeachersByCourseId = (courseId) => async (dispatch) => {
 };
 
 export const getTeachersPaginationAction =
-  (pageNumber, searchQuery, status = "all", role) =>
+  (pageNumber, searchQuery, status = "all", role,courseId) =>
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
@@ -189,7 +189,7 @@ export const getTeachersPaginationAction =
       console.log(role, "role");
 
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&role=${role}`
+        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
       );
 
       dispatch({
@@ -672,7 +672,7 @@ export const confirmTeacherChangesAction =
       dispatch({
         type: TEACHERS_MODAL_ACTION_TYPE.CLOSE_TEACHER_CONFIRM_MODAL,
       });
-      toastSuccess("Yeniliklər təstiqləndi");
+      toastSuccess("Yeniliklər təsdiqləndi");
     } catch (error) {
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -693,7 +693,7 @@ export const confirmTeacherChangesAction =
           dispatch({
             type: TEACHERS_MODAL_ACTION_TYPE.CLOSE_TEACHER_CONFIRM_MODAL,
           });
-          toastSuccess("Təlimçi təstiqləndi!");
+          toastSuccess("Təlimçi təsdiqləndi!");
         } catch (error) {
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());

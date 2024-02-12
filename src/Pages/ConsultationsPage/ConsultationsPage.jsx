@@ -70,14 +70,14 @@ const ConsultationsPage = () => {
   }, []);
 
   return (
-    <div className="details-page tuition-fee-page">
+    <div className="details-page ">
       <GlobalHead
         searchData={searchData}
         openModal={openModal}
         DATA_SEARCH_VALUE={"CONSULTATION_SEARCH_VALUE"}
         dataSearchValues={consultationSearchValues}
         addBtn={status === "appointed" ? true : false}
-        statusType="student"
+        statusType="consultation"
         profile={"consultation"}
       />
 

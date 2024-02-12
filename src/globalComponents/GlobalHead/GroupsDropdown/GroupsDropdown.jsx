@@ -24,16 +24,16 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
       type: DROPDOWN_GROUP_ACTIONS_TYPE.SELECT_GROUP,
       payload: group,
     });
-    dispatch(getLessonTablePaginationAction(1, "", group._id));
+    dispatch(getLessonTablePaginationAction(1, "", group._id,"",""));
   };
 
   useEffect(() => {
-    if (user?.role == "teacher") {
+    if (user?.role === "teacher") {
       dispatch(getGroupsWithTeacherAction(user._id));
     } else {
       dispatch(getGroupsAction());
     }
-  }, [user]);
+  }, []);
 
   return (
     <div

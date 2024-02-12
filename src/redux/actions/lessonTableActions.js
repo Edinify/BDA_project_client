@@ -78,12 +78,11 @@ const modalLoading = (loadingValue) => ({
 });
 
 export const getLessonTablePaginationAction =
-  (pageNumber, searchQuery, groupId) => async (dispatch) => {
+  (pageNumber, searchQuery, groupId,startDate = "",endDate = "",status = "") => async (dispatch) => {
     dispatch(pageLoading(true));
-    // console.log(pageNumber, searchQuery, groupId);
     try {
       const { data } = await API.get(
-        `/?page=${pageNumber}&searchQuery=${searchQuery}&groupId=${groupId}`
+        `/?page=${pageNumber}&searchQuery=${searchQuery}&groupId=${groupId}&startDate=${startDate || ""}&endDate=${endDate || ""}&status=${status}`
       );
 
       dispatch({
@@ -96,6 +95,7 @@ export const getLessonTablePaginationAction =
         payload: data,
       });
     } catch (error) {
+      console.log(error)
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -294,7 +294,7 @@ export const confirmLessonTableChangesAction =
         payload: false,
       });
 
-      toastSuccess("Yeniləmələr təstiqləndi!");
+      toastSuccess("Yeniləmələr təsdiqləndi!");
     } catch (error) {
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {

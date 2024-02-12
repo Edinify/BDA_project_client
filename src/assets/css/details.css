@@ -85,6 +85,28 @@
   text-align: center;
 }
 
+.tuition-fee-page .details-table tr th:nth-last-child(4) {
+  width: 80px;
+}
+
+.tuition-fee-page .details-table tr th:nth-last-child(3) {
+  width: 160px;
+}
+.tuition-fee-page .details-table tr th:nth-last-child(2) {
+  width: 130px;
+}
+
+.tuition-fee-page .details-table tr th:nth-last-child(6) {
+  width: 130px;
+}
+.tuition-fee-page .details-table tr th:nth-last-child(7) {
+  width: 130px;
+}
+
+.tuition-fee-page .details-table tr th:nth-last-child(5) {
+  width: 130px;
+}
+
 .details-table.courses-table tr th:first-child,
 .details-table.courses-table tr td:first-child {
   width: 80%;
@@ -113,6 +135,19 @@
 }
 .finance-page .details-table tr th {
   border-top: 0.5px solid var(--neutrals-500);
+}
+
+/* lesson table */
+.details-table.lesson-table tr th:nth-last-child(3),
+.details-table.lesson-table tr td:nth-last-child(3),
+.details-table.lesson-table tr th:nth-child(2),
+.details-table.lesson-table tr td:nth-child(2) {
+  width: 120px;
+}
+
+.details-table.lesson-table tr th:nth-last-child(2),
+.details-table.lesson-table tr td:nth-last-child(2) {
+  width: 140px;
 }
 
 /* only-show */
@@ -228,15 +263,23 @@
     rgba(255, 255, 255, 0.1) 100%
   );
 }
+
+.details-table.consultation-page tr th:nth-last-child(4),
+.details-table.consultation-page tr td:nth-last-child(4),
+.details-table.consultation-page tr th:nth-last-child(3),
+.details-table.consultation-page tr td:nth-last-child(3) {
+  text-align: center;
+}
+
 /* details-table END*/
 
 /* details-tablet*/
 .details-list-tablet {
   display: none;
 }
-.finance-page .details-list-tablet {
-  /* border-top: 0.5px solid var(--neutrals-300, #ddd); */
-}
+/* .finance-page .details-list-tablet {
+  border-top: 0.5px solid var(--neutrals-300, #ddd);
+} */
 .stimulations-page .details-list-tablet {
   border-top: 0.5px solid var(--neutrals-300, #ddd);
 }
@@ -252,7 +295,7 @@
   border-bottom: 0.5px solid var(--neutrals-300, #ddd);
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 700px) {
   .details-table {
     display: none;
   }
@@ -302,6 +345,13 @@
   .details-list-tablet .content-box .left {
     overflow: hidden;
   }
+
+  .details-list-tablet .content-box .left .student-count {
+    border-bottom: 1px solid;
+    cursor: pointer;
+    width: 100px;
+  }
+
   .details-list-tablet .content-box .left h3 {
     font-size: 16px;
     color: var(--neutrals-900);
@@ -352,7 +402,8 @@
   .details-list-tablet .content-box .right {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    /* justify-content: space-between; */
     align-items: flex-end;
     position: absolute;
     right: 16px;

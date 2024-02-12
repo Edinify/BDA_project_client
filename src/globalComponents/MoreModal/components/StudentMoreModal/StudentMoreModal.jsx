@@ -30,9 +30,9 @@ const StudentMoreModal = ({ studentsModalData }) => {
     { title: "Mobil nömrə", value: studentsModalData?.phone },
     {
       title: "Bizi haradan eşitdiniz?",
-      value: whereComingList.find(
+      value: whereComingList?.find(
         (item) => item.key === studentsModalData?.whereComing
-      ).name,
+      )?.name,
     },
     { title: "İxtisaslar", value: courses },
   ];

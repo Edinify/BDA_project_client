@@ -63,6 +63,9 @@ const UpdateDeleteModal = ({
     if (user?.role === "super-admin") {
       setUpdateBtn(true);
       setDeleteBtn(true);
+      if (profil === "tuitionFee") {
+        setPaymentsBtn(true);
+      }
     } else if (user?.role === "worker") {
       const power = user?.profiles?.find(
         (item) => item.profile === profil
@@ -77,7 +80,11 @@ const UpdateDeleteModal = ({
         setChangesBtn(true);
       }
 
-      if ((power === "all" || power === "update") && data?.changes?._id) {
+      if (
+        (power === "all" || power === "update") &&
+        data?.changes?._id &&
+        profil !== "tuitionFee"
+      ) {
         setBadge(true);
       } else {
         setBadge(false);
@@ -124,7 +131,7 @@ const UpdateDeleteModal = ({
           {confirmBtn && (
             <h4 className="confirm" onClick={openConfirmModal}>
               <div style={{ position: "relative" }}>
-                <span>Təstiqlə</span>
+                <span>təsdiqlə</span>
                 <div
                   style={{
                     width: "8px",

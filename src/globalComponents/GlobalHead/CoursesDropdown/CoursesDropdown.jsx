@@ -4,6 +4,7 @@ import { ReactComponent as ArrowIcon } from "../../../assets/icons/arrow-down-dr
 import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg";
 import {
   SYLLABUS_ALL_ACTIONS_TYPE,
+  STUDENT_STATUS_FILTER_ACTION_TYPE
 } from "../../../redux/actions-type";
 import { getAllCoursesAction } from "../../../redux/actions/coursesActions";
 import { getSyllabusPaginationAction } from "../../../redux/actions/syllabusActions";
@@ -15,11 +16,16 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const getCourse = (course) => {
+    console.log(course)
     setDropdownOpen(false);
     dispatch({
       type: SYLLABUS_ALL_ACTIONS_TYPE.SELECT_COURSE_FOR_SYLLABUS,
       payload: course,
     });
+    dispatch({
+      type: STUDENT_STATUS_FILTER_ACTION_TYPE.GET_STUDENT_COURSEID,
+      payload: course._id,
+    })
     dispatch(getSyllabusPaginationAction(1, "", course._id));
   };
 
@@ -37,7 +43,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
         className="dropdown-head"
         onClick={() => setDropdownOpen(!dropdownOpen)}
       >
-        <h2>{selectedCourse ? selectedCourse.name : "Ixtisaslar"}</h2>
+        <h2>{selectedCourse ? selectedCourse.name : "İxtisaslar"}</h2>
         <div className="arrow-icon">
           <ArrowIcon />
         </div>

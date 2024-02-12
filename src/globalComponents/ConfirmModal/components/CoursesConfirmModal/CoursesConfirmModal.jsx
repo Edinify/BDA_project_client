@@ -117,7 +117,7 @@ const CoursesConfirmModal = ({}) => {
                   )
                 }
               >
-                {(coursesModalLoading && <LoadingBtn />) || "Təstiqlə"}
+                {(coursesModalLoading && <LoadingBtn />) || "təsdiqlə"}
               </button>
             </div>
           )}

@@ -23,6 +23,17 @@ export default function Payment({
           : "",
     },
     {
+      inputName: "paidDate",
+      label: "Ödədiyi tarix",
+      type: "date",
+      marginTop: "10px",
+      marginBottom: "0",
+      inputValue:
+        data[inputName] && inputName === "paidDate"
+          ? moment(data[inputName]).format("YYYY-MM-DD")
+          : "",
+    },
+    {
       inputName: "payment",
       label: "Ödəniş",
       type: "number",
@@ -76,6 +87,7 @@ export default function Payment({
           setShrink(!!e.target.value);
         }}
         onFocus={() => setShrink(true)}
+        disabled={data?.status === "paid"}
       />
 
       {formik.errors[inputName] && formik.touched[inputName] && (

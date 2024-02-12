@@ -12,7 +12,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   const { careerSearchValues } = useSelector((state) => state.searchValues);
   const listData = [
     { key: "Qrup", value: data.group.name },
-    { key: "Ixtisas", value: data.group.course.name },
+    { key: "İxtisas", value: data.group.course.name },
     // { key: "Tələbənin adı", value: data.fullName },
     { key: "Portfolio linki", value: data?.portfolioLink || "" },
     { key: "CV linki", value: data?.cvLink || "" },
@@ -133,14 +133,16 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               ))}
             </ul>
           </div>
-          {/* <div className="right">
+           <div className="right">
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
               data={data}
+              openMoreModal={openMoreModal}
+              profil={"careers"}
             />
-            <span onClick={() => openMoreModal()}>Ətraflı</span>
-          </div> */}
+         
+          </div> 
         </div>
       )}
     </>

@@ -209,7 +209,7 @@ const GroupsConfirmModal = () => {
                   )
                 }
               >
-                {(groupModalLoading && <LoadingBtn />) || "Təstiqlə"}
+                {(groupModalLoading && <LoadingBtn />) || "təsdiqlə"}
               </button>
             </div>
           )}

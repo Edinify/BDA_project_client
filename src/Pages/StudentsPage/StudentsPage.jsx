@@ -9,7 +9,8 @@ const StudentsPage = () => {
   const dispatch = useDispatch();
   const { lastPage } = useSelector((state) => state.studentsPagination);
   const { studentSearchValues } = useSelector((state) => state.searchValues);
-  const { studentStatus } = useSelector((state) => state.studentStatus);
+  const { studentStatus,courseId } = useSelector((state) => state.studentStatus);
+  const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   // const { loading, loadingAll, groupsByMore } = useSelector(
   //   (state) => state.groupsPagination
   // );
@@ -20,6 +21,18 @@ const StudentsPage = () => {
     userData.role !== "super-admin"
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
+
+  const studentFilter = () => {
+    console.log("sds")
+    dispatch(
+    getStudentsPaginationAction(
+      '',
+      '',
+      studentStatus ? studentStatus : "all",
+      courseId,
+      selectedGroup._id
+    )
+  )}
 
   const getPageNumber = (pageNumber) => {
     if (studentSearchValues) {
@@ -79,6 +92,7 @@ const StudentsPage = () => {
       <GlobalHead
         searchData={searchData}
         openModal={openModal}
+        filter={studentFilter}
         DATA_SEARCH_VALUE={"STUDENTS_SEARCH_VALUE"}
         dataSearchValues={studentSearchValues}
         statusType="student"

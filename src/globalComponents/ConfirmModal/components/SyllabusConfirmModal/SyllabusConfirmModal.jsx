@@ -105,7 +105,7 @@ const SyllabusConfirmModal = () => {
                   )
                 }
               >
-                {(syllabusModalLoading && <LoadingBtn />) || "Təstiqlə"}
+                {(syllabusModalLoading && <LoadingBtn />) || "təsdiqlə"}
               </button>
             </div>
           )}
