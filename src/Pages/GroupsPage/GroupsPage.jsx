@@ -35,10 +35,10 @@ const GroupsPage = () => {
   const getPageNumber = (pageNumber) => {
     if (groupsSearchValues) {
       dispatch(
-        getGroupsPaginationAction(pageNumber, groupsSearchValues, completed)
+        getGroupsPaginationAction(pageNumber, groupsSearchValues, completed,'','')
       );
     } else {
-      dispatch(getGroupsPaginationAction(pageNumber, "", completed));
+      dispatch(getGroupsPaginationAction(pageNumber, "", completed,'',''));
     }
   };
   const openModal = () => {
@@ -49,15 +49,15 @@ const GroupsPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getGroupsPaginationAction(1, groupsSearchValues, completed));
+    dispatch(getGroupsPaginationAction(1, groupsSearchValues, completed,'',''));
   };
 
   useEffect(() => {
     if (location.pathname === "/groups/current") {
-      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", true));
+      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", true,'',''));
       setCompleted(true);
     } else if (location.pathname === "/groups/waiting") {
-      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", false));
+      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", false,'',''));
       setCompleted(false);
     }
   }, [location.pathname]);

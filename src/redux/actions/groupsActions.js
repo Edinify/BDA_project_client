@@ -207,11 +207,11 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
 };
 
 export const getGroupsPaginationAction =
-  (pageNumber, searchQuery, completed,courseId, selectedId) => async (dispatch) => {
+  (pageNumber, searchQuery, completed,courseId, teacherId) => async (dispatch) => {
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
-        `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&completed=${completed}&courseId=${courseId}&selectedId=${selectedId}`
+        `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&completed=${completed}&courseId=${courseId}&teacherId=${teacherId}`
       );
       dispatch({
         type: GROUP_ALL_ACTIONS_TYPE.GET_GROUP_LAST_PAGE,
@@ -266,7 +266,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
     window.location.pathname === "/groups/current" ? true : false;
   try {
     const { data } = await API.post("/", groupData);
-    dispatch(getGroupsPaginationAction(data.lastPage, "", completed));
+    dispatch(getGroupsPaginationAction(data.lastPage, "", completed,'',''));
     dispatch({
       type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
       payload: false,
@@ -286,7 +286,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
           })
         );
         const { data } = await API.post("/", groupData);
-        dispatch(getGroupsPaginationAction(data.lastPage, "", completed));
+        dispatch(getGroupsPaginationAction(data.lastPage, "", completed,'',''));
         dispatch({
           type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
           payload: false,
@@ -358,7 +358,7 @@ export const deleteGroupAction =
   async (dispatch) => {
     try {
       await API.delete(`/${_id}`);
-      dispatch(getGroupsPaginationAction(pageNumber, searchQuery, completed));
+      dispatch(getGroupsPaginationAction(pageNumber, searchQuery, completed,'',''));
       dispatch({ type: GROUP_ALL_ACTIONS_TYPE.DELETE_GROUP, payload: _id });
       toastSuccess("Qrup silindi");
     } catch (error) {
@@ -376,7 +376,7 @@ export const deleteGroupAction =
           );
           await API.delete(`/${_id}`);
           dispatch(
-            getGroupsPaginationAction(pageNumber, searchQuery, completed)
+            getGroupsPaginationAction(pageNumber, searchQuery, completed,'','')
           );
           dispatch({
             type: GROUP_ALL_ACTIONS_TYPE.DELETE_GROUP,
