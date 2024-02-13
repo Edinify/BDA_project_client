@@ -14,10 +14,10 @@ import { ReactComponent as HalfCircleICon } from "../../assets/icons/filter/half
 const GlobalHead = ({
   searchData,
   openModal,
-  filter,
   DATA_SEARCH_VALUE,
   dataSearchValues,
   statusType,
+  filter,
   search = true,
   addBtn = true,
   profile,
@@ -52,7 +52,7 @@ const GlobalHead = ({
             }`}
           >
             <div className="details-header-content-left">
-              {location.pathname === "/teachers"
+              {location.pathname === "/teachers" || location.pathname==="/teachers/mentors"
                 ? null
                 : search && (
                     <Search
@@ -64,15 +64,14 @@ const GlobalHead = ({
                   )}
 
               {statusType === "teacher" && (
-                <div
-                  className="teacher-header-filter-container"
-                  style={{ display: "flex", alignItems: "center" }}
-                >
-                  {/* <div className="teahcer-page-add-btn"></div> */}
-                  <div
-                    className="teacher-header-filter"
-                    style={{ marginTop: 0 }}
-                  >
+                <div className="teacher-header-filter-container">
+                  <div className="teahcer-page-add-btn">
+                    <button className="add-detail" onClick={openModal}>
+                      <PlusIcon />
+                      Əlavə et
+                    </button>
+                  </div>
+                  <div className="teacher-header-filter">
                     {search && (
                       <Search
                         searchData={searchData}
@@ -85,7 +84,7 @@ const GlobalHead = ({
                     <CoursesDropdown deviceType="desktop" />
                     <GroupsDropdown deviceType="desktop" />
 
-                    <div className="lesson-table-btn-container teacher">
+                    <div className="lesson-table-btn-container teacher ">
                       <button className="add-detail" onClick={() => filter()}>
                         Tətbiq et
                       </button>
@@ -97,6 +96,9 @@ const GlobalHead = ({
                   </div>
                 </div>
               )}
+              {/* {statusType === "student" && (
+                <StatusDropdown statusType="student" deviceType="desktop" />
+              )} */}
               {statusType === "syllabus" && (
                 <CoursesDropdown deviceType="desktop" />
               )}
@@ -168,10 +170,9 @@ const GlobalHead = ({
                       <div className="lesson-table-datepick">
                         <DatePick deviceType="desktop" />
                       </div>
-                      <div
-                        className="lesson-table-btn-container"
-                        style={{ marginLeft: "16px" }}
-                      >
+                    </div>
+                    <div className="lesson-page-apply-btn">
+                      <div className="lesson-table-btn-container lesson-page ">
                         <button className="add-detail" onClick={() => filter()}>
                           Tətbiq et
                         </button>
@@ -183,14 +184,18 @@ const GlobalHead = ({
             </div>
             {addBtn && showAddBtn && (
               <div className="lesson-table-add-btn">
-                {/* {statusType === "lesson-table" && (
-                  <div className="lesson-table-btn-container">
-                    <button className="add-detail" onClick={() => filter()}>
-                      Tətbiq et
-                    </button>
-                  </div>
-                )} */}
-                {statusType !== "lesson-table" && (
+                {
+                  statusType === "lesson-table" && null
+                  // <button className="add-detail" onClick={openModal}>
+                  //   <PlusIcon />
+                  //   Əlavə et
+                  // </button>
+                  // <div className="lesson-table-btn-container desktop ">
+                  //   <button className="add-detail">Tətbiq et</button>
+                  // </div>
+                }
+                {statusType === "teacher" && null}
+                {statusType !== "lesson-table" && statusType !== "teacher" && (
                   <button className="add-detail" onClick={openModal}>
                     <PlusIcon />
                     Əlavə et
@@ -208,6 +213,13 @@ const GlobalHead = ({
             <GroupsDropdown deviceType="mobile" />
           )}
         </div>
+        {/* {statusType === "lesson-table" && (
+          <div className="apply-btn">
+            <button className="add-detail" onClick={openModal}>
+              Əlavə et
+            </button>
+          </div>
+        )} */}
       </div>
     </div>
   );

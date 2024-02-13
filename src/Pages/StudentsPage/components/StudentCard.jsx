@@ -76,6 +76,9 @@ const StudentCard = ({
     });
   };
 
+
+  console.log(cellNumber,"celll")
+
   // console.log(data.groups, "hhdddddddddddddddddd");
   return (
     <>
