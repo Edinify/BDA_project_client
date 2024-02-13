@@ -26,10 +26,10 @@ const TuitionFeePage = () => {
   const getPageNumber = (pageNumber) => {
     if (tuitionFeeSearchValues) {
       dispatch(
-        getTuitionFeePaginationAction(pageNumber, tuitionFeeSearchValues, "all","","")
+        getTuitionFeePaginationAction(pageNumber, tuitionFeeSearchValues, "","")
       );
     } else {
-      dispatch(getTuitionFeePaginationAction(pageNumber, "", "all","",""));
+      dispatch(getTuitionFeePaginationAction(pageNumber, "","",""));
     }
   };
   const openModal = () => {
