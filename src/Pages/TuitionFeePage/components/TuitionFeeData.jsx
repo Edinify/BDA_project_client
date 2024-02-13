@@ -36,6 +36,9 @@ const TuitionFeeData = ({ pageNum, getPageNumber }) => {
     }
   }, [openMoreModal]);
 
+
+  console.log(totalPages, 'total pages tuiton fee')
+
   return (
     <>
       {loading ? (

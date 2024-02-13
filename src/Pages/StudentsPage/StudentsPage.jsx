@@ -9,7 +9,9 @@ const StudentsPage = () => {
   const dispatch = useDispatch();
   const { lastPage } = useSelector((state) => state.studentsPagination);
   const { studentSearchValues } = useSelector((state) => state.searchValues);
-  const { studentStatus,courseId } = useSelector((state) => state.studentStatus);
+  const { studentStatus, courseId } = useSelector(
+    (state) => state.studentStatus
+  );
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   // const { loading, loadingAll, groupsByMore } = useSelector(
   //   (state) => state.groupsPagination
@@ -23,16 +25,17 @@ const StudentsPage = () => {
       : JSON.parse(localStorage.getItem("userData"));
 
   const studentFilter = () => {
-    console.log("sds")
+    console.log("sds");
     dispatch(
-    getStudentsPaginationAction(
-      '',
-      '',
-      studentStatus ? studentStatus : "all",
-      courseId,
-      selectedGroup._id
-    )
-  )}
+      getStudentsPaginationAction(
+        "",
+        "",
+        studentStatus ? studentStatus : "all",
+        courseId,
+        selectedGroup._id
+      )
+    );
+  };
 
   const getPageNumber = (pageNumber) => {
     if (studentSearchValues) {
@@ -87,6 +90,7 @@ const StudentsPage = () => {
     }
   }, [dispatch]);
 
+  console.log(lastPage, "last page in student");
   return (
     <div className="details-page students-page">
       <GlobalHead

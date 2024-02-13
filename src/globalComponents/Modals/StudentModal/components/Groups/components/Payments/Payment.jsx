@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Payment({
   formik,
@@ -19,17 +19,6 @@ export default function Payment({
       marginBottom: "0",
       inputValue:
         data[inputName] && inputName === "paymentDate"
-          ? moment(data[inputName]).format("YYYY-MM-DD")
-          : "",
-    },
-    {
-      inputName: "paidDate",
-      label: "Ödədiyi tarix",
-      type: "date",
-      marginTop: "10px",
-      marginBottom: "0",
-      inputValue:
-        data[inputName] && inputName === "paidDate"
           ? moment(data[inputName]).format("YYYY-MM-DD")
           : "",
     },
@@ -87,7 +76,6 @@ export default function Payment({
           setShrink(!!e.target.value);
         }}
         onFocus={() => setShrink(true)}
-        disabled={data?.status === "paid"}
       />
 
       {formik.errors[inputName] && formik.touched[inputName] && (

@@ -103,14 +103,26 @@ const TuitionFeeConfirmModal = () => {
       }
     );
 
-    const currPayment =
-      calcedPayments.find(
-        (item) => new Date(item.paymentDate).getMonth() === currDate.getMonth()
-      )?.rest || 0;
+    const beforePayments = calcedPayments.filter((item) => {
+      const date = (item?.paymentDate && new Date(item.paymentDate)) || null;
+      console.log(date);
+      return (
+        date?.getFullYear() < currDate?.getFullYear() ||
+        (date?.getFullYear() === currDate?.getFullYear() &&
+          date?.getMonth() <= currDate?.getMonth())
+      );
+    });
 
-    console.log(currPayment, "curretn payment");
+    console.log(beforePayments, "before payments");
 
-    setCurrentPayment(currPayment);
+    const totalBeforePayment = beforePayments.reduce(
+      (total, item) => total + item.payment,
+      0
+    );
+
+    const currPayment = totalBeforePayment - totalConfirmedPayment;
+
+    setCurrentPayment(currPayment > 0 ? currPayment : 0);
 
     setPayments(calcedPayments);
 
