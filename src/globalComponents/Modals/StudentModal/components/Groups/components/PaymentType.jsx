@@ -38,12 +38,11 @@ const PaymentType = ({ formik, data, addPaymentType }) => {
               value={inputValue}
               onBlur={() => formik.setFieldTouched("paymentType", true)}
             />
-            {!data?.payments?.find((item) => item.status != "wait") && (
-              <DropdownIcon
-                setOpenDropdown={setOpenDropdown}
-                openDropdown={openDropdown}
-              />
-            )}
+
+            <DropdownIcon
+              setOpenDropdown={setOpenDropdown}
+              openDropdown={openDropdown}
+            />
           </div>
 
           <ul

@@ -24,6 +24,7 @@ const StudentsData = ({ studentPageNum, getPageNumber, userData }) => {
     }
   }, [openMoreModal]);
 
+  console.log(studentPageNum, "student page num");
   return (
     <>
       {loading ? (

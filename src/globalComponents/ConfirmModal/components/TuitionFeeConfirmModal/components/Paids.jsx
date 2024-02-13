@@ -56,7 +56,7 @@ function Paids({ tuitionFeeModalData }) {
           <Checkbox
             color="primary"
             onChange={() => togglePaymentStatus(i)}
-            checked={item?.confirmed}
+            checked={item?.confirmed || false}
             sx={{
               ".MuiCheckbox-sizeMedium": {
                 fontSize: "0px",

@@ -21,7 +21,7 @@ const GroupInput = ({
     (item) => item.group._id === data.group._id
   );
 
-  console.log(data,"dataaaaaaa")
+  console.log(data, "dataaaaaaa");
 
   const addPaymentType = (item) => {
     groupData[foundIndex] = {
@@ -51,10 +51,7 @@ const GroupInput = ({
   };
 
   useEffect(() => {
-    const checkPayments = data?.payments?.find((item) => item.status !== "wait")
-      ? false
-      : true;
-    if (data.amount && data.payment && checkPayments) {
+    if (data.amount && data.payment) {
       const payment = data.payment;
       const amount = data.amount;
       const discount = data?.discount || 0;

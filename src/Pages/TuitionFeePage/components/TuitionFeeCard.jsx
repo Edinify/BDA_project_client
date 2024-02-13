@@ -80,21 +80,31 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   };
 
   useEffect(() => {
-    const currentDate = new Date();
+    const currDate = new Date();
     const totalConfirmedPayment = data?.paids?.reduce(
       (value, item) => value + parseFloat(item?.confirmed ? item.payment : 0),
       0
     );
 
-    const currIndex = data.payments.findIndex(
-      (item) => new Date(item.paymentDate).getMonth() === currentDate.getMonth()
+    const beforePayments = data?.payments?.filter((item) => {
+      const date = (item?.paymentDate && new Date(item.paymentDate)) || null;
+      return (
+        date?.getFullYear() < currDate?.getFullYear() ||
+        (date?.getFullYear() === currDate?.getFullYear() &&
+          date?.getMonth() <= currDate?.getMonth())
+      );
+    });
+
+    console.log(beforePayments, "before payments in card");
+
+    const totalBeforePayment = beforePayments.reduce(
+      (total, item) => total + item.payment,
+      0
     );
 
-    const totalPayment = data.payments
-      .filter((item, i) => i <= currIndex)
-      .reduce((total, item) => total + item.payment, 0);
+    const currPayment = totalBeforePayment - totalConfirmedPayment;
 
-    setCurrentPayment(totalPayment - totalConfirmedPayment);
+    setCurrentPayment(currPayment > 0 ? currPayment : 0);
     console.log(data.totalAmount);
     setTotalRest((data?.totalAmount || 0) - (totalConfirmedPayment || 0));
   });
