@@ -113,14 +113,7 @@ export default function InputField({ formik, data, inputName, addGroupData }) {
         value={
           inputData.find((item) => item.inputName === inputName)?.inputValue
         }
-        disabled={
-          inputName === "totalAmount" ||
-          inputName === "amount" ||
-          ((inputName === "discount" || inputName === "contractStartDate") &&
-            data?.payments?.find((item) => item.status != "wait"))
-            ? true
-            : false
-        }
+        disabled={inputName === "totalAmount" || inputName === "amount"}
         onWheel={(e) => e.target.blur()}
         onChange={(e) => {
           addGroupData(inputName, e.target.value);

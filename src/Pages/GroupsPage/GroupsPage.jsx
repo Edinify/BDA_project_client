@@ -60,6 +60,10 @@ const GroupsPage = () => {
       dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", false,'',''));
       setCompleted(false);
     }
+    else if (location.pathname==="/groups/ended"){
+      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", false,'',''));
+      setCompleted(false);
+    }
   }, [location.pathname]);
 
   return (
@@ -77,8 +81,10 @@ const GroupsPage = () => {
       <HeadTabs
         firstRoute={"/groups/waiting"}
         secondRoute={"/groups/current"}
+        thirdRoute={"/groups/ended"}
         firstPathname={"Yığılan qruplar"}
         secondPathname={"Mövcud qruplar"}
+        thirdPathname={"Bitmiş qruplar"}
       />
 
       <GroupsData

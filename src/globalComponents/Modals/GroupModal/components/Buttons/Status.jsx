@@ -5,7 +5,7 @@ const Status = ({ modalData, updateModalState }) => {
     updateModalState("completed", status);
   };
   return (
-    <ul className="modal-status">
+    <ul className="modal-status group-status ">
       <li
         className={`${modalData.completed ? "active" : ""}`}
         onClick={() => getStatus(true)}
@@ -17,6 +17,12 @@ const Status = ({ modalData, updateModalState }) => {
         onClick={() => getStatus(false)}
       >
         Yığılan
+      </li>
+      <li
+        className={`${modalData.completed ? "" : "active"}`}
+        onClick={() => getStatus(false)}
+      >
+        Bitmiş
       </li>
     </ul>
   );

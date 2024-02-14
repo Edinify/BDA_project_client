@@ -5,8 +5,10 @@ import "./headTabs.css";
 const HeadTabs = ({
   firstRoute,
   secondRoute,
+  thirdRoute,
   firstPathname,
   secondPathname,
+  thirdPathname
 }) => {
   const location = useLocation();
   return (
@@ -22,6 +24,12 @@ const HeadTabs = ({
         className={`${location.pathname === secondRoute ? "active" : ""}`}
       >
         {secondPathname}
+      </Link>
+      <Link
+        to={thirdRoute}
+        className={`${location.pathname === thirdRoute ? "active" : ""}`}
+      >
+        {thirdPathname}
       </Link>
     </div>
   );
