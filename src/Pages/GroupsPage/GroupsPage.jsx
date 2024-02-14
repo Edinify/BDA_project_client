@@ -14,8 +14,8 @@ const GroupsPage = () => {
   const { groupsSearchValues } = useSelector((state) => state.searchValues);
   const {courseId } = useSelector((state) => state.studentStatus);
   const { selectedTeacher } = useSelector((state) => state.dropdownTeacher);
-  const [completed, setCompleted] = useState(true);
-  // console.log(selectedTeacher)
+  const [status, setStatus] = useState("waiting");
+  console.log(selectedTeacher)
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =
     userData.role !== "super-admin"
@@ -27,7 +27,7 @@ const GroupsPage = () => {
       getGroupsPaginationAction(
         1,
         groupsSearchValues, 
-        completed,
+        status,
         courseId,
         selectedTeacher._id
       )
@@ -35,10 +35,10 @@ const GroupsPage = () => {
   const getPageNumber = (pageNumber) => {
     if (groupsSearchValues) {
       dispatch(
-        getGroupsPaginationAction(pageNumber, groupsSearchValues, completed,'','')
+        getGroupsPaginationAction(pageNumber, groupsSearchValues, status,'','')
       );
     } else {
-      dispatch(getGroupsPaginationAction(pageNumber, "", completed,'',''));
+      dispatch(getGroupsPaginationAction(pageNumber, "", status,'',''));
     }
   };
   const openModal = () => {
@@ -49,16 +49,20 @@ const GroupsPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getGroupsPaginationAction(1, groupsSearchValues, completed,'',''));
+    dispatch(getGroupsPaginationAction(1, groupsSearchValues, status,'',''));
   };
 
   useEffect(() => {
     if (location.pathname === "/groups/current") {
-      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", true,'',''));
-      setCompleted(true);
+      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", "current",'',''));
+      setStatus("current");
     } else if (location.pathname === "/groups/waiting") {
-      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", false,'',''));
-      setCompleted(false);
+      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", "waiting",'',''));
+      setStatus("waiting");
+    }
+    else if (location.pathname==="/groups/ended"){
+      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", "ended",'',''));
+      setStatus("ended");
     }
   }, [location.pathname]);
 
@@ -77,8 +81,10 @@ const GroupsPage = () => {
       <HeadTabs
         firstRoute={"/groups/waiting"}
         secondRoute={"/groups/current"}
+        thirdRoute={"/groups/ended"}
         firstPathname={"Yığılan qruplar"}
         secondPathname={"Mövcud qruplar"}
+        thirdPathname={"Bitmiş qruplar"}
       />
 
       <GroupsData

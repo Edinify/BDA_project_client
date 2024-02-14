@@ -69,22 +69,69 @@ const GroupMoreModal = ({ groupModalData }) => {
   // },
   // ];
 
-  // console.log(groupModalData, "group modal data");
+  const teachers =
+    Array.isArray(groupModalData.teachers) && groupModalData.teachers.length > 0
+      ? groupModalData?.teachers
+          .map((teacher) => {
+            return teacher.fullName;
+          })
+          .join(", ")
+      : "boş";
+
+  const mentors =
+    Array.isArray(groupModalData.mentors) && groupModalData.mentors.length > 0
+      ? groupModalData.mentors
+          .map((mentor) => {
+            return mentor.fullName;
+          })
+          .join(",")
+      : "boş";
+
+  const students =
+    Array.isArray(groupModalData.students) && groupModalData.students.length > 0
+      ? groupModalData.students
+          .map((student) => {
+            return student.fullName;
+          })
+          .join(" , ")
+      : "boş";
+
+  const lessonDate =
+    Array.isArray(groupModalData.lessonDate) &&
+    groupModalData.lessonDate.length > 0
+      ? groupModalData.lessonDate.map((lesson, i) => (
+          <span className="lesson-date" key={i}>
+            Gün: {lesson.day}, Saat: {lesson.time}{" "}
+            {lesson.practical ? "(Praktika)" : ""}
+            <br />
+          </span>
+        ))
+      : "";
+
+  console.log(groupModalData, "group modal data");
 
   return (
     <>
       <div className="more-modal-work-inform">
         <h2>Qrup adı: {groupModalData?.name}</h2>
+
         <div className="work-inform-con">
           <h3>
-            Yekun məbləğ: <span>{}</span>
+            İxtisas adı: <span> {groupModalData?.course.name} </span>{" "}
           </h3>
           <h3>
-            Ödəniş: <span>{}</span>
+            Müəllimlər: <span> {teachers} </span>{" "}
           </h3>
           <h3>
-            Ödəmə növü: <span>{} hissəli</span>
+            Mentorlar: <span> {mentors} </span>{" "}
           </h3>
+          <h3>
+            Tələbələr: <span> {students} </span>{" "}
+          </h3>
+          <h3>
+            Dərs günləri: <span> {lessonDate} </span>{" "}
+          </h3>
+
           <h3>
             Müqavilə başlama tarixi:{" "}
             <span>
@@ -105,12 +152,16 @@ const GroupMoreModal = ({ groupModalData }) => {
                 : ""}
             </span>
           </h3>
-          <h3>
-            Təhsil dərəcəsi: <span>{}</span>
-          </h3>
 
           <h3>
-            Status: <span>{true ? "Davam edir" : "Məzun"}</span>
+            Status:{" "}
+            <span>
+              {groupModalData.status === "waiting"
+                ? " Yığılan"
+                : groupModalData.status === "current"
+                ? "Mövcud"
+                : "Bitmiş"}
+            </span>
           </h3>
         </div>
       </div>

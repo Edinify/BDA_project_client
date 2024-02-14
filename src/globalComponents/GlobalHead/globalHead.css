@@ -155,6 +155,10 @@
   margin-left: 10px;
 }
 
+.details-page .teacher-header-filter-container{
+  width: 100%;
+}
+
 .details-header .circle-icon {
   display: flex;
   align-items: center;

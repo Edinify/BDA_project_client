@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { ReactComponent as LogoIcon } from "../../../../assets/icons/sidebar-head-logo.svg";
+// import { ReactComponent as LogoIcon } from "../../../../assets/icons/sidebar-head-logo.svg";
+import { ReactComponent as LogoIcon } from "../../../../assets/icons/logo/bdaLogoMid.svg";
 import UserAvatar from "../../../../assets/images/user-avatar.jpg";
 
 const SidebarHead = ({ closeSidebar }) => {

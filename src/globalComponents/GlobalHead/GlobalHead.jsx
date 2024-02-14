@@ -45,13 +45,15 @@ const GlobalHead = ({
             className={`details-header-content ${
               location.pathname === "/"
                 ? "lesson-page"
-                : location.pathname === "/teachers"
+                : location.pathname === "/teachers" ||
+                  location.pathname === "/teachers/mentors"
                 ? "teacher"
                 : ""
             }`}
           >
             <div className="details-header-content-left">
-              {location.pathname === "/teachers" || location.pathname==="/teachers/mentors"
+              {location.pathname === "/teachers" ||
+              location.pathname === "/teachers/mentors"
                 ? null
                 : search && (
                     <Search

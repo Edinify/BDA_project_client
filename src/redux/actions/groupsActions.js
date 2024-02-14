@@ -113,8 +113,6 @@ export const getGroupsAction = () => async (dispatch) => {
   }
 };
 
-
-
 export const getGroupsWithTeacherAction = (teacherId) => async (dispatch) => {
   try {
     const { data } = await API.get(`/with-teacher?teacherId=${teacherId}`);
@@ -207,11 +205,13 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
 };
 
 export const getGroupsPaginationAction =
-  (pageNumber, searchQuery, completed,courseId, teacherId) => async (dispatch) => {
+  (pageNumber, searchQuery, status, courseId, teacherId) =>
+  async (dispatch) => {
     dispatch(pageLoading(true));
+    console.log(status, "statussss");
     try {
       const { data } = await API.get(
-        `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&completed=${completed}&courseId=${courseId || ""}&teacherId=${teacherId || ""}`
+        `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&teacherId=${teacherId}`
       );
       dispatch({
         type: GROUP_ALL_ACTIONS_TYPE.GET_GROUP_LAST_PAGE,
@@ -237,7 +237,7 @@ export const getGroupsPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&completed=${completed}`
+            `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}`
           );
 
           dispatch({
@@ -263,11 +263,16 @@ export const getGroupsPaginationAction =
 
 export const createGroupAction = (groupData) => async (dispatch) => {
   dispatch(modalLoading(true));
-  const completed =
-    window.location.pathname === "/groups/current" ? true : false;
+  const status =
+    window.location.pathname === "/groups/current"
+      ? "current"
+      : window.location.pathname === "groups/waiting"
+      ? "waiting"
+      : "ended";
+
   try {
     const { data } = await API.post("/", groupData);
-    dispatch(getGroupsPaginationAction(data.lastPage, "", completed,'',''));
+    dispatch(getGroupsPaginationAction(data.lastPage, "", status, "", ""));
     dispatch({
       type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
       payload: false,
@@ -287,7 +292,9 @@ export const createGroupAction = (groupData) => async (dispatch) => {
           })
         );
         const { data } = await API.post("/", groupData);
-        dispatch(getGroupsPaginationAction(data.lastPage, "", completed,'',''));
+        dispatch(
+          getGroupsPaginationAction(data.lastPage, "", status, "", "")
+        );
         dispatch({
           type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
           payload: false,
@@ -355,11 +362,13 @@ export const updateGroupAction = (_id, groupData) => async (dispatch) => {
 };
 
 export const deleteGroupAction =
-  ({ _id, pageNumber, searchQuery, completed }) =>
+  ({ _id, pageNumber, searchQuery, status }) =>
   async (dispatch) => {
     try {
       await API.delete(`/${_id}`);
-      dispatch(getGroupsPaginationAction(pageNumber, searchQuery, completed,'',''));
+      dispatch(
+        getGroupsPaginationAction(pageNumber, searchQuery, status, "", "")
+      );
       dispatch({ type: GROUP_ALL_ACTIONS_TYPE.DELETE_GROUP, payload: _id });
       toastSuccess("Qrup silindi");
     } catch (error) {
@@ -377,7 +386,13 @@ export const deleteGroupAction =
           );
           await API.delete(`/${_id}`);
           dispatch(
-            getGroupsPaginationAction(pageNumber, searchQuery, completed,'','')
+            getGroupsPaginationAction(
+              pageNumber,
+              searchQuery,
+              status,
+              "",
+              ""
+            )
           );
           dispatch({
             type: GROUP_ALL_ACTIONS_TYPE.DELETE_GROUP,

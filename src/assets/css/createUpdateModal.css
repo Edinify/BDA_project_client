@@ -586,6 +586,14 @@
   border-radius: 0 8px 8px 0;
   padding: 8px 12px;
 }
+.create-update-modal-btn-con .modal-status.group-status li:nth-child(2) {
+  border-radius: 0;
+}
+.create-update-modal-btn-con .modal-status.group-status li:nth-child(3) {
+  border-radius: 0 8px 8px 0;
+  padding: 8px 12px;
+}
+
 .create-update-modal-btn-con .modal-status li.active {
   color: white;
   border-color: #2a78ff;

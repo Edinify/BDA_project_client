@@ -1,14 +1,14 @@
 {
-  "short_name": "Edinify",
-  "name": "Edinify",
+  "short_name": "BDA",
+  "name": "BDA",
   "icons": [
     {
-      "src": "favico.svg",
+      "src": "bdaLogo.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src":"favico.svg",
+      "src":"bdaLogo.png",
       "type": "image/png",
       "sizes": "192x192"
     },

@@ -2,7 +2,9 @@ import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Eye } from "../../assets/icons/eye.svg";
 import { ReactComponent as EyeSlash } from "../../assets/icons/eye-slash.svg";
-import { ReactComponent as LoginLogo } from "../../assets/icons/Login-Logo.svg";
+// import { ReactComponent as LoginLogo } from "../../assets/icons/Login-Logo.svg";
+import { ReactComponent as LoginLogo } from "../../assets/icons/logo/bdaLogo.svg";
+
 import { Box, TextField } from "@mui/material";
 import { loginAction } from "../../redux/actions/auth";
 import { goToForgetPageAction } from "../../redux/actions/forgetPasswordAction";
@@ -67,7 +69,7 @@ export const Login = () => {
 
       <div className="login-right">
         <div className="login-right-header">
-          <LoginLogo />
+          {/* <LoginLogo /> */}
           <h2>Daxil olun</h2>
         </div>
 
