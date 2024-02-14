@@ -84,7 +84,9 @@ const TuitionFeeConfirmModal = () => {
       0
     );
     const currDate = new Date();
+    currDate.setHours(23, 59, 59, 999);
 
+    console.log(currDate, "mmmmmmmmmmmmmmm");
     const calcedPayments = tuitionFeeModalData?.payments.map(
       (item, index, array) => {
         const totalPayment = array
@@ -106,11 +108,7 @@ const TuitionFeeConfirmModal = () => {
     const beforePayments = calcedPayments.filter((item) => {
       const date = (item?.paymentDate && new Date(item.paymentDate)) || null;
       console.log(date);
-      return (
-        date?.getFullYear() < currDate?.getFullYear() ||
-        (date?.getFullYear() === currDate?.getFullYear() &&
-          date?.getMonth() <= currDate?.getMonth())
-      );
+      return date < currDate;
     });
 
     console.log(beforePayments, "before payments");
