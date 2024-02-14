@@ -81,6 +81,8 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
 
   useEffect(() => {
     const currDate = new Date();
+    currDate.setHours(23, 59, 59, 999);
+
     const totalConfirmedPayment = data?.paids?.reduce(
       (value, item) => value + parseFloat(item?.confirmed ? item.payment : 0),
       0
@@ -88,11 +90,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
 
     const beforePayments = data?.payments?.filter((item) => {
       const date = (item?.paymentDate && new Date(item.paymentDate)) || null;
-      return (
-        date?.getFullYear() < currDate?.getFullYear() ||
-        (date?.getFullYear() === currDate?.getFullYear() &&
-          date?.getMonth() <= currDate?.getMonth())
-      );
+      return date < currDate;
     });
 
     // console.log(beforePayments, "before payments in card");
