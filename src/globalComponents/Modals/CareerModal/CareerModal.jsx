@@ -17,7 +17,7 @@ const CareerModal = () => {
   );
 
 
-  console.log(modalData,"modal data")
+  // console.log(modalData,"modal data")
   // formik
   const formik = useFormik({
     initialValues: {},

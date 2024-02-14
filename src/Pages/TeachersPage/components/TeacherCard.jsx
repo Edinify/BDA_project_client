@@ -9,7 +9,7 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
     (state) => state.teachersPagination
   );
 
-  // console.log(teacher,"teacher")
+  // // console.log(teacher,"teacher")
   const { teachersSearchValues } = useSelector((state) => state.searchValues);
   const { teacherStatus } = useSelector((state) => state.teacherStatus);
   let courses =

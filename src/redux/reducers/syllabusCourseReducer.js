@@ -10,6 +10,10 @@ export const syllabusCourseReducer = (state = initialState, action) => {
       return {
         selectedCourse: action.payload,
       };
+      case SYLLABUS_ALL_ACTIONS_TYPE.CLEAR_COURSE:
+      return {
+        selectedCourse: "",
+      };
     default:
       return state;
   }

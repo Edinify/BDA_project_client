@@ -106,7 +106,7 @@ export const getEventsPaginationAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -154,7 +154,7 @@ export const createEventAction = (eventData) => async (dispatch) => {
     if (error?.response?.status === 403) {
       dispatch(logoutAction());
     }
-    console.log(error);
+    // console.log(error);
     if (error?.response?.data?.key === "course-already-exists") {
       toastError("Bu ad ilə fənn artıq mövcuddur");
     }
@@ -194,7 +194,7 @@ export const updateEventAction = (_id, eventData) => async (dispatch) => {
         }
       }
     }
-    console.log(error);
+    // console.log(error);
     toastError(error?.response?.data?.message);
     if (error?.response?.data?.key === "course-already-exists") {
       dispatch(eventModalOpen(true));
@@ -238,7 +238,7 @@ export const deleteEventAction =
           }
         }
       }
-      console.log(error);
+      // console.log(error);
       toastError(error?.response?.data.message);
     }
   };

@@ -43,7 +43,7 @@ const StudentLessonModal = ({ students, setStudents }) => {
     setStudents({ ...students, data: newStudentsList });
   };
 
-  console.log(students, "students kljjlkjkk");
+  // console.log(students, "students kljjlkjkk");
   return (
     <div className="create-update-modal-con">
       <div className="student-lesson-modal">

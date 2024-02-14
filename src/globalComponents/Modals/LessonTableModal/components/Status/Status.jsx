@@ -11,7 +11,7 @@ const Status = ({ updateModalState, modalData }) => {
     updateModalState("status", status);
   };
 
-  console.log(modalData, "modal data in status");
+  // console.log(modalData, "modal data in status");
   return (
     <>
       <div className="modal-select">

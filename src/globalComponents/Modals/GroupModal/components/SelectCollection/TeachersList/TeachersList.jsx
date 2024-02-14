@@ -49,7 +49,7 @@ const TeachersList = ({ formik, updateModalState, modalData }) => {
   };
 
   useEffect(() => {
-    console.log(modalData, "modal data in groups lkdsfj");
+    // console.log(modalData, "modal data in groups lkdsfj");
     dispatch(getTeachersByCourseId(modalData?.course?._id, "teacher"));
   }, [modalData.course]);
 

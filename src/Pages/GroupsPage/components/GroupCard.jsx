@@ -75,7 +75,7 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
       },
     });
   };
-  console.log(group, "grouppp");
+  // console.log(group, "grouppp");
 
   return (
     <>

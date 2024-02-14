@@ -10,7 +10,7 @@ const LessonTablePage = () => {
   const dispatch = useDispatch();
   const { lastPage,status } = useSelector((state) => state.lessonTablePagination);
   const { startDate,endDate } = useSelector((state) => state.datepicker);
-  console.log(startDate,endDate)
+  // console.log(startDate,endDate)
   const { lessonTableSearchValues } = useSelector(
     (state) => state.searchValues
   );
@@ -37,14 +37,16 @@ const LessonTablePage = () => {
           pageNumber,
           lessonTableSearchValues,
           selectedGroup._id,
-          '',
-          ''
+          startDate,
+          endDate,
+          status
         )
       );
     } else {
       dispatch(
-        getLessonTablePaginationAction(pageNumber, "", selectedGroup._id,'',
-        '')
+        getLessonTablePaginationAction(pageNumber, "", selectedGroup._id,startDate,
+        endDate,
+        status)
       );
     }
   };
@@ -82,8 +84,9 @@ const LessonTablePage = () => {
         1,
         lessonTableSearchValues,
         selectedGroup._id,
-        '',
-        ''
+        startDate,
+        endDate,
+        status
       )
     );
   };

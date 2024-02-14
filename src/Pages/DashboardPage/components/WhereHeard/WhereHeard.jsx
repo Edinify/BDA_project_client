@@ -20,7 +20,7 @@ const WhereHeard = ({ dashboardKeys }) => {
     dispatch(getDashboardAdvertisingAction("", "", option.key));
   };
 
-  console.log(advertising, "bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+  // console.log(advertising, "bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 
   return (
     <>

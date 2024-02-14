@@ -12,7 +12,7 @@ const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  console.log(location.pathname, "locatiooooooooooooooooooooooooooonnn");
+  // console.log(location.pathname, "locatiooooooooooooooooooooooooooonnn");
 
   const { teachersModalLoading } = useSelector((state) => state.teachersModal);
   const [isDisabled, setIsDisabled] = useState(() => {

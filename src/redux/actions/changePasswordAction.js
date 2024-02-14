@@ -60,7 +60,7 @@ export const changeAdminPasswordAction = (
         toastError("köhnə şifrə yalnışdır");
         return;
       }
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -80,7 +80,7 @@ export const changeAdminPasswordAction = (
     
           dispatch(logoutAction());
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -108,7 +108,7 @@ export const changeTeacherPasswordAction = (oldPassword, newPassword) => {
         toastError("köhnə şifrə yalnışdır");
         return;
       }
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -128,7 +128,7 @@ export const changeTeacherPasswordAction = (oldPassword, newPassword) => {
     
           dispatch(logoutAction());
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -160,7 +160,7 @@ export const changeStudentPasswordAction = (
         toastError("köhnə şifrə yalnışdır");
         return;
       }
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -180,7 +180,7 @@ export const changeStudentPasswordAction = (
     
           dispatch(logoutAction());
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }

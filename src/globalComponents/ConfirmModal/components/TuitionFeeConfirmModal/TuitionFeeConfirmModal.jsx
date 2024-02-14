@@ -28,8 +28,8 @@ const TuitionFeeConfirmModal = () => {
   const [payments, setPayments] = useState([]);
   const [paidAmount, setPaidAmount] = useState(0);
 
-  console.log(tuitionFeeSearchValues, "tuitionFeeSearchValues");
-  console.log(paidData);
+  // console.log(tuitionFeeSearchValues, "tuitionFeeSearchValues");
+  // console.log(paidData);
 
   const updateTuitionPayments = () => {
     dispatch(
@@ -105,7 +105,7 @@ const TuitionFeeConfirmModal = () => {
 
     const beforePayments = calcedPayments.filter((item) => {
       const date = (item?.paymentDate && new Date(item.paymentDate)) || null;
-      console.log(date);
+      // console.log(date);
       return (
         date?.getFullYear() < currDate?.getFullYear() ||
         (date?.getFullYear() === currDate?.getFullYear() &&
@@ -113,7 +113,7 @@ const TuitionFeeConfirmModal = () => {
       );
     });
 
-    console.log(beforePayments, "before payments");
+    // console.log(beforePayments, "before payments");
 
     const totalBeforePayment = beforePayments.reduce(
       (total, item) => total + item.payment,
@@ -129,7 +129,7 @@ const TuitionFeeConfirmModal = () => {
     setPaidAmount(totalConfirmedPayment);
   }, [tuitionFeeModalData.paids]);
 
-  console.log(payments, "ssssssssssssssssssssss");
+  // console.log(payments, "ssssssssssssssssssssss");
   return (
     <div style={{ marginTop: "30px" }}>
       <div>

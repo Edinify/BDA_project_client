@@ -81,13 +81,13 @@ const toastError = (message) => {
 
 export const getTuitionFeePaginationAction =
   (pageNumber, searchQuery,courseId,groupId) => async (dispatch) => {
-    console.log(courseId,groupId)
+    // console.log(courseId,groupId)
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
         `/?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${courseId || ''}&groupId=${groupId|| ''}`
       );
-      console.log(data, "salam get tuition fee actionnnnnn");
+      // console.log(data, "salam get tuition fee actionnnnnn");
       dispatch({
         type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_LAST_PAGE,
         payload: pageNumber,
@@ -97,7 +97,7 @@ export const getTuitionFeePaginationAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -122,7 +122,7 @@ export const getTuitionFeePaginationAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -140,7 +140,7 @@ export const updateTuitionFeeAction =
     try {
       const { data } = await API.patch(`/payment`, newData);
 
-      console.log(data, "salam tuition fee action");
+      // console.log(data, "salam tuition fee action");
       dispatch({ type: TUITION_FEE_MODAL_ACTION_TYPE.CLOSE_CONFIRM_MODAL });
       dispatch(getTuitionFeePaginationAction(page, searchValue));
 

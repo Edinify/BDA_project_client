@@ -10,6 +10,10 @@ export const dropdownGroupReducer = (state = initialState, action) => {
       return {
         selectedGroup: action.payload
       };
+      case DROPDOWN_GROUP_ACTIONS_TYPE.CLEAR_GROUP:
+      return {
+        selectedGroup: ""
+      };
     default:
       return state;
   }

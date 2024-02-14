@@ -95,7 +95,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
       );
     });
 
-    console.log(beforePayments, "before payments in card");
+    // console.log(beforePayments, "before payments in card");
 
     const totalBeforePayment = beforePayments.reduce(
       (total, item) => total + item.payment,
@@ -105,7 +105,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
     const currPayment = totalBeforePayment - totalConfirmedPayment;
 
     setCurrentPayment(currPayment > 0 ? currPayment : 0);
-    console.log(data.totalAmount);
+    // console.log(data.totalAmount);
     setTotalRest((data?.totalAmount || 0) - (totalConfirmedPayment || 0));
   });
 

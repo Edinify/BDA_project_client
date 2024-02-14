@@ -43,7 +43,7 @@ const WorkerCard = ({
     setOpenMoreModal(true);
   };
 
-  // console.log(worker)
+  // // console.log(worker)
   return (
     <>
       {mode === "desktop" ? (

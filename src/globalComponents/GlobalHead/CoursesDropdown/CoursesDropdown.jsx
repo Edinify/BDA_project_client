@@ -8,6 +8,8 @@ import {
 } from "../../../redux/actions-type";
 import { getAllCoursesAction } from "../../../redux/actions/coursesActions";
 import { getSyllabusPaginationAction } from "../../../redux/actions/syllabusActions";
+import { useLocation } from "react-router-dom";
+
 
 export const CoursesDropdown = ({ deviceType = "" }) => {
   const dispatch = useDispatch();
@@ -15,8 +17,20 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
   const { selectedCourse } = useSelector((state) => state.syllabusCourse);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const location = useLocation()
+
+
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: SYLLABUS_ALL_ACTIONS_TYPE.CLEAR_COURSE,
+      });
+    }
+  }, [location])
+  
+
   const getCourse = (course) => {
-    console.log(course)
+    // console.log(course)
     setDropdownOpen(false);
     dispatch({
       type: SYLLABUS_ALL_ACTIONS_TYPE.SELECT_COURSE_FOR_SYLLABUS,

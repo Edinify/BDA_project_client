@@ -29,7 +29,7 @@ const EventsData = ({ userData, eventPageNum, getPageNumber }) => {
     }
   }, [openMoreModal]);
 
-  console.log(userData);
+  // console.log(userData);
   return (
     <>
       {loading ? (

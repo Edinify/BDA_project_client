@@ -82,7 +82,7 @@ export const getLessonTablePaginationAction =
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
-        `/?page=${pageNumber}&searchQuery=${searchQuery}&groupId=${groupId}&startDate=${startDate || ""}&endDate=${endDate || ""}&status=${status}`
+        `/?page=${pageNumber}&searchQuery=${searchQuery}&groupId=${groupId}&startDate=${startDate || ""}&endDate=${endDate || ""}&status=${status || ""}`
       );
 
       dispatch({
@@ -95,7 +95,7 @@ export const getLessonTablePaginationAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -121,7 +121,7 @@ export const getLessonTablePaginationAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -163,13 +163,13 @@ export const createLessonTableAction =
           });
           toastSuccess("Yeni dərs yaradıldı");
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
         }
       }
-      console.log(error);
+      // console.log(error);
     } finally {
       dispatch(modalLoading(false));
     }
@@ -233,7 +233,7 @@ export const deleteLessonTableAction =
   async (dispatch) => {
     try {
       const { data } = await API.delete(`/${_id}`);
-      console.log(data, "deleted lessonnnnnn");
+      // console.log(data, "deleted lessonnnnnn");
       dispatch(
         getLessonTablePaginationAction(pageNumber, searchQuery, data.group)
       );
@@ -270,7 +270,7 @@ export const deleteLessonTableAction =
       if (error?.response?.data?.key === "has-current-week-lessons") {
         toastError("Cari həftədə  dərsi olan dərs silinə bilməz");
       }
-      console.log(error);
+      // console.log(error);
       toastError(error?.response?.data.message);
     }
   };

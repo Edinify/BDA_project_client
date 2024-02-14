@@ -82,7 +82,7 @@ export const getAllTeachersAction = () => async (dispatch) => {
     const { data } = await API.get("/all");
     dispatch({ type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER, payload: data });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -100,7 +100,7 @@ export const getAllTeachersAction = () => async (dispatch) => {
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
-        console.log(error);
+        // console.log(error);
       }
     }
   }
@@ -114,7 +114,7 @@ export const getActiveTeachersAction = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -132,7 +132,7 @@ export const getActiveTeachersAction = () => async (dispatch) => {
           payload: data,
         });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -151,7 +151,7 @@ export const getTeachersByCourseId = (courseId) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -169,7 +169,7 @@ export const getTeachersByCourseId = (courseId) => async (dispatch) => {
           payload: data,
         });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -183,10 +183,10 @@ export const getTeachersPaginationAction =
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
-      console.log(pageNumber, "pageNumber");
-      console.log(searchQuery, "searchQuery");
-      console.log(status, "status");
-      console.log(role, "role");
+      // console.log(pageNumber, "pageNumber");
+      // console.log(searchQuery, "searchQuery");
+      // console.log(status, "status");
+      // console.log(role, "role");
 
       const { data } = await API.get(
         `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
@@ -227,7 +227,7 @@ export const getTeachersPaginationAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -242,7 +242,7 @@ export const createTeacherAction =
   (teacherData, pathName) => async (dispatch) => {
     dispatch(modalLoading(true));
 
-    console.log(pathName, "path name");
+    // console.log(pathName, "path name");
     try {
       const { data } = await API.post("/", teacherData);
 
@@ -296,7 +296,7 @@ export const createTeacherAction =
           });
           toastSuccess("Yeni təlimçi yaradıldı");
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -306,7 +306,7 @@ export const createTeacherAction =
       if (error?.response?.data?.key === "email-already-exist") {
         toastError("Bu email ilə istifadəçi mövcuddur");
       }
-      console.log(error);
+      // console.log(error);
     } finally {
       dispatch(modalLoading(false));
     }
@@ -399,7 +399,7 @@ export const deleteTeacherAction =
       if (error?.response?.data?.key === "has-current-week-lessons") {
         toastError("Cari həftədə  dərsi olan təlimçi silinə bilməz");
       }
-      console.log(error);
+      // console.log(error);
       toastError(error?.response?.data.message);
     }
   };
@@ -443,7 +443,7 @@ export const getTeacherLessonStatisticsAction =
           }
         }
       }
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -486,7 +486,7 @@ export const getTeacherConfirmedLessonsAction =
           }
         }
       }
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -529,7 +529,7 @@ export const getTeacherCancelledLessonsAction =
           }
         }
       }
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -572,7 +572,7 @@ export const getTeacherUnviewedLessonsAction =
           }
         }
       }
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -615,7 +615,7 @@ export const getTeacherLeaderboradOrderAction =
           }
         }
       }
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -626,13 +626,13 @@ export const getMentorsByCourseId = (courseId) => async (dispatch) => {
     const { data } = await API.get("/by-course", {
       params: { courseId: courseId, role: "mentor" },
     });
-    console.log(data, "mentors in action");
+    // console.log(data, "mentors in action");
     dispatch({
       type: MENTOR_TYPES.GET_MENTORS,
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -650,7 +650,7 @@ export const getMentorsByCourseId = (courseId) => async (dispatch) => {
           payload: data,
         });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }

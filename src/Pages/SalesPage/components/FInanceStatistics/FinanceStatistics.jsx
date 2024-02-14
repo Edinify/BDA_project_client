@@ -18,7 +18,7 @@ const FinanceStatistics = () => {
     sales: 0,
   });
 
-  console.log(salesChart);
+  // console.log(salesChart);
 
   useEffect(() => {
     const totalLead = salesChart.series

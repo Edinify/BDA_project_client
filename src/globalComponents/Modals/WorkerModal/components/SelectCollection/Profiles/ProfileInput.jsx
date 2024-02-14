@@ -23,7 +23,7 @@ const ProfileInput = ({
     setOpenDropdown(false);
   };
 
-  // console.log(data, "dataadksfa");
+  // // console.log(data, "dataadksfa");
 
   return (
     <li>

@@ -14,7 +14,7 @@ const MentorsList = ({ formik, updateModalState, modalData }) => {
   const dispatch = useDispatch();
   const { mentors: dataList } = useSelector((state) => state.mentors);
 
-  console.log(dataList, "mentors");
+  // console.log(dataList, "mentors");
   const [openDropdown, setOpenDropdown] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [profileErrMessage, setProfileErrMessage] = useState(false);

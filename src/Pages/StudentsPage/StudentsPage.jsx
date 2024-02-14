@@ -14,10 +14,6 @@ const StudentsPage = () => {
   );
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [studentPageNum, setStudentPageNum] = useState(1);
-  // const { loading, loadingAll, groupsByMore } = useSelector(
-  //   (state) => state.groupsPagination
-  // );
-  // const { allCourses: dataList } = useSelector((state) => state.allCourses);
 
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =
@@ -26,14 +22,17 @@ const StudentsPage = () => {
       : JSON.parse(localStorage.getItem("userData"));
 
   const studentFilter = () => {
-    console.log("sds");
     dispatch(
       getStudentsPaginationAction(
-        "",
-        "",
-        studentStatus ? studentStatus : "all",
-        courseId,
-        selectedGroup._id
+        1,
+        studentSearchValues,
+        studentStatus
+          ? studentStatus !== "all"
+            ? studentStatus
+            : "all"
+          : "all",
+          courseId,
+          selectedGroup._id
       )
     );
   };
@@ -45,7 +44,9 @@ const StudentsPage = () => {
         getStudentsPaginationAction(
           pageNumber,
           studentSearchValues,
-          studentStatus ? studentStatus : "all"
+          studentStatus ? studentStatus : "all",
+          courseId,
+          selectedGroup._id
         )
       );
     } else {
@@ -53,7 +54,9 @@ const StudentsPage = () => {
         getStudentsPaginationAction(
           pageNumber,
           "",
-          studentStatus ? studentStatus : "all"
+          studentStatus ? studentStatus : "all",
+          courseId,
+          selectedGroup._id
         )
       );
     }
@@ -66,6 +69,7 @@ const StudentsPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
+    console.log(e)
     dispatch(
       getStudentsPaginationAction(
         1,
@@ -74,7 +78,9 @@ const StudentsPage = () => {
           ? studentStatus !== "all"
             ? studentStatus
             : "all"
-          : "all"
+          : "all",
+          courseId,
+          selectedGroup._id
       )
     );
     setStudentPageNum(1);
@@ -92,13 +98,14 @@ const StudentsPage = () => {
   }, [studentStatus]);
   useEffect(() => {
     if (studentSearchValues) {
-      dispatch(getStudentsPaginationAction(1, studentSearchValues, "all"));
+      dispatch(getStudentsPaginationAction(1, studentSearchValues, "all",'',
+      ''));
     } else {
-      dispatch(getStudentsPaginationAction(1, "", ""));
+      dispatch(getStudentsPaginationAction(1, "", "",'',
+      ''));
     }
   }, [dispatch]);
 
-  console.log(lastPage, "last page in student");
   return (
     <div className="details-page students-page">
       <GlobalHead

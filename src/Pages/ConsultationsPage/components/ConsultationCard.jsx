@@ -82,7 +82,7 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
     });
   };
 
-  console.log(constStatusList, "consttttttttttt");
+  // console.log(constStatusList, "consttttttttttt");
   return (
     <>
       {mode === "desktop" ? (

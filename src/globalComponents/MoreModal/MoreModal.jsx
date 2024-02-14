@@ -32,9 +32,9 @@ const MoreModal = ({ setOpenMoreModal, type, userData }) => {
   const { eventsModalData } = useSelector((state) => state.eventModal);
   const { user } = useSelector((state) => state.user);
 
-  console.log(userData?.power === "only-show", "user Dataaaa");
-  console.log(user.role === "super-admin");
-  console.log(type, "user data more modal");
+  // console.log(userData?.power === "only-show", "user Dataaaa");
+  // console.log(user.role === "super-admin");
+  // console.log(type, "user data more modal");
 
   const openUpdateModal = () => {
     if (type === "teacher") {

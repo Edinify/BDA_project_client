@@ -98,7 +98,7 @@ export const getStudentsAction = (payload) => async (dispatch) => {
     }
   } catch (error) {
     const originalRequest = error.config;
-    console.log(error);
+    // console.log(error);
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
@@ -124,7 +124,7 @@ export const getStudentsAction = (payload) => async (dispatch) => {
           });
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -141,7 +141,7 @@ export const getActiveStudentsAction = (payload) => async (dispatch) => {
     const { data } = await API.get(
       `/active?studentsCount=${payload.studentsCount}&searchQuery=${payload.searchQuery}&courseId=${payload.courseId}`
     );
-    // console.log(data);
+    // // console.log(data);
     if (payload.studentsCount > 0) {
       dispatch({
         type: STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_ALL,
@@ -155,7 +155,7 @@ export const getActiveStudentsAction = (payload) => async (dispatch) => {
     }
   } catch (error) {
     const originalRequest = error.config;
-    console.log(error);
+    // console.log(error);
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
@@ -181,7 +181,7 @@ export const getActiveStudentsAction = (payload) => async (dispatch) => {
           });
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -211,7 +211,7 @@ export const getstudentsByCourseIdAction = (payload) => async (dispatch) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       try {
@@ -252,7 +252,7 @@ export const getStudentsPaginationAction =
   (pageNumber, searchQuery, status = "all",courseId = "",groupId = "") =>
   async (dispatch) => {
     dispatch(setLoadingStudentsAction(true));
-    console.log(courseId,groupId)
+    // console.log(courseId,groupId)
     try {
       const { data } = await API.get(
         `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}`
@@ -266,7 +266,7 @@ export const getStudentsPaginationAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -291,7 +291,7 @@ export const getStudentsPaginationAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -303,7 +303,7 @@ export const getStudentsPaginationAction =
   };
 
 export const createStudentsAction = (studentData) => async (dispatch) => {
-  console.log(studentData);
+  // console.log(studentData);
   dispatch(studentModalLoading(true));
   try {
     const { data } = await API.post("/", studentData);
@@ -314,7 +314,7 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
     });
     toastSuccess("Yeni tələbə yaradıldı");
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -340,7 +340,7 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
         }
       }
     }
-    console.log(error);
+    // console.log(error);
     if (error?.response?.data?.key === "email-already-exist") {
       dispatch({
         type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
@@ -354,7 +354,7 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
 };
 
 export const updateStudentsAction = (_id, studentData) => async (dispatch) => {
-  console.log(studentData);
+  // console.log(studentData);
   dispatch(studentModalLoading(true));
   try {
     const { data } = await API.patch(`/${_id}`, studentData);
@@ -393,7 +393,7 @@ export const updateStudentsAction = (_id, studentData) => async (dispatch) => {
         }
       }
     }
-    console.log(error);
+    // console.log(error);
     if (error?.response?.data?.key === "email-already-exist") {
       // dispatch({type:STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,payload:true})
       toastError("Bu email ilə istifadəçi mövcuddur");
@@ -448,7 +448,7 @@ export const deleteStudentAction =
       if (error?.response?.data?.key === "has-current-week-lessons") {
         toastError("Cari həftədə  dərsi olan tələbə silinə bilməz");
       }
-      console.log(error);
+      // console.log(error);
       toastError(error?.response?.data.message);
     }
   };
@@ -495,7 +495,7 @@ export const confirmStudentChangesAction =
           }
         }
       }
-      console.log(error);
+      // console.log(error);
       if (error?.response?.data?.key === "email-already-exist") {
         // dispatch({type:STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,payload:true})
         toastError("Bu email ilə istifadəçi mövcuddur");
@@ -510,7 +510,7 @@ export const confirmStudentChangesAction =
 
 export const cancelStudentChangesAction =
   (_id, studentData) => async (dispatch) => {
-    console.log(studentData);
+    // console.log(studentData);
     dispatch(studentModalLoading(true));
     try {
       const { data } = await API.patch(`/changes/cancel/${_id}`, studentData);
@@ -551,7 +551,7 @@ export const cancelStudentChangesAction =
           }
         }
       }
-      console.log(error);
+      // console.log(error);
       if (error?.response?.data?.key === "email-already-exist") {
         // dispatch({type:STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,payload:true})
         toastError("Bu email ilə istifadəçi mövcuddur");

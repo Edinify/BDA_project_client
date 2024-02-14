@@ -17,7 +17,7 @@ const GroupsConfirmModal = () => {
   const dispatch = useDispatch();
   const [btns, setBtns] = useState(true);
 
-  console.log(groupModalData, "group modal data");
+  // console.log(groupModalData, "group modal data");
   let beforeTeachers =
     Array.isArray(groupModalData?.teachers) &&
     groupModalData?.teachers.length > 0

@@ -15,7 +15,7 @@ const ProfileList = ({ formik, updateModalState, modalData }) => {
   const [profileErrMessage, setProfileErrMessage] = useState(false);
 
 
-  console.log(generalProfileList,"list")
+  // console.log(generalProfileList,"list")
 
   const deleteClass = (index) => {
     if (modalData.profiles.length === 1) {
