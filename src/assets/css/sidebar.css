@@ -67,6 +67,10 @@
     top: 0;
     left: 0;
 }
+.main-sidebar .sidebar-head-tablet img{
+    width: 30px;
+    height: 30px;
+}
 .main-sidebar .sidebar-head-tablet svg {
     cursor: pointer;
 }

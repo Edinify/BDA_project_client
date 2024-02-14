@@ -25,8 +25,12 @@
 .login-left .left-container .left-img-container {
   display: flex;
   overflow: hidden;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
+  /* justify-content: flex-end; */
   position: relative;
+  height: 80%;
+
 }
 .login-left .left-container .left-img-container .chart-img {
   width: 210px;
