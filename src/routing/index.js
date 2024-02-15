@@ -28,17 +28,21 @@ export const Routing = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const token = localStorage.getItem("auth");
 
+  // console.log(user,"userrrrrrr");
+  // console.log(auth);
   useEffect(() => {
     if (token) {
+      // console.log(1);
       if (!user._id) {
+        // console.log(2);
         dispatch(userAction());
       } else if (user.role === "super-admin" && !notFound) {
-        // // console.log(3);
+        // console.log(3);
         if (location.pathname.startsWith("/login")) {
           navigate("/");
         }
       } else if (user.role === "teacher" && !notFound) {
-        // // console.log(4);
+        // console.log(4);
         if (location.pathname.startsWith("/login")) {
           navigate("/teacher-panel");
         }

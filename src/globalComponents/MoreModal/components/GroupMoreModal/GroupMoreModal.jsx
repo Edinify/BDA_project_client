@@ -108,7 +108,7 @@ const GroupMoreModal = ({ groupModalData }) => {
         ))
       : "";
 
-  console.log(groupModalData, "group modal data");
+  // console.log(groupModalData, "group modal data");
 
   return (
     <>

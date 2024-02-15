@@ -22,6 +22,9 @@ const WorkersPanelRoute = (user) => {
     {}
   );
 
+
+
+
   // console.log(user, "user");
   // console.log(profiles, "profiles in worker roter");
 
@@ -60,6 +63,7 @@ const WorkersPanelRoute = (user) => {
         <>
           <Route path="/groups/current" element={<GroupsPage />} />
           <Route path="/groups/waiting" element={<GroupsPage />} />
+          <Route path="/groups/ended" element={<GroupsPage />} />
         </>
       )}
 

@@ -208,7 +208,7 @@ export const getGroupsPaginationAction =
   (pageNumber, searchQuery, status, courseId, teacherId) =>
   async (dispatch) => {
     dispatch(pageLoading(true));
-    console.log(status, "statussss");
+    // console.log(status, "statussss");
     try {
       const { data } = await API.get(
         `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&teacherId=${teacherId}`
@@ -225,7 +225,7 @@ export const getGroupsPaginationAction =
     } catch (error) {
       
       const originalRequest = error.config;
-      console.log(error);
+      // console.log(error);
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
         try {
