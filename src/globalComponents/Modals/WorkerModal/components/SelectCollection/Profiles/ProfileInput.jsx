@@ -16,6 +16,7 @@ const ProfileInput = ({
   const profileName = generalProfileList.find(
     (item) => item.key === data.profile
   ).name;
+
   const addPower = (selectedPower) => {
     const profileData = [...modalData?.profiles];
     profileData[index] = { ...profileData[index], power: selectedPower };
