@@ -28,7 +28,7 @@ export const Routing = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const token = localStorage.getItem("auth");
 
-  console.log(user);
+  console.log(user,"userrrrrrr");
   console.log(auth);
   useEffect(() => {
     if (token) {

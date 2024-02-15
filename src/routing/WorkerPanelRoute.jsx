@@ -60,6 +60,7 @@ const WorkersPanelRoute = (user) => {
         <>
           <Route path="/groups/current" element={<GroupsPage />} />
           <Route path="/groups/waiting" element={<GroupsPage />} />
+          <Route path="/groups/ended" element={<GroupsPage />} />
         </>
       )}
 
