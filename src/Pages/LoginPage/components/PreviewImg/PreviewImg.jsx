@@ -3,7 +3,8 @@ import ChartImg from "../../../../assets/images/login-imgs/Chart.png"
 import WhereHearImg from "../../../../assets/images/login-imgs/Where did they hear us from_.png"
 import DashboardMobileImg from "../../../../assets/images/login-imgs/Dashboard - Mobile.png"
 import DashboardTabletImg from "../../../../assets/images/login-imgs//Dashboard - Tablet.png"
-import { ReactComponent as LoginLogo } from "../../../../assets/icons/logo/bdaLogo.svg";
+// import { ReactComponent as LoginLogo } from "../../../../assets/icons/logo/bdaLogo.svg";
+import {ReactComponent as LoginLogo } from "../../../../assets/icons/logo/WhiteLogo.svg";
 
 
 

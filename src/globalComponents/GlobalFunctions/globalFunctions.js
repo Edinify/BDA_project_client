@@ -170,7 +170,7 @@ export function useCustomHook() {
   ];
   const generalProfileList = [
     { id: 1, name: "Qruplar", key: "groups", icon: <GroupIcon /> },
-    { id: 2, name: "Əməkdaşlar", key: "workers", icon: <AdminIcon /> },
+    // { id: 2, name: "Əməkdaşlar", key: "workers", icon: <AdminIcon /> },
     { id: 3, name: "Tələbələr", key: "students", icon: <StudentsIcon /> },
     { id: 6, name: "Təlimçilər", key: "teachers", icon: <TeachersIcon /> },
     { id: 7, name: "Fənlər", key: "courses", icon: <CoursesIcon /> },
