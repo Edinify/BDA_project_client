@@ -66,7 +66,7 @@ function App() {
     dispatch(userAction());
   }, []);
 
-  console.log(leadOpenModal, "lead open modal");
+  // console.log(leadOpenModal, "lead open modal");
   return (
     <div className="App">
       <Routing />

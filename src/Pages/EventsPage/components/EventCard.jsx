@@ -60,7 +60,7 @@ const EventCard = ({
       },
     });
   };
-  console.log(userData, "blablablabla 999999999999999");
+  // console.log(userData, "blablablabla 999999999999999");
   return (
     <>
       {mode === "desktop" ? (

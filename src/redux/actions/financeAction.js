@@ -24,7 +24,7 @@ const refreshApi = axios.create({
 
 export const getFinanceChartAction =
   (startDate, endDate, monthCount) => async (dispatch) => {
-    console.log('tttttttttttttttttt')
+    // console.log('tttttttttttttttttt')
     try {
       const { data } = await API.get(
         `/chart/?startDate=${startDate || ""}&endDate=${
@@ -58,7 +58,7 @@ export const getFinanceChartAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -80,7 +80,7 @@ export const getFinanceDataAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -103,7 +103,7 @@ export const getFinanceDataAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }

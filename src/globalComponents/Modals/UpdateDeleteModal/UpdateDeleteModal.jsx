@@ -16,7 +16,7 @@ const UpdateDeleteModal = ({
 }) => {
   //
 
-  // console.log(state,"admin")
+  // // console.log(state,"admin")
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { funcComp } = useSelector((state) => state.funcComponent);
@@ -101,7 +101,7 @@ const UpdateDeleteModal = ({
       setUpdateBtn(true);
     }
   });
-  // console.log(user)
+  // // console.log(user)
   return (
     <div className="func-component">
       {badge && (

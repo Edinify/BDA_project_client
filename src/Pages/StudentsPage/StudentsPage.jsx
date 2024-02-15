@@ -26,7 +26,7 @@ const StudentsPage = () => {
       : JSON.parse(localStorage.getItem("userData"));
 
   const studentFilter = () => {
-    console.log("sds");
+    // console.log("sds");
     dispatch(
       getStudentsPaginationAction(
         "",
@@ -98,7 +98,7 @@ const StudentsPage = () => {
     }
   }, [dispatch]);
 
-  console.log(lastPage, "last page in student");
+  // console.log(lastPage, "last page in student");
   return (
     <div className="details-page students-page">
       <GlobalHead
@@ -108,6 +108,7 @@ const StudentsPage = () => {
         DATA_SEARCH_VALUE={"STUDENTS_SEARCH_VALUE"}
         dataSearchValues={studentSearchValues}
         statusType="student"
+        profile={"students"}
       />
 
       <StudentsData

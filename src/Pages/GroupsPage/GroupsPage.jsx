@@ -15,7 +15,7 @@ const GroupsPage = () => {
   const {courseId } = useSelector((state) => state.studentStatus);
   const { selectedTeacher } = useSelector((state) => state.dropdownTeacher);
   const [status, setStatus] = useState("waiting");
-  console.log(selectedTeacher)
+  // console.log(selectedTeacher)
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =
     userData.role !== "super-admin"

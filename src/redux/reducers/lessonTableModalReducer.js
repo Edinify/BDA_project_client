@@ -11,7 +11,7 @@ const initialState = {
 export const lessonTableModalReducer = (state = initialState, action) => {
   switch (action.type) {
     case LESSON_TABLE_MODAL_ACTION_TYPE.GET_LESSON_TABLE_MODAL:
-      console.log(action.payload, "--bla bla bla");
+      // console.log(action.payload, "--bla bla bla");
       return {
         ...state,
         lessonTableModalData: action.payload.data,

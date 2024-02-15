@@ -35,7 +35,7 @@ export const getAllStudentsCountAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -58,7 +58,7 @@ export const getAllStudentsCountAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -80,13 +80,13 @@ export const getActiveStudentsCountAction =
         }&monthCount=${monthCount || ""}`
       );
 
-      console.log(data);
+      // console.log(data);
       dispatch({
         type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_CANCELLED_LESSONS,
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -109,7 +109,7 @@ export const getActiveStudentsCountAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -132,7 +132,7 @@ export const getAllGroupsAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -155,7 +155,7 @@ export const getAllGroupsAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -178,7 +178,7 @@ export const getAllEventsAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -201,7 +201,7 @@ export const getAllEventsAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -218,7 +218,7 @@ export const getDashboardConsultationsDataAction = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -237,7 +237,7 @@ export const getDashboardConsultationsDataAction = () => async (dispatch) => {
           payload: data,
         });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -255,13 +255,13 @@ export const getDashboardCourseStatisticAction =
           endDate || ""
         }&monthCount=${monthCount || ""}`
       );
-      // console.log(data)
+      // // console.log(data)
       dispatch({
         type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_COURSE_STATISTIC,
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -279,13 +279,13 @@ export const getDashboardCourseStatisticAction =
               endDate || ""
             }&monthCount=${monthCount || ""}`
           );
-          // console.log(data)
+          // // console.log(data)
           dispatch({
             type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_COURSE_STATISTIC,
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -303,13 +303,13 @@ export const getDashboardAdvertisingAction =
           endDate || ""
         }&monthCount=${monthCount || ""}`
       );
-      // console.log(data)
+      // // console.log(data)
       dispatch({
         type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_ADVERTISING,
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -327,13 +327,13 @@ export const getDashboardAdvertisingAction =
               endDate || ""
             }&monthCount=${monthCount || ""}`
           );
-          // console.log(data)
+          // // console.log(data)
           dispatch({
             type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_ADVERTISING,
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -355,7 +355,7 @@ export const getDashboarLeadboarddAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -378,7 +378,7 @@ export const getDashboarLeadboarddAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -401,7 +401,7 @@ export const getDashboardStudentsAmountAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -424,7 +424,7 @@ export const getDashboardStudentsAmountAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }

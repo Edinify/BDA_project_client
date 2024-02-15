@@ -28,7 +28,7 @@ const GlobalHead = ({
 
   useEffect(() => {
     if (user.role === "super-admin") {
-      console.log(2);
+      // console.log(2);
       setShowAddBtn(true);
     } else if (user.role === "worker") {
       const checkPower =

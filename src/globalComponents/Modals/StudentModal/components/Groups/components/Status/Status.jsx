@@ -7,7 +7,7 @@ export default function Status({ data, setInputValue, formik, addGroupData }) {
     setInputValue("status", value);
   };
 
-  console.log(data.status, "data in status component");
+  // console.log(data.status, "data in status component");
   return (
     <div style={{ marginTop: "16px" }}>
       <label className="radio-sector-title"></label>

@@ -33,12 +33,12 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
   };
 
   useEffect(() => {
-    console.log(funcType, "func type");
+    // console.log(funcType, "func type");
     setIsDisabled(() => {
       if (funcType === "update") {
-        console.log(formik.isValid, "formik is valid");
-        console.log(formik.errors, "formik ERRROR");
-        console.log(modalData);
+        // console.log(formik.isValid, "formik is valid");
+        // console.log(formik.errors, "formik ERRROR");
+        // console.log(modalData);
         if (Object.keys(formik.errors).length === 0) {
           return false;
         } else if (
@@ -50,9 +50,9 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
           return true;
         }
       } else {
-        console.log(formik.isValid, "formik is valid");
-        console.log(formik.errors, "formik ERRROR");
-        console.log(modalData);
+        // console.log(formik.isValid, "formik is valid");
+        // console.log(formik.errors, "formik ERRROR");
+        // console.log(modalData);
         if (formik.isValid) {
           return false;
         } else {
@@ -62,7 +62,7 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
     });
   }, [formik.errors]);
 
-  console.log(isDisabled, "modal loading");
+  // console.log(isDisabled, "modal loading");
 
   return (
     <>

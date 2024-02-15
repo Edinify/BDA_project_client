@@ -30,7 +30,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
     }
   }, [openMoreModal]);
 
-  console.log(careerData, "career data");
+  // console.log(careerData, "career data");
 
   return (
     <>

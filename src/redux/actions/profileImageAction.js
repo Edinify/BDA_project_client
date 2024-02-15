@@ -67,7 +67,7 @@ export const profileUpdateImage = (base64) => async (dispatch) => {
     });
     toastSuccess("Profil şəkli dəyişdi");
   } catch (error) {
-    console.log(error, "img");
+    // console.log(error, "img");
     if (error?.response?.status === 413) {
       toastError("Şəklin ölçüsü böyük olduğu üçün dəyişmək olmur");
     }
@@ -96,7 +96,7 @@ export const profileUpdateImage = (base64) => async (dispatch) => {
         });
         toastSuccess("Profil şəkli dəyişdi");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }

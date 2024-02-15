@@ -22,7 +22,7 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
     }
   });
   const dataCreate = () => {
-    console.log(true)
+    // console.log(true)
     dispatch({
       type: SEARCH_VALUES_ACTION_TYPES.SYLLABUS_SEARCH_VALUE,
       payload: "",

@@ -22,8 +22,11 @@ const WorkersPanelRoute = (user) => {
     {}
   );
 
-  console.log(user, "user");
-  console.log(profiles, "profiles in worker roter");
+
+
+
+  // console.log(user, "user");
+  // console.log(profiles, "profiles in worker roter");
 
   return (
     <>

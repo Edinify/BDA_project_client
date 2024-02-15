@@ -46,7 +46,7 @@ const CourseCard = ({
       },
     });
   };
-  // console.log(course)
+  // // console.log(course)
   return (
     <>
       {mode === "desktop" ? (

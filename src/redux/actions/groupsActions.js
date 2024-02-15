@@ -86,7 +86,7 @@ export const getGroupsAction = () => async (dispatch) => {
     const { data } = await API.get("/all");
     dispatch({ type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS, payload: data });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -107,7 +107,7 @@ export const getGroupsAction = () => async (dispatch) => {
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
-        console.log(error);
+        // console.log(error);
       }
     }
   }
@@ -118,7 +118,7 @@ export const getGroupsWithTeacherAction = (teacherId) => async (dispatch) => {
     const { data } = await API.get(`/with-teacher?teacherId=${teacherId}`);
     dispatch({ type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS, payload: data });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -139,7 +139,7 @@ export const getGroupsWithTeacherAction = (teacherId) => async (dispatch) => {
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
-        console.log(error);
+        // console.log(error);
       }
     }
   }
@@ -152,7 +152,7 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
       `/with-course?groupsCount=${payload.groupsCount}&searchQuery=${payload.searchQuery}`,
       { params: { courseIds: payload.courseIds } }
     );
-    // console.log(data);
+    // // console.log(data);
     if (payload.groupsCount > 0) {
       dispatch({
         type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL,
@@ -166,7 +166,7 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
     }
   } catch (error) {
     const originalRequest = error.config;
-    console.log(error);
+    // console.log(error);
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
@@ -192,7 +192,7 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
           });
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -208,7 +208,7 @@ export const getGroupsPaginationAction =
   (pageNumber, searchQuery, status, courseId, teacherId) =>
   async (dispatch) => {
     dispatch(pageLoading(true));
-    console.log(status, "statussss");
+    // console.log(status, "statussss");
     try {
       const { data } = await API.get(
         `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&teacherId=${teacherId}`
@@ -224,7 +224,7 @@ export const getGroupsPaginationAction =
       });
     } catch (error) {
       const originalRequest = error.config;
-      console.log(error);
+      // console.log(error);
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
         try {
@@ -249,7 +249,7 @@ export const getGroupsPaginationAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -279,7 +279,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
     toastSuccess("Yeni əməkdaş yaradıldı");
   } catch (error) {
     const originalRequest = error.config;
-    console.log(error);
+    // console.log(error);
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
@@ -300,7 +300,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
         });
         toastSuccess("Yeni əməkdaş yaradıldı");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -310,7 +310,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
     if (error?.response?.data?.key === "email-already-exist") {
       toastError("Bu email ilə istifadəçi mövcuddur");
     }
-    console.log(error);
+    // console.log(error);
   } finally {
     dispatch(modalLoading(false));
   }
@@ -328,7 +328,7 @@ export const updateGroupAction = (_id, groupData) => async (dispatch) => {
     toastSuccess("Qrup yeniləndi");
   } catch (error) {
     const originalRequest = error.config;
-    console.log(error);
+    // console.log(error);
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
@@ -374,7 +374,7 @@ export const deleteGroupAction =
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
-        console.log(error);
+        // console.log(error);
         try {
           const token = await refreshApi.get("/");
           localStorage.setItem(
@@ -404,7 +404,7 @@ export const deleteGroupAction =
           }
         }
       }
-      console.log(error);
+      // console.log(error);
       toastError(error?.response?.data.message);
     }
   };
@@ -421,7 +421,7 @@ export const confirmGroupChangesAction =
       toastSuccess("Yeniliklər təsdiqləndi!");
     } catch (error) {
       const originalRequest = error.config;
-      console.log(error);
+      // console.log(error);
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
         try {
@@ -466,7 +466,7 @@ export const cancelGroupChangesAction =
       toastSuccess("Yeniliklər ləğv edildi!");
     } catch (error) {
       const originalRequest = error.config;
-      console.log(error);
+      // console.log(error);
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
         try {

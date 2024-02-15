@@ -4,7 +4,7 @@ import "moment/locale/az";
 import { useCustomHook } from "../../../GlobalFunctions/globalFunctions";
 
 const EventMoreModal = ({ eventsModalData }) => {
-  console.log(eventsModalData, "event modal data");
+  // console.log(eventsModalData, "event modal data");
 
   const purposes = [
     { key: "new-qrup", value: "Yeni qrup" },

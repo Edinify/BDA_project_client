@@ -21,7 +21,7 @@ const TuitionFeePage = () => {
     )
   ) 
 
-  console.log(selectedGroup)
+  // console.log(selectedGroup)
 
   const getPageNumber = (pageNumber) => {
     if (tuitionFeeSearchValues) {

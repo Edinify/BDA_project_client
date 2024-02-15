@@ -79,13 +79,13 @@ const modalLoading = (loadingValue) => ({
 export const getAllSyllabusAction = (courseId) => async (dispatch) => {
   try {
     const { data } = await API.get(`/all?courseId=${courseId}`);
-    console.log(data);
+    // console.log(data);
     dispatch({
       type: SYLLABUS_ALL_ACTIONS_TYPE.GET_ACTIVE_SYLLABUS,
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -106,7 +106,7 @@ export const getAllSyllabusAction = (courseId) => async (dispatch) => {
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
-        console.log(error);
+        // console.log(error);
       }
     }
   }
@@ -120,7 +120,7 @@ export const getSyllabusActiveAction = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -138,7 +138,7 @@ export const getSyllabusActiveAction = () => async (dispatch) => {
           payload: data,
         });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -189,7 +189,7 @@ export const getSyllabusPaginationAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -239,13 +239,13 @@ export const createSyllabusAction = (syllabusData) => async (dispatch) => {
         });
         toastSuccess("Yeni sillabus yaradıldı");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
       }
     }
-    console.log(error);
+    // console.log(error);
   } finally {
     dispatch(modalLoading(false));
   }
@@ -349,7 +349,7 @@ export const deleteSyllabusAction =
       if (error?.response?.data?.key === "has-current-week-lessons") {
         toastError("Cari həftədə  dərsi olan sillabus silinə bilməz");
       }
-      console.log(error);
+      // console.log(error);
       toastError(error?.response?.data.message);
     }
   };

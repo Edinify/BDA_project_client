@@ -53,7 +53,7 @@ export const sendToEmailAction = (email) => async (dispatch) => {
         payload: "Daxil etdiyiniz email düzgün deyil",
       });
     }
-    console.log(error);
+    // console.log(error);
     toastError(error.response.data.message);
   } finally {
     dispatch({
@@ -73,7 +73,7 @@ export const resendToEmailAction = (email) => async (dispatch) => {
         payload: "Daxil etdiyiniz email düzgün deyil",
       });
     }
-    console.log(error);
+    // console.log(error);
     toastError(error.response.data.message);
   }
 };
@@ -94,7 +94,7 @@ export const checkOTPAction = (otp) => async (dispatch) => {
       type: FORGET_PASSWORD_ACTIONS_TYPE.FORGET_LOADING,
       payload: false,
     });
-    console.log(error);
+    // console.log(error);
     if (error?.response?.status === 404) {
       dispatch({
         type: FORGET_PASSWORD_ACTIONS_TYPE.FORGET_ERROR,
@@ -126,7 +126,7 @@ export const changePasswordAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       dispatch({
         type: FORGET_PASSWORD_ACTIONS_TYPE.FORGET_LOADING,
         payload: false,

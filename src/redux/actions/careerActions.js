@@ -83,7 +83,7 @@ export const getCareerPaginationAction =
       const { data } = await API.get(
         `/?page=${pageNumber}&searchQuery=${searchQuery}`
       );
-      console.log(data);
+      // console.log(data);
       dispatch({
         type: CAREER_ALL_ACTIONS_TYPE.GET_CAREER_LAST_PAGE,
         payload: pageNumber || 1,
@@ -119,7 +119,7 @@ export const getCareerPaginationAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }

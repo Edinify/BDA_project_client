@@ -51,7 +51,7 @@ const TuitionFeeMoreModal = ({ tuitionFeeModalData }) => {
     },
   ];
 
-  console.log(tuitionFeeModalData);
+  // console.log(tuitionFeeModalData);
   return (
     <>
       <div className="more-modal-header-inform">

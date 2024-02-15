@@ -26,8 +26,8 @@ const LessonInput = ({
     updateModalState("lessonDate", lessonDateData);
   };
 
-  console.log(data);
-  console.log(modalData, "modal dataaaaaaaaa");
+  // console.log(data);
+  // console.log(modalData, "modal dataaaaaaaaa");
 
   return (
     <li>

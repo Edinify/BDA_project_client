@@ -17,7 +17,7 @@ const Payments = ({ formik, modalData }) => {
   const [sameItemErrMessage, setsameItemErrMessage] = useState(false);
   const dispatch = useDispatch();
 
-  console.log(modalData, "course modal data");
+  // console.log(modalData, "course modal data");
 
   const updateModalState = (keyName, value) => {
     dispatch({

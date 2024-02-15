@@ -64,7 +64,7 @@ const modalLoading = (loadingValue) => ({
 export const getIncomePaginationAction =
   (page = 1, startDate, endDate, monthCount, category, sort) =>
   async (dispatch) => {
-    // console.log(page, startDate, endDate, monthCount, category, sort);
+    // // console.log(page, startDate, endDate, monthCount, category, sort);
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
@@ -84,7 +84,7 @@ export const getIncomePaginationAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const originalRequest = error.config;
       if (error.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -114,7 +114,7 @@ export const getIncomePaginationAction =
             payload: data,
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -140,7 +140,7 @@ export const createIncomesAction = (incomesData) => async (dispatch) => {
     });
     toastSuccess("Yeni məhsul əlavə edildi");
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const originalRequest = error.config;
     toastError("Xəta baş verdi.");
     if (error.response?.status === 403 && !originalRequest._retry) {
@@ -164,7 +164,7 @@ export const createIncomesAction = (incomesData) => async (dispatch) => {
         });
         toastSuccess("Yeni məhsul əlavə edildi");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -194,7 +194,7 @@ export const updateIncomesAction = (_id, incomesData) => async (dispatch) => {
     });
     toastSuccess("Məhsul yeniləndi");
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     toastError("Xəta baş verdi.");
     const originalRequest = error.config;
     if (error.response?.status === 403 && !originalRequest._retry) {
@@ -215,7 +215,7 @@ export const updateIncomesAction = (_id, incomesData) => async (dispatch) => {
         });
         toastSuccess("Məhsul yeniləndi");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -237,7 +237,7 @@ export const deleteIncomesAction = ({_id, page, startDate, endDate, monthCount, 
     });
     toastSuccess("Məhsul silindi");
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     toastError("Xəta baş verdi.");
     const originalRequest = error.config;
     if (error.response?.status === 403 && !originalRequest._retry) {
@@ -256,7 +256,7 @@ export const deleteIncomesAction = ({_id, page, startDate, endDate, monthCount, 
         dispatch(getIncomePaginationAction(page, startDate, endDate, monthCount, category, sort));
         toastSuccess("Məhsul silindi");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error?.response?.status === 401) {
           dispatch(logoutAction());
         }
