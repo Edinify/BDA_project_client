@@ -33,15 +33,15 @@ export const PaymentStatusDropdown = ({ statusType, deviceType = "" }) => {
     setSelectedType("");
   }, []);
 
-//   const handleClick = (item) => {
-//     console.log(item);
-//     // console.log(item.key)
-//     dispatch({
-//       type: LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_STATUS,
-//       payload: item.key,
-//     });
-//     getCategory(item);
-//   };
+  //   const handleClick = (item) => {
+  //     console.log(item);
+  //     // console.log(item.key)
+  //     dispatch({
+  //       type: LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_STATUS,
+  //       payload: item.key,
+  //     });
+  //     getCategory(item);
+  //   };
 
   return (
     <div

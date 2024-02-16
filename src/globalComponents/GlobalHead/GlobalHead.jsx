@@ -11,6 +11,7 @@ import { DatePick } from "../../globalComponents/DatePicker/DatePicker";
 import { TeachersDropdown } from "./TeachersDropdown/TeachersDropdown";
 import { ReactComponent as HalfCircleICon } from "../../assets/icons/filter/half-circle-svgrepo-com.svg";
 import { PaymentStatusDropdown } from "./PaymentStatusDropdown/PaymentStatusDropdown";
+import PaymentResult from "./PaymentResult/PaymentResult";
 
 const GlobalHead = ({
   searchData,
@@ -55,7 +56,8 @@ const GlobalHead = ({
           >
             <div className="details-header-content-left">
               {location.pathname === "/teachers" ||
-              location.pathname === "/teachers/mentors"
+              location.pathname === "/teachers/mentors" ||
+              location.pathname === "/tuition-fee"
                 ? null
                 : search && (
                     <Search
@@ -139,18 +141,34 @@ const GlobalHead = ({
               )}
 
               {statusType === "tutionFee" && (
-                <div className="tution-fee-filter-header">
-                  <CoursesDropdown deviceType="desktop" />
-                  <GroupsDropdown deviceType="desktop" />
-                  <PaymentStatusDropdown deviceType="desktop"  statusType="tution-fee" />
-                  <div className="lesson-table-btn-container tution ">
-                    <button className="add-detail" onClick={() => filter()}>
-                      Tətbiq et
-                    </button>
+                <div className="tuition-fee-container">
+                  <div className="tuition-fee-payment-container">
+                    <PaymentResult />
                   </div>
-                  <div className="circle-icon">
-                    <p className="filter-count">10</p>
-                    <HalfCircleICon />
+                  <div className="tution-fee-filter-header">
+                    {search && (
+                      <Search
+                        searchData={searchData}
+                        dataSearchValues={dataSearchValues}
+                        className="search-input-con desktop"
+                        DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+                      />
+                    )}
+                    <CoursesDropdown deviceType="desktop" />
+                    <GroupsDropdown deviceType="desktop" />
+                    <PaymentStatusDropdown
+                      deviceType="desktop"
+                      statusType="tution-fee"
+                    />
+                    <div className="lesson-table-btn-container tution ">
+                      <button className="add-detail" onClick={() => filter()}>
+                        Tətbiq et
+                      </button>
+                    </div>
+                    <div className="circle-icon">
+                      <p className="filter-count">10</p>
+                      <HalfCircleICon />
+                    </div>
                   </div>
                 </div>
               )}
