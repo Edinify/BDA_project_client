@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as ArrowIcon } from "../../../assets/icons/arrow-down-dropdown.svg";
-import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg"
+import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg";
 import {
   STUDENT_STATUS_FILTER_ACTION_TYPE,
   TEACHER_STATUS_FILTER_ACTION_TYPE,
-  LESSON_TABLE_ALL_ACTIONS_TYPE
+  LESSON_TABLE_ALL_ACTIONS_TYPE,
 } from "../../../redux/actions-type";
 
-export const StatusDropdown = ({ statusType, deviceType = '' }) => {
+export const StatusDropdown = ({ statusType, deviceType = "" }) => {
   const { teacherStatus } = useSelector((state) => state.teacherStatus);
   const { studentStatus } = useSelector((state) => state.studentStatus);
 
@@ -25,7 +25,7 @@ export const StatusDropdown = ({ statusType, deviceType = '' }) => {
   //   {key:"cancelled",name:"Ləğv edilib"}
   // ]
   const filterData = {
-    "teacher": [
+    teacher: [
       { key: "all", name: "Bütün statuslar" },
       { key: "active", name: "Aktiv" },
       { key: "deactive", name: "Deaktiv" },
@@ -34,9 +34,14 @@ export const StatusDropdown = ({ statusType, deviceType = '' }) => {
       { key: "all", name: "Bütün statuslar" },
       { key: "confirmed", name: "Keçirilib" },
       { key: "unviewed", name: "Gözləyir" },
-      { key: "cancelled", name: "Ləğv edilib" }
-    ]
+      { key: "cancelled", name: "Ləğv edilib" },
+    ],
   };
+
+  const filterItems = filterData[statusType] || [];
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState("");
 
   const getCategory = (categoryType) => {
     setSelectedType(categoryType.name);
@@ -57,7 +62,7 @@ export const StatusDropdown = ({ statusType, deviceType = '' }) => {
   useEffect(() => {
     setSelectedType("");
   }, []);
-  
+
   const handleClick = (item) => {
     // console.log(item.key)
     dispatch({
@@ -67,15 +72,12 @@ export const StatusDropdown = ({ statusType, deviceType = '' }) => {
     getCategory(item);
   };
 
-  const filterItems = filterData[statusType] || [];
-  
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedType, setSelectedType] = useState("");
-
-  
-
   return (
-    <div className={`global-category-dropdown dropdown-name data-status ${deviceType} ${dropdownOpen ? "active" : ""}`}>
+    <div
+      className={`global-category-dropdown dropdown-name data-status ${deviceType} ${
+        dropdownOpen ? "active" : ""
+      }`}
+    >
       <div
         className="dropdown-head"
         onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -107,13 +109,13 @@ export const StatusDropdown = ({ statusType, deviceType = '' }) => {
           </ul>
         )} */}
         <ul>
-    {filterItems.map((item) => (
-      <li key={item.key} onClick={() => handleClick(item)}>
-        {teacherStatus === item.id && <CheckIcon />}
-        {item.name}
-      </li>
-    ))}
-  </ul>
+          {filterItems.map((item) => (
+            <li key={item.key} onClick={() => handleClick(item)}>
+              {teacherStatus === item.id && <CheckIcon />}
+              {item.name}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
