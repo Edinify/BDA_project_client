@@ -107,8 +107,12 @@ const TuitionFeeConfirmModal = () => {
 
     const beforePayments = calcedPayments.filter((item) => {
       const date = (item?.paymentDate && new Date(item.paymentDate)) || null;
-      console.log(date);
-      return date < currDate;
+      // console.log(date);
+      return (
+        date?.getFullYear() < currDate?.getFullYear() ||
+        (date?.getFullYear() === currDate?.getFullYear() &&
+          date?.getMonth() <= currDate?.getMonth())
+      );
     });
 
     // console.log(beforePayments, "before payments");

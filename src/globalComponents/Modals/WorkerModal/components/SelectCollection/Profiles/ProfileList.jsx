@@ -14,7 +14,6 @@ const ProfileList = ({ formik, updateModalState, modalData }) => {
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [profileErrMessage, setProfileErrMessage] = useState(false);
 
-
   // console.log(generalProfileList,"list")
 
   const deleteClass = (index) => {
@@ -78,16 +77,18 @@ const ProfileList = ({ formik, updateModalState, modalData }) => {
           </div>
 
           <ul className={`dropdown-body ${openDropdown ? "active" : ""}`}>
-            {generalProfileList.map((item, index) => (
-              <li key={index} onClick={() => setSelectedProfile(item)}>
-                {modalData?.profiles?.find(
-                  (obj) => obj.profile === item.key
-                ) ? (
-                  <CheckIcon />
-                ) : null}
-                <h4>{item.name}</h4>
-              </li>
-            ))}
+            {generalProfileList
+              .filter((item) => item.key !== "workers")
+              .map((item, index) => (
+                <li key={index} onClick={() => setSelectedProfile(item)}>
+                  {modalData?.profiles?.find(
+                    (obj) => obj.profile === item.key
+                  ) ? (
+                    <CheckIcon />
+                  ) : null}
+                  <h4>{item.name}</h4>
+                </li>
+              ))}
           </ul>
         </div>
 
