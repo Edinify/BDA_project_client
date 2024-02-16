@@ -13,7 +13,7 @@ const WorkersMoreModal = ({ workerModal }) => {
             } - ${
               generalProfilePowerList.find(
                 (profile) => profile.key === item.power
-              ).name
+              )?.name
             }`;
           })
           .join(", ")
