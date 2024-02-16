@@ -3,13 +3,17 @@ import { TUITION_FEE_ALL_ACTIONS_TYPE } from "../actions-type";
 const initialState = {
   tuitionFeeData: [],
   tuitionFeeDataByMore: [],
+  paymentsResults: {},
   totalPages: 1,
   lastPage: "",
   loading: false,
   loadingAll: false,
 };
 
-export const tuitionFeeDataPaginationReducer = (state = initialState, action) => {
+export const tuitionFeeDataPaginationReducer = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case TUITION_FEE_ALL_ACTIONS_TYPE.GET_MORE_TUITION_FEE_ALL_ADD:
       return {
@@ -19,13 +23,17 @@ export const tuitionFeeDataPaginationReducer = (state = initialState, action) =>
     case TUITION_FEE_ALL_ACTIONS_TYPE.GET_MORE_TUITION_FEE_ALL:
       return {
         ...state,
-        tuitionFeeDataByMore: [...state.tuitionFeeDataByMore, ...action.payload?.tutionFees],
+        tuitionFeeDataByMore: [
+          ...state.tuitionFeeDataByMore,
+          ...action.payload?.tutionFees,
+        ],
       };
     case TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_PAGINATION:
       return {
         ...state,
         tuitionFeeData: action.payload.tutionFees,
         totalPages: action.payload.totalPages,
+        paymentsResults: action.payload.paymentsResults,
       };
     case TUITION_FEE_ALL_ACTIONS_TYPE.TUITION_FEE_LOADING:
       return {

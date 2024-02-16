@@ -143,7 +143,7 @@ const GlobalHead = ({
               {statusType === "tutionFee" && (
                 <div className="tuition-fee-container">
                   <div className="tuition-fee-payment-container">
-                    <PaymentResult />
+                    <PaymentResult  />
                   </div>
                   <div className="tution-fee-filter-header">
                     {search && (
@@ -164,10 +164,6 @@ const GlobalHead = ({
                       <button className="add-detail" onClick={() => filter()}>
                         Tətbiq et
                       </button>
-                    </div>
-                    <div className="circle-icon">
-                      <p className="filter-count">10</p>
-                      <HalfCircleICon />
                     </div>
                   </div>
                 </div>
