@@ -104,6 +104,17 @@ export function useCustomHook() {
     { name: "PROMOKOD", key: "promocode" },
     { name: "Resale", key: "resale" },
   ];
+  const whereSendList = [
+    { name: "Technest İnside", key: "technestInsine" },
+    { name: "Dövlət Məşğulluq Agentliyi", key: "DMA" },
+    { name: "Azərbaycan Respublikası Mədəniyyət Nazirliyi", key: "ARMN" },
+    { name: "Təhsilin İnkişafı Fondu", key: "TIF" },
+    { name: "Azərbaycan Respublikası Elm və Təhsil Nazirliyi", key: "ARETN" },
+    { name: "Technest university", key: "technestUniversity" },
+    { name: "Future leaders", key: "futureLeaders" },
+    { name: "Code for Future", key: "codeForFuture" },
+    { name: "Digər", key: "other" },
+  ];
   const personaList = [
     { name: "Həvəsli", key: "enthusiastic" },
     { name: "Narazı", key: "dissatisfied" },
@@ -295,6 +306,7 @@ export function useCustomHook() {
     cancelReasonList,
     constStatusList,
     lessonStatusList,
+    whereSendList,
     getWeeksBetweenDates,
     changeMainPageType,
     createLessonModal,
