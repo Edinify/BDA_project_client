@@ -58,6 +58,7 @@ export const StudentModal = () => {
     });
   };
 
+  console.log(modalData, "ajsfkajsfkasjfasfjakfakslfjskdjfkjsadfkasf");
   return (
     <div className="create-update-modal-con student-modal">
       <div className="create-update-modal">

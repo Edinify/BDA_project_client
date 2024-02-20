@@ -29,7 +29,7 @@ const WhereSend = ({ formik, modalData, updateModalState }) => {
                 style: { fontSize: "12px", color: "#3F3F3F" },
               }}
               fullWidth
-              label=" Haradan gəliblər?"
+              label=" Haradan Göndərilib?"
               autoComplete="off"
               disabled
               value={inputValue}

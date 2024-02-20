@@ -105,7 +105,7 @@ export function useCustomHook() {
     { name: "Resale", key: "resale" },
   ];
   const whereSendList = [
-    { name: "Technest İnside", key: "technestInsine" },
+    { name: "Technest İnside", key: "technestInside" },
     { name: "Dövlət Məşğulluq Agentliyi", key: "DMA" },
     { name: "Azərbaycan Respublikası Mədəniyyət Nazirliyi", key: "ARMN" },
     { name: "Təhsilin İnkişafı Fondu", key: "TIF" },

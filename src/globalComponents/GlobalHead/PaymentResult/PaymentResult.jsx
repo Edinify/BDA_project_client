@@ -6,15 +6,15 @@ import { ReactComponent as OtherPayIcon } from "../../../assets/icons/payment/ot
 import "./paymentResult.css";
 import { useSelector } from "react-redux";
 const PaymentResult = () => {
-  // const { paymentsResults } = useSelector(
-  //   (state) => state.tuitionFeePagination
-  // );
+  const { paymentsResults } = useSelector(
+    (state) => state.tuitionFeePagination
+  );
 
   const paymentData = [
     {
       id: 1,
       name: "Gecikmədə olan",
-      count: 0,
+      count: paymentsResults.totalLatePayment,
       img: <LatePayIcon />,
     },
     { id: 2, name: "Bugün daxil olan", count: 0, img: <TodayPayIcon /> },

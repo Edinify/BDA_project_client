@@ -67,6 +67,7 @@ export default function Payment({
         value={
           inputData.find((item) => item.inputName === inputName)?.inputValue
         }
+        disabled={true}
         onWheel={(e) => e.target.blur()}
         onChange={(e) => {
           addPayments(inputName, e.target.value, index);
