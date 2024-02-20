@@ -46,6 +46,7 @@ const GroupInput = ({
       ...groupData[foundIndex],
       [key]: value,
     };
+
     // console.log(groupData);
     updateModalState("groups", groupData);
   };
@@ -59,8 +60,8 @@ const GroupInput = ({
       const totalAmount = amount - (amount * discount) / 100;
       const part = payment.part;
       const onePartPayment = totalAmount / part;
-      const paymentsDate = data?.contractStartDate
-        ? new Date(data.contractStartDate)
+      const paymentsDate = data?.paymentStartDate
+        ? new Date(data.paymentStartDate)
         : "";
 
       const paymentArr = [];
@@ -85,7 +86,7 @@ const GroupInput = ({
       // console.log("helllooooooo");
       updateModalState("groups", groupData);
     }
-  }, [data.discount, data.amount, data.contractStartDate]);
+  }, [data.discount, data.amount, data.paymentStartDate]);
 
   return (
     <li className="group-li">
@@ -161,6 +162,13 @@ const GroupInput = ({
           addGroupData={addGroupData}
         />
       </div>
+      <InputField
+        inputName={"paymentStartDate"}
+        formik={formik}
+        setInputValue={setInputValue}
+        data={data}
+        addGroupData={addGroupData}
+      />
 
       <p style={{ marginTop: "20px" }}>{index + 1}. Ödənişlər</p>
       {data?.payments?.map((item, index) => (

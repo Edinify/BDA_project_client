@@ -64,6 +64,17 @@ export default function InputField({ formik, data, inputName, addGroupData }) {
       marginBottom: "0",
       inputValue: data[inputName] || "",
     },
+    {
+      inputName: "paymentStartDate",
+      label: "Ödənişə başlama tarixi",
+      type: "date",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue:
+        data[inputName] && inputName === "paymentStartDate"
+          ? moment(data[inputName]).format("YYYY-MM-DD")
+          : "",
+    },
   ];
 
   useEffect(() => {
