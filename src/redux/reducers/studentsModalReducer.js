@@ -18,6 +18,7 @@ const initialState = {
     payment: "",
     sector: "",
     whereComing: "",
+    whereSend:"",
     educationalInstitution: "",
     educationDegree: "",
     healthStatus: "",

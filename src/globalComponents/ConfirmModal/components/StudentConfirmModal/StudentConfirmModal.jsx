@@ -13,7 +13,7 @@ const StudentConfirmModal = () => {
   const { studentsModalData, studentsModalLoading } = useSelector(
     (state) => state.studentsModal
   );
-  const { whereComingList, discountReasonList, paymentTypeList } =
+  const { whereComingList, discountReasonList,whereSendList, paymentTypeList } =
     useCustomHook();
   const { user } = useSelector((state) => state.user);
   const [btns, setBtns] = useState(true);
@@ -59,6 +59,8 @@ const StudentConfirmModal = () => {
         (item) => item.key === studentsModalData?.whereComing
       )?.name,
     },
+    {title:"Haradan gəliblər?",
+  value:whereSendList.find(item=>item.key===studentsModalData?.whereSend)?.name},
     { title: "İxtisaslar", value: beforeCourses },
   ];
 

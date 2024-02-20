@@ -80,14 +80,17 @@ const toastError = (message) => {
 };
 
 export const getTuitionFeePaginationAction =
-  (pageNumber, searchQuery,courseId,groupId) => async (dispatch) => {
+  (pageNumber, searchQuery, courseId, groupId, paymentStatus) =>
+  async (dispatch) => {
     // console.log(courseId,groupId)
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
-        `/?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${courseId || ''}&groupId=${groupId|| ''}`
+        `/?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${
+          courseId || ""
+        }&groupId=${groupId || ""}&paymentStatus=${paymentStatus || "all"}`
       );
-      // console.log(data, "salam get tuition fee actionnnnnn");
+      console.log(data, "salam get tuition fee actionnnnnn");
       dispatch({
         type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_LAST_PAGE,
         payload: pageNumber,

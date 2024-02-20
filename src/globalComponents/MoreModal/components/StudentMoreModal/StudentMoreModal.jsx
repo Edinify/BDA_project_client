@@ -13,7 +13,7 @@ const StudentMoreModal = ({ studentsModalData }) => {
           })
           .join(", ")
       : "boş";
-  const { whereComingList, discountReasonList, paymentTypeList } =
+  const { whereComingList,whereSendList, discountReasonList, paymentTypeList } =
     useCustomHook();
   const dataList1 = [
     { title: "Ad soyad", value: studentsModalData?.fullName },
@@ -32,6 +32,12 @@ const StudentMoreModal = ({ studentsModalData }) => {
       title: "Bizi haradan eşitdiniz?",
       value: whereComingList?.find(
         (item) => item.key === studentsModalData?.whereComing
+      )?.name,
+    },
+    {
+      title: "Haradan gəliblər?",
+      value: whereSendList?.find(
+        (item) => item.key === studentsModalData?.whereSend
       )?.name,
     },
     { title: "İxtisaslar", value: courses },

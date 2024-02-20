@@ -56,6 +56,7 @@ import { eventsPaginationReducer } from "./reducers/eventsPaginationReducer";
 import { eventModalReducer } from "./reducers/eventModalReducer";
 import { dashboardReducer } from "./reducers/dashboardReducer";
 import { dropdownTeacherReducer } from "./reducers/dropdownTeacherReducer";
+import { paymentStatusReducer } from "./reducers/paymentStatusReducer";
 
 const initialState = {};
 const reducers = combineReducers({
@@ -110,6 +111,7 @@ const reducers = combineReducers({
   dropdownGroup: dropdownGroupReducer,
   dropdownTeacher:dropdownTeacherReducer,
   mentors: mentorsReducer,
+  paymentStatus:paymentStatusReducer
 });
 // test
 

@@ -10,7 +10,6 @@ import {
 import { getLessonTablePaginationAction } from "../../../redux/actions/lessonTableActions";
 import { useLocation } from "react-router-dom";
 
-
 export const GroupsDropdown = ({ deviceType = "" }) => {
   const dispatch = useDispatch();
   const { groupData: dataList } = useSelector(
@@ -19,14 +18,14 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user } = useSelector((state) => state.user);
-  const location = useLocation()
+  const location = useLocation();
   const getCourse = (group) => {
     setDropdownOpen(false);
     dispatch({
       type: DROPDOWN_GROUP_ACTIONS_TYPE.SELECT_GROUP,
       payload: group,
     });
-    dispatch(getLessonTablePaginationAction(1, "", group._id,"",""));
+    dispatch(getLessonTablePaginationAction(1, "", group._id, "", ""));
   };
 
   useEffect(() => {
@@ -42,8 +41,8 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
       dispatch({
         type: DROPDOWN_GROUP_ACTIONS_TYPE.CLEAR_GROUP,
       });
-    }
-  }, [location])
+    };
+  }, [location]);
 
   return (
     <div

@@ -11,6 +11,7 @@ import InputField from "./components/Inputs/InputField";
 import WhereComing from "./components/SelectCollection/WhereComing";
 import CoursesList from "./components/SelectCollection/CoursesList/CoursesList";
 import GroupList from "./components/Groups/GroupList";
+import WhereSend from "./components/SelectCollection/WhereSend";
 
 export const StudentModal = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,6 @@ export const StudentModal = () => {
     (state) => state.studentsModal
   );
   const inputNameArr1 = ["fin", "seria", "birthday", "phone"];
-
 
   // console.log(modalData,"studentModal")
   // formik
@@ -58,6 +58,7 @@ export const StudentModal = () => {
     });
   };
 
+  console.log(modalData, "ajsfkajsfkasjfasfjakfakslfjskdjfkjsadfkasf");
   return (
     <div className="create-update-modal-con student-modal">
       <div className="create-update-modal">
@@ -96,6 +97,11 @@ export const StudentModal = () => {
                 />
               ))}
             </div>
+            <WhereSend
+              modalData={modalData}
+              updateModalState={updateModalState}
+              formik={formik}
+            />
             <WhereComing
               modalData={modalData}
               updateModalState={updateModalState}

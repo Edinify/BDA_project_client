@@ -9,27 +9,39 @@ const TuitionFeePage = () => {
   const dispatch = useDispatch();
   const { lastPage } = useSelector((state) => state.tuitionFeePagination);
   const { tuitionFeeSearchValues } = useSelector((state) => state.searchValues);
-  const {courseId } = useSelector((state) => state.studentStatus);
+  const { courseId } = useSelector((state) => state.studentStatus);
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
+  const { paymentStatus } = useSelector((state) => state.paymentStatus);
 
-  const filterTuition = () => dispatch(
-    getTuitionFeePaginationAction(
-      1,
-      tuitionFeeSearchValues, 
-      courseId,
-      selectedGroup._id
-    )
-  ) 
+  console.log(paymentStatus, "payment status");
+  const filterTuition = () =>
+    dispatch(
+      getTuitionFeePaginationAction(
+        1,
+        tuitionFeeSearchValues,
+        courseId,
+        selectedGroup._id,
+        paymentStatus
+      )
+    );
 
   // console.log(selectedGroup)
 
   const getPageNumber = (pageNumber) => {
     if (tuitionFeeSearchValues) {
       dispatch(
-        getTuitionFeePaginationAction(pageNumber, tuitionFeeSearchValues, "","")
+        getTuitionFeePaginationAction(
+          pageNumber,
+          tuitionFeeSearchValues,
+          "",
+          "",
+          paymentStatus
+        )
       );
     } else {
-      dispatch(getTuitionFeePaginationAction(pageNumber, "","",""));
+      dispatch(
+        getTuitionFeePaginationAction(pageNumber, "", "", "", paymentStatus)
+      );
     }
   };
   const openModal = () => {
@@ -40,17 +52,32 @@ const TuitionFeePage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getTuitionFeePaginationAction(1, tuitionFeeSearchValues));
+    dispatch(
+      getTuitionFeePaginationAction(
+        1,
+        tuitionFeeSearchValues,
+        "",
+        "",
+        paymentStatus
+      )
+    );
   };
 
   useEffect(() => {
     if (tuitionFeeSearchValues) {
-      dispatch(getTuitionFeePaginationAction(1, tuitionFeeSearchValues));
+      dispatch(
+        getTuitionFeePaginationAction(
+          1,
+          tuitionFeeSearchValues,
+          "",
+          "",
+          paymentStatus
+        )
+      );
     } else {
-      dispatch(getTuitionFeePaginationAction(1, ""));
+      dispatch(getTuitionFeePaginationAction(1, "", "", "", paymentStatus));
     }
   }, [dispatch]);
-
 
   return (
     <div className="details-page tuition-fee-page">

@@ -1,0 +1,25 @@
+.payment-result-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.payment-result-container .payment-res-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.payment-result-container .payment-res-content .circle-icon {
+  position: relative;
+  margin-top: 5px;
+}
+
+.payment-result-container .payment-res-content .circle-icon .filter-count {
+  position: absolute;
+  left: 20px;
+}
+
+
