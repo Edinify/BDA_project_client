@@ -10,6 +10,7 @@ import {
   WORKER_MODAL_ACTION_TYPE,
   GROUP_MODAL_ACTION_TYPE,
   EVENTS_MODAL_ACTION_TYPE,
+  CAREER_MODAL_ACTION_TYPE,
 } from "../../redux/actions-type";
 import "moment/locale/az";
 import TeacherMoreModal from "./components/TeacherMoreModal/TeacherMoreModal";
@@ -19,6 +20,7 @@ import TuitionFeeMoreModal from "./components/TuitionFeeMoreModal/TuitionFeeMore
 import WorkersMoreModal from "./components/WorkersMoreModal/WorkersMoreModal";
 import GroupMoreModal from "./components/GroupMoreModal/GroupMoreModal";
 import EventMoreModal from "./components/EventMoreModal/EventMoreModal";
+import CareerMoreModal from "./components/CareerMoreModal/CareerMoreModal";
 const MoreModal = ({ setOpenMoreModal, type, userData }) => {
   const dispatch = useDispatch();
   const { teachersModalData } = useSelector((state) => state.teachersModal);
@@ -30,6 +32,7 @@ const MoreModal = ({ setOpenMoreModal, type, userData }) => {
   );
   const { groupModalData } = useSelector((state) => state.groupModal);
   const { eventsModalData } = useSelector((state) => state.eventModal);
+  const { careerModalData } = useSelector((state) => state.careerModal);
   const { user } = useSelector((state) => state.user);
 
   // console.log(userData?.power === "only-show", "user Dataaaa");
@@ -97,6 +100,16 @@ const MoreModal = ({ setOpenMoreModal, type, userData }) => {
           openModal: true,
         },
       });
+    } else if (type === "career") {
+      dispatch({
+        type: CAREER_MODAL_ACTION_TYPE.GET_CAREER_MODAL,
+        payload: {
+          data: {
+            ...careerModalData,
+          },
+          openModal: true,
+        },
+      });
     }
     setOpenMoreModal(false);
   };
@@ -111,6 +124,7 @@ const MoreModal = ({ setOpenMoreModal, type, userData }) => {
           type === "tuitionFee" ||
           type === "worker" ||
           type === "event" ||
+          type === "career" ||
           type === "group" ? (
             <h2>Ətraflı məlumatlar</h2>
           ) : (
@@ -151,6 +165,9 @@ const MoreModal = ({ setOpenMoreModal, type, userData }) => {
         {type === "group" && <GroupMoreModal groupModalData={groupModalData} />}
         {type === "event" && (
           <EventMoreModal eventsModalData={eventsModalData} />
+        )}
+        {type === "career" && (
+          <CareerMoreModal careerModalData={careerModalData} />
         )}
       </div>
     </div>

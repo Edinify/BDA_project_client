@@ -4,11 +4,15 @@ import { CAREER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteCareerAction } from "../../../redux/actions/careerActions";
 import moment from "moment";
+import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   const dispatch = useDispatch();
   const { careerData, lastPage } = useSelector(
     (state) => state.careerPagination
   );
+
+  const { careerModalWorkStatusList: dataList } = useCustomHook();
+
   const { careerSearchValues } = useSelector((state) => state.searchValues);
   const listData = [
     { key: "Qrup", value: data.group.name },
@@ -99,14 +103,19 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           </td>
           <td
             style={
-              !data.status
+              data.workStatus === "student"
                 ? { backgroundColor: "#d2c3fe" }
-                : { backgroundColor: "#d4ffbf" }
+                : data.workStatus === "employed"
+                ? { backgroundColor: "#d4ffbf" }
+                : data.workStatus === "unemployed"
+                ? { backgroundColor: "#ffced1" }
+                : {}
             }
           >
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {!data.status ? "Davam edir" : "Məzun"}
+                {dataList.find((item) => item.key === data.workStatus)?.name ||
+                  ""}
               </div>
             </div>
           </td>
@@ -133,7 +142,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               ))}
             </ul>
           </div>
-           <div className="right">
+          <div className="right">
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
@@ -141,8 +150,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               openMoreModal={openMoreModal}
               profil={"careers"}
             />
-         
-          </div> 
+          </div>
         </div>
       )}
     </>

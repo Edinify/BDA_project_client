@@ -18,7 +18,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
     "Portfolio linki",
     "CV linki",
     "Mobil Nömrə",
-    "Status",
+    "İş Statusu",
     "",
   ];
 
@@ -39,7 +39,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
       ) : (
         <>
           {openMoreModal && (
-            <MoreModal setOpenMoreModal={setOpenMoreModal} type="teacher" />
+            <MoreModal setOpenMoreModal={setOpenMoreModal} type="career" />
           )}
           <table className="details-table career-table">
             <thead>

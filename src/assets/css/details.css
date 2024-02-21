@@ -180,7 +180,11 @@
 /* only-show finished */
 .details-table.teacher-table tr th:nth-last-child(3),
 .details-table.student-table tr th:nth-last-child(3) {
-  width: 80px;
+  width: 80px ;
+}
+
+.details-table.student-table tr th:nth-last-child(2) {
+  width: 80px !important;
 }
 
 .details-table.teacher-table tr th:nth-last-child(2),

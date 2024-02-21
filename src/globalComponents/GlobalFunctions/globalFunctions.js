@@ -203,6 +203,12 @@ export function useCustomHook() {
     { name: "Heç biri", key: "only-show" },
   ];
 
+  const careerModalWorkStatusList=[
+    {name:"İşləyir",key:"employed"},
+    {name:"Tələbədir",key:"student"},
+    {name:"İşsizdir",key:"unemployed"},
+  ]
+
   const getWeeksBetweenDates = (start, end) => {
     let weeksList = [];
     const startDate = new Date(start);
@@ -307,10 +313,12 @@ export function useCustomHook() {
     constStatusList,
     lessonStatusList,
     whereSendList,
+    careerModalWorkStatusList,
     getWeeksBetweenDates,
     changeMainPageType,
     createLessonModal,
     clearLessonModal,
     changeDropdownNameErr,
+    
   };
 }
