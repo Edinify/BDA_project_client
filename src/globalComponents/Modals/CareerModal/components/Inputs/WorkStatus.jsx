@@ -12,12 +12,14 @@ const WorkStatus = ({ formik, modalData, updateModalState }) => {
   //     {name:"İşsizdir",key:"unemployed"},
   // ]
   const inputValue =
-    dataList.find((item) => item.key === modalData.work)?.name || "";
+    dataList.find((item) => item.key === modalData.workStatus)?.name || "";
   const [openDropdown, setOpenDropdown] = useState(false);
   const addData = (item) => {
     updateModalState("workStatus", item);
     setOpenDropdown(false);
   };
+
+  console.log(modalData,"modal")
   return (
     <>
       <div className="class-input">
