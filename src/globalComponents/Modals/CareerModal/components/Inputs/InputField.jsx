@@ -31,6 +31,56 @@ export default function InputField({
       marginBottom: "10px",
       inputValue: modalData[inputName] || "",
     },
+    {
+      inputName: "studentName",
+      label: "Tələbə adı",
+      type: "text",
+      marginTop: "10px",
+      marginBottom: "10px",
+      inputValue: modalData[inputName] || "",
+    },
+    {
+      inputName: "previousWorkPlace",
+      label: "Əvvəlki iş yeri",
+      type: "text",
+      marginTop: "10px",
+      marginBottom: "10px",
+      inputValue: modalData[inputName] || "",
+    },
+    {
+      inputName: "previousWorkPosition",
+      label: "Əvvəlki iş vəzifəsi",
+      type: "text",
+      marginTop: "10px",
+      marginBottom: "10px",
+      inputValue: modalData[inputName] || "",
+    },
+    {
+      inputName: "currentWorkPlace",
+      label: "Cari iş yeri",
+      type: "text",
+      marginTop: "10px",
+      marginBottom: "10px",
+      inputValue: modalData[inputName] || "",
+    },
+    {
+      inputName: "currentWorkPosition",
+      label: "Cari iş vəzifəsi",
+      type: "text",
+      marginTop: "10px",
+      marginBottom: "10px",
+      inputValue: modalData[inputName] || "",
+    },
+    {
+      inputName: "workStartDate",
+      label: "İşə başlama tarixi",
+      type: "date",
+      marginTop: "10px",
+      marginBottom: "10px",
+      inputValue: modalData[inputName] || "",
+    },
+    
+
   ];
 
   // console.log(modalData,'lllllllllll')
@@ -54,7 +104,7 @@ export default function InputField({
         }}
         InputLabelProps={{
           shrink:
-            inputName === "birthday"
+            inputName === "workStartDate"
               ? true
               : inputData.find((item) => item.inputName === inputName)
                   .inputValue

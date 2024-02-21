@@ -9,12 +9,22 @@ import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema
 import Status from "./components/Buttons/Status";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
+import WorkStatus from "./components/Inputs/WorkStatus";
 
 const CareerModal = () => {
   const dispatch = useDispatch();
   const { careerModalData: modalData } = useSelector(
     (state) => state.careerModal
   );
+
+  const inputName=[
+    "studentName",
+    "previousWorkPlace",
+    "previousWorkPosition",
+    "currentWorkPlace",
+    "currentWorkPosition",
+    "workStartDate",
+  ]
 
 
   // console.log(modalData,"modal data")
@@ -65,6 +75,7 @@ const CareerModal = () => {
             width: 500,
             maxWidth: "100%",
             display: "flex",
+            flexDirection:"column",
             justifyContent: "center",
           }}
         >
@@ -81,7 +92,23 @@ const CareerModal = () => {
               modalData={modalData}
               updateModalState={updateModalState}
             />
+            
+            <WorkStatus formik={formik}
+              modalData={modalData}
+              updateModalState={updateModalState} />
           </div>
+
+          <div className="input-couples">
+              {inputName.map((name, index) => (
+                <InputField
+                  key={index}
+                  inputName={name}
+                  formik={formik}
+                  modalData={modalData}
+                  updateModalState={updateModalState}
+                />
+              ))}
+            </div>
         </Box>
 
         <div className="create-update-modal-btn-con">
