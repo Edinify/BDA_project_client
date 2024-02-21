@@ -19,7 +19,7 @@ const WorkStatus = ({ formik, modalData, updateModalState }) => {
     setOpenDropdown(false);
   };
 
-  console.log(modalData,"modal")
+  // console.log(modalData,"modal")
   return (
     <>
       <div className="class-input">
