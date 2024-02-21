@@ -24,7 +24,10 @@ const WorkStatus = ({ formik, modalData, updateModalState }) => {
     <>
       <div className="class-input">
         <div className="dropdown-input">
-          <div className="input-box">
+          <div
+            className="input-box"
+            style={{ display: "flex", alignItems: "center" }}
+          >
             <TextField
               sx={{
                 "& input": {
@@ -32,13 +35,12 @@ const WorkStatus = ({ formik, modalData, updateModalState }) => {
                   marginRight: "32px",
                 },
                 marginTop: "24px",
-                // marginBottom: "24px",
               }}
               InputLabelProps={{
                 style: { fontSize: "12px", color: "#3F3F3F" },
               }}
               fullWidth
-              label=" Status"
+              label="İş statusu"
               autoComplete="off"
               disabled
               value={inputValue}

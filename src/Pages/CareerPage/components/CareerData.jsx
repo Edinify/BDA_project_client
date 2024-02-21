@@ -18,7 +18,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
     "Portfolio linki",
     "CV linki",
     "Mobil Nömrə",
-    "Status",
+    "İş Statusu",
     "",
   ];
 

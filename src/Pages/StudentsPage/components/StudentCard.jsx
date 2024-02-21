@@ -76,10 +76,6 @@ const StudentCard = ({
     });
   };
 
-
-  // // console.log(cellNumber,"celll")
-
-  // // console.log(data.groups, "hhdddddddddddddddddd");
   return (
     <>
       {mode === "desktop" ? (
@@ -113,6 +109,12 @@ const StudentCard = ({
                   </p>
                 ))} */}
               </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data.qbCount}</div>
               <div className="right-fade"></div>
             </div>
           </td>

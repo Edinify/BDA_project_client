@@ -19,68 +19,69 @@ export default function InputField({
       inputName: "portfolioLink",
       label: "Portfolio linki",
       type: "text",
-      marginTop: "10px",
-      marginBottom: "10px",
+      marginTop: "24px",
+      marginBottom: "0px",
       inputValue: modalData[inputName] || "",
     },
     {
       inputName: "cvLink",
       label: "CV linki",
       type: "text",
-      marginTop: "10px",
-      marginBottom: "10px",
+      marginTop: "24px",
+      marginBottom: "0px",
       inputValue: modalData[inputName] || "",
     },
     {
-      inputName: "studentName",
+      inputName: "fullName",
       label: "Tələbə adı",
       type: "text",
-      marginTop: "10px",
-      marginBottom: "10px",
+      marginTop: "24px",
+      marginBottom: "0px",
       inputValue: modalData[inputName] || "",
     },
     {
       inputName: "previousWorkPlace",
       label: "Əvvəlki iş yeri",
       type: "text",
-      marginTop: "10px",
-      marginBottom: "10px",
+      marginTop: "24px",
+      marginBottom: "0px",
       inputValue: modalData[inputName] || "",
     },
     {
       inputName: "previousWorkPosition",
       label: "Əvvəlki iş vəzifəsi",
       type: "text",
-      marginTop: "10px",
-      marginBottom: "10px",
+      marginTop: "24px",
+      marginBottom: "0px",
       inputValue: modalData[inputName] || "",
     },
     {
       inputName: "currentWorkPlace",
       label: "Cari iş yeri",
       type: "text",
-      marginTop: "10px",
-      marginBottom: "10px",
+      marginTop: "24px",
+      marginBottom: "0px",
       inputValue: modalData[inputName] || "",
     },
     {
       inputName: "currentWorkPosition",
       label: "Cari iş vəzifəsi",
       type: "text",
-      marginTop: "10px",
-      marginBottom: "10px",
+      marginTop: "24px",
+      marginBottom: "0px",
       inputValue: modalData[inputName] || "",
     },
     {
       inputName: "workStartDate",
       label: "İşə başlama tarixi",
       type: "date",
-      marginTop: "10px",
-      marginBottom: "10px",
-      inputValue: modalData[inputName] || "",
+      marginTop: "24px",
+      marginBottom: "0px",
+      inputValue:
+        modalData[inputName] && inputName === "workStartDate"
+          ? moment(modalData[inputName]).format("YYYY-MM-DD")
+          : "",
     },
-    
-
   ];
 
   // console.log(modalData,'lllllllllll')
@@ -132,27 +133,8 @@ export default function InputField({
           setShrink(!!e.target.value);
         }}
         onFocus={() => setShrink(true)}
+        disabled={inputName === "fullName"}
       />
-
-      {inputName === "password" && modalData?._id
-        ? formik.errors[inputName] &&
-          formik.errors[inputName] !== "Bu xana tələb olunur." &&
-          formik.touched[inputName] && (
-            <small className="validation-err-message">
-              {formik.errors[inputName]}
-            </small>
-          )
-        : formik.errors[inputName] &&
-          formik.touched[inputName] && (
-            <small className="validation-err-message">
-              {formik.errors[inputName]}
-            </small>
-          )}
-      {inputName === "password" && (
-        <div className="modal-view-icon" onClick={() => setViewPass(!viewPass)}>
-          {viewPass ? <EyeSlash /> : <Eye />}
-        </div>
-      )}
     </div>
   );
 }
