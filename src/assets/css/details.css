@@ -76,11 +76,12 @@
   width: 60px;
   border-right: none;
 }
-/* .details-table.career-table tr td:last-child,
-.details-table.career-table tr th:last-child {
-  text-align: unset;
-  width: auto;
-} */
+.career-table-container{
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
 .tuition-fee-page .details-table tr th {
   text-align: center;
 }
@@ -299,6 +300,11 @@
   border-bottom: 0.5px solid var(--neutrals-300, #ddd);
 }
 
+/* career page */
+
+.details-table.career-table{
+  width:auto;
+}
 @media screen and (max-width: 700px) {
   .details-table {
     display: none;

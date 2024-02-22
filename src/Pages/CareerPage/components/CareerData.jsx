@@ -42,6 +42,8 @@ const CareerData = ({ pageNum, getPageNumber }) => {
           {openMoreModal && (
             <MoreModal setOpenMoreModal={setOpenMoreModal} type="career" />
           )}
+          <div className="career-table-container">
+
           <table className="details-table career-table">
             <thead>
               <tr>
@@ -63,6 +65,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
               ))}
             </tbody>
           </table>
+          </div>
 
           <div className="details-list-tablet">
             {careerData?.map((teacher, i) => (
