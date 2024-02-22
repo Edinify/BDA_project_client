@@ -2,16 +2,25 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CAREER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
-import { deleteCareerAction } from "../../../redux/actions/careerActions";
+// import { deleteCareerAction } from "../../../redux/actions/careerActions";
 import moment from "moment";
-import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
+// import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   const dispatch = useDispatch();
   const { careerData, lastPage } = useSelector(
     (state) => state.careerPagination
   );
 
-  const { careerModalWorkStatusList: dataList } = useCustomHook();
+  // const { careerModalWorkStatusList: dataList } = useCustomHook();
+
+  const workStatus =
+    Array.isArray(data.workStatus) && data.workStatus.length > 0
+      ? data.workStatus
+          .map((workStatus) => {
+            return workStatus.name;
+          })
+          .join(",")
+      : "boş";
 
   const { careerSearchValues } = useSelector((state) => state.searchValues);
   const listData = [
@@ -114,8 +123,9 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           >
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {dataList.find((item) => item.key === data.workStatus)?.name ||
-                  ""}
+                {workStatus}
+                {/* {dataList.find((item) => item.key === data.workStatus)?.name ||
+                  ""} */}
               </div>
             </div>
           </td>

@@ -22,6 +22,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
     "",
   ];
 
+
   useEffect(() => {
     if (openMoreModal) {
       document.body.style.overflowY = "hidden";

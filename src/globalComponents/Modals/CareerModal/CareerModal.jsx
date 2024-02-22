@@ -10,6 +10,7 @@ import Status from "./components/Buttons/Status";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
 import WorkStatus from "./components/Inputs/WorkStatus";
+import WorkStatusList from "./components/WorkStatusList";
 
 const CareerModal = () => {
   const dispatch = useDispatch();
@@ -96,11 +97,16 @@ const CareerModal = () => {
           </div>
 
           <div className="create-update-modal-form">
-            <WorkStatus
+            <WorkStatusList
+            formik={formik}
+            modalData={modalData}
+            updateModalState={updateModalState}
+            />
+            {/* <WorkStatus
               formik={formik}
               modalData={modalData}
               updateModalState={updateModalState}
-            />
+            /> */}
             <InputField
               inputName="portfolioLink"
               formik={formik}
