@@ -53,7 +53,8 @@ export const Dashboard = () => {
             </div>
 
             <div className="bottom">
-              <LeaderBoard />
+              <Table/>
+              {/* <LeaderBoard /> */}
             </div>
           </div>
         </div>
@@ -71,7 +72,7 @@ export const Dashboard = () => {
           <WhereHeard dashboardKeys={dashboardKeys} />
           <LeaderBoard type="mobile" />
         </div>
-        <Table/>
+        {/* <Table/> */}
       </div>
     </div>
   );
