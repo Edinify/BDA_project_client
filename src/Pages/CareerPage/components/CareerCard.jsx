@@ -72,6 +72,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
     setOpenMoreModal(true);
   };
 
+
   return (
     <>
       {mode === "desktop" ? (
@@ -230,12 +231,23 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
                 : {}
             }
           >
+            
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
                 {workStatus}
                 {/* {dataList.find((item) => item.key === data.workStatus)?.name ||
                   ""} */}
               </div>
+            </div>
+          </td>
+          <td  
+           style={data.status ? {backgroundColor:"#d4ffbf"}:{backgroundColor:"#d2c3fe"} }
+            >
+            <div className="td-con student-status ">
+              <div className="table-scroll-text phone">
+                {data?.status ? "Məzun" :" Davam edir"}
+              </div>
+              {/* <div className="right-fade"></div> */}
             </div>
           </td>
           <td>

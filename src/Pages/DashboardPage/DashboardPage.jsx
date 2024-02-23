@@ -74,8 +74,8 @@ export const Dashboard = () => {
           <LessonStatistics type="mobile" />
           <WhereHeard dashboardKeys={dashboardKeys} />
           <LeaderBoard type="mobile" />
+
         </div>
-        {/* <Table/> */}
       </div>
     </div>
   );
