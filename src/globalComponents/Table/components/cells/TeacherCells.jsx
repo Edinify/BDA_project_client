@@ -121,7 +121,7 @@ const TeacherCells = ({
 
     <td className={`lesson-name teacher-cell`} key={index}>
       <div className="lesson-box-con">
-        <div
+        {/* <div
           onClick={() => handleClick(lessson1)}
           className={`lesson-box ${lessson1 ? lessson1?.status : ""}`}
         >
@@ -138,8 +138,8 @@ const TeacherCells = ({
               <p>{existCancelledStudent1.length}</p>
             </div>
           )}
-        </div>
-        <div
+        </div> */}
+        {/* <div
           onClick={() => handleClick(lessson2)}
           className={`lesson-box ${lessson2 ? lessson2?.status : ""}`}
         >
@@ -156,8 +156,8 @@ const TeacherCells = ({
               <p>{existCancelledStudent2.length}</p>
             </div>
           )}
-        </div>
-        <div
+        </div> */}
+        {/* <div
           onClick={() => handleClick(lessson3)}
           className={`lesson-box ${lessson3 ? lessson3?.status : ""}`}
         >
@@ -174,8 +174,8 @@ const TeacherCells = ({
               <p>{existCancelledStudent3.length}</p>
             </div>
           )}
-        </div>
-        <div
+        </div> */}
+        {/* <div
           onClick={() => handleClick(lessson4)}
           className={`lesson-box ${lessson4 ? lessson4?.status : ""}`}
         >
@@ -192,7 +192,7 @@ const TeacherCells = ({
               <p>{existCancelledStudent4.length}</p>
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </td>
   );
