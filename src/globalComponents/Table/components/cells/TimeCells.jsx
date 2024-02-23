@@ -1,10 +1,10 @@
 import React from 'react'
 
-const TimeCells = ({index, first_time, second_time}) => {
+const TimeCells = ({index, time}) => {
+  console.log(time)
   return (
     <td className="time"  key={index}>
-        {first_time}
-        <br /> - <br /> {second_time}
+        {time}
     </td>
   )
 }

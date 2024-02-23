@@ -432,3 +432,40 @@ export const getDashboardStudentsAmountAction =
       }
     }
   };
+
+
+
+export const getDashboardWeeklyTable = () => async (dispatch) =>{
+  try {
+    const { data } = await API.get("/group-table");
+    dispatch({
+      type: DASHBOARD_ACTIONS_TYPE.GET_WEEKLY_TABLE,
+      payload: data,
+    });
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+
+        const { data } = await API.get("/group-table");
+    dispatch({
+      type: DASHBOARD_ACTIONS_TYPE.GET_WEEKLY_TABLE,
+      payload: data,
+    });
+      } catch (error) {
+        // console.log(error);
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+        }
+      }
+    }
+  }
+}

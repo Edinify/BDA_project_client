@@ -17,6 +17,7 @@ import {
   getDashboardStudentsAmountAction,
   getAllGroupsAction,
   getAllEventsAction,
+  getDashboardWeeklyTable
 } from "../../redux/actions/dashboardAction";
 import { Table } from "../../globalComponents/Table/Table";
 
@@ -34,7 +35,10 @@ export const Dashboard = () => {
     dispatch(getDashboardAdvertisingAction("", "", 1));
     dispatch(getDashboardStudentsAmountAction("", "", 3));
     dispatch(getDashboarLeadboarddAction("", "", 1, "lessonCount"));
+    dispatch(getDashboardWeeklyTable())
   }, []);
+
+  
 
   return (
     <div className="dashboard-page">
@@ -54,7 +58,6 @@ export const Dashboard = () => {
 
             <div className="bottom">
               <Table/>
-              {/* <LeaderBoard /> */}
             </div>
           </div>
         </div>

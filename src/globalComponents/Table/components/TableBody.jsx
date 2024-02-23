@@ -8,7 +8,7 @@ const TableBody = () => {
     const { dropdownName } = useSelector((state) => state.dropdownName);
     const { user } = useSelector((state) => state.user);
     const { tableType } = useSelector((state) => state.tableType);
-
+console.log(lessonHours)
     const openModal = (lessonKeys) => {
         const time = lessonKeys?.time
         const week = lessonKeys?.week

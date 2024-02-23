@@ -21,6 +21,8 @@ import {
   DROPDOWN_ERROR_TYPE,
 } from "../../redux/actions-type";
 
+
+
 export function useCustomHook() {
   const dispatch = useDispatch();
   const startWeek = new Date();
@@ -29,6 +31,10 @@ export function useCustomHook() {
       (startWeek.getDay() === 0 ? 7 : startWeek.getDay()) +
       1
   );
+
+  const {
+    dashboardweek
+  } = useSelector((state) => state.dashboardData);
   startWeek.setHours(0, 0, 0, 0);
   const endWeek = new Date();
   endWeek.setDate(startWeek.getDate() + 6);
@@ -44,40 +50,8 @@ export function useCustomHook() {
     "Şənbə",
   ];
 
-  const lessonHours = [
-    {
-      first_time: "08:30",
-      second_time: "10:00",
-    },
-    {
-      first_time: "10:00",
-      second_time: "11:30",
-    },
-    {
-      first_time: "11:30",
-      second_time: "13:00",
-    },
-    {
-      first_time: "13:00",
-      second_time: "14:30",
-    },
-    {
-      first_time: "14:30",
-      second_time: "16:00",
-    },
-    {
-      first_time: "16:00",
-      second_time: "17:30",
-    },
-    {
-      first_time: "17:30",
-      second_time: "19:00",
-    },
-    {
-      first_time: "19:30",
-      second_time: "20:00",
-    },
-  ];
+  const lessonHours = dashboardweek
+ 
   const lessonStatusList = [
     { name: "Gözləyir", key: "unviewed" },
     { name: "Keçirilib", key: "confirmed" },

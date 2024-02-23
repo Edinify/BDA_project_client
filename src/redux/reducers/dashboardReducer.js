@@ -11,6 +11,7 @@ const initialState = {
   advertising: [],
   leadboard: {},
   dashboardStudentsAmount: {},
+  dashboardweek:[]
 };
 
 export const dashboardReducer = (state = initialState, action) => {
@@ -88,7 +89,6 @@ export const dashboardReducer = (state = initialState, action) => {
                 }
               }),
       };
-
     case DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_ADVERTISING:
       return {
         ...state,
@@ -113,6 +113,11 @@ export const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         dashboardStudentsAmount: action.payload,
+      };
+    case DASHBOARD_ACTIONS_TYPE.GET_WEEKLY_TABLE:
+      return {
+        ...state,
+        dashboardweek: action.payload,
       };
     default:
       return state;
