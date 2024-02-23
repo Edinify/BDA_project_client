@@ -61,7 +61,7 @@
 
 /* 4 LESSON ONE CELL */
 .table-container td.teacher-cell {
-  padding: 0 !important; 
+  /* padding: 0 !important;  */
 }
 .table-container td.lesson-name .lesson-box-con {
   display: flex;
