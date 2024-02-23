@@ -57,6 +57,7 @@ import { eventModalReducer } from "./reducers/eventModalReducer";
 import { dashboardReducer } from "./reducers/dashboardReducer";
 import { dropdownTeacherReducer } from "./reducers/dropdownTeacherReducer";
 import { paymentStatusReducer } from "./reducers/paymentStatusReducer";
+import { weeklyGroupData } from "./reducers/weeklyGroupReducer";
 
 const initialState = {};
 const reducers = combineReducers({
@@ -90,6 +91,7 @@ const reducers = combineReducers({
   workersPagination: workersPaginationReducer,
   groupModal: groupModalReducer,
   groupsPagination: groupsPaginationReducer,
+  weeklyGroupData:weeklyGroupData,
   lessonTableModal: lessonTableModalReducer,
   lessonTablePagination: lessonTablePaginationReducer,
   syllabusModal: syllabusModalReducer,
