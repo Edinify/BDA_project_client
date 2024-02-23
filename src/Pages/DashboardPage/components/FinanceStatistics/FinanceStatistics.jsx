@@ -13,6 +13,7 @@ import { ReactComponent as ArrowRihgt1 } from "../../../../assets/icons/dashboar
 import { ReactComponent as ArrowRihgt2 } from "../../../../assets/icons/dashboard/arrow-right2.svg";
 import { ReactComponent as ArrowRihgt3 } from "../../../../assets/icons/dashboard/arrow-right3.svg";
 import { ReactComponent as ArrowRihgt4 } from "../../../../assets/icons/dashboard/arrow-right4.svg";
+import { Table } from "../../../../globalComponents/Table/Table";
 
 const FinanceStatistics = ({ dashboardKeys }) => {
   const dispatch = useDispatch();
@@ -102,7 +103,8 @@ const FinanceStatistics = ({ dashboardKeys }) => {
 
         <div className="right">
           <StudentsAmount />
-          <LeaderBoard type="mobile" />
+          <Table/>
+          {/* <LeaderBoard type="mobile" /> */}
         </div>
       </div>
     </section>

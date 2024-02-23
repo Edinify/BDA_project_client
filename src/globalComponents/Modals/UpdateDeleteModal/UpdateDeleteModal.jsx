@@ -59,6 +59,7 @@ const UpdateDeleteModal = ({
     };
   }, []);
 
+
   useEffect(() => {
     if (user?.role === "super-admin") {
       setUpdateBtn(true);
@@ -101,7 +102,6 @@ const UpdateDeleteModal = ({
       setUpdateBtn(true);
     }
   });
-  // // console.log(user)
   return (
     <div className="func-component">
       {badge && (
@@ -173,10 +173,11 @@ const UpdateDeleteModal = ({
               Ödənişlər
             </h4>
           )}
+          
 
           {profil !== "syllabus" &&
             profil !== "lessonTable" &&
-            profil !== "sales" && (
+            profil !== "sales" &&  profil!== "careers" && (
               <h4 className="confirm" onClick={() => openMoreModal()}>
                 Ətraflı
               </h4>

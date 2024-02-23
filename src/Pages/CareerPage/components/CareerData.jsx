@@ -31,11 +31,9 @@ const CareerData = ({ pageNum, getPageNumber }) => {
     "Cari iş vəzifəsi",
     "İşə başlama tarixi:",
     "İş Statusu",
-
+    "Status",
     "",
   ];
-
-
 
   useEffect(() => {
     if (openMoreModal) {
@@ -45,7 +43,6 @@ const CareerData = ({ pageNum, getPageNumber }) => {
     }
   }, [openMoreModal]);
 
-  // console.log(careerData, "career data");
 
   return (
     <>
@@ -57,28 +54,27 @@ const CareerData = ({ pageNum, getPageNumber }) => {
             <MoreModal setOpenMoreModal={setOpenMoreModal} type="career" />
           )}
           <div className="career-table-container">
+            <table className="details-table career-table">
+              <thead>
+                <tr>
+                  {tableHead.map((head, i) => (
+                    <th key={i}>{head}</th>
+                  ))}
+                </tr>
+              </thead>
 
-          <table className="details-table career-table">
-            <thead>
-              <tr>
-                {tableHead.map((head, i) => (
-                  <th key={i}>{head}</th>
+              <tbody>
+                {careerData?.map((career, i) => (
+                  <CareerCard
+                    key={i}
+                    data={career}
+                    mode="desktop"
+                    cellNumber={i + 1 + (pageNum - 1) * 10}
+                    setOpenMoreModal={setOpenMoreModal}
+                  />
                 ))}
-              </tr>
-            </thead>
-
-            <tbody>
-              {careerData?.map((career, i) => (
-                <CareerCard
-                  key={i}
-                  data={career}
-                  mode="desktop"
-                  cellNumber={i + 1 + (pageNum - 1) * 10}
-                  setOpenMoreModal={setOpenMoreModal}
-                />
-              ))}
-            </tbody>
-          </table>
+              </tbody>
+            </table>
           </div>
 
           <div className="details-list-tablet">
