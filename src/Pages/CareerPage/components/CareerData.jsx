@@ -18,9 +18,23 @@ const CareerData = ({ pageNum, getPageNumber }) => {
     "Portfolio linki",
     "CV linki",
     "Mobil Nömrə",
+    "Fin kod",
+    "Seriya nömrəsi",
+    "Doğum günü",
+    "Dərsə başlama tarixi",
+    "Bitmə tarixi",
+    "Bizi haradan eşitdiniz",
+    "Haradan göndərilib",
+    "Əvvəlki iş yeri",
+    "Əvvəlki iş vəzifəsi",
+    "Cari iş yeri",
+    "Cari iş vəzifəsi",
+    "İşə başlama tarixi:",
     "İş Statusu",
+
     "",
   ];
+
 
 
   useEffect(() => {

@@ -57,6 +57,10 @@ import { eventModalReducer } from "./reducers/eventModalReducer";
 import { dashboardReducer } from "./reducers/dashboardReducer";
 import { dropdownTeacherReducer } from "./reducers/dropdownTeacherReducer";
 import { paymentStatusReducer } from "./reducers/paymentStatusReducer";
+import { weeksBetweenSelectedDatesReducer } from "./reducers/weeksBetweenSelectedDateReducer";
+import { tableTypeReducer } from "./reducers/tableTypeReducer";
+import { paginationPageNumberReducer } from "./reducers/paginationPageNumber";
+import { mainPageTypeReducer } from "./reducers/mainpageTypeReducer";
 
 const initialState = {};
 const reducers = combineReducers({
@@ -111,7 +115,11 @@ const reducers = combineReducers({
   dropdownGroup: dropdownGroupReducer,
   dropdownTeacher:dropdownTeacherReducer,
   mentors: mentorsReducer,
-  paymentStatus:paymentStatusReducer
+  paymentStatus:paymentStatusReducer,
+  weeksBetweenSelectedDates:weeksBetweenSelectedDatesReducer,
+  tableType:tableTypeReducer,
+  pageNumber:paginationPageNumberReducer,
+  mainpageType:mainPageTypeReducer
 });
 // test
 

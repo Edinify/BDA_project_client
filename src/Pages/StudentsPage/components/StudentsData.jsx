@@ -16,6 +16,8 @@ const StudentsData = ({ studentPageNum, getPageNumber, userData }) => {
 
   const tableHead = ["Tələbə adı", "İxtisas", "Mobil nömrə", "Qrup", "Q/B", ""];
 
+
+
   useEffect(() => {
     if (openMoreModal) {
       document.body.style.overflowY = "hidden";

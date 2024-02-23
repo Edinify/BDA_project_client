@@ -4,14 +4,19 @@ import { CAREER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 // import { deleteCareerAction } from "../../../redux/actions/careerActions";
 import moment from "moment";
+import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 // import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   const dispatch = useDispatch();
   const { careerData, lastPage } = useSelector(
     (state) => state.careerPagination
   );
+  const { whereComingList: dataList, whereSendList } = useCustomHook();
 
-  // const { careerModalWorkStatusList: dataList } = useCustomHook();
+  const whereComingName =
+    dataList.find((item) => item.key === data.whereComing)?.name || "";
+  const whereSendName =
+    whereSendList.find((item) => item.key === data.whereSend)?.name || "";
 
   const workStatus =
     Array.isArray(data.workStatus) && data.workStatus.length > 0
@@ -80,13 +85,15 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>
-              <div className="table-scroll-text">{data.group.name}</div>
+              <div className="table-scroll-text">{data?.group?.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td className="email">
             <div className="td-con">
-              <div className="table-scroll-text">{data.group.course.name}</div>
+              <div className="table-scroll-text">
+                {data?.group?.course?.name}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -100,13 +107,115 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone">{data.cvLink}</div>
+              <div className="table-scroll-text phone">{data?.cvLink}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone">{data.phone}</div>
+              <div className="table-scroll-text phone">{data?.phone}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">{data?.fin}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">{data?.seria}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.birthday
+                  ? moment(data?.birthday).locale("az").format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.group
+                  ? moment(data?.group?.startDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.group
+                  ? moment(data?.group?.endDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">{whereComingName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">{whereSendName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.previousWorkPlace}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.previousWorkPosition}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.currentWorkPlace}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.currentWorkPosition}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.workStartDate
+                  ? moment(data?.workStartDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>

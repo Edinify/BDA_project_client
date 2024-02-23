@@ -18,6 +18,7 @@ import {
   getAllGroupsAction,
   getAllEventsAction,
 } from "../../redux/actions/dashboardAction";
+import { Table } from "../../globalComponents/Table/Table";
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
@@ -70,6 +71,7 @@ export const Dashboard = () => {
           <WhereHeard dashboardKeys={dashboardKeys} />
           <LeaderBoard type="mobile" />
         </div>
+        <Table/>
       </div>
     </div>
   );
