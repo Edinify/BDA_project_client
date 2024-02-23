@@ -9,6 +9,8 @@ import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema
 import Status from "./components/Buttons/Status";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
+import WorkStatus from "./components/Inputs/WorkStatus";
+import WorkStatusList from "./components/WorkStatusList";
 
 const CareerModal = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,14 @@ const CareerModal = () => {
     (state) => state.careerModal
   );
 
+  const inputName = [
+    "fullName",
+    "previousWorkPlace",
+    "previousWorkPosition",
+    "currentWorkPlace",
+    "currentWorkPosition",
+    "workStartDate",
+  ];
 
   // console.log(modalData,"modal data")
   // formik
@@ -50,6 +60,11 @@ const CareerModal = () => {
     });
   };
 
+  console.log(
+    modalData,
+    "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+  );
+
   return (
     <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal">
@@ -65,10 +80,33 @@ const CareerModal = () => {
             width: 500,
             maxWidth: "100%",
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
           }}
         >
+          <div className="input-couples">
+            {inputName.map((name, index) => (
+              <InputField
+                key={index}
+                inputName={name}
+                formik={formik}
+                modalData={modalData}
+                updateModalState={updateModalState}
+              />
+            ))}
+          </div>
+
           <div className="create-update-modal-form">
+            <WorkStatusList
+            formik={formik}
+            modalData={modalData}
+            updateModalState={updateModalState}
+            />
+            {/* <WorkStatus
+              formik={formik}
+              modalData={modalData}
+              updateModalState={updateModalState}
+            /> */}
             <InputField
               inputName="portfolioLink"
               formik={formik}

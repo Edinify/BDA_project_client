@@ -2,13 +2,31 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CAREER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
-import { deleteCareerAction } from "../../../redux/actions/careerActions";
+// import { deleteCareerAction } from "../../../redux/actions/careerActions";
 import moment from "moment";
+import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
+// import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   const dispatch = useDispatch();
   const { careerData, lastPage } = useSelector(
     (state) => state.careerPagination
   );
+  const { whereComingList: dataList, whereSendList } = useCustomHook();
+
+  const whereComingName =
+    dataList.find((item) => item.key === data.whereComing)?.name || "";
+  const whereSendName =
+    whereSendList.find((item) => item.key === data.whereSend)?.name || "";
+
+  const workStatus =
+    Array.isArray(data.workStatus) && data.workStatus.length > 0
+      ? data.workStatus
+          .map((workStatus) => {
+            return workStatus.name;
+          })
+          .join(",")
+      : "boş";
+
   const { careerSearchValues } = useSelector((state) => state.searchValues);
   const listData = [
     { key: "Qrup", value: data.group.name },
@@ -67,13 +85,15 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>
-              <div className="table-scroll-text">{data.group.name}</div>
+              <div className="table-scroll-text">{data?.group?.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td className="email">
             <div className="td-con">
-              <div className="table-scroll-text">{data.group.course.name}</div>
+              <div className="table-scroll-text">
+                {data?.group?.course?.name}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -87,26 +107,134 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone">{data.cvLink}</div>
+              <div className="table-scroll-text phone">{data?.cvLink}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text phone">{data.phone}</div>
+              <div className="table-scroll-text phone">{data?.phone}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">{data?.fin}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">{data?.seria}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.birthday
+                  ? moment(data?.birthday).locale("az").format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.group
+                  ? moment(data?.group?.startDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.group
+                  ? moment(data?.group?.endDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">{whereComingName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">{whereSendName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.previousWorkPlace}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.previousWorkPosition}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.currentWorkPlace}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.currentWorkPosition}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.workStartDate
+                  ? moment(data?.workStartDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td
             style={
-              !data.status
+              data.workStatus === "student"
                 ? { backgroundColor: "#d2c3fe" }
-                : { backgroundColor: "#d4ffbf" }
+                : data.workStatus === "employed"
+                ? { backgroundColor: "#d4ffbf" }
+                : data.workStatus === "unemployed"
+                ? { backgroundColor: "#ffced1" }
+                : {}
             }
           >
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {!data.status ? "Davam edir" : "Məzun"}
+                {workStatus}
+                {/* {dataList.find((item) => item.key === data.workStatus)?.name ||
+                  ""} */}
               </div>
             </div>
           </td>
@@ -133,7 +261,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               ))}
             </ul>
           </div>
-           <div className="right">
+          <div className="right">
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
@@ -141,8 +269,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               openMoreModal={openMoreModal}
               profil={"careers"}
             />
-         
-          </div> 
+          </div>
         </div>
       )}
     </>

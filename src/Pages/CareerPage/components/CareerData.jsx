@@ -18,9 +18,24 @@ const CareerData = ({ pageNum, getPageNumber }) => {
     "Portfolio linki",
     "CV linki",
     "Mobil Nömrə",
-    "Status",
+    "Fin kod",
+    "Seriya nömrəsi",
+    "Doğum günü",
+    "Dərsə başlama tarixi",
+    "Bitmə tarixi",
+    "Bizi haradan eşitdiniz",
+    "Haradan göndərilib",
+    "Əvvəlki iş yeri",
+    "Əvvəlki iş vəzifəsi",
+    "Cari iş yeri",
+    "Cari iş vəzifəsi",
+    "İşə başlama tarixi:",
+    "İş Statusu",
+
     "",
   ];
+
+
 
   useEffect(() => {
     if (openMoreModal) {
@@ -39,8 +54,10 @@ const CareerData = ({ pageNum, getPageNumber }) => {
       ) : (
         <>
           {openMoreModal && (
-            <MoreModal setOpenMoreModal={setOpenMoreModal} type="teacher" />
+            <MoreModal setOpenMoreModal={setOpenMoreModal} type="career" />
           )}
+          <div className="career-table-container">
+
           <table className="details-table career-table">
             <thead>
               <tr>
@@ -62,6 +79,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
               ))}
             </tbody>
           </table>
+          </div>
 
           <div className="details-list-tablet">
             {careerData?.map((teacher, i) => (

@@ -36,7 +36,7 @@ const CareerPage = () => {
     }
   }, []);
   return (
-    <div className="details-page teachers-page ">
+    <div className="details-page career-page ">
       <GlobalHead
         searchData={searchData}
         openModal={openModal}
