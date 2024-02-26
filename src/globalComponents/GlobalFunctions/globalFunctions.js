@@ -21,8 +21,6 @@ import {
   DROPDOWN_ERROR_TYPE,
 } from "../../redux/actions-type";
 
-
-
 export function useCustomHook() {
   const dispatch = useDispatch();
   const startWeek = new Date();
@@ -32,9 +30,7 @@ export function useCustomHook() {
       1
   );
 
-  const {
-    dashboardweek
-  } = useSelector((state) => state.dashboardData);
+  const { dashboardweek } = useSelector((state) => state.dashboardData);
   startWeek.setHours(0, 0, 0, 0);
   const endWeek = new Date();
   endWeek.setDate(startWeek.getDate() + 6);
@@ -50,8 +46,8 @@ export function useCustomHook() {
     "Şənbə",
   ];
 
-  const lessonHours = dashboardweek
- 
+  const lessonHours = dashboardweek;
+
   const lessonStatusList = [
     { name: "Gözləyir", key: "unviewed" },
     { name: "Keçirilib", key: "confirmed" },
@@ -170,6 +166,12 @@ export function useCustomHook() {
     { id: 11, name: "Sillabus", key: "syllabus", icon: <SyllabusIcon /> },
     { id: 12, name: "Cədvəl", key: "lessonTable", icon: <TableIcon /> },
     { id: 13, name: "Tədbirlər", key: "events", icon: <EventIcon /> },
+    {
+      id: 14,
+      name: "İdarəetmə paneli",
+      key: "dashboard",
+      icon: <DashboardIcon />,
+    },
   ];
   const generalProfilePowerList = [
     { name: "Tam-səlahiyyətli", key: "all" },
@@ -177,11 +179,11 @@ export function useCustomHook() {
     { name: "Heç biri", key: "only-show" },
   ];
 
-  const careerModalWorkStatusList=[
-    {name:"İşləyir",key:"employed"},
-    {name:"Tələbədir",key:"student"},
-    {name:"İşsizdir",key:"unemployed"},
-  ]
+  const careerModalWorkStatusList = [
+    { name: "İşləyir", key: "employed" },
+    { name: "Tələbədir", key: "student" },
+    { name: "İşsizdir", key: "unemployed" },
+  ];
 
   const getWeeksBetweenDates = (start, end) => {
     let weeksList = [];
@@ -293,6 +295,5 @@ export function useCustomHook() {
     createLessonModal,
     clearLessonModal,
     changeDropdownNameErr,
-    
   };
 }
