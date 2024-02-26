@@ -12,7 +12,7 @@ const TeacherCells = ({
   openModal,
   selectedWeekDay,
 }) => {
-  console.log(groups)
+  console.log(groups);
   const handleClick = (lesson) => {
     const getLesson = lesson ? [lesson] : [];
     const lessonKeys = {
@@ -25,19 +25,21 @@ const TeacherCells = ({
     openModal(lessonKeys);
   };
 
-  console.log(groups)
+  console.log(index, "indexxxxx");
   return (
-    <td className={`lesson-name teacher-cell`} key={index}>
+    <td
+      className={`lesson-name teacher-cell`}
+      key={time.time + index}
+      style={{ padding: "10px", boxSizing: "border-box" }}
+    >
       <div className="lesson-box-con">
         <ul>
-          {groups.map((data) =>{
-            const {name, lessonDate } = data
+          {groups.map((data, i) => {
+            const { name, lessonDate } = data;
 
-            let date 
-            date = lessonDate.find((lesson) => lesson.day ==  index + 1 && lesson.day)
-            return(
-              <li> { !date && name} </li>
-            )
+            let date;
+            date = lessonDate.find((lesson) => lesson.day == index + 1);
+            return <li key={i}> {!date && name} </li>;
           })}
         </ul>
       </div>
