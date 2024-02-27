@@ -16,7 +16,21 @@ const TeacherCells = ({ time, groups, index }) => {
               (lesson) => lesson.day == index && lesson.time === time.time
             );
 
-            return <li key={i}> {date && name} </li>;
+            console.log(date, "dateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+
+            return (
+              <li
+                style={
+                  (date?.practical && {
+                    color: "#f9710f",
+                    fontWeight: "bold",
+                  }) || { fontWeight: 600}
+                }
+                key={i}
+              >
+                {date && name}
+              </li>
+            );
           })}
         </ul>
       </div>
