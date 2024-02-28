@@ -5,6 +5,7 @@ import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const StudentsData = ({ studentPageNum, getPageNumber, userData }) => {
   const { students, totalPages } = useSelector(
@@ -15,8 +16,6 @@ const StudentsData = ({ studentPageNum, getPageNumber, userData }) => {
   const { openConfirmModal } = useSelector((state) => state.studentsModal);
 
   const tableHead = ["Tələbə adı", "İxtisas", "Mobil nömrə", "Qrup", "Q/B", ""];
-
-
 
   useEffect(() => {
     if (openMoreModal) {
@@ -54,16 +53,30 @@ const StudentsData = ({ studentPageNum, getPageNumber, userData }) => {
               </tr>
             </thead>
             <tbody>
-              {students?.map((student, i) => (
-                <StudentCard
-                  key={i}
-                  data={student}
-                  mode="desktop"
-                  student={userData}
-                  setOpenMoreModal={setOpenMoreModal}
-                  cellNumber={i + 1 + (studentPageNum - 1) * 10}
-                />
-              ))}
+              <InfiniteScroll
+                dataLength={students.length}
+                next={""}
+                hasMore={true}
+                loader={<h4>Loading...</h4>}
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>Yay! You have seen it all</b>
+                  </p>
+                }
+              >
+                <tbody>
+                  {students?.map((student, i) => (
+                    <StudentCard
+                      key={i}
+                      data={student}
+                      mode="desktop"
+                      student={userData}
+                      setOpenMoreModal={setOpenMoreModal}
+                      cellNumber={i + 1 + (studentPageNum - 1) * 10}
+                    />
+                  ))}
+                </tbody>
+              </InfiniteScroll>
             </tbody>
           </table>
 
