@@ -23,7 +23,7 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
     "/consultation/appointed",
     "/consultation/completed",
   ];
-  const groupsNav = ["/groups/current", "/groups/waiting"];
+  const groupsNav = ["/groups/current", "/groups/waiting", "/groups/ended"];
 
   return (
     <ul className="sidebar-nav-list">

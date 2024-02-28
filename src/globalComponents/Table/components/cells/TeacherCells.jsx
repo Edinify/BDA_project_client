@@ -36,7 +36,7 @@ const TeacherCells = ({
         <ul>
           {groups.map((data, i) => {
             const { name, lessonDate } = data;
-
+          
             let date;
             date = lessonDate.find((lesson) => lesson.day == index + 1);
             return <li key={i}> {!date && name} </li>;
