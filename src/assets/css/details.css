@@ -192,6 +192,13 @@
 .details-table.student-table tr th:nth-last-child(2) {
   width: 100px;
 }
+.details-table.student-table thead{
+  position:sticky;
+  background-color:white;
+  z-index: 1;
+  top:0
+}
+
 .details-table tr td.more,
 .details-table tr td.more {
   text-decoration: underline;

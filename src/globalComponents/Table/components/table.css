@@ -11,6 +11,7 @@
   height: 98px;
   font-size: 16px;
 }
+
 .table-container thead tr {
   height: 59px;
   font-size: 16px;
@@ -96,13 +97,13 @@
   background-color: #ffced1;
 }
 .table-container td.lesson-name .lesson-box.student-cancelled {
-  background-color: #FEECB4;
+  background-color: #feecb4;
 }
 .table-container td.lesson-name .lesson-box.confirmed {
   background-color: #d4ffbf;
 }
 .table-container td.lesson-name .lesson-box.present-cancelled {
-  background-color: #FFBAD0;
+  background-color: #ffbad0;
 }
 .table-container tbody td.lesson-name .lesson-box .icons-con {
   gap: 2px;
@@ -120,8 +121,6 @@
 }
 
 /* 4 LESSON ONE CELL */
-
-
 
 /* when opening tablet  */
 .table-container tbody td.lesson-name h3,
@@ -144,13 +143,13 @@
   background-color: #ffced1;
 }
 .table-container tbody td.student-cancelled {
-  background-color: #FEECB4;
+  background-color: #feecb4;
 }
 .table-container tbody td.confirmed {
   background-color: #d4ffbf;
 }
 .table-container tbody td.present-cancelled {
-  background-color: #FFBAD0;
+  background-color: #ffbad0;
 }
 
 .table-container tbody tr:nth-child(odd) td:nth-of-type(1) {
@@ -177,7 +176,7 @@
 .table-container tbody td .icons-con {
   display: flex;
   align-items: center;
-  justify-content:flex-end;
+  justify-content: flex-end;
   gap: 5px;
   position: absolute;
   bottom: 4px;
@@ -203,10 +202,10 @@
   height: 16px;
 }
 .table-container tbody td .icons-con .star path {
-  fill: #1E1E1E;
+  fill: #1e1e1e;
 }
 .table-container tbody td .icons-con .letter path {
-  fill: #1E1E1E;
+  fill: #1e1e1e;
 }
 
 .table-container .cur-pagination {
@@ -234,4 +233,3 @@
     display: none;
   }
 }
-
