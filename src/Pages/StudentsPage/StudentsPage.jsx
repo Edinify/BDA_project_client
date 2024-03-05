@@ -27,10 +27,11 @@ const StudentsPage = () => {
       : JSON.parse(localStorage.getItem("userData"));
 
   const studentFilter = () => {
-    // console.log("sds");
+    dispatch({ type: STUDENTS_ALL_ACTIONS_TYPE.RESET_STUDENT_PAGINATION });
+
     dispatch(
       getStudentsPaginationAction(
-        1,
+        0,
         studentSearchValues,
         studentStatus
           ? studentStatus !== "all"

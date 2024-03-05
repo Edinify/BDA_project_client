@@ -11,6 +11,7 @@ const StudentCard = ({
   setOpenConfirmModal,
   student,
 }) => {
+  console.log(data?.courses, "dataaaaaaaaaaaaaaaaaaaaaaaaaaa");
   const dispatch = useDispatch();
   const { students, lastPage } = useSelector(
     (state) => state.studentsPagination
@@ -18,7 +19,7 @@ const StudentCard = ({
   const { studentSearchValues } = useSelector((state) => state.searchValues);
   const { studentStatus } = useSelector((state) => state.studentStatus);
   let courses =
-    Array.isArray(data.courses) && data.courses.length > 0
+    Array.isArray(data?.courses) && data?.courses.length > 0
       ? data.courses
           .map((course) => {
             return `${course.name}`;
@@ -29,12 +30,12 @@ const StudentCard = ({
     { key: "İxtisas", value: courses },
     {
       key: "Mobil nömrə",
-      value: data.phone ? data.phone : "boş",
+      value: data?.phone ? data?.phone : "boş",
     },
   ];
 
   let groupName =
-    Array.isArray(data.groups) && data.groups.length > 0
+    Array.isArray(data?.groups) && data?.groups.length > 0
       ? data.groups
           .map((group) => {
             return `${group.group.name}`;
@@ -83,7 +84,7 @@ const StudentCard = ({
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>
-              <div className="table-scroll-text">{data.fullName}</div>
+              <div className="table-scroll-text">{data?.fullName || ""}</div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -95,7 +96,7 @@ const StudentCard = ({
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.phone}</div>
+              <div className="table-scroll-text">{data?.phone || ""}</div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -114,7 +115,7 @@ const StudentCard = ({
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.qbCount}</div>
+              <div className="table-scroll-text">{data?.qbCount || 0}</div>
               <div className="right-fade"></div>
             </div>
           </td>

@@ -31,6 +31,8 @@ const StudentsData = ({
     }
   }, [openMoreModal]);
 
+  console.log(students.length, "students length");
+  console.log(totalLength, "total length");
   return (
     <>
       {openMoreModal && (

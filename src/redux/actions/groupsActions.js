@@ -145,6 +145,38 @@ export const getGroupsWithTeacherAction = (teacherId) => async (dispatch) => {
   }
 };
 
+export const getGroupsWithMentorAction = (mentorId) => async (dispatch) => {
+  try {
+    const { data } = await API.get(`/with-mentor?mentorId=${mentorId}`);
+    dispatch({ type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS, payload: data });
+  } catch (error) {
+    // console.log(error);
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.get("/all");
+        dispatch({
+          type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS,
+          payload: data,
+        });
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+        }
+        // console.log(error);
+      }
+    }
+  }
+};
+
 export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
   dispatch(pageLoading(true));
   try {
@@ -223,7 +255,6 @@ export const getGroupsPaginationAction =
         payload: data,
       });
     } catch (error) {
-      
       const originalRequest = error.config;
       // console.log(error);
       if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -292,9 +323,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
           })
         );
         const { data } = await API.post("/", groupData);
-        dispatch(
-          getGroupsPaginationAction(data.lastPage, "", status, "", "")
-        );
+        dispatch(getGroupsPaginationAction(data.lastPage, "", status, "", ""));
         dispatch({
           type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
           payload: false,
@@ -386,13 +415,7 @@ export const deleteGroupAction =
           );
           await API.delete(`/${_id}`);
           dispatch(
-            getGroupsPaginationAction(
-              pageNumber,
-              searchQuery,
-              status,
-              "",
-              ""
-            )
+            getGroupsPaginationAction(pageNumber, searchQuery, status, "", "")
           );
           dispatch({
             type: GROUP_ALL_ACTIONS_TYPE.DELETE_GROUP,

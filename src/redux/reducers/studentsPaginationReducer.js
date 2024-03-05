@@ -60,7 +60,8 @@ export const StudentsPaginationReducer = (state = initialState, action) => {
     case STUDENTS_ALL_ACTIONS_TYPE.CREATE_STUDENT:
       return {
         ...state,
-        students: [...state.students, action.payload],
+        students: [action.payload, ...state.students],
+        totalLength: state.totalLength + 1,
       };
     case STUDENTS_ALL_ACTIONS_TYPE.UPDATE_STUDENT:
       return {

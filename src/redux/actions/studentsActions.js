@@ -257,10 +257,7 @@ export const getStudentsPaginationAction =
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}`
       );
-      // dispatch({
-      //   type: STUDENTS_ALL_ACTIONS_TYPE.GET_STUDENT_LAST_PAGE,
-      //   payload: pageNumber,
-      // });
+
       dispatch({
         type: STUDENTS_ALL_ACTIONS_TYPE.GET_STUDENT_PAGINATION,
         payload: data,
@@ -307,7 +304,12 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
   dispatch(studentModalLoading(true));
   try {
     const { data } = await API.post("/", studentData);
-    dispatch(getStudentsPaginationAction(data.lastPage, "", "all"));
+
+    dispatch({
+      type: STUDENTS_ALL_ACTIONS_TYPE.CREATE_STUDENT,
+      data,
+    });
+
     dispatch({
       type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
       payload: false,
@@ -328,7 +330,7 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
         );
 
         const { data } = await REGISTERAPI.post("/student/sign", studentData);
-        dispatch(getStudentsPaginationAction(data.lastPage, "", "all"));
+
         dispatch({
           type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
           payload: false,
