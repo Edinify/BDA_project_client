@@ -41,7 +41,10 @@ export const Routing = () => {
         if (location.pathname.startsWith("/login")) {
           navigate("/");
         }
-      } else if (user.role === "teacher" && !notFound) {
+      } else if (
+        (user.role === "teacher" || user.role === "mentor") &&
+        !notFound
+      ) {
         // console.log(4);
         if (location.pathname.startsWith("/login")) {
           navigate("/teacher-panel");
@@ -119,7 +122,8 @@ export const Routing = () => {
           {LoginRoute()}
           {userData?.role === "super-admin" && SuperAdminPanelRoute()}
           {/* {{userData?.role === "admin" && AdminPanelRoute()} */}
-          {userData?.role === "teacher" && TeacherPanelRoute()}
+          {(userData?.role === "teacher" || userData?.role === "mentor") &&
+            TeacherPanelRoute()}
           {user?.role === "worker" && WorkerPanelRoute(user)}
         </Routes>
       </div>

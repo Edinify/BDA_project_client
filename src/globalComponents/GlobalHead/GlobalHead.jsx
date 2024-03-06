@@ -57,7 +57,8 @@ const GlobalHead = ({
             <div className="details-header-content-left">
               {location.pathname === "/teachers" ||
               location.pathname === "/teachers/mentors" ||
-              location.pathname === "/tuition-fee"
+              location.pathname === "/tuition-fee" ||
+              location.pathname === "/tuitionFee"
                 ? null
                 : search && (
                     <Search
@@ -143,7 +144,7 @@ const GlobalHead = ({
               {statusType === "tutionFee" && (
                 <div className="tuition-fee-container">
                   <div className="tuition-fee-payment-container">
-                    <PaymentResult  />
+                    <PaymentResult />
                   </div>
                   <div className="tution-fee-filter-header">
                     {search && (
@@ -170,12 +171,14 @@ const GlobalHead = ({
               )}
               {statusType === "lesson-table" && (
                 <div className="lesson-page-header-container">
-                  <div className="lesson-page-add-btn">
-                    <button className="add-detail" onClick={openModal}>
-                      <PlusIcon />
-                      Əlavə et
-                    </button>
-                  </div>
+                  {showAddBtn && (
+                    <div className="lesson-page-add-btn">
+                      <button className="add-detail" onClick={openModal}>
+                        <PlusIcon />
+                        Əlavə et
+                      </button>
+                    </div>
+                  )}
                   <div className="lesson-page-filter-container">
                     <div className="lesson-table-header-content">
                       <div className="lesson-table-status">

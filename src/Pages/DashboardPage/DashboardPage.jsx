@@ -72,7 +72,7 @@ export const Dashboard = () => {
           <FinanceStatistics dashboardKeys={dashboardKeys} />
           <StudentsAmount />
           <LessonStatistics type="mobile" />
-          <WhereHeard dashboardKeys={dashboardKeys} />
+          <WhereHeard dashboardKeys={dashboardKeys} type="mobile"  />
           <LeaderBoard type="mobile" />
 
         </div>

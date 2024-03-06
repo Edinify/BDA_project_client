@@ -4,10 +4,10 @@ const initialState = {
   students: [],
   studentsByCourse: [],
   studentsByMore: [],
-  totalPages: 1,
+  totalLength: 0,
   lastPage: "",
   loading: false,
-  loadingAll: false
+  loadingAll: false,
 };
 
 export const StudentsPaginationReducer = (state = initialState, action) => {
@@ -25,23 +25,27 @@ export const StudentsPaginationReducer = (state = initialState, action) => {
           ...action.payload?.students,
         ],
       };
-      case STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_ALL_ADD:
-        return {
-          ...state,
-          studentsByMore: action.payload?.students,
-        };
-      case STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_ALL:
-        return {
-          ...state,
-          studentsByMore: [
-            ...state.studentsByMore,
-            ...action.payload?.students,
-          ],
-        };
+    case STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_ALL_ADD:
+      return {
+        ...state,
+        studentsByMore: action.payload?.students,
+      };
+    case STUDENTS_ALL_ACTIONS_TYPE.GET_MORE_STUDENTS_ALL:
+      return {
+        ...state,
+        studentsByMore: [...state.studentsByMore, ...action.payload?.students],
+      };
     case STUDENTS_ALL_ACTIONS_TYPE.GET_STUDENT_PAGINATION:
       return {
         ...state,
-        ...action.payload,
+        students: [...state.students, ...action.payload.students],
+        totalLength: action.payload.totalLength,
+      };
+    case STUDENTS_ALL_ACTIONS_TYPE.RESET_STUDENT_PAGINATION:
+      return {
+        ...state,
+        students: [],
+        totalLength: 0,
       };
     case STUDENTS_ALL_ACTIONS_TYPE.STUDENT_LOADING:
       return {
@@ -56,7 +60,8 @@ export const StudentsPaginationReducer = (state = initialState, action) => {
     case STUDENTS_ALL_ACTIONS_TYPE.CREATE_STUDENT:
       return {
         ...state,
-        students: [...state.students, action.payload],
+        students: [action.payload, ...state.students],
+        totalLength: state.totalLength + 1,
       };
     case STUDENTS_ALL_ACTIONS_TYPE.UPDATE_STUDENT:
       return {

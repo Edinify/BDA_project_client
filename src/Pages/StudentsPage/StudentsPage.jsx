@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudentsPaginationAction } from "../../redux/actions/studentsActions";
-import { STUDENTS_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import {
+  STUDENTS_ALL_ACTIONS_TYPE,
+  STUDENTS_MODAL_ACTION_TYPE,
+} from "../../redux/actions-type";
 import StudentsData from "./components/StudentsData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const StudentsPage = () => {
   const dispatch = useDispatch();
-  const { lastPage } = useSelector((state) => state.studentsPagination);
+  const { lastPage, students } = useSelector(
+    (state) => state.studentsPagination
+  );
   const { studentSearchValues } = useSelector((state) => state.searchValues);
   const { studentStatus, courseId } = useSelector(
     (state) => state.studentStatus
@@ -22,18 +27,19 @@ const StudentsPage = () => {
       : JSON.parse(localStorage.getItem("userData"));
 
   const studentFilter = () => {
-    // console.log("sds");
+    dispatch({ type: STUDENTS_ALL_ACTIONS_TYPE.RESET_STUDENT_PAGINATION });
+
     dispatch(
       getStudentsPaginationAction(
-        1,
+        0,
         studentSearchValues,
         studentStatus
           ? studentStatus !== "all"
             ? studentStatus
             : "all"
           : "all",
-          courseId,
-          selectedGroup._id
+        courseId,
+        selectedGroup._id
       )
     );
   };
@@ -62,6 +68,31 @@ const StudentsPage = () => {
       );
     }
   };
+
+  const getNextStudents = () => {
+    if (studentSearchValues) {
+      dispatch(
+        getStudentsPaginationAction(
+          students?.length || 0,
+          studentSearchValues,
+          studentStatus ? studentStatus : "all",
+          courseId,
+          selectedGroup._id
+        )
+      );
+    } else {
+      dispatch(
+        getStudentsPaginationAction(
+          students?.length || 0,
+          "",
+          studentStatus ? studentStatus : "all",
+          courseId,
+          selectedGroup._id
+        )
+      );
+    }
+  };
+
   const openModal = () => {
     dispatch({
       type: STUDENTS_MODAL_ACTION_TYPE.GET_STUDENTS_MODAL,
@@ -70,18 +101,18 @@ const StudentsPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    console.log(e)
+    console.log(e);
     dispatch(
       getStudentsPaginationAction(
-        1,
+        0,
         studentSearchValues,
         studentStatus
           ? studentStatus !== "all"
             ? studentStatus
             : "all"
           : "all",
-          courseId,
-          selectedGroup._id
+        courseId,
+        selectedGroup._id
       )
     );
     setStudentPageNum(1);
@@ -92,19 +123,27 @@ const StudentsPage = () => {
       setStudentPageNum(lastPage);
     }
   }, [lastPage]);
+
   useEffect(() => {
     if (studentStatus) {
       getPageNumber(1);
     }
   }, [studentStatus]);
+
   useEffect(() => {
     if (studentSearchValues) {
-      dispatch(getStudentsPaginationAction(1, studentSearchValues, "all",'',
-      ''));
+      dispatch(
+        getStudentsPaginationAction(0, studentSearchValues, "all", "", "")
+      );
     } else {
-      dispatch(getStudentsPaginationAction(1, "", "",'',
-      ''));
+      dispatch(getStudentsPaginationAction(0, "", "", "", ""));
     }
+
+    return () => {
+      dispatch({
+        type: STUDENTS_ALL_ACTIONS_TYPE.RESET_STUDENT_PAGINATION,
+      });
+    };
   }, [dispatch]);
 
   // console.log(lastPage, "last page in student");
@@ -123,6 +162,7 @@ const StudentsPage = () => {
       <StudentsData
         studentPageNum={studentPageNum}
         getPageNumber={getPageNumber}
+        getNextStudents={getNextStudents}
         userData={userData}
       />
     </div>
