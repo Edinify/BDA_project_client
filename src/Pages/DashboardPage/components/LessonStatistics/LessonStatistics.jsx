@@ -92,7 +92,7 @@ const LessonStatistics = ({ type }) => {
         <div className="content-box">
           <div className="top">
             <h2 className="title">Fənlərin statistikası</h2>
-            {type !== "mobile" ? (
+            {/* {type !== "mobile" ? (
               <DateDropdown
                 optionType={"date"}
                 calendar={true}
@@ -111,7 +111,7 @@ const LessonStatistics = ({ type }) => {
                 setOpenDropdown={setOpenDateDropdown}
                 applyMonthsFilter={applyMonthsFilter}
               />
-            )}
+            )} */}
           </div>
 
           <div className="bottom">
@@ -135,12 +135,12 @@ const LessonStatistics = ({ type }) => {
         </div>
       </section>
 
-      {openCalendar && (
+      {/* {openCalendar && (
         <DateRangeModal
           applyFilter={applyFilter}
           setOpenCalendar={setOpenCalendar}
         />
-      )}
+      )} */}
     </>
   );
 };
