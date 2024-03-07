@@ -125,6 +125,18 @@ const GlobalHead = ({
 
                 // <StatusDropdown statusType="student" deviceType="mobile" />
               )}
+              {statusType === "career" && (
+                <div className="career-filter-header">
+                  <CoursesDropdown deviceType="desktop" />
+                  <GroupsDropdown deviceType="desktop" />
+                  <div className="lesson-table-btn-container student ">
+                    <button className="add-detail" onClick={() => filter()}>
+                      Tətbiq et
+                    </button>
+                  </div>
+                </div>
+
+              )}
               {statusType === "groups" && (
                 <div className="groups-filter-header">
                   <CoursesDropdown deviceType="desktop" />

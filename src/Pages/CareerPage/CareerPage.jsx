@@ -43,6 +43,8 @@ const CareerPage = () => {
         DATA_SEARCH_VALUE={"CAREER_SEARCH_VALUE"}
         dataSearchValues={careerSearchValues}
         addBtn={false}
+        profile="career"
+        statusType="career"
       />
       <CareerData pageNum={lastPage} getPageNumber={getPageNumber} />
     </div>

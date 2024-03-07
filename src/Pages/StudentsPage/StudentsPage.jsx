@@ -156,7 +156,7 @@ const StudentsPage = () => {
         DATA_SEARCH_VALUE={"STUDENTS_SEARCH_VALUE"}
         dataSearchValues={studentSearchValues}
         statusType="student"
-        profile={"students"}
+        profile="students"
       />
 
       <StudentsData

@@ -136,7 +136,9 @@
 
 /* student -page */
 
-.details-page.students-page .student-filter-header {
+.details-page.students-page .student-filter-header ,
+.details-page.career-page .career-filter-header
+{
   width: 100%;
   display: flex;
 }
