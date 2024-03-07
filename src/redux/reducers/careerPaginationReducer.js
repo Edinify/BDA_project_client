@@ -3,6 +3,7 @@ import { CAREER_ALL_ACTIONS_TYPE } from "../actions-type";
 const initialState = {
   careerData: [],
   totalPages: 1,
+  totalLength:0,
   lastPage: "",
   loading: false,
 };
@@ -32,6 +33,12 @@ export const careerPaginationReducer = (state = initialState, action) => {
         careerData: action.payload.careers,
         totalPages: action.payload.totalPages,
       };
+      case CAREER_ALL_ACTIONS_TYPE.RESET_CAREER_PAGINATION:
+        return{
+          ...state,
+          careerData:[],
+          totalLength:0
+        }
 
     case CAREER_ALL_ACTIONS_TYPE.CREATE_CAREER:
       return {
