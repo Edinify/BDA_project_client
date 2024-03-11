@@ -21,7 +21,7 @@ const StudentsData = ({
   const { loading } = useSelector((state) => state.studentsPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.studentsModal);
-  const tableHead = ["Tələbə adı", "İxtisas", "Mobil nömrə", "Qrup", "Q/B", ""];
+  const tableHead = ["Tələbə adı","Fin","Seriya","Doğum günü","Mobil nömrə","Bizi haradan eşidiblər?","Haradan gəliblər",  "İxtisas",  "Qrup", "Q/B", ""];
 
   useEffect(() => {
     if (openMoreModal) {
@@ -31,8 +31,9 @@ const StudentsData = ({
     }
   }, [openMoreModal]);
 
-  console.log(students.length, "students length");
-  console.log(totalLength, "total length");
+
+  console.log(students,"student")
+
   return (
     <>
       {openMoreModal && (
@@ -45,19 +46,21 @@ const StudentsData = ({
 
       {openConfirmModal && <ConfirmModal type="student" />}
       <InfiniteScroll
+        style={{
+          // overflow: "none",
+        }}
         dataLength={students.length}
         next={getNextStudents}
         hasMore={totalLength > students.length || loading}
         loader={<SmallLoading />}
         endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
+          <p style={{ textAlign: "center", fontSize: "20px" }}>
           </p>
         }
         scrollThreshold={1}
       >
         <table
-          style={{ marginBottom: "200px" }}
+          style={{ marginBottom: "50px" }}
           className={`details-table  student-table ${
             userData.power === "only-show" ? "only-show" : "update"
           } `}

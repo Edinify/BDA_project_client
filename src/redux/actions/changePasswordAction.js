@@ -4,10 +4,9 @@ import { toast } from "react-toastify";
 import { logoutAction } from "./auth";
 import { apiRoot } from "../../apiRoot";
 
-
 const API = axios.create({
   baseURL: `${apiRoot}/user`,
-  withCredentials:true
+  withCredentials: true,
 });
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("auth")) {
@@ -21,7 +20,7 @@ API.interceptors.request.use((req) => {
 
 const refreshApi = axios.create({
   baseURL: `${apiRoot}/user/auth/refresh_token`,
-  withCredentials:true
+  withCredentials: true,
 });
 
 const toastError = (message) => {
@@ -38,13 +37,10 @@ const toastError = (message) => {
   });
 };
 
-export const changeAdminPasswordAction = (
-  oldPassword,
-  newPassword,
-) => {
+export const changeAdminPasswordAction = (oldPassword, newPassword) => {
   return async (dispatch) => {
     try {
-      const response = await API.patch(`admin/me/password`, {
+      const response = await API.patch(`admin/own/password`, {
         newPassword,
         oldPassword,
       });
@@ -77,7 +73,7 @@ export const changeAdminPasswordAction = (
             newPassword,
             oldPassword,
           });
-    
+
           dispatch(logoutAction());
         } catch (error) {
           // console.log(error);
@@ -92,7 +88,7 @@ export const changeAdminPasswordAction = (
 export const changeTeacherPasswordAction = (oldPassword, newPassword) => {
   return async (dispatch) => {
     try {
-      const response = await API.patch(`teacher/me/password`, {
+      const response = await API.patch(`teacher/own/password`, {
         newPassword,
         oldPassword,
       });
@@ -125,7 +121,7 @@ export const changeTeacherPasswordAction = (oldPassword, newPassword) => {
             newPassword,
             oldPassword,
           });
-    
+
           dispatch(logoutAction());
         } catch (error) {
           // console.log(error);
@@ -138,10 +134,7 @@ export const changeTeacherPasswordAction = (oldPassword, newPassword) => {
   };
 };
 
-export const changeStudentPasswordAction = (
-  oldPassword,
-  newPassword,
-) => {
+export const changeStudentPasswordAction = (oldPassword, newPassword) => {
   return async (dispatch) => {
     try {
       const response = await API.patch(`student/me/password`, {
@@ -177,7 +170,7 @@ export const changeStudentPasswordAction = (
             newPassword,
             oldPassword,
           });
-    
+
           dispatch(logoutAction());
         } catch (error) {
           // console.log(error);

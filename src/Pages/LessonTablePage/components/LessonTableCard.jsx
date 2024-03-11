@@ -93,7 +93,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
     });
   };
 
-  // console.log(lesson, "pow");
+  console.log(data, "pow");
 
   return (
     <>

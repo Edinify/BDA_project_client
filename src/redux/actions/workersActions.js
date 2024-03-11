@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  CHANGE_PASSPWORD_ACTION_TYPE,
   WORKER_ALL_ACTIONS_TYPE,
   WORKER_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -334,3 +335,52 @@ export const deleteWorkerAction =
       toastError(error?.response?.data.message);
     }
   };
+
+export const changeWorkerPasswordAction = (oldPassword, newPassword) => {
+  return async (dispatch) => {
+    try {
+      const response = await API.patch(`/own/password`, {
+        newPassword,
+        oldPassword,
+      });
+
+      dispatch(logoutAction());
+    } catch (error) {
+      dispatch({
+        type: CHANGE_PASSPWORD_ACTION_TYPE.START_LOADING,
+        payload: false,
+      });
+
+      if (error?.response?.data?.key === "old-password-incorrect.") {
+        toastError("köhnə şifrə yalnışdır");
+        return;
+      }
+      // console.log(error);
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+
+          const response = await API.patch(`worker/own/password`, {
+            newPassword,
+            oldPassword,
+          });
+
+          dispatch(logoutAction());
+        } catch (error) {
+          // console.log(error);
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+    }
+  };
+};

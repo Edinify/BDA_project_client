@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { STUDENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { deleteStudentAction } from "../../../redux/actions/studentsActions";
+import moment from "moment";
+import "moment/locale/az";
 
 const StudentCard = ({
   data,
@@ -11,7 +13,6 @@ const StudentCard = ({
   setOpenConfirmModal,
   student,
 }) => {
-  console.log(data?.courses, "dataaaaaaaaaaaaaaaaaaaaaaaaaaa");
   const dispatch = useDispatch();
   const { students, lastPage } = useSelector(
     (state) => state.studentsPagination
@@ -90,16 +91,55 @@ const StudentCard = ({
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{courses}</div>
+              <div className="table-scroll-text">{data?.fin || ""}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data?.phone || ""}</div>
+              <div className="table-scroll-text">{data?.seria || ""}</div>
               <div className="right-fade"></div>
             </div>
           </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {data?.birthday
+                  ? moment(data.birthday).locale("az").format("DD MMMM")
+                  : "" || "boş"}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data?.phone || "boş"}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {data?.whereSend || "boş"}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {data?.whereComing || "boş"}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{courses}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+
           <td>
             <div className="td-con">
               <div className="table-scroll-text">

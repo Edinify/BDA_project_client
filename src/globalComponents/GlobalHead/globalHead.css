@@ -1,6 +1,9 @@
 .details-header {
   background-color: var(--neutrals-200);
   padding-bottom: 16px;
+  position: sticky;
+  top: 86px;
+  z-index: 100;
 }
 .details-header-container {
   width: 100%;
@@ -136,9 +139,8 @@
 
 /* student -page */
 
-.details-page.students-page .student-filter-header ,
-.details-page.career-page .career-filter-header
-{
+.details-page.students-page .student-filter-header,
+.details-page.career-page .career-filter-header {
   width: 100%;
   display: flex;
 }
