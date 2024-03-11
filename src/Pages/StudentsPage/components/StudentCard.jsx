@@ -11,7 +11,6 @@ const StudentCard = ({
   setOpenConfirmModal,
   student,
 }) => {
-  console.log(data?.courses, "dataaaaaaaaaaaaaaaaaaaaaaaaaaa");
   const dispatch = useDispatch();
   const { students, lastPage } = useSelector(
     (state) => state.studentsPagination

@@ -73,7 +73,7 @@
 .details-table tr td:last-child,
 .details-table tr th:last-child {
   text-align: end;
-  width: 60px; 
+  width: 60px;
   border-right: none;
 }
 .career-table-container {
@@ -192,11 +192,11 @@
 .details-table.student-table tr th:nth-last-child(2) {
   width: 100px;
 }
-.details-table.student-table thead{
-  position:sticky;
-  background-color:white;
+.details-table.student-table thead {
+  position: sticky;
+  background-color: white;
   z-index: 1;
-  top:0
+  top: 145px;
 }
 
 .details-table tr td.more,
@@ -314,10 +314,9 @@
   overflow-x: scroll;
 }
 
-.details-table .td-con.student-status{
+.details-table .td-con.student-status {
   width: 150px;
 }
-
 
 .details-table.career-table tr th:last-child,
 .details-table.career-table tr td:last-child {

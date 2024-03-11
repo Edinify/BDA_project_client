@@ -58,6 +58,7 @@ export const StudentsPaginationReducer = (state = initialState, action) => {
         loadingAll: action.payload,
       };
     case STUDENTS_ALL_ACTIONS_TYPE.CREATE_STUDENT:
+      console.log(action.payload, "hhhddddddddddddddd");
       return {
         ...state,
         students: [action.payload, ...state.students],

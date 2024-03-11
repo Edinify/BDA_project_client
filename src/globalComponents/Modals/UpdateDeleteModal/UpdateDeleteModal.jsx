@@ -94,7 +94,10 @@ const UpdateDeleteModal = ({
       if (power !== "only-show") {
         setUpdateBtn(true);
       }
-    } else if (user?.role === "teacher" || user?.role === "mentor") {
+    } else if (
+      user?.role === "teacher" ||
+      (user?.role === "mentor" && data?.topic?.name === "Praktika")
+    ) {
       setUpdateBtn(true);
     }
   });
