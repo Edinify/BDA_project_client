@@ -74,7 +74,7 @@ export const ChangePasswordModal = ({ setOpenModal }) => {
           type: CHANGE_PASSPWORD_ACTION_TYPE.START_LOADING,
           payload: true,
         });
-      } else if (user.role === "teacher") {
+      } else if (user.role === "teacher" || user.role === "mentor") {
         dispatch(
           changeTeacherPasswordAction(title.oldPassword, title.newPassword)
         );
