@@ -4,6 +4,7 @@ import { STUDENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { deleteStudentAction } from "../../../redux/actions/studentsActions";
 import moment from "moment";
 import "moment/locale/az";
+import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 
 const StudentCard = ({
   data,
@@ -19,6 +20,17 @@ const StudentCard = ({
   );
   const { studentSearchValues } = useSelector((state) => state.searchValues);
   const { studentStatus } = useSelector((state) => state.studentStatus);
+
+  const { whereComingList, whereSendList } = useCustomHook();
+
+  const whereComingName = whereComingList.find(
+    (item) => item.key === data?.whereComing
+  )?.name;
+
+  const whereSendName = whereSendList.find(
+    (item) => item.key === data?.whereSend
+  )?.name;
+
   let courses =
     Array.isArray(data?.courses) && data?.courses.length > 0
       ? data.courses
@@ -102,7 +114,7 @@ const StudentCard = ({
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text">
                 {data?.birthday
                   ? moment(data.birthday).locale("az").format("DD MMMM")
@@ -118,30 +130,28 @@ const StudentCard = ({
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text">{whereSendName || "boş"}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text">
-                {data?.whereSend || "boş"}
+                {whereComingName || "boş"}
               </div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
-              <div className="table-scroll-text">
-                {data?.whereComing || "boş"}
-              </div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text">{courses}</div>
               <div className="right-fade"></div>
             </div>
           </td>
 
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text">
                 {groupName}
                 {/* {data.groups.map((item) => (
