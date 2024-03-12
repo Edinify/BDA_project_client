@@ -32,7 +32,7 @@ const StudentsData = ({
   }, [openMoreModal]);
 
 
-  console.log(students,"student")
+  // console.log(students,"student")
 
   return (
     <>
@@ -46,9 +46,7 @@ const StudentsData = ({
 
       {openConfirmModal && <ConfirmModal type="student" />}
       <InfiniteScroll
-        style={{
-          // overflow: "none",
-        }}
+      
         dataLength={students.length}
         next={getNextStudents}
         hasMore={totalLength > students.length || loading}

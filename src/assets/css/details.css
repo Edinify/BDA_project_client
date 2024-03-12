@@ -196,7 +196,7 @@
   position: sticky;
   background-color: white;
   z-index: 1;
-  top: 145px;
+  /* top: 145px; */
 }
 
 .details-table tr td.more,
@@ -314,6 +314,7 @@
   width: auto;
   overflow-x: scroll;
 }
+
 
 .details-table .td-con.student-status {
   width: 150px;
