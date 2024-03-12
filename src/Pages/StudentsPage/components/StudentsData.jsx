@@ -31,8 +31,6 @@ const StudentsData = ({
     }
   }, [openMoreModal]);
 
-  console.log(students.length, "students length");
-  console.log(totalLength, "total length");
   return (
     <>
       {openMoreModal && (
@@ -45,19 +43,22 @@ const StudentsData = ({
 
       {openConfirmModal && <ConfirmModal type="student" />}
       <InfiniteScroll
+        style={{
+          overflow: "none",
+        }}
         dataLength={students.length}
         next={getNextStudents}
         hasMore={totalLength > students.length || loading}
         loader={<SmallLoading />}
         endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
+          <p style={{ textAlign: "center", fontSize: "20px" }}>
+            {/* <p>Tamamlandı</p> */}
           </p>
         }
         scrollThreshold={1}
       >
         <table
-          style={{ marginBottom: "200px" }}
+          style={{ marginBottom: "50px" }}
           className={`details-table  student-table ${
             userData.power === "only-show" ? "only-show" : "update"
           } `}

@@ -307,7 +307,7 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
 
     dispatch({
       type: STUDENTS_ALL_ACTIONS_TYPE.CREATE_STUDENT,
-      data,
+      payload: data,
     });
 
     dispatch({
@@ -356,7 +356,6 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
 };
 
 export const updateStudentsAction = (_id, studentData) => async (dispatch) => {
-  // console.log(studentData);
   dispatch(studentModalLoading(true));
   try {
     const { data } = await API.patch(`/${_id}`, studentData);
