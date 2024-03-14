@@ -5,6 +5,8 @@ import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
   const { courses, totalPages } = useSelector(
@@ -43,32 +45,45 @@ const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
           )}
 
           {openConfirmModal && <ConfirmModal type="courses" />}
-          <table
-            className={`details-table  courses-table ${
-              userData.power === "only-show" ? "only-show" : "update"
-            } `}
+          <InfiniteScroll
+            style={{ overflowX: "none" }}
+            dataLength={courses.length}
+            // next={getNextStudents}
+            // hasMore={totalLength > courses.length || loading}
+            hasMore={courses.length || loading}
+            loader={<SmallLoading />}
+            endMessage={
+              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+            }
+            scrollThreshold={1}
           >
-            <thead>
-              <tr>
-                {tableHead.map((head, i) => (
-                  <th key={i}>{head.label}</th>
-                ))}
-              </tr>
-            </thead>
+            <table
+              className={`details-table  courses-table ${
+                userData.power === "only-show" ? "only-show" : "update"
+              } `}
+            >
+              <thead>
+                <tr>
+                  {tableHead.map((head, i) => (
+                    <th key={i}>{head.label}</th>
+                  ))}
+                </tr>
+              </thead>
 
-            <tbody>
-              {courses.map((courseName, i) => (
-                <CourseCard
-                  key={i}
-                  data={courseName}
-                  course={userData}
-                  mode="desktop"
-                  cellNumber={i + 1 + (coursePageNum - 1) * 10}
-                  setOpenMoreModal={setOpenMoreModal}
-                />
-              ))}
-            </tbody>
-          </table>
+              <tbody>
+                {courses.map((courseName, i) => (
+                  <CourseCard
+                    key={i}
+                    data={courseName}
+                    course={userData}
+                    mode="desktop"
+                    cellNumber={i + 1 + (coursePageNum - 1) * 10}
+                    setOpenMoreModal={setOpenMoreModal}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </InfiniteScroll>
 
           <div className="details-list-tablet course-list-mobile">
             <h3 className="details-list-title">Fənn adı</h3>
