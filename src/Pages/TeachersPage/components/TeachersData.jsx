@@ -8,9 +8,9 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
+const TeachersData = ({ teacherPageNum, getNextTeachers, userData }) => {
   const dispatch = useDispatch();
-  const { teachers, totalPages } = useSelector(
+  const { teachers, totalLength } = useSelector(
     (state) => state.teachersPagination
   );
   const { loading } = useSelector((state) => state.teachersPagination);
@@ -37,11 +37,10 @@ const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
     }
   }, [openMoreModal]);
 
+
+  console.log(totalLength , teachers.length )
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
         <>
           {openMoreModal && (
             <MoreModal
@@ -53,9 +52,8 @@ const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
           {openConfirmModal && <ConfirmModal type="teacher" />}
           <InfiniteScroll
             dataLength={teachers.length}
-            //  next={getNextStudents}
-            // hasMore={ totalLength > teachers.length || loading}
-            hasMore={teachers.length || loading}
+            next={getNextTeachers}
+            hasMore={totalLength > teachers.length || loading}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -114,7 +112,6 @@ const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
             </div>
           )} */}
         </>
-      )}
     </>
   );
 };

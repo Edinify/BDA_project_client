@@ -3,8 +3,6 @@ import { TEACHER_ALL_ACTIONS_TYPE } from "../actions-type";
 const initialState = {
   teachers: [],
   totalLength: 0,
-  // totalPages: 1,
-  // lastPage: "",
   teacherLessonStatistics: {},
   teacherConfirmedLessons: '',
   teacherCancelledLessons: '',

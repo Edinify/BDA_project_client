@@ -23,10 +23,13 @@ const TeachersPage = () => {
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
 
-  const filterTeachers = () =>
+  const filterTeachers = () =>{
+    dispatch({
+      type: TEACHER_ALL_ACTIONS_TYPE.RESET_TEACHER_PAGINATION,
+    });
     dispatch(
       getTeachersPaginationAction(
-        1,
+        0,
         teachersSearchValues,
         teacherStatus
           ? teacherStatus !== "all"
@@ -37,7 +40,7 @@ const TeachersPage = () => {
         courseId
       )
     );
-
+  }
   const getPageNumber = (pageNumber) => {
     setTeacherPageNum(pageNumber);
     if (teachersSearchValues) {
@@ -70,7 +73,7 @@ const TeachersPage = () => {
   };
   // ============
 
-  const getNextStudents = () => {
+  const getNextTeachers = () => {
     if (teachersSearchValues) {
       dispatch(
         getTeachersPaginationAction(
@@ -188,7 +191,7 @@ const TeachersPage = () => {
 
       <TeachersData
         teacherPageNum={teacherPageNum}
-        getPageNumber={getPageNumber}
+        getNextTeachers={getNextTeachers}
         userData={userData}
       />
     </div>

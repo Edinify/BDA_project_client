@@ -6,7 +6,7 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 
-const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
+const CoursesData = ({ userData, getNextCourse, coursePageNum, getPageNumber }) => {
   const { courses, totalPages } = useSelector(
     (state) => state.coursesPagination
   );

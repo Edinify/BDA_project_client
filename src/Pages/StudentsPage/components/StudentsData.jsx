@@ -32,7 +32,7 @@ const StudentsData = ({
   }, [openMoreModal]);
 
 
-  // console.log(students,"student")
+  console.log(totalLength , students.length)
 
   return (
     <>

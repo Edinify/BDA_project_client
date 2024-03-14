@@ -200,9 +200,9 @@ const StudentCard = ({
               <ul>
                 {data.groups.map((groupsData) => (
                   <li key={groupsData.group._id}>
-                    <span>Qrup adı: {groupsData.group.name}</span>
-                    Qrup İxtisası: {groupsData.group.course.name} <br />
-                    Ümumi ödəniş: {groupsData.totalAmount} <br />
+                    <span>Qrup adı: {groupsData?.group?.name}</span>
+                    Qrup İxtisası: {groupsData?.group?.course?.name} <br />
+                    Ümumi ödəniş: {groupsData?.totalAmount} <br />
                   </li>
                 ))}
               </ul>

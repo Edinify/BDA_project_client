@@ -27,6 +27,7 @@ const refreshApi = axios.create({
   withCredentials: true,
 });
 
+
 const toastSuccess = (message) => {
   toast.success(message, {
     position: "top-right",
@@ -52,7 +53,7 @@ const toastError = (message) => {
     theme: "colored",
   });
 };
-const pageLoading = (loadingValue) => ({
+const setLoadingCoursesAction = (loadingValue) => ({
   type: COURSES_ALL_ACTIONS_TYPE.COURSE_LOADING,
   payload: loadingValue,
 });
@@ -75,16 +76,12 @@ export const getAllCoursesAction = () => async (dispatch) => {
 };
 
 export const getCoursesPaginationAction =
-  (pageNumber, searchQuery) => async (dispatch) => {
-    dispatch(pageLoading(true));
+  (length, searchQuery) => async (dispatch) => {
+    dispatch(setLoadingCoursesAction(true));
     try {
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}`
+        `/pagination/?length=${length}&searchQuery=${searchQuery}`
       );
-      dispatch({
-        type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_LAST_PAGE,
-        payload: pageNumber,
-      });
       dispatch({
         type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION,
         payload: data,
@@ -102,12 +99,8 @@ export const getCoursesPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}`
+            `/pagination/?length=${length}&searchQuery=${searchQuery}`
           );
-          dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_LAST_PAGE,
-            payload: pageNumber,
-          });
           dispatch({
             type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION,
             payload: data,
@@ -123,7 +116,7 @@ export const getCoursesPaginationAction =
         dispatch(logoutAction());
       }
     } finally {
-      dispatch(pageLoading(false));
+      dispatch(setLoadingCoursesAction(false));
     }
   };
 export const createCoursesAction = (courseData) => async (dispatch) => {

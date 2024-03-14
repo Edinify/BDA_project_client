@@ -3,6 +3,7 @@ import {
   MENTOR_TYPES,
   TEACHER_ALL_ACTIONS_TYPE,
   TEACHERS_MODAL_ACTION_TYPE,
+  
 } from "../actions-type";
 import { toast } from "react-toastify";
 import { logoutAction } from "./auth";
@@ -41,6 +42,11 @@ REGISTERAPI.interceptors.request.use((req) => {
   }
 
   return req;
+});
+
+const setLoadingStudentsAction = (loadingValue) => ({
+  type:TEACHER_ALL_ACTIONS_TYPE.TEACHER_LOADING,
+  payload: loadingValue,
 });
 
 const toastSuccess = (message) => {
@@ -181,22 +187,17 @@ export const getTeachersByCourseId = (courseId) => async (dispatch) => {
 export const getTeachersPaginationAction =
   (length, searchQuery, status = "all", role,courseId) =>
   async (dispatch) => {
-    dispatch(pageLoading(true));
+    dispatch(setLoadingStudentsAction(true));
     try {
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
       );
-
-      // dispatch({
-      //   type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_LAST_PAGE,
-      //   payload: pageNumber,
-      // });
-
       dispatch({
         type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_PAGINATION,
         payload: data,
       });
     } catch (error) {
+      console.log(error)
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;

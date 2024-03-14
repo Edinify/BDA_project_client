@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { COURSES_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import { COURSES_MODAL_ACTION_TYPE,COURSES_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
 import { getCoursesPaginationAction } from "../../redux/actions/coursesActions";
 import CoursesData from "./components/CoursesData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
@@ -8,7 +8,7 @@ import { useCustomHook } from "../../globalComponents/GlobalFunctions/globalFunc
 
 const CoursePage = () => {
   const dispatch = useDispatch();
-  const { lastPage } = useSelector((state) => state.coursesPagination);
+  const { courses } = useSelector((state) => state.coursesPagination);
   const { coursesSearchValues } = useSelector((state) => state.searchValues);
   const [coursePageNum, setCoursePageNum] = useState(1);
   const { user } = useSelector((state) => state.user);
@@ -27,9 +27,29 @@ const CoursePage = () => {
       dispatch(getCoursesPaginationAction(pageNumber, ""));
     }
   };
+
+    // ============
+
+  const getNextCourse = () => {
+    if (coursesSearchValues) {
+      dispatch(
+        getCoursesPaginationAction(courses?.length || 0, coursesSearchValues)
+      );
+    } else {
+      dispatch(
+        getCoursesPaginationAction(courses?.length || 0, "")
+      );
+    }
+  };
+
+  // ========
+
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getCoursesPaginationAction(1, coursesSearchValues));
+    dispatch({
+      type: COURSES_ALL_ACTIONS_TYPE.RESET_COURSES_PAGINATION,
+    });
+    dispatch(getCoursesPaginationAction(0, coursesSearchValues));
     setCoursePageNum(1);
   };
 
@@ -39,13 +59,14 @@ const CoursePage = () => {
     } else {
       dispatch(getCoursesPaginationAction(1, ""));
     }
-  }, []);
 
-  useEffect(() => {
-    if (lastPage) {
-      setCoursePageNum(lastPage);
+    return () =>{
+      dispatch({
+        type: COURSES_ALL_ACTIONS_TYPE.RESET_COURSES_PAGINATION,
+      });
     }
-  }, [lastPage]);
+
+  }, []);
 
   return (
     <div className="details-page courses ">
@@ -59,7 +80,7 @@ const CoursePage = () => {
 
       <CoursesData
         userData={user}
-        pageNum={lastPage}
+        getNextCourse={getNextCourse}
         coursePageNum={coursePageNum}
         getPageNumber={getPageNumber}
       />

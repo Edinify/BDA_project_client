@@ -3,6 +3,7 @@ import { COURSES_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState={
     courses:[],
+    totalLength: 0,
     totalPages:1,
     lastPage: '',
     loading:false
@@ -16,22 +17,30 @@ export const coursesPaginationReducer=(state=initialState,action)=>{
           courses: action.payload,
           // loading:action.payload.loading
         };
-  
         case COURSES_ALL_ACTIONS_TYPE.COURSE_LOADING:
           return{
             ...state,
             loading:action.payload
           }
         case COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION:
-          return{
-              ...state,
-              ...action.payload
-          }
+          return {
+            ...state,
+            courses: [...state.courses, ...action.payload.courses],
+            totalLength: action.payload.totalLength,
+          };
         case COURSES_ALL_ACTIONS_TYPE.CREATE_COURSE:
           return {
-              ...state,
-            courses: [...state.courses, action.payload],
+            ...state,
+            teachers:  [action.payload, ...state.teachers],
+            totalLength: state.totalLength + 1,
           };
+        case COURSES_ALL_ACTIONS_TYPE.RESET_COURSES_PAGINATION:
+          return {
+            ...state,
+            teachers: [],
+            totalLength: 0,
+          };
+          
         case COURSES_ALL_ACTIONS_TYPE.UPDATE_COURSE:
           return {
               ...state,
