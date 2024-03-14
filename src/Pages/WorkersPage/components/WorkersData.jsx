@@ -5,6 +5,8 @@ import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const WorkersData = ({ userData, pageNum, getPageNumber }) => {
   const { workers, totalPages, loading } = useSelector(
@@ -19,6 +21,8 @@ const WorkersData = ({ userData, pageNum, getPageNumber }) => {
     "Email",
     "Mobil nömrə",
     "Pozisiya",
+    "Doğum günü",
+    "Profillər",
     "",
   ];
 
@@ -41,6 +45,18 @@ const WorkersData = ({ userData, pageNum, getPageNumber }) => {
               type="workers"
             />
           )}
+           <InfiniteScroll
+            style={{ overflowX: "none" }}
+            dataLength={workers.length}
+            // next={getNextStudents}
+            // hasMore={totalLength > workers.length || loading}
+            hasMore={workers.length || loading}
+            loader={<SmallLoading />}
+            endMessage={
+              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+            }
+            scrollThreshold={1}
+          >
           <table
             className={`details-table  teacher-table ${
               userData.power === "only-show" ? "only-show" : "update"
@@ -68,6 +84,7 @@ const WorkersData = ({ userData, pageNum, getPageNumber }) => {
               ))}
             </tbody>
           </table>
+          </InfiniteScroll>
 
           <div className="details-list-tablet">
             {workers?.map((teacher, i) => (

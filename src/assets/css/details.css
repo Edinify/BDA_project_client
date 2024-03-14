@@ -176,7 +176,7 @@
 .details-table.teacher-table.update tr th:nth-last-child(2),
 .details-table.teacher-table.update tr th:nth-last-child(3) {
   width: auto;
-  width: 200px;
+  /* width: 200px; */
 }
 /* only-show finished */
 .details-table.teacher-table tr th:nth-last-child(3),
