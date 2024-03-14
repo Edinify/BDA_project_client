@@ -5,6 +5,8 @@ import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
   const dispatch = useDispatch();
@@ -16,10 +18,15 @@ const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
   const { openConfirmModal } = useSelector((state) => state.teachersModal);
   const tableHead = [
     { id: 1, label: "Təlimçi adı" },
-    { id: 2, label: "Fənn" },
-    { id: 3, label: "Email" },
-    { id: 4, label: "Telefon nömrəsi" },
-    { id: 6, label: "" },
+    { id: 2, label: "Fin" },
+    { id: 3, label: "Seriya" },
+    { id: 4, label: "Doğum tarixi" },
+    { id: 5, label: "Email" },
+    { id: 6, label: "Telefon nömrəsi" },
+    { id: 7, label: "Fənn" },
+    { id: 8, label: "Qoşulma tarixi" },
+    { id: 9, label: "Status" },
+    { id: 10, label: "" },
   ];
 
   useEffect(() => {
@@ -44,32 +51,44 @@ const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
             />
           )}
           {openConfirmModal && <ConfirmModal type="teacher" />}
-          <table
-            className={`details-table  teacher-table ${
-              userData.power === "only-show" ? "only-show" : "update"
-            } `}
+          <InfiniteScroll
+            dataLength={teachers.length}
+            //  next={getNextStudents}
+            // hasMore={ totalLength > teachers.length || loading}
+            hasMore={teachers.length || loading}
+            loader={<SmallLoading />}
+            endMessage={
+              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+            }
+            scrollThreshold={1}
           >
-            <thead>
-              <tr>
-                {tableHead.map((head, i) => (
-                  <th key={i}>{head.label}</th>
-                ))}
-              </tr>
-            </thead>
+            <table
+              className={`details-table  teacher-table ${
+                userData.power === "only-show" ? "only-show" : "update"
+              } `}
+            >
+              <thead>
+                <tr>
+                  {tableHead.map((head, i) => (
+                    <th key={i}>{head.label}</th>
+                  ))}
+                </tr>
+              </thead>
 
-            <tbody>
-              {teachers?.map((teacher, i) => (
-                <TeacherCard
-                  key={i}
-                  data={teacher}
-                  mode="desktop"
-                  teacher={userData}
-                  cellNumber={i + 1 + (teacherPageNum - 1) * 10}
-                  setOpenMoreModal={setOpenMoreModal}
-                />
-              ))}
-            </tbody>
-          </table>
+              <tbody>
+                {teachers?.map((teacher, i) => (
+                  <TeacherCard
+                    key={i}
+                    data={teacher}
+                    mode="desktop"
+                    teacher={userData}
+                    cellNumber={i + 1 + (teacherPageNum - 1) * 10}
+                    setOpenMoreModal={setOpenMoreModal}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </InfiniteScroll>
 
           <div className="details-list-tablet with-more">
             {teachers?.map((teacher, i) => (
@@ -84,7 +103,7 @@ const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
             ))}
           </div>
 
-          {totalPages > 1 && (
+          {/* {totalPages > 1 && (
             <div className="pages-pagination">
               <Pagination
                 current={teacherPageNum}
@@ -93,7 +112,7 @@ const TeachersData = ({ teacherPageNum, getPageNumber, userData }) => {
                 onChange={getPageNumber}
               />
             </div>
-          )}
+          )} */}
         </>
       )}
     </>

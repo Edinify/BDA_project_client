@@ -15,7 +15,10 @@ const CoursesData = ({ userData, coursePageNum, getPageNumber }) => {
   const { openConfirmModal } = useSelector((state) => state.coursesModal);
   const tableHead = [
     { id: 1, label: "Fənn adı" },
-    { id: 2, label: "" },
+    { id: 2, label: "Tam" },
+    { id: 3, label: "Tədris müddəti" },
+    { id: 4, label: "10 hissəli" },
+    { id: 5, label: "" },
   ];
   useEffect(() => {
     if (openMoreModal) {

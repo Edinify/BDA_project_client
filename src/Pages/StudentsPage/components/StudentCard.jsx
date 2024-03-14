@@ -117,7 +117,7 @@ const StudentCard = ({
             <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text">
                 {data?.birthday
-                  ? moment(data.birthday).locale("az").format("DD MMMM")
+                  ? moment(data.birthday).locale("az").format("DD MMMM YYYY ")
                   : "" || "boş"}
               </div>
               <div className="right-fade"></div>

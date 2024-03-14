@@ -110,7 +110,7 @@
 
 .details-table.courses-table tr th:first-child,
 .details-table.courses-table tr td:first-child {
-  width: 80%;
+  /* width: 80%; */
 }
 
 .details-table.courses-table.only-show tr th:last-child,
@@ -120,7 +120,7 @@
 
 .details-table.courses-table.update tr th:first-child,
 .details-table.courses-table.update tr td:first-child {
-  width: 100%;
+  /* width: 100%; */
 }
 
 .details-table.syllabus-table tr th:nth-child(2),
@@ -198,6 +198,11 @@
   z-index: 1;
   /* top: 145px; */
 }
+/* .details-table.teacher-table thead{
+  position: sticky;
+  background-color: white;
+  z-index: 1;
+} */
 
 .details-table tr td.more,
 .details-table tr td.more {
@@ -310,7 +315,9 @@
 /* career page */
 
 .details-table.career-table,
-.details-table.student-table {
+.details-table.student-table,
+.details-table.teacher-table
+ {
   width: auto;
   overflow-x: scroll;
 }
@@ -323,7 +330,10 @@
 .details-table.career-table tr th:last-child,
 .details-table.career-table tr td:last-child,
 .details-table.student-table tr th:last-child,
-.details-table.student-table tr td:last-child {
+.details-table.student-table tr td:last-child ,
+.details-table.teacher-table tr th:last-child,
+.details-table.teacher-table tr td:last-child 
+{
   position: sticky;
   z-index: 1;
   right: 0;

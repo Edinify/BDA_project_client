@@ -10,7 +10,7 @@ const Teacher = ({ formik, modalData, updateModalState }) => {
   );
 
   const inputValue =
-    teachers.find((teacher) => teacher._id == modalData.teacher)?.fullName ||
+    teachers?.find((teacher) => teacher._id === modalData.teacher)?.fullName ||
     "";
 
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -54,7 +54,7 @@ const Teacher = ({ formik, modalData, updateModalState }) => {
               openDropdown ? "active" : ""
             }`}
           >
-            {teachers.map((item) => (
+            {teachers?.map((item) => (
               <li key={item._id} onClick={() => addData(item)}>
                 <h4>{item.fullName}</h4>
               </li>
