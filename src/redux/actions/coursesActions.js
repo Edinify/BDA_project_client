@@ -78,6 +78,7 @@ export const getAllCoursesAction = () => async (dispatch) => {
 export const getCoursesPaginationAction =
   (length, searchQuery) => async (dispatch) => {
     dispatch(setLoadingCoursesAction(true));
+    console.log(length, searchQuery)
     try {
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}`
@@ -86,6 +87,7 @@ export const getCoursesPaginationAction =
         type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION,
         payload: data,
       });
+      
     } catch (error) {
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {

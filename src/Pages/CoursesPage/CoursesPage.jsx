@@ -22,15 +22,16 @@ const CoursePage = () => {
   const getPageNumber = (pageNumber) => {
     setCoursePageNum(pageNumber);
     if (coursesSearchValues) {
-      dispatch(getCoursesPaginationAction(pageNumber, coursesSearchValues));
+      dispatch(getCoursesPaginationAction(0, coursesSearchValues));
     } else {
-      dispatch(getCoursesPaginationAction(pageNumber, ""));
+      dispatch(getCoursesPaginationAction(0, ""));
     }
   };
 
     // ============
 
   const getNextCourse = () => {
+    console.log(courses?.length)
     if (coursesSearchValues) {
       dispatch(
         getCoursesPaginationAction(courses?.length || 0, coursesSearchValues)
@@ -55,9 +56,9 @@ const CoursePage = () => {
 
   useEffect(() => {
     if (coursesSearchValues) {
-      dispatch(getCoursesPaginationAction(1, coursesSearchValues));
+      dispatch(getCoursesPaginationAction(0, coursesSearchValues));
     } else {
-      dispatch(getCoursesPaginationAction(1, ""));
+      dispatch(getCoursesPaginationAction(0, ""));
     }
 
     return () =>{
@@ -82,17 +83,7 @@ const CoursePage = () => {
         userData={user}
         getNextCourse={getNextCourse}
         coursePageNum={coursePageNum}
-        getPageNumber={getPageNumber}
       />
-
-      {/* <GlobalHead 
-      searchData={searchData} 
-      openModal={openModal} 
-      DATA_SEARCH_VALUE={'COURSES_SEARCH_VALUE'} 
-      dataSearchValues={coursesSearchValues}
-      statusType="courses"
-      />
-      <CoursesData coursePageNum={coursePageNum} getPageNumber={getPageNumber} /> */}
     </div>
   );
 };

@@ -8,8 +8,8 @@ import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const CoursesData = ({ userData, getNextCourse, coursePageNum, getPageNumber }) => {
-  const { courses, totalPages } = useSelector(
+const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
+  const { courses, totalLength } = useSelector(
     (state) => state.coursesPagination
   );
   const { loading } = useSelector((state) => state.coursesPagination);
@@ -29,12 +29,9 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum, getPageNumber }) 
       document.body.style.overflowY = "overlay";
     }
   }, [openMoreModal]);
-
+  console.log(totalLength , courses.length )
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
         <>
           {openMoreModal && (
             <MoreModal
@@ -46,11 +43,10 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum, getPageNumber }) 
 
           {openConfirmModal && <ConfirmModal type="courses" />}
           <InfiniteScroll
-            style={{ overflowX: "none" }}
+            // style={{ overflowX: "none" }}
             dataLength={courses.length}
-            // next={getNextStudents}
-            // hasMore={totalLength > courses.length || loading}
-            hasMore={courses.length || loading}
+            next={getNextCourse}
+            hasMore={totalLength > courses.length || loading}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -98,18 +94,7 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum, getPageNumber }) 
               />
             ))}
           </div>
-          {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={coursePageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )}
         </>
-      )}
     </>
   );
 };
