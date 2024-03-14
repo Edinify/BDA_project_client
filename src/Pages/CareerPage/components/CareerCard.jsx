@@ -29,8 +29,8 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
 
   const { careerSearchValues } = useSelector((state) => state.searchValues);
   const listData = [
-    { key: "Qrup", value: data.group.name },
-    { key: "İxtisas", value: data.group.course.name },
+    { key: "Qrup", value: data?.group?.name },
+    { key: "İxtisas", value: data?.group?.course?.name },
     // { key: "Tələbənin adı", value: data.fullName },
     { key: "Portfolio linki", value: data?.portfolioLink || "" },
     { key: "CV linki", value: data?.cvLink || "" },

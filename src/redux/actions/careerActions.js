@@ -77,11 +77,13 @@ const modalLoading = (loadingValue) => ({
 });
 
 export const getCareerPaginationAction =
-  (pageNumber, searchQuery) => async (dispatch) => {
+  (pageNumber, searchQuery, courseId = "", groupId = "") =>
+  async (dispatch) => {
     dispatch(pageLoading(true));
+    // console.log(groupId,"course")
     try {
       const { data } = await API.get(
-        `/?page=${pageNumber}&searchQuery=${searchQuery}`
+        `/?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${courseId}&groupId=${groupId}`
       );
       // console.log(data);
       dispatch({
@@ -106,7 +108,7 @@ export const getCareerPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/?page=${pageNumber}&searchQuery=${searchQuery}`
+            `/?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${courseId}&groupId=${groupId}`
           );
 
           dispatch({

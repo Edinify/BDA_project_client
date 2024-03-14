@@ -5,6 +5,25 @@ import { useCustomHook } from "../../../../globalComponents/GlobalFunctions/glob
 const SidebarStudent = ({ closeSidebar,profiles }) => {
   const location = useLocation();
   const { generalProfileList } = useCustomHook();
+
+  const consultationNav = [
+    "/consultation/appointed",
+    "/consultation/completed",
+  ];
+  const groupsNav = ["/groups/current", "/groups/waiting", "/groups/ended"];
+
+
+
+
+  const isActive = (profile) => {
+    if (profile === "consultation") {
+      return consultationNav.includes(location.pathname) ? "active" : "";
+    } else if (profile === "groups") {
+      return groupsNav.includes(location.pathname) ? "active" : "";
+    } else {
+      return "";
+    }
+  };
   
   return (
     <ul className="sidebar-nav-list">
@@ -14,7 +33,10 @@ const SidebarStudent = ({ closeSidebar,profiles }) => {
           // // console.log(data)
           return(
             <li key={_id}>
-              <NavLink to={ 
+              <NavLink 
+              className={isActive(profile)}
+              // className={profile==="consultation" ? (consultationNav.includes(location.pathname) )? "active" : "" : profile==="groups" ? groupsNav.includes(location.pathname) ? "active" : "" :""} 
+               to={ 
                 profile === "consultation" ? `/${profile}/appointed`:
                 profile === "groups" ? `/${profile}/current`: profile
                 } onClick={closeSidebar}>
@@ -22,7 +44,7 @@ const SidebarStudent = ({ closeSidebar,profiles }) => {
                   generalProfileList.map((data) =>{
                     
                     const {name,key,icon,id} = data
-                    if(key == profile){
+                    if(key === profile){
                       return(
                         <span key={id}>
                           {icon}

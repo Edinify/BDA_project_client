@@ -14,9 +14,6 @@ const UpdateDeleteModal = ({
   openConfirmModal,
   profil,
 }) => {
-  //
-
-  // // console.log(state,"admin")
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { funcComp } = useSelector((state) => state.funcComponent);
@@ -59,7 +56,6 @@ const UpdateDeleteModal = ({
     };
   }, []);
 
-
   useEffect(() => {
     if (user?.role === "super-admin") {
       setUpdateBtn(true);
@@ -98,7 +94,10 @@ const UpdateDeleteModal = ({
       if (power !== "only-show") {
         setUpdateBtn(true);
       }
-    } else if (user?.role === "teacher") {
+    } else if (
+      user?.role === "teacher" ||
+      (user?.role === "mentor" && data?.topic?.name === "Praktika")
+    ) {
       setUpdateBtn(true);
     }
   });
@@ -173,11 +172,11 @@ const UpdateDeleteModal = ({
               Ödənişlər
             </h4>
           )}
-          
 
           {profil !== "syllabus" &&
             profil !== "lessonTable" &&
-            profil !== "sales" &&  profil!== "careers" && (
+            profil !== "sales" &&
+            profil !== "careers" && (
               <h4 className="confirm" onClick={() => openMoreModal()}>
                 Ətraflı
               </h4>

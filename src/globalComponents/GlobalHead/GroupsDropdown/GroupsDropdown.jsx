@@ -5,6 +5,7 @@ import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg"
 import { DROPDOWN_GROUP_ACTIONS_TYPE } from "../../../redux/actions-type";
 import {
   getGroupsAction,
+  getGroupsWithMentorAction,
   getGroupsWithTeacherAction,
 } from "../../../redux/actions/groupsActions";
 import { getLessonTablePaginationAction } from "../../../redux/actions/lessonTableActions";
@@ -31,6 +32,8 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
   useEffect(() => {
     if (user?.role === "teacher") {
       dispatch(getGroupsWithTeacherAction(user._id));
+    } else if (user?.role === "mentor") {
+      dispatch(getGroupsWithMentorAction(user._id));
     } else {
       dispatch(getGroupsAction());
     }
