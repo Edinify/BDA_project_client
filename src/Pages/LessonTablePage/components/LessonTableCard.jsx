@@ -37,7 +37,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
       value: lessonDay,
     },
     { key: "Dərs saatı", value: data.time },
-    { key: "İxtisas", value: data.group.course.name },
+    { key: "İxtisas", value: data.group?.course?.name },
     {
       key: "Mövzu",
       value: `${data?.topic?.orderNumber}. ${data?.topic?.name}`,

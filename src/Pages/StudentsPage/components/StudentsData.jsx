@@ -21,7 +21,19 @@ const StudentsData = ({
   const { loading } = useSelector((state) => state.studentsPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.studentsModal);
-  const tableHead = ["Tələbə adı","Fin","Seriya","Doğum günü","Mobil nömrə","Bizi haradan eşidiblər?","Haradan gəliblər",  "İxtisas",  "Qrup", "Q/B", ""];
+  const tableHead = [
+    "Tələbə adı",
+    "Fin",
+    "Seriya",
+    "Doğum günü",
+    "Mobil nömrə",
+    "Bizi haradan eşidiblər?",
+    "Haradan gəliblər",
+    "İxtisas",
+    "Qrup",
+    "Q/B",
+    "",
+  ];
 
   useEffect(() => {
     if (openMoreModal) {
@@ -31,8 +43,7 @@ const StudentsData = ({
     }
   }, [openMoreModal]);
 
-
-  console.log(totalLength , students.length)
+  // console.log(students,"student")
 
   return (
     <>
@@ -46,15 +57,12 @@ const StudentsData = ({
 
       {openConfirmModal && <ConfirmModal type="student" />}
       <InfiniteScroll
-      
+        style={{ overflowX: "none" }}
         dataLength={students.length}
         next={getNextStudents}
         hasMore={totalLength > students.length || loading}
         loader={<SmallLoading />}
-        endMessage={
-          <p style={{ textAlign: "center", fontSize: "20px" }}>
-          </p>
-        }
+        endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
         scrollThreshold={1}
       >
         <table
