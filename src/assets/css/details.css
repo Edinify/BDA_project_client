@@ -316,7 +316,8 @@
 
 .details-table.career-table,
 .details-table.student-table,
-.details-table.teacher-table
+.details-table.teacher-table,
+.details-table.consultation-page
 /* .details-table.courses-table */
  {
   width: auto;
@@ -333,7 +334,9 @@
 .details-table.student-table tr th:last-child,
 .details-table.student-table tr td:last-child ,
 .details-table.teacher-table tr th:last-child,
-.details-table.teacher-table tr td:last-child 
+.details-table.teacher-table tr td:last-child ,
+.details-table.consultation-page tr th:last-child,
+.details-table.consultation-page tr td:last-child
 {
   position: sticky;
   z-index: 1;
