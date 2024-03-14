@@ -25,6 +25,8 @@ const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
     "",
   ];
 
+  console.log(consultationData,"consultation data")
+
   useEffect(() => {
     if (openMoreModal) {
       document.body.style.overflowY = "hidden";
