@@ -179,23 +179,18 @@ export const getTeachersByCourseId = (courseId) => async (dispatch) => {
 };
 
 export const getTeachersPaginationAction =
-  (pageNumber, searchQuery, status = "all", role,courseId) =>
+  (length, searchQuery, status = "all", role,courseId) =>
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
-      // console.log(pageNumber, "pageNumber");
-      // console.log(searchQuery, "searchQuery");
-      // console.log(status, "status");
-      // console.log(role, "role");
-
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
+        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
       );
 
-      dispatch({
-        type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_LAST_PAGE,
-        payload: pageNumber,
-      });
+      // dispatch({
+      //   type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_LAST_PAGE,
+      //   payload: pageNumber,
+      // });
 
       dispatch({
         type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_PAGINATION,
@@ -214,14 +209,14 @@ export const getTeachersPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}`
+            `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
           );
-
-          dispatch({
-            type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_LAST_PAGE,
-            payload: pageNumber,
-          });
-
+    
+          // dispatch({
+          //   type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_LAST_PAGE,
+          //   payload: pageNumber,
+          // });
+    
           dispatch({
             type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_PAGINATION,
             payload: data,
@@ -246,25 +241,10 @@ export const createTeacherAction =
     try {
       const { data } = await API.post("/", teacherData);
 
-      if (pathName === "/teachers" && data.teacher.role === "teacher") {
-        dispatch(
-          getTeachersPaginationAction(
-            data.lastPage,
-            "",
-            "all",
-            data.teacher.role
-          )
-        );
-      } else if (pathName !== "/teachers" && data.teacher.role === "mentor") {
-        dispatch(
-          getTeachersPaginationAction(
-            data.lastPage,
-            "",
-            "all",
-            data.teacher.role
-          )
-        );
-      }
+      dispatch({
+        type: TEACHER_ALL_ACTIONS_TYPE.CREATE_TEACHER,
+        payload: data,
+      });
 
       dispatch({
         type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,

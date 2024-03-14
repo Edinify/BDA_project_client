@@ -2,8 +2,9 @@ import { TEACHER_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState = {
   teachers: [],
-  totalPages: 1,
-  lastPage: "",
+  totalLength: 0,
+  // totalPages: 1,
+  // lastPage: "",
   teacherLessonStatistics: {},
   teacherConfirmedLessons: '',
   teacherCancelledLessons: '',
@@ -34,13 +35,20 @@ export const teacherPaginationReducer = (state = initialState, action) => {
     case TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_PAGINATION:
       return {
         ...state,
-        ...action.payload,
+        teachers: [...state.teachers, ...action.payload.teachers],
+        totalLength: action.payload.totalLength,
       };
-
+    case TEACHER_ALL_ACTIONS_TYPE.RESET_TEACHER_PAGINATION:
+      return {
+        ...state,
+        teachers: [],
+        totalLength: 0,
+      };
     case TEACHER_ALL_ACTIONS_TYPE.CREATE_TEACHER:
       return {
         ...state,
-        teachers: [...state.teachers, action.payload],
+        teachers:  [action.payload, ...state.teachers],
+        totalLength: state.totalLength + 1,
       };
     case TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER:
       return {

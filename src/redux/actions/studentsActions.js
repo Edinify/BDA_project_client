@@ -258,7 +258,7 @@ export const getStudentsPaginationAction =
         `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}`
       );
 
-      dispatch({
+      dispatch({  
         type: STUDENTS_ALL_ACTIONS_TYPE.GET_STUDENT_PAGINATION,
         payload: data,
       });
