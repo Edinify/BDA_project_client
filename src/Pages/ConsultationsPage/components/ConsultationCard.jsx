@@ -10,10 +10,16 @@ import { useLocation } from "react-router-dom";
 const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { constStatusList } = useCustomHook();
   const { students, lastPage } = useSelector(
     (state) => state.consultationPagination
   );
+  const {
+    cancelReasonList,
+    knowledgeList,
+    constStatusList,
+    whereComingList,
+    personaList,
+  } = useCustomHook();
   const { consultationSearchValues } = useSelector(
     (state) => state.searchValues
   );
@@ -41,6 +47,17 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
         constStatusList.find((item) => item.key === data.status)?.name || "",
     },
   ];
+
+  const whereComingName =
+    whereComingList.find((item) => item?.key === data?.whereComing)?.name || "";
+
+  const cancelReasonName =
+    cancelReasonList.find((item) => item?.key === data?.cancelReason)?.name ||
+    "";
+  const knowledgeListName =
+    knowledgeList.find((item) => item?.key === data?.knowledge)?.name || "";
+  const personaName =
+    personaList.find((item) => item?.key === data?.persona)?.name || "";
 
   const updateItem = (modalType) => {
     dispatch({
@@ -87,21 +104,108 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
     <>
       {mode === "desktop" ? (
         <tr>
-          <td>{data?.studentName}</td>
-          <td>{data?.teacher?.fullName}</td>
-          <td>{data?.studentPhone}</td>
-          <td>{data?.course?.name}</td>
           <td>
-            {data?.contactDate
-              ? moment(data?.contactDate).locale("az").format("DD MMMM YYYY")
-              : ""}
+            <div className="td-con" style={{ width: "150px" }}>
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">{data?.studentName}</div>
+              <div className="right-fade"></div>
+            </div>
           </td>
           <td>
-            {data?.constDate
-              ? moment(data?.constDate).locale("az").format("DD MMMM YYYY")
-              : ""}
+            <div className="td-con" style={{ width: "150px" }}>
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">{data?.teacher?.fullName}</div>
+              <div className="right-fade"></div>
+            </div>
           </td>
-          <td>{data?.constTime}</td>
+          <td>
+            <div className="td-con">
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">{data?.studentPhone}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "120px" }}>
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">{data?.course?.name}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "120px" }}>
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">{personaName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+
+          <td>
+            <div className="td-con" style={{ width: "120px" }}>
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">{knowledgeListName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "150px" }}>
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">
+                {data?.contactDate
+                  ? moment(data?.contactDate)
+                      .locale("az")
+                      .format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+
+          <td>
+            <div className="td-con" style={{ width: "150px" }}>
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">
+                {data?.constDate
+                  ? moment(data?.constDate).locale("az").format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">{data?.constTime}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "150px" }}>
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">
+                {cancelReasonName ? cancelReasonName : "boş"}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+
+          <td>
+            <div className="td-con" style={{ width: "150px" }}>
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">
+                {data?.addInfo ? data.addInfo : "Boş"}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "150px" }}>
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">{whereComingName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+
           <td
             style={
               data?.status === "sold"
@@ -111,8 +215,13 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
                 : { backgroundColor: "#d2c3fe" }
             }
           >
-            {constStatusList.find((item) => item.key === data.status)?.name ||
-              ""}
+            <div className="td-con" style={{ width: "150px" }}>
+              {/* <div className="cell-number">{cellNumber}.</div> */}
+              <div className="table-scroll-text">
+                {constStatusList.find((item) => item.key === data.status)
+                  ?.name || ""}
+              </div>
+            </div>
           </td>
           <td>
             <UpdateDeleteModal

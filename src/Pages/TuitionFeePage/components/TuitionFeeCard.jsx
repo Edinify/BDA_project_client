@@ -19,7 +19,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   const [totalRest, setTotalRest] = useState();
 
   const listData = [
-    { key: "Qrup", value: `${data.group.name} - ${data.group.course.name}` },
+    { key: "Qrup", value: `${data.group.name} - ${data?.group?.course?.name}` },
     { key: "Məbləğ", value: data.amount },
     { key: "Yekun Məbləğ", value: data.totalAmount },
     { key: "Ödəniş növü:", value: `${data.paymentType} hissəli` },
@@ -121,7 +121,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
           <td>
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {data.group.name} - {data.group.course.name}
+                {data?.group?.name} - {data.group?.course?.name}
               </div>
               <div className="right-fade"></div>
             </div>

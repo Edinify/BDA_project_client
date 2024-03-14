@@ -176,7 +176,7 @@
 .details-table.teacher-table.update tr th:nth-last-child(2),
 .details-table.teacher-table.update tr th:nth-last-child(3) {
   width: auto;
-  width: 200px;
+  /* width: 200px; */
 }
 /* only-show finished */
 .details-table.teacher-table tr th:nth-last-child(3),
@@ -316,7 +316,8 @@
 
 .details-table.career-table,
 .details-table.student-table,
-.details-table.teacher-table
+.details-table.teacher-table,
+.details-table.consultation-page
 /* .details-table.courses-table */
  {
   width: auto;
@@ -333,7 +334,9 @@
 .details-table.student-table tr th:last-child,
 .details-table.student-table tr td:last-child ,
 .details-table.teacher-table tr th:last-child,
-.details-table.teacher-table tr td:last-child 
+.details-table.teacher-table tr td:last-child ,
+.details-table.consultation-page tr th:last-child,
+.details-table.consultation-page tr td:last-child
 {
   position: sticky;
   z-index: 1;

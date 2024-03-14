@@ -4,6 +4,8 @@ import SyllabusCard from "./SyllabusCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
   const dispatch = useDispatch();
   const { syllabusData, totalPages, loading } = useSelector(
@@ -20,6 +22,18 @@ const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
       ) : (
         <>
           {openConfirmModal && <ConfirmModal type="syllabus" />}
+          <InfiniteScroll
+            style={{ overflowX: "none" }}
+            dataLength={syllabusData.length}
+            // next={getNextStudents}
+            // hasMore={totalLength > courses.length || loading}
+            hasMore={syllabusData.length || loading}
+            loader={<SmallLoading />}
+            endMessage={
+              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+            }
+            scrollThreshold={1}
+          >
 
           <table className="details-table syllabus-table">
             <thead>
@@ -42,6 +56,7 @@ const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
               ))}
             </tbody>
           </table>
+          </InfiniteScroll>
 
           <div className="details-list-tablet syllabus-tablet">
             {syllabusData?.map((teacher, i) => (
@@ -55,7 +70,7 @@ const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
             ))}
           </div>
 
-          {totalPages > 1 && (
+          {/* {totalPages > 1 && (
             <div className="pages-pagination">
               <Pagination
                 current={pageNum}
@@ -64,7 +79,7 @@ const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
                 onChange={getPageNumber}
               />
             </div>
-          )}
+          )} */}
         </>
       )}
     </>
