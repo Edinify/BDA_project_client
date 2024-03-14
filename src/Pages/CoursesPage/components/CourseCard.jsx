@@ -36,6 +36,7 @@ const CourseCard = ({
     setOpenMoreModal(true);
   };
 
+  console.log(data, "course data");
   const openConfirmModal = () => {
     dispatch({
       type: COURSES_MODAL_ACTION_TYPE.OPEN_COURSE_CONFIRM_MODAL,
@@ -46,7 +47,6 @@ const CourseCard = ({
       },
     });
   };
-  // // console.log(course)
   return (
     <>
       {mode === "desktop" ? (
@@ -58,6 +58,16 @@ const CourseCard = ({
               <div className="right-fade"></div>
             </div>
           </td>
+          {data?.payments.map((item) => (
+            <td key={item._id} >
+              <div className="td-con">
+                {/* <div className="cell-number">{cellNumber}.</div> */}
+                <div className="table-scroll-text">{item.payment ? item.payment : "boş"}</div>
+                <div className="right-fade"></div>
+              </div>
+            </td>
+          ))}
+
           {course?.power !== "only-show" ? (
             <td>
               <UpdateDeleteModal
