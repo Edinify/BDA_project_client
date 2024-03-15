@@ -63,7 +63,8 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
             }
-            scrollThreshold={1}
+            height={550}
+            scrollThreshold={0.7}
           >
             <table
               className={`details-table  teacher-table ${

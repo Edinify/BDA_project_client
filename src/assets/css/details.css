@@ -199,20 +199,18 @@
   top: -2px;
 }
 .details-table.teacher-table thead,
-.details-table.events-table thead
-{
+.details-table.events-table thead,
+.details-table.courses-table thead,
+.details-table.career-table thead,
+.details-table.consultation-page thead,
+.details-table.syllabus-table thead,
+.details-table.lesson-table thead
+ {
   position: sticky;
   background-color: white;
   z-index: 10;
   top: 0;
 }
-.details-table.courses-table thead{
-  position: sticky;
-  background-color: white;
-  z-index: 10;
-  top: 0;
-}
-
 
 .details-table tr td.more,
 .details-table tr td.more {
@@ -329,8 +327,7 @@
 .details-table.teacher-table,
 .details-table.consultation-page,
 .details-table.events-table
-/* .details-table.courses-table */
- {
+/* .details-table.courses-table */ {
   width: auto;
   overflow-x: scroll;
 }
@@ -342,14 +339,13 @@
 .details-table.career-table tr th:last-child,
 .details-table.career-table tr td:last-child,
 .details-table.student-table tr th:last-child,
-.details-table.student-table tr td:last-child ,
+.details-table.student-table tr td:last-child,
 .details-table.teacher-table tr th:last-child,
-.details-table.teacher-table tr td:last-child ,
+.details-table.teacher-table tr td:last-child,
 .details-table.consultation-page tr th:last-child,
 .details-table.consultation-page tr td:last-child,
 .details-table.events-table tr th:last-child,
-.details-table.events-table tr td:last-child
-{
+.details-table.events-table tr td:last-child {
   position: sticky;
   z-index: 1;
   right: 0;
