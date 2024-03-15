@@ -23,6 +23,7 @@ const GlobalHead = ({
   search = true,
   addBtn = true,
   profile,
+  count,
 }) => {
   const { user } = useSelector((state) => state.user);
   const [showAddBtn, setShowAddBtn] = useState(false);
@@ -118,7 +119,7 @@ const GlobalHead = ({
                     </button>
                   </div>
                   <div className="circle-icon">
-                    <p className="filter-count">10</p>
+                    <p className="filter-count">{count || 0}</p>
                     <HalfCircleICon />
                   </div>
                 </div>
@@ -135,7 +136,6 @@ const GlobalHead = ({
                     </button>
                   </div>
                 </div>
-
               )}
               {statusType === "groups" && (
                 <div className="groups-filter-header">

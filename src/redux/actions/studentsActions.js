@@ -252,13 +252,14 @@ export const getStudentsPaginationAction =
   (length, searchQuery, status = "all", courseId = "", groupId = "") =>
   async (dispatch) => {
     dispatch(setLoadingStudentsAction(true));
-    // console.log(courseId,groupId)
+
+    console.log(searchQuery, "ssssssssssssssssssssss");
     try {
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}`
       );
 
-      dispatch({  
+      dispatch({
         type: STUDENTS_ALL_ACTIONS_TYPE.GET_STUDENT_PAGINATION,
         payload: data,
       });
@@ -314,6 +315,7 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
       type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
       payload: false,
     });
+
     toastSuccess("Yeni tələbə yaradıldı");
   } catch (error) {
     // console.log(error);

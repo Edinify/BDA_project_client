@@ -9,10 +9,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
-  const { courses, totalLength } = useSelector(
+  const { courses, totalLength,loading } = useSelector(
     (state) => state.coursesPagination
   );
-  const { loading } = useSelector((state) => state.coursesPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.coursesModal);
   const tableHead = [
@@ -22,6 +21,8 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
     { id: 4, label: "10 hissəli" },
     { id: 5, label: "" },
   ];
+
+
   useEffect(() => {
     if (openMoreModal) {
       document.body.style.overflowY = "hidden";
@@ -51,7 +52,8 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
             }
-            scrollThreshold={1}
+            scrollThreshold={0.7}
+            height={600}
           >
             <table
               className={`details-table  courses-table ${
@@ -67,7 +69,7 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
               </thead>
 
               <tbody>
-                {courses.map((courseName, i) => (
+                {courses?.map((courseName, i) => (
                   <CourseCard
                     key={i}
                     data={courseName}

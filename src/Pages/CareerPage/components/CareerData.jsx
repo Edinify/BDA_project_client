@@ -4,6 +4,8 @@ import CareerCard from "./CareerCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const CareerData = ({ pageNum, getPageNumber }) => {
   const dispatch = useDispatch();
@@ -43,7 +45,6 @@ const CareerData = ({ pageNum, getPageNumber }) => {
     }
   }, [openMoreModal]);
 
-
   return (
     <>
       {loading ? (
@@ -54,27 +55,40 @@ const CareerData = ({ pageNum, getPageNumber }) => {
             <MoreModal setOpenMoreModal={setOpenMoreModal} type="career" />
           )}
           <div className="career-table-container">
-            <table className="details-table career-table">
-              <thead>
-                <tr>
-                  {tableHead.map((head, i) => (
-                    <th key={i}>{head}</th>
-                  ))}
-                </tr>
-              </thead>
+            <InfiniteScroll
+              dataLength={careerData.length}
+              // next={getNextTeachers}
+              // hasMore={totalLength > teachers.length || loading}
+              hasMore={careerData.length || loading}
+              loader={<SmallLoading />}
+              endMessage={
+                <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+              }
+              height={700}
+              scrollThreshold={0.7}
+            >
+              <table className="details-table career-table">
+                <thead>
+                  <tr>
+                    {tableHead.map((head, i) => (
+                      <th key={i}>{head}</th>
+                    ))}
+                  </tr>
+                </thead>
 
-              <tbody>
-                {careerData?.map((career, i) => (
-                  <CareerCard
-                    key={i}
-                    data={career}
-                    mode="desktop"
-                    cellNumber={i + 1 + (pageNum - 1) * 10}
-                    setOpenMoreModal={setOpenMoreModal}
-                  />
-                ))}
-              </tbody>
-            </table>
+                <tbody>
+                  {careerData?.map((career, i) => (
+                    <CareerCard
+                      key={i}
+                      data={career}
+                      mode="desktop"
+                      cellNumber={i + 1 + (pageNum - 1) * 10}
+                      setOpenMoreModal={setOpenMoreModal}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </InfiniteScroll>
           </div>
 
           <div className="details-list-tablet">
@@ -89,7 +103,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
             ))}
           </div>
 
-          {totalPages > 1 && (
+          {/* {totalPages > 1 && (
             <div className="pages-pagination">
               <Pagination
                 current={pageNum}
@@ -98,7 +112,7 @@ const CareerData = ({ pageNum, getPageNumber }) => {
                 onChange={getPageNumber}
               />
             </div>
-          )}
+          )} */}
         </>
       )}
     </>

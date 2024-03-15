@@ -4,8 +4,8 @@ const initialState = {
   tuitionFeeData: [],
   tuitionFeeDataByMore: [],
   paymentsResults: {},
-  totalPages: 1,
-  lastPage: "",
+  totalLength: 0,
+  currentLength: 0,
   loading: false,
   loadingAll: false,
 };
@@ -31,8 +31,9 @@ export const tuitionFeeDataPaginationReducer = (
     case TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_PAGINATION:
       return {
         ...state,
-        tuitionFeeData: action.payload.tutionFees,
-        totalPages: action.payload.totalPages,
+        tuitionFeeData: [...state.tuitionFeeData, ...action.payload.tutionFees],
+        totalLength: action.payload.totalLength,
+        currentLength: action.payload.currentLength,
         paymentsResults: action.payload.paymentsResults,
       };
     case TUITION_FEE_ALL_ACTIONS_TYPE.TUITION_FEE_LOADING:

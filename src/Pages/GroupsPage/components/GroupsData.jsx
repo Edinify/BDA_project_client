@@ -5,6 +5,8 @@ import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const GroupsData = ({ pageNum, getPageNumber, userData }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
@@ -17,12 +19,17 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
   const tableHead = [
     "Qrup adı",
     "İxtisas",
+    "Müəllimlər",
     "Təlimçilər",
+    "Tələbələr",
     "Dərs günləri",
     "Başlama tarixi",
     "Bitmə tarixi",
+    "Status",
     "",
   ];
+
+  console.log(groupData,"group data")
 
   useEffect(() => {
     if (openMoreModal) {
@@ -47,33 +54,45 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
           )}
 
           {openConfirmModal && <ConfirmModal type="groups" />}
-
-          <table
-            className={`details-table  teacher-table ${
-              userData.power === "only-show" ? "only-show" : "update"
-            } `}
+          <InfiniteScroll
+            dataLength={groupData.length}
+            // next={getNextTeachers}
+            // hasMore={totalLength > teachers.length || loading}
+            hasMore={groupData.length || loading}
+            loader={<SmallLoading />}
+            endMessage={
+              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+            }
+            height={550}
+            scrollThreshold={0.7}
           >
-            <thead>
-              <tr>
-                {tableHead.map((head, i) => (
-                  <th key={i}>{head}</th>
-                ))}
-              </tr>
-            </thead>
+            <table
+              className={`details-table  teacher-table ${
+                userData.power === "only-show" ? "only-show" : "update"
+              } `}
+            >
+              <thead>
+                <tr>
+                  {tableHead.map((head, i) => (
+                    <th key={i}>{head}</th>
+                  ))}
+                </tr>
+              </thead>
 
-            <tbody>
-              {groupData?.map((teacher, i) => (
-                <GroupCard
-                  key={i}
-                  data={teacher}
-                  group={userData}
-                  mode="desktop"
-                  cellNumber={i + 1 + (pageNum - 1) * 10}
-                  setOpenMoreModal={setOpenMoreModal}
-                />
-              ))}
-            </tbody>
-          </table>
+              <tbody>
+                {groupData?.map((teacher, i) => (
+                  <GroupCard
+                    key={i}
+                    data={teacher}
+                    group={userData}
+                    mode="desktop"
+                    cellNumber={i + 1 + (pageNum - 1) * 10}
+                    setOpenMoreModal={setOpenMoreModal}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </InfiniteScroll>
 
           <div className="details-list-tablet">
             {groupData?.map((teacher, i) => (
@@ -88,7 +107,7 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
             ))}
           </div>
 
-          {totalPages > 1 && (
+          {/* {totalPages > 1 && (
             <div className="pages-pagination">
               <Pagination
                 current={pageNum}
@@ -97,7 +116,7 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
                 onChange={getPageNumber}
               />
             </div>
-          )}
+          )} */}
         </>
       )}
     </>

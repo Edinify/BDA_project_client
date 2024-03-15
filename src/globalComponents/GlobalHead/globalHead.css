@@ -171,7 +171,7 @@
 }
 .details-header .circle-icon .filter-count {
   position: absolute;
-  right: 8px;
+  left: 45%;
   font-size: 14px;
   color: var(--secondary-900);
   font-weight: bold;

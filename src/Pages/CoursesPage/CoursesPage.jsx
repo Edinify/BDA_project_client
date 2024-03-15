@@ -80,13 +80,6 @@ const CoursePage = () => {
         profile="courses"
       />
 
-      <HeadTabs
-        firstRoute={"/teachers"}
-        secondRoute={"/teachers/mentors"}
-        firstPathname={"Müəllimlər"}
-        secondPathname={"Tyutorlar"}
-      />
-
       <CoursesData
         userData={user}
         getNextCourse={getNextCourse}

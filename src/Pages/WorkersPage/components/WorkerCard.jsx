@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WORKER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteWorkerAction } from "../../../redux/actions/workersActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
+import WorkerProfileDropdown from "./WorkerProfileDropdown";
 const WorkerCard = ({
   data,
   mode,
@@ -27,22 +28,6 @@ const WorkerCard = ({
     });
   };
 
-  const { generalProfileList, generalProfilePowerList } = useCustomHook();
-  let profiles =
-    Array.isArray(data.profiles) && data.profiles.length > 0
-      ? data.profiles
-          .map((item) => {
-            return `${
-              generalProfileList.find((profile) => profile.key === item.profile)
-                .name
-            } - ${
-              generalProfilePowerList.find(
-                (profile) => profile.key === item.power
-              )?.name
-            }`;
-          })
-          .join(", ")
-      : "boş";
   const deleteItem = () => {
     const pageNumber =
       lastPage > 1 ? (workers.length > 1 ? lastPage : lastPage - 1) : 1;
@@ -108,13 +93,7 @@ const WorkerCard = ({
           </td>
           <td>
             <div className="td-con" style={{ width: "400px" }}>
-              <div
-                style={{ whiteSpace: "nowrap" }}
-                className="table-scroll-text"
-              >
-                {profiles}
-              </div>
-              <div className="right-fade"></div>
+              <WorkerProfileDropdown data={data} />
             </div>
           </td>
 

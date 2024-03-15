@@ -5,6 +5,8 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import EventCard from "./EventCard";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const EventsData = ({ userData, eventPageNum, getPageNumber }) => {
   const { events, totalPages } = useSelector((state) => state.eventsPagination);
@@ -13,11 +15,16 @@ const EventsData = ({ userData, eventPageNum, getPageNumber }) => {
   const { openConfirmModal } = useSelector((state) => state.coursesModal);
   const tableHead = [
     { id: 1, label: "Tədbir adı" },
+    { id: 9, label: "Məkan" },
     { id: 2, label: "Tarix" },
     { id: 3, label: "Saat" },
     { id: 4, label: "Qonaq" },
     { id: 5, label: "Spiker" },
+    { id: 10, label: "Hədəf kütlə" },
+    { id: 12, label: "Məqsəd" },
+    { id: 13, label: "Büdcə" },
     { id: 6, label: "İştirakçı sayı" },
+    { id: 11, label: "Alınacaq" },
     { id: 7, label: "status" },
     { id: 8, label: "" },
   ];
@@ -45,33 +52,45 @@ const EventsData = ({ userData, eventPageNum, getPageNumber }) => {
           )}
 
           {openConfirmModal && <ConfirmModal type="courses" />}
-
-          <table
-            className={`details-table   ${
-              userData.power === "only-show" ? "only-show" : "update"
-            } `}
+          <InfiniteScroll
+            dataLength={events.length}
+            // next={getNextStudents}
+            // hasMore={totalLength > students.length || loading}
+            hasMore={events.length || loading}
+            loader={<SmallLoading />}
+            endMessage={
+              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+            }
+            height={550}
+            scrollThreshold={0.7}
           >
-            <thead>
-              <tr>
-                {tableHead.map((head, i) => (
-                  <th key={i}>{head.label}</th>
-                ))}
-              </tr>
-            </thead>
+            <table
+              className={`details-table events-table   ${
+                userData.power === "only-show" ? "only-show" : "update"
+              } `}
+            >
+              <thead>
+                <tr>
+                  {tableHead.map((head, i) => (
+                    <th key={i}>{head.label}</th>
+                  ))}
+                </tr>
+              </thead>
 
-            <tbody>
-              {events.map((event, i) => (
-                <EventCard
-                  key={i}
-                  data={event}
-                  userData={userData}
-                  mode="desktop"
-                  cellNumber={i + 1 + (eventPageNum - 1) * 10}
-                  setOpenMoreModal={setOpenMoreModal}
-                />
-              ))}
-            </tbody>
-          </table>
+              <tbody>
+                {events.map((event, i) => (
+                  <EventCard
+                    key={i}
+                    data={event}
+                    userData={userData}
+                    mode="desktop"
+                    cellNumber={i + 1 + (eventPageNum - 1) * 10}
+                    setOpenMoreModal={setOpenMoreModal}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </InfiniteScroll>
 
           <div className="details-list-tablet course-list-mobile">
             <h3 className="details-list-title">Tədbir adı</h3>
@@ -86,7 +105,7 @@ const EventsData = ({ userData, eventPageNum, getPageNumber }) => {
               />
             ))}
           </div>
-          {totalPages > 1 && (
+          {/* {totalPages > 1 && (
             <div className="pages-pagination">
               <Pagination
                 current={eventPageNum}
@@ -95,7 +114,7 @@ const EventsData = ({ userData, eventPageNum, getPageNumber }) => {
                 onChange={getPageNumber}
               />
             </div>
-          )}
+          )} */}
         </>
       )}
     </>

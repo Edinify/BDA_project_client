@@ -3,6 +3,7 @@ import { EVENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteEventAction } from "../../../redux/actions/eventsActions";
 import moment from "moment";
+import EventsProductDropdown from "./EventsProductDropdown";
 
 const EventCard = ({
   data,
@@ -60,20 +61,28 @@ const EventCard = ({
       },
     });
   };
+
+  console.log(data,"data")
   // console.log(userData, "blablablabla 999999999999999");
   return (
     <>
       {mode === "desktop" ? (
         <tr className="class-table">
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{width:"200px",whiteSpace:"nowrap"}} >
               <div className="cell-number">{cellNumber}.</div>
               <div className="table-scroll-text">{data?.eventName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{width:"200px",whiteSpace:"nowrap"}}>
+              <div className="table-scroll-text">{data?.place}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{width:"200px",whiteSpace:"nowrap"}}>
               <div className="table-scroll-text">{eventDate}</div>
               <div className="right-fade"></div>
             </div>
@@ -85,23 +94,51 @@ const EventCard = ({
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{width:"200px",whiteSpace:"nowrap"}}>
               <div className="table-scroll-text">{data?.visitor}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{width:"200px",whiteSpace:"nowrap"}}>
               <div className="table-scroll-text">{data?.speaker}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{width:"200px",whiteSpace:"nowrap"}}>
+              <div className="table-scroll-text">{data?.targetAudience}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{width:"200px",whiteSpace:"nowrap"}}>
+              <div className="table-scroll-text">{data?.purpose}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{width:"120px",whiteSpace:"nowrap"}}>
+              <div className="table-scroll-text">{data?.budget}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          
+          <td>
+            <div className="td-con" style={{width:"100px",whiteSpace:"nowrap"}}>
               <div className="table-scroll-text">{data?.participantsCount}</div>
               <div className="right-fade"></div>
             </div>
           </td>
+          <td>
+            <div className="td-con">
+              <EventsProductDropdown data={data} />
+              {/* <div className="right-fade"></div> */}
+            </div>
+          </td>
+        
+          
+
           <td
             style={
               data.status
