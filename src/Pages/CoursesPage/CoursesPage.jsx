@@ -79,6 +79,8 @@ const CoursePage = () => {
         profile="courses"
       />
 
+      <div style={{height:"60px",backgroundColor:"var(--neutrals-200)"}} ></div>
+
       <CoursesData
         userData={user}
         getNextCourse={getNextCourse}

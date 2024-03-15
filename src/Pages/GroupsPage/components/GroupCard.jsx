@@ -20,11 +20,31 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
           })
           .join(", ")
       : "boş";
+  let mentors =
+    Array.isArray(data?.mentors) && data?.mentors.length > 0
+      ? data?.mentors
+          .map((item) => {
+            return `${item.fullName}`;
+          })
+          .join(", ")
+      : "boş";
+
+  let students =
+    data && data.students && data.students.length > 0 ? (
+      data.students.map((item) => (
+        <span key={item._id}>
+          {item.fullName}
+          <br />
+        </span>
+      ))
+    ) : (
+      <span>boş</span>
+    );
 
   let lessonDates = data.lessonDate.map((item, index) => (
     <span className="lesson-date" key={index}>
-      gün: {item.day}, saat: {item.time}  {item.practical ? "(Praktika)" : ""}  <br />
-     
+      gün: {item.day}, saat: {item.time} {item.practical ? "(Praktika)" : ""}{" "}
+      <br />
     </span>
   ));
 
@@ -82,32 +102,50 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
       {mode === "desktop" ? (
         <tr>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="cell-number">{cellNumber}.</div>
               <div className="table-scroll-text">{data?.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text">{data?.course?.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text phone">{teachers}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
+              <div className="table-scroll-text phone">{mentors}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div
+              className="td-con"
+              style={{ width: "250px", whiteSpace: "nowrap" }}
+            >
+              <div className="table-scroll-text phone">{students}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div
+              className="td-con"
+              style={{ width: "250px", whiteSpace: "nowrap" }}
+            >
               <div className="table-scroll-text">{lessonDates}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text">
                 {moment(data.startDate).locale("az").format("DD MMMM YYYY")}
               </div>
@@ -115,9 +153,23 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text">
                 {moment(data.endDate).locale("az").format("DD MMMM YYYY")}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {data.status === "waiting"
+                  ? "Yığılan"
+                  : data.status === "current"
+                  ? "Mövcud"
+                  : data.status === "ended"
+                  ? "Bitmiş"
+                  : null}
               </div>
               <div className="right-fade"></div>
             </div>

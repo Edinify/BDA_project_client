@@ -168,7 +168,7 @@ const TeachersPage = () => {
       });
     };
 
-  }, [location.pathname]);
+  }, []);
 
   return (
     <div className="details-page teachers-page ">

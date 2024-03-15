@@ -6,6 +6,8 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import StudentLessonModal from "./StudentLessonModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const LessonTableData = ({ pageNum, getPageNumber, userData }) => {
   const { lessonTableData, totalPages, loading } = useSelector(
@@ -47,33 +49,44 @@ const LessonTableData = ({ pageNum, getPageNumber, userData }) => {
           )}
 
           {openConfirmModal && <ConfirmModal type="lesson-table" />}
-
-          <table
-            className={`details-table  lesson-table ${
-              userData?.power === "only-show" ? "only-show" : "update"
-            } `}
+          <InfiniteScroll
+            dataLength={lessonTableData.length}
+            // next={getNextTeachers}
+            // hasMore={totalLength > teachers.length || loading}
+            hasMore={lessonTableData.length || loading}
+            loader={<SmallLoading />}
+            endMessage={
+              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+            }
+            scrollThreshold={1}
           >
-            <thead>
-              <tr>
-                {tableHead.map((head, i) => (
-                  <th key={i}>{head}</th>
-                ))}
-              </tr>
-            </thead>
+            <table
+              className={`details-table  lesson-table ${
+                userData?.power === "only-show" ? "only-show" : "update"
+              } `}
+            >
+              <thead>
+                <tr>
+                  {tableHead.map((head, i) => (
+                    <th key={i}>{head}</th>
+                  ))}
+                </tr>
+              </thead>
 
-            <tbody>
-              {lessonTableData?.map((lesson, i) => (
-                <LessonTableCard
-                  key={i}
-                  data={lesson}
-                  lesson={userData}
-                  mode="desktop"
-                  cellNumber={i + 1 + (pageNum - 1) * 10}
-                  setStudents={setStudents}
-                />
-              ))}
-            </tbody>
-          </table>
+              <tbody>
+                {lessonTableData?.map((lesson, i) => (
+                  <LessonTableCard
+                    key={i}
+                    data={lesson}
+                    lesson={userData}
+                    mode="desktop"
+                    cellNumber={i + 1 + (pageNum - 1) * 10}
+                    setStudents={setStudents}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </InfiniteScroll>
 
           <div className="details-list-tablet">
             {lessonTableData?.map((teacher, i) => (
