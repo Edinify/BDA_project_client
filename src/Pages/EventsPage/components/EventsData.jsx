@@ -61,7 +61,7 @@ const EventsData = ({ userData, eventPageNum, getPageNumber }) => {
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
             }
-            height={550}
+            height={700}
             scrollThreshold={0.7}
           >
             <table

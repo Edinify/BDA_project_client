@@ -20,7 +20,7 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
             return `${item.fullName}`;
           })
           .join(", ")
-      : "boş";
+      : "";
   let mentors =
     Array.isArray(data?.mentors) && data?.mentors.length > 0
       ? data?.mentors
@@ -28,19 +28,9 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
             return `${item.fullName}`;
           })
           .join(", ")
-      : "boş";
+      : "";
 
-  let students =
-    data && data.students && data.students.length > 0 ? (
-      data.students.map((item) => (
-        <span key={item._id}>
-          {item.fullName}
-          <br />
-        </span>
-      ))
-    ) : (
-      <span>boş</span>
-    );
+  
 
   let lessonDates = data.lessonDate.map((item, index) => (
     <span className="lesson-date" key={index}>

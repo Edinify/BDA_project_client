@@ -183,7 +183,7 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
             <div className="td-con" style={{ width: "150px" }}>
               {/* <div className="cell-number">{cellNumber}.</div> */}
               <div className="table-scroll-text">
-                {cancelReasonName ? cancelReasonName : "boş"}
+                {cancelReasonName ? cancelReasonName : ""}
               </div>
               <div className="right-fade"></div>
             </div>
@@ -193,7 +193,7 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
             <div className="td-con" style={{ width: "150px" }}>
               {/* <div className="cell-number">{cellNumber}.</div> */}
               <div className="table-scroll-text">
-                {data?.addInfo ? data.addInfo : "Boş"}
+                {data?.addInfo ? data.addInfo : ""}
               </div>
               <div className="right-fade"></div>
             </div>
