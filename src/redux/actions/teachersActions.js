@@ -187,6 +187,7 @@ export const getTeachersByCourseId = (courseId) => async (dispatch) => {
 export const getTeachersPaginationAction =
   (length, searchQuery, status = "all", role,courseId) =>
   async (dispatch) => {
+    console.log(length)
     dispatch(setLoadingStudentsAction(true));
     try {
       const { data } = await API.get(
@@ -212,11 +213,6 @@ export const getTeachersPaginationAction =
           const { data } = await API.get(
             `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
           );
-    
-          // dispatch({
-          //   type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_LAST_PAGE,
-          //   payload: pageNumber,
-          // });
     
           dispatch({
             type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_PAGINATION,

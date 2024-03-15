@@ -29,6 +29,7 @@ export const coursesPaginationReducer=(state=initialState,action)=>{
             totalLength: action.payload.totalLength,
           };
         case COURSES_ALL_ACTIONS_TYPE.CREATE_COURSE:
+          // console.log(state)
           return {
             ...state,
             courses:  [action.payload, ...state.courses],
@@ -37,10 +38,9 @@ export const coursesPaginationReducer=(state=initialState,action)=>{
         case COURSES_ALL_ACTIONS_TYPE.RESET_COURSES_PAGINATION:
           return {
             ...state,
-            teachers: [],
+            courses: [],
             totalLength: 0,
           };
-          
         case COURSES_ALL_ACTIONS_TYPE.UPDATE_COURSE:
           return {
               ...state,

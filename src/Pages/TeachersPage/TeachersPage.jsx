@@ -134,11 +134,11 @@ const TeachersPage = () => {
       setTeacherPageNum(lastPage);
     }
   }, [lastPage]);
-  useEffect(() => {
-    if (teacherStatus) {
-      getPageNumber(1);
-    }
-  }, [teacherStatus]);
+  // useEffect(() => {
+  //   if (teacherStatus) {
+  //     getPageNumber(1);
+  //   }
+  // }, [teacherStatus]);
   useEffect(() => {
     if (location.pathname === "/teachers") {
       dispatch(

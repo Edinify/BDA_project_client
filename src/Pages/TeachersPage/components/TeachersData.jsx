@@ -38,7 +38,7 @@ const TeachersData = ({ teacherPageNum, getNextTeachers, userData }) => {
   }, [openMoreModal]);
 
 
-  console.log(totalLength , teachers.length )
+  // console.log(totalLength , teachers.length )
   return (
     <>
         <>
@@ -100,17 +100,6 @@ const TeachersData = ({ teacherPageNum, getNextTeachers, userData }) => {
               />
             ))}
           </div>
-
-          {/* {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={teacherPageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )} */}
         </>
     </>
   );

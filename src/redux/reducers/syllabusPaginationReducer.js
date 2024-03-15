@@ -2,6 +2,7 @@ import { SYLLABUS_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState = {
   syllabusData: [],
+  totalLength: 0,
   totalPages: 1,
   lastPage: "",
   loading: false,
@@ -29,14 +30,20 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
     case SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_PAGINATION:
       return {
         ...state,
-        syllabusData: action.payload.syllabus,
-        totalPages: action.payload.totalPages,
+        syllabusData: [...state.syllabusData, ...action.payload.syllabusData],
+        totalLength: action.payload.totalLength,
       };
-
     case SYLLABUS_ALL_ACTIONS_TYPE.CREATE_SYLLABUS:
       return {
         ...state,
-        syllabusData: [...state.syllabusData, action.payload],
+        syllabusData:  [action.payload, ...state.syllabusData],
+        totalLength: state.totalLength + 1,
+      };
+    case SYLLABUS_ALL_ACTIONS_TYPE.RESET_SYLLABUS_PAGINATION:
+      return {
+        ...state,
+        syllabusData: [],
+        totalLength: 0,
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.UPDATE_SYLLABUS:
       return {

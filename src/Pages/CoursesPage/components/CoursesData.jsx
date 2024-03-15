@@ -29,7 +29,7 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
       document.body.style.overflowY = "overlay";
     }
   }, [openMoreModal]);
-  console.log(totalLength , courses.length )
+  // console.log(courses)
   return (
     <>
         <>
@@ -43,7 +43,7 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
 
           {openConfirmModal && <ConfirmModal type="courses" />}
           <InfiniteScroll
-            // style={{ overflowX: "none" }}
+            style={{ overflowX: "none" }}
             dataLength={courses.length}
             next={getNextCourse}
             hasMore={totalLength > courses.length || loading}

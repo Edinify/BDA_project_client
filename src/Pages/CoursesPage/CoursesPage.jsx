@@ -6,6 +6,8 @@ import CoursesData from "./components/CoursesData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import { useCustomHook } from "../../globalComponents/GlobalFunctions/globalFunctions";
 
+import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
+
 const CoursePage = () => {
   const dispatch = useDispatch();
   const { courses } = useSelector((state) => state.coursesPagination);
@@ -31,7 +33,6 @@ const CoursePage = () => {
     // ============
 
   const getNextCourse = () => {
-    console.log(courses?.length)
     if (coursesSearchValues) {
       dispatch(
         getCoursesPaginationAction(courses?.length || 0, coursesSearchValues)
@@ -77,6 +78,13 @@ const CoursePage = () => {
         DATA_SEARCH_VALUE={"COURSES_SEARCH_VALUE"}
         dataSearchValues={coursesSearchValues}
         profile="courses"
+      />
+
+      <HeadTabs
+        firstRoute={"/teachers"}
+        secondRoute={"/teachers/mentors"}
+        firstPathname={"Müəllimlər"}
+        secondPathname={"Tyutorlar"}
       />
 
       <CoursesData

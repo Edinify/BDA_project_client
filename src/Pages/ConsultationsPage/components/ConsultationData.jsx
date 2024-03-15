@@ -8,8 +8,8 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
-  const { totalPages, loading, consultationData } = useSelector(
+const ConsultationData = ({ pageNum, getNextConsultation, userData }) => {
+  const { totalLength, loading, consultationData } = useSelector(
     (state) => state.consultationPagination
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
@@ -44,9 +44,6 @@ const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
         <>
           {openMoreModal && (
             <MoreModal
@@ -63,9 +60,8 @@ const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
           <InfiniteScroll
             style={{ overflowX: "none" }}
             dataLength={consultationData.length}
-            // next={getNextStudents}
-            // hasMore={totalLength > consultationData.length || loading}
-            hasMore={consultationData.length || loading}
+            next={getNextConsultation}
+            hasMore={totalLength > consultationData.length || loading}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -108,19 +104,7 @@ const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
               />
             ))}
           </div>
-
-          {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={pageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )}
         </>
-      )}
     </>
   );
 };

@@ -4,6 +4,7 @@ const initialState = {
   consultationData: [],
   consultationDataByMore: [],
   totalPages: 1,
+  totalLength:0,
   lastPage: "",
   loading: false,
   loadingAll: false,
@@ -24,8 +25,14 @@ export const consultationPaginationReducer = (state = initialState, action) => {
     case CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_PAGINATION:
       return {
         ...state,
-        consultationData: action.payload.consultations,
-        totalPages: action.payload.totalPages,
+        consultationData: [...state.consultationData, ...action.payload.consultationData],
+        totalLength: action.payload.totalLength,
+      };
+    case CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION:
+      return {
+        ...state,
+        consultationData: [],
+        totalLength: 0,
       };
     case CONSULTATION_ALL_ACTIONS_TYPE.CONSULTATION_LOADING:
       return {
@@ -40,7 +47,8 @@ export const consultationPaginationReducer = (state = initialState, action) => {
     case CONSULTATION_ALL_ACTIONS_TYPE.CREATE_CONSULTATION:
       return {
         ...state,
-        consultationData: [...state.consultationData, action.payload],
+        consultationData:  [action.payload, ...state.consultationData],
+        totalLength: state.totalLength + 1,
       };
     case CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_CONSULTATION:
       return {

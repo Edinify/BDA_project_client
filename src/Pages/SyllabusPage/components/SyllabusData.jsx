@@ -6,9 +6,9 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
-const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
+const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
   const dispatch = useDispatch();
-  const { syllabusData, totalPages, loading } = useSelector(
+  const { syllabusData, totalLength, loading } = useSelector(
     (state) => state.syllabusPagination
   );
   const { openConfirmModal } = useSelector((state) => state.syllabusModal);
@@ -17,17 +17,13 @@ const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
         <>
           {openConfirmModal && <ConfirmModal type="syllabus" />}
           <InfiniteScroll
             style={{ overflowX: "none" }}
             dataLength={syllabusData.length}
-            // next={getNextStudents}
-            // hasMore={totalLength > courses.length || loading}
-            hasMore={syllabusData.length || loading}
+            next={getNextSyllabus}
+            hasMore={totalLength > syllabusData.length || loading}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -81,7 +77,6 @@ const SyllabusData = ({ pageNum, getPageNumber, userData }) => {
             </div>
           )} */}
         </>
-      )}
     </>
   );
 };

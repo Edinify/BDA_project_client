@@ -61,6 +61,7 @@ const modalLoading = (loadingValue) => ({
   type: COURSES_MODAL_ACTION_TYPE.COURSE_MODAL_LOADING,
   payload: loadingValue,
 });
+
 const courseModalOpen = (value) => ({
   type: COURSES_MODAL_ACTION_TYPE.COURSE_OPEN_MODAL,
   payload: value,
@@ -78,10 +79,10 @@ export const getAllCoursesAction = () => async (dispatch) => {
 export const getCoursesPaginationAction =
   (length, searchQuery) => async (dispatch) => {
     dispatch(setLoadingCoursesAction(true));
-    console.log(length, searchQuery)
+    
     try {
       const { data } = await API.get(
-        `/pagination/?length=${length}&searchQuery=${searchQuery}`
+        `/pagination/?length=${length || 0}&searchQuery=${searchQuery}`
       );
       dispatch({
         type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION,
@@ -89,6 +90,7 @@ export const getCoursesPaginationAction =
       });
       
     } catch (error) {
+      console.log(error)
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -122,12 +124,15 @@ export const getCoursesPaginationAction =
     }
   };
 export const createCoursesAction = (courseData) => async (dispatch) => {
-  dispatch(modalLoading(true));
+  dispatch(setLoadingCoursesAction(true));
   // console.log(courseData);
   try {
     const { data } = await API.post("/", courseData);
-    // console.log(data);
-    dispatch(getCoursesPaginationAction(data.lastPage, ""));
+    console.log(data);
+    dispatch({
+      type: COURSES_ALL_ACTIONS_TYPE.CREATE_COURSE,
+      payload: data,
+    });
     dispatch(courseModalOpen(false));
     toastSuccess("Yeni fənn yaradıldı");
   } catch (error) {

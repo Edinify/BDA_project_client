@@ -72,6 +72,10 @@ const pageLoading = (loadingValue) => ({
   type: WORKER_ALL_ACTIONS_TYPE.WORKER_LOADING,
   payload: loadingValue,
 });
+const setLoadingCoursesAction = (loadingValue) => ({
+  type: WORKER_ALL_ACTIONS_TYPE.WORKER_LOADING,
+  payload: loadingValue,
+});
 const modalLoading = (loadingValue) => ({
   type: WORKER_MODAL_ACTION_TYPE.WORKER_MODAL_LOADING,
   payload: loadingValue,
@@ -145,17 +149,12 @@ export const getWorkersActiveAction = () => async (dispatch) => {
 };
 
 export const getWorkersPaginationAction =
-  (pageNumber, searchQuery) => async (dispatch) => {
-    dispatch(pageLoading(true));
+  (length, searchQuery) => async (dispatch) => {
+    dispatch(setLoadingCoursesAction(true));
     try {
       const { data } = await API.get(
-        `/?page=${pageNumber}&searchQuery=${searchQuery}`
+        `/?length=${length}&searchQuery=${searchQuery}`
       );
-      dispatch({
-        type: WORKER_ALL_ACTIONS_TYPE.GET_WORKER_LAST_PAGE,
-        payload: pageNumber,
-      });
-
       dispatch({
         type: WORKER_ALL_ACTIONS_TYPE.GET_WORKER_PAGINATION,
         payload: data,
@@ -173,14 +172,8 @@ export const getWorkersPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/?page=${pageNumber}&searchQuery=${searchQuery}`
+            `/?length=${length}&searchQuery=${searchQuery}`
           );
-
-          dispatch({
-            type: WORKER_ALL_ACTIONS_TYPE.GET_WORKER_LAST_PAGE,
-            payload: pageNumber,
-          });
-
           dispatch({
             type: WORKER_ALL_ACTIONS_TYPE.GET_WORKER_PAGINATION,
             payload: data,
