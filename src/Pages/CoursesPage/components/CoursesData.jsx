@@ -52,7 +52,8 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
             }
-            scrollThreshold={1}
+            scrollThreshold={0.7}
+            height={600}
           >
             <table
               className={`details-table  courses-table ${

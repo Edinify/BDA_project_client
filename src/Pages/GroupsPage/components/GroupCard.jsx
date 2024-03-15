@@ -5,6 +5,7 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { deleteGroupAction } from "../../../redux/actions/groupsActions";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
+import GroupStudentsDropdown from "./GroupStudentsDropdown";
 const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -127,12 +128,8 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div
-              className="td-con"
-              style={{ width: "250px", whiteSpace: "nowrap" }}
-            >
-              <div className="table-scroll-text phone">{students}</div>
-              <div className="right-fade"></div>
+            <div className="td-con" style={{width:"250px"}} >
+              <GroupStudentsDropdown data={data} />
             </div>
           </td>
           <td>

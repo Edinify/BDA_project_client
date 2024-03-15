@@ -1,5 +1,5 @@
 .details-page {
-  padding-bottom: 30px;
+  /* padding-bottom: 30px; */
 }
 /* details-table */
 .details-table {
@@ -195,14 +195,24 @@
 .details-table.student-table thead {
   position: sticky;
   background-color: white;
-  z-index: 1;
-  /* top: 145px; */
+  z-index: 10;
+  top: -2px;
 }
-/* .details-table.teacher-table thead{
+.details-table.teacher-table thead,
+.details-table.events-table thead
+{
   position: sticky;
   background-color: white;
-  z-index: 1;
-} */
+  z-index: 10;
+  top: 0;
+}
+.details-table.courses-table thead{
+  position: sticky;
+  background-color: white;
+  z-index: 10;
+  top: 0;
+}
+
 
 .details-table tr td.more,
 .details-table tr td.more {
@@ -317,13 +327,13 @@
 .details-table.career-table,
 .details-table.student-table,
 .details-table.teacher-table,
-.details-table.consultation-page
+.details-table.consultation-page,
+.details-table.events-table
 /* .details-table.courses-table */
  {
   width: auto;
   overflow-x: scroll;
 }
-
 
 .details-table .td-con.student-status {
   width: 150px;
@@ -336,7 +346,9 @@
 .details-table.teacher-table tr th:last-child,
 .details-table.teacher-table tr td:last-child ,
 .details-table.consultation-page tr th:last-child,
-.details-table.consultation-page tr td:last-child
+.details-table.consultation-page tr td:last-child,
+.details-table.events-table tr th:last-child,
+.details-table.events-table tr td:last-child
 {
   position: sticky;
   z-index: 1;

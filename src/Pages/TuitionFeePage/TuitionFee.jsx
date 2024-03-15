@@ -7,13 +7,14 @@ import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const TuitionFeePage = () => {
   const dispatch = useDispatch();
-  const { lastPage } = useSelector((state) => state.tuitionFeePagination);
+  const { lastPage, currentLength } = useSelector(
+    (state) => state.tuitionFeePagination
+  );
   const { tuitionFeeSearchValues } = useSelector((state) => state.searchValues);
   const { courseId } = useSelector((state) => state.studentStatus);
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const { paymentStatus } = useSelector((state) => state.paymentStatus);
 
-  console.log(paymentStatus, "payment status");
   const filterTuition = () =>
     dispatch(
       getTuitionFeePaginationAction(
@@ -27,11 +28,12 @@ const TuitionFeePage = () => {
 
   // console.log(selectedGroup)
 
-  const getPageNumber = (pageNumber) => {
+  const getNextTuitionFees = () => {
+    console.log('getNextTuitionFees')
     if (tuitionFeeSearchValues) {
       dispatch(
         getTuitionFeePaginationAction(
-          pageNumber,
+          currentLength,
           tuitionFeeSearchValues,
           "",
           "",
@@ -40,7 +42,7 @@ const TuitionFeePage = () => {
       );
     } else {
       dispatch(
-        getTuitionFeePaginationAction(pageNumber, "", "", "", paymentStatus)
+        getTuitionFeePaginationAction(currentLength, "", "", "", paymentStatus)
       );
     }
   };
@@ -67,7 +69,7 @@ const TuitionFeePage = () => {
     if (tuitionFeeSearchValues) {
       dispatch(
         getTuitionFeePaginationAction(
-          1,
+          0,
           tuitionFeeSearchValues,
           "",
           "",
@@ -75,7 +77,7 @@ const TuitionFeePage = () => {
         )
       );
     } else {
-      dispatch(getTuitionFeePaginationAction(1, "", "", "", paymentStatus));
+      dispatch(getTuitionFeePaginationAction(0, "", "", "", paymentStatus));
     }
   }, [dispatch]);
 
@@ -91,7 +93,10 @@ const TuitionFeePage = () => {
         profile={"tuitionFee"}
         statusType="tutionFee"
       />
-      <TuitionFeeData pageNum={lastPage} getPageNumber={getPageNumber} />
+      <TuitionFeeData
+        pageNum={lastPage}
+        getNextTuitionFees={getNextTuitionFees}
+      />
     </div>
   );
 };
