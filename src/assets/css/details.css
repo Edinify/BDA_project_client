@@ -1,5 +1,5 @@
 .details-page {
-  padding-bottom: 30px;
+  /* padding-bottom: 30px; */
 }
 /* details-table */
 .details-table {
@@ -195,8 +195,8 @@
 .details-table.student-table thead {
   position: sticky;
   background-color: white;
-  z-index: 1;
-  /* top: 145px; */
+  z-index: 10;
+  top: -2px;
 }
 
 .details-table tr td.more,
@@ -314,7 +314,6 @@
   width: auto;
   overflow-x: scroll;
 }
-
 
 .details-table .td-con.student-status {
   width: 150px;

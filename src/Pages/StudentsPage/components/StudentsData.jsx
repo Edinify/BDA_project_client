@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import StudentCard from "./StudentCard";
-import { Pagination } from "antd";
-import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
-import LoadingBtn from "../../../globalComponents/Loading/components/LoadingBtn/LoadingBtn";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const StudentsData = ({
   studentPageNum,
-  getPageNumber,
   userData,
   getNextStudents,
 }) => {
@@ -21,7 +17,19 @@ const StudentsData = ({
   const { loading } = useSelector((state) => state.studentsPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.studentsModal);
-  const tableHead = ["Tələbə adı","Fin","Seriya","Doğum günü","Mobil nömrə","Bizi haradan eşidiblər?","Haradan gəliblər",  "İxtisas",  "Qrup", "Q/B", ""];
+  const tableHead = [
+    "Tələbə adı",
+    "Fin",
+    "Seriya",
+    "Doğum günü",
+    "Mobil nömrə",
+    "Bizi haradan eşidiblər?",
+    "Haradan gəliblər",
+    "İxtisas",
+    "Qrup",
+    "Q/B",
+    "",
+  ];
 
   useEffect(() => {
     if (openMoreModal) {
@@ -30,7 +38,6 @@ const StudentsData = ({
       document.body.style.overflowY = "overlay";
     }
   }, [openMoreModal]);
-
 
   // console.log(students,"student")
 
@@ -45,17 +52,15 @@ const StudentsData = ({
       )}
 
       {openConfirmModal && <ConfirmModal type="student" />}
+
       <InfiniteScroll
-      
         dataLength={students.length}
         next={getNextStudents}
         hasMore={totalLength > students.length || loading}
         loader={<SmallLoading />}
-        endMessage={
-          <p style={{ textAlign: "center", fontSize: "20px" }}>
-          </p>
-        }
-        scrollThreshold={1}
+        endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
+        height={550}
+        scrollThreshold={0.7}
       >
         <table
           style={{ marginBottom: "50px" }}

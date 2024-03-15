@@ -19,15 +19,18 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   const [totalRest, setTotalRest] = useState();
 
   const listData = [
-    { key: "Qrup", value: `${data.group.name} - ${data.group.course.name}` },
-    { key: "Məbləğ", value: data.amount },
-    { key: "Yekun Məbləğ", value: data.totalAmount },
-    { key: "Ödəniş növü:", value: `${data.paymentType} hissəli` },
-    { key: "Endirim %", value: data.discount },
+    {
+      key: "Qrup",
+      value: `${data?.group?.name} - ${data?.group?.course?.name}`,
+    },
+    { key: "Məbləğ", value: data?.amount },
+    { key: "Yekun Məbləğ", value: data?.totalAmount },
+    { key: "Ödəniş növü:", value: `${data?.paymentType} hissəli` },
+    { key: "Endirim %", value: data?.discount },
     {
       key: "Endirim növü",
       value:
-        discountReasonList.find((item) => item.key === data?.discountReason)
+        discountReasonList?.find((item) => item.key === data?.discountReason)
           ?.name || "",
     },
     {
@@ -114,14 +117,14 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>
-              <div className="table-scroll-text no-wrap">{data.fullName}</div>
+              <div className="table-scroll-text no-wrap">{data?.fullName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {data.group.name} - {data.group.course.name}
+                {data.group.name} - {data?.group?.course?.name}
               </div>
               <div className="right-fade"></div>
             </div>
@@ -194,9 +197,10 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
       ) : (
         <div className="content-box">
           <div className="left">
-            <h3>{data.fullName}</h3>
+            <h3>{data?.fullName}</h3>
+            <h3>test</h3>
             <ul>
-              {listData.map((item, index) => (
+              {listData?.map((item, index) => (
                 <li key={index}>
                   <span className="type">{item.key}</span>
                   <p>{item.value}</p>
