@@ -21,7 +21,7 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
             return `${course.name}`;
           })
           .join(", ")
-      : "boş";
+      : "";
 
   const listData = [
     { key: "Fənn", value: courses },
@@ -91,7 +91,7 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
               <div className="table-scroll-text">
                 {data?.birthday
                   ? moment(data.birthday).locale("az").format("DD MMMM YYYY ")
-                  : "" || "boş"}
+                  : "" || ""}
               </div>
               <div className="right-fade"></div>
             </div>

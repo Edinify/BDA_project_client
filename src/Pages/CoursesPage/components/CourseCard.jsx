@@ -59,7 +59,7 @@ const CourseCard = ({
           {data?.payments.slice(0, 3).map((item, index) => (
             <td key={item._id}>
               <div className="td-con">
-                <div className="table-scroll-text">{item.payment || "boş"}</div>
+                <div className="table-scroll-text">{item.payment || ""}</div>
                 <div>{item.paymentType === "Tədris müddəti" && `${item.part} hissəli `}</div>
                 <div className="right-fade"></div>
               </div>
@@ -68,7 +68,7 @@ const CourseCard = ({
           {data?.payments.length < 3 && (
             <td>
               <div className="td-con">
-                <div className="table-scroll-text">boş</div>
+                <div className="table-scroll-text"></div>
                 <div className="right-fade"></div>
               </div>
             </td>
@@ -76,7 +76,7 @@ const CourseCard = ({
           {data?.payments.length < 2 && (
             <td>
               <div className="td-con">
-                <div className="table-scroll-text">boş</div>
+                <div className="table-scroll-text"></div>
                 <div className="right-fade"></div>
               </div>
             </td>
@@ -84,7 +84,7 @@ const CourseCard = ({
           {data?.payments.length < 1 && (
             <td>
               <div className="td-con">
-                <div className="table-scroll-text">boş</div>
+                <div className="table-scroll-text"></div>
                 <div className="right-fade"></div>
               </div>
             </td>

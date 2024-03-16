@@ -38,12 +38,12 @@ const StudentCard = ({
             return `${course.name}`;
           })
           .join(", ")
-      : "boş";
+      : "";
   const listData = [
     { key: "İxtisas", value: courses },
     {
       key: "Mobil nömrə",
-      value: data?.phone ? data?.phone : "boş",
+      value: data?.phone ? data?.phone : "",
     },
   ];
 
@@ -54,7 +54,7 @@ const StudentCard = ({
             return `${group.group.name}`;
           })
           .join(",")
-      : "boş";
+      : "";
 
   const updateItem = (modalType) => {
     dispatch({
@@ -118,27 +118,27 @@ const StudentCard = ({
               <div className="table-scroll-text">
                 {data?.birthday
                   ? moment(data.birthday).locale("az").format("DD MMMM YYYY ")
-                  : "" || "boş"}
+                  : "" || ""}
               </div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data?.phone || "boş"}</div>
+              <div className="table-scroll-text">{data?.phone || ""}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con" style={{ width: "200px" }}>
-              <div className="table-scroll-text">{whereSendName || "boş"}</div>
+              <div className="table-scroll-text">{whereSendName || ""}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text">
-                {whereComingName || "boş"}
+                {whereComingName || ""}
               </div>
               <div className="right-fade"></div>
             </div>

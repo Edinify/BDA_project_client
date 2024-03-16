@@ -102,7 +102,7 @@ const LessonTableData = ({ pageNum, getPageNumber, userData }) => {
             ))}
           </div>
 
-          {totalPages > 1 && (
+          {/* {totalPages > 1 && (
             <div className="pages-pagination">
               <Pagination
                 current={pageNum}
@@ -111,7 +111,7 @@ const LessonTableData = ({ pageNum, getPageNumber, userData }) => {
                 onChange={getPageNumber}
               />
             </div>
-          )}
+          )} */}
         </>
       )}
     </>

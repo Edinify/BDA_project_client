@@ -25,7 +25,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             return workStatus.name;
           })
           .join(",")
-      : "boş";
+      : "";
 
   const { careerSearchValues } = useSelector((state) => state.searchValues);
   const listData = [
