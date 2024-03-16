@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroupsPaginationAction } from "../../redux/actions/groupsActions";
-import { GROUP_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import { GROUP_MODAL_ACTION_TYPE,GROUP_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
 import GroupsData from "./components/GroupsData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 const GroupsPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { lastPage } = useSelector((state) => state.groupsPagination);
+  const { lastPage,groupData } = useSelector((state) => state.groupsPagination);
   const { groupsSearchValues } = useSelector((state) => state.searchValues);
   const {courseId } = useSelector((state) => state.studentStatus);
   const { selectedTeacher } = useSelector((state) => state.dropdownTeacher);
@@ -32,15 +32,20 @@ const GroupsPage = () => {
         selectedTeacher._id
       )
     )   
-  const getPageNumber = (pageNumber) => {
+  // ============
+
+  const getNextTeachers = () => {
     if (groupsSearchValues) {
       dispatch(
-        getGroupsPaginationAction(pageNumber, groupsSearchValues, status,'','')
+        getGroupsPaginationAction(groupData?.length || 0, groupsSearchValues, status,'','')
       );
     } else {
-      dispatch(getGroupsPaginationAction(pageNumber, "", status,'',''));
+      dispatch(getGroupsPaginationAction(groupData?.length || 0, "", status,'',''));
     }
   };
+
+  // ========
+
   const openModal = () => {
     dispatch({
       type: GROUP_MODAL_ACTION_TYPE.GET_GROUP_MODAL,
@@ -49,21 +54,27 @@ const GroupsPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getGroupsPaginationAction(1, groupsSearchValues, status,'',''));
+    dispatch(getGroupsPaginationAction(0, groupsSearchValues, status,'',''));
   };
 
   useEffect(() => {
     if (location.pathname === "/groups/current") {
-      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", "current",'',''));
+      dispatch(getGroupsPaginationAction(0, groupsSearchValues || "", "current",'',''));
       setStatus("current");
     } else if (location.pathname === "/groups/waiting") {
-      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", "waiting",'',''));
+      dispatch(getGroupsPaginationAction(0, groupsSearchValues || "", "waiting",'',''));
       setStatus("waiting");
     }
     else if (location.pathname==="/groups/ended"){
-      dispatch(getGroupsPaginationAction(1, groupsSearchValues || "", "ended",'',''));
+      dispatch(getGroupsPaginationAction(0, groupsSearchValues || "", "ended",'',''));
       setStatus("ended");
     }
+
+    return () => {
+      dispatch({
+        type: GROUP_ALL_ACTIONS_TYPE.RESET_GROUP_PAGINATION,
+      });
+    };
   }, [location.pathname]);
 
   return (
@@ -89,7 +100,7 @@ const GroupsPage = () => {
 
       <GroupsData
         pageNum={lastPage}
-        getPageNumber={getPageNumber}
+        getNextTeachers={getNextTeachers}
         userData={userData}
       />
     </div>

@@ -116,7 +116,7 @@ const TeachersPage = () => {
     e.preventDefault();
     dispatch(
       getTeachersPaginationAction(
-        1,
+        0,
         teachersSearchValues,
         teacherStatus
           ? teacherStatus !== "all"
@@ -134,11 +134,7 @@ const TeachersPage = () => {
       setTeacherPageNum(lastPage);
     }
   }, [lastPage]);
-  // useEffect(() => {
-  //   if (teacherStatus) {
-  //     getPageNumber(1);
-  //   }
-  // }, [teacherStatus]);
+  
   useEffect(() => {
     if (location.pathname === "/teachers") {
       dispatch(

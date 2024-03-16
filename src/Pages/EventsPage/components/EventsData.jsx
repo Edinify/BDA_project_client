@@ -8,8 +8,8 @@ import EventCard from "./EventCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const EventsData = ({ userData, eventPageNum, getPageNumber }) => {
-  const { events, totalPages } = useSelector((state) => state.eventsPagination);
+const EventsData = ({ userData, eventPageNum, getNextTeachers }) => {
+  const { events, totalLength } = useSelector((state) => state.eventsPagination);
   const { loading } = useSelector((state) => state.eventsPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.coursesModal);
@@ -39,9 +39,6 @@ const EventsData = ({ userData, eventPageNum, getPageNumber }) => {
   // console.log(userData);
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
         <>
           {openMoreModal && (
             <MoreModal
@@ -54,9 +51,8 @@ const EventsData = ({ userData, eventPageNum, getPageNumber }) => {
           {openConfirmModal && <ConfirmModal type="courses" />}
           <InfiniteScroll
             dataLength={events.length}
-            // next={getNextStudents}
-            // hasMore={totalLength > students.length || loading}
-            hasMore={events.length || loading}
+            next={getNextTeachers}
+            hasMore={totalLength > events.length || loading}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -116,7 +112,6 @@ const EventsData = ({ userData, eventPageNum, getPageNumber }) => {
             </div>
           )} */}
         </>
-      )}
     </>
   );
 };

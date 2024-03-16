@@ -2,6 +2,7 @@ import { EVENTS_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState = {
   events: [],
+  totalLength:0,
   totalPages: 1,
   lastPage: "",
   loading: false,
@@ -24,12 +25,20 @@ export const eventsPaginationReducer = (state = initialState, action) => {
     case EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_PAGINATION:
       return {
         ...state,
-        ...action.payload,
+        events: [...state.events, ...action.payload.events],
+        totalLength: action.payload.totalLength,
       };
     case EVENTS_ALL_ACTIONS_TYPE.CREATE_EVENT:
       return {
         ...state,
-        events: [...state.events, action.payload],
+        events:  [action.payload, ...state.events],
+        totalLength: state.totalLength + 1,
+      };
+    case EVENTS_ALL_ACTIONS_TYPE.RESET_EVENTS_PAGINATION:
+      return {
+        ...state,
+        events: [],
+        totalLength: 0,
       };
     case EVENTS_ALL_ACTIONS_TYPE.UPDATE_EVENT:
       return {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EVENTS_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import { EVENTS_MODAL_ACTION_TYPE,EVENTS_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import { useCustomHook } from "../../globalComponents/GlobalFunctions/globalFunctions";
 import EventsData from "./components/EventsData";
@@ -8,7 +8,7 @@ import { getEventsPaginationAction } from "../../redux/actions/eventsActions";
 
 const EventsPage = () => {
   const dispatch = useDispatch();
-  const { lastPage } = useSelector((state) => state.eventsPagination);
+  const { lastPage,events } = useSelector((state) => state.eventsPagination);
   const { eventsSearchValues } = useSelector((state) => state.searchValues);
   const [eventPageNum, setEventPageNum] = useState(1);
   const { user } = useSelector((state) => state.user);
@@ -27,18 +27,37 @@ const EventsPage = () => {
       dispatch(getEventsPaginationAction(pageNumber, ""));
     }
   };
+
+  // ============
+
+  const getNextTeachers = () => {
+    if (eventsSearchValues) {
+      dispatch(getEventsPaginationAction(events?.length || 0, eventsSearchValues));
+    } else {
+      dispatch(getEventsPaginationAction(events?.length || 0, ""));
+    }
+  };
+
+  // ========
+
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getEventsPaginationAction(1, eventsSearchValues));
+    dispatch(getEventsPaginationAction(0, eventsSearchValues));
     setEventPageNum(1);
   };
 
   useEffect(() => {
     if (eventsSearchValues) {
-      dispatch(getEventsPaginationAction(1, eventsSearchValues));
+      dispatch(getEventsPaginationAction(0, eventsSearchValues));
     } else {
-      dispatch(getEventsPaginationAction(1, ""));
+      dispatch(getEventsPaginationAction(0, ""));
     }
+
+    return () => {
+      dispatch({
+        type: EVENTS_ALL_ACTIONS_TYPE.RESET_EVENTS_PAGINATION,
+      });
+    };
   }, []);
 
   useEffect(() => {
@@ -61,7 +80,7 @@ const EventsPage = () => {
         userData={user}
         pageNum={lastPage}
         eventPageNum={eventPageNum}
-        getPageNumber={getPageNumber}
+        getNextTeachers={getNextTeachers}
       />
 
       {/* <GlobalHead 

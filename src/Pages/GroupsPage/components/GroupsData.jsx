@@ -8,10 +8,10 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const GroupsData = ({ pageNum, getPageNumber, userData }) => {
+const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const dispatch = useDispatch();
-  const { groupData, totalPages, loading } = useSelector(
+  const { groupData, totalLength, loading } = useSelector(
     (state) => state.groupsPagination
   );
   const { openConfirmModal } = useSelector((state) => state.groupModal);
@@ -41,9 +41,6 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
         <>
           {openMoreModal && (
             <MoreModal
@@ -56,9 +53,8 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
           {openConfirmModal && <ConfirmModal type="groups" />}
           <InfiniteScroll
             dataLength={groupData.length}
-            // next={getNextTeachers}
-            // hasMore={totalLength > teachers.length || loading}
-            hasMore={groupData.length || loading}
+            next={getNextTeachers}
+            hasMore={totalLength > groupData.length || loading}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -118,7 +114,6 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
             </div>
           )} */}
         </>
-      )}
     </>
   );
 };
