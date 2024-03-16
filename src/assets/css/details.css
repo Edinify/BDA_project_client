@@ -110,7 +110,7 @@
 
 .details-table.courses-table tr th:first-child,
 .details-table.courses-table tr td:first-child {
-  width: 80%;
+  /* width: 80%; */
 }
 
 .details-table.courses-table.only-show tr th:last-child,
@@ -120,7 +120,7 @@
 
 .details-table.courses-table.update tr th:first-child,
 .details-table.courses-table.update tr td:first-child {
-  width: 100%;
+  /* width: 100%; */
 }
 
 .details-table.syllabus-table tr th:nth-child(2),
@@ -176,7 +176,7 @@
 .details-table.teacher-table.update tr th:nth-last-child(2),
 .details-table.teacher-table.update tr th:nth-last-child(3) {
   width: auto;
-  width: 200px;
+  /* width: 200px; */
 }
 /* only-show finished */
 .details-table.teacher-table tr th:nth-last-child(3),
@@ -197,6 +197,19 @@
   background-color: white;
   z-index: 10;
   top: -2px;
+}
+.details-table.teacher-table thead,
+.details-table.events-table thead,
+.details-table.courses-table thead,
+.details-table.career-table thead,
+.details-table.consultation-page thead,
+.details-table.syllabus-table thead,
+.details-table.lesson-table thead
+ {
+  position: sticky;
+  background-color: white;
+  z-index: 10;
+  top: 0;
 }
 
 .details-table tr td.more,
@@ -310,7 +323,11 @@
 /* career page */
 
 .details-table.career-table,
-.details-table.student-table {
+.details-table.student-table,
+.details-table.teacher-table,
+.details-table.consultation-page,
+.details-table.events-table
+/* .details-table.courses-table */ {
   width: auto;
   overflow-x: scroll;
 }
@@ -322,7 +339,13 @@
 .details-table.career-table tr th:last-child,
 .details-table.career-table tr td:last-child,
 .details-table.student-table tr th:last-child,
-.details-table.student-table tr td:last-child {
+.details-table.student-table tr td:last-child,
+.details-table.teacher-table tr th:last-child,
+.details-table.teacher-table tr td:last-child,
+.details-table.consultation-page tr th:last-child,
+.details-table.consultation-page tr td:last-child,
+.details-table.events-table tr th:last-child,
+.details-table.events-table tr td:last-child {
   position: sticky;
   z-index: 1;
   right: 0;

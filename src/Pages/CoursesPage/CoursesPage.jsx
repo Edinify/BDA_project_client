@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { COURSES_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import { COURSES_MODAL_ACTION_TYPE,COURSES_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
 import { getCoursesPaginationAction } from "../../redux/actions/coursesActions";
 import CoursesData from "./components/CoursesData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import { useCustomHook } from "../../globalComponents/GlobalFunctions/globalFunctions";
 
+import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
+
 const CoursePage = () => {
   const dispatch = useDispatch();
-  const { lastPage } = useSelector((state) => state.coursesPagination);
+  const { courses } = useSelector((state) => state.coursesPagination);
   const { coursesSearchValues } = useSelector((state) => state.searchValues);
   const [coursePageNum, setCoursePageNum] = useState(1);
   const { user } = useSelector((state) => state.user);
@@ -22,30 +24,51 @@ const CoursePage = () => {
   const getPageNumber = (pageNumber) => {
     setCoursePageNum(pageNumber);
     if (coursesSearchValues) {
-      dispatch(getCoursesPaginationAction(pageNumber, coursesSearchValues));
+      dispatch(getCoursesPaginationAction(0, coursesSearchValues));
     } else {
-      dispatch(getCoursesPaginationAction(pageNumber, ""));
+      dispatch(getCoursesPaginationAction(0, ""));
     }
   };
+
+    // ============
+
+  const getNextCourse = () => {
+    if (coursesSearchValues) {
+      dispatch(
+        getCoursesPaginationAction(courses?.length || 0, coursesSearchValues)
+      );
+    } else {
+      dispatch(
+        getCoursesPaginationAction(courses?.length || 0, "")
+      );
+    }
+  };
+
+  // ========
+
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getCoursesPaginationAction(1, coursesSearchValues));
+    dispatch({
+      type: COURSES_ALL_ACTIONS_TYPE.RESET_COURSES_PAGINATION,
+    });
+    dispatch(getCoursesPaginationAction(0, coursesSearchValues));
     setCoursePageNum(1);
   };
 
   useEffect(() => {
     if (coursesSearchValues) {
-      dispatch(getCoursesPaginationAction(1, coursesSearchValues));
+      dispatch(getCoursesPaginationAction(0, coursesSearchValues));
     } else {
-      dispatch(getCoursesPaginationAction(1, ""));
+      dispatch(getCoursesPaginationAction(0, ""));
     }
-  }, []);
 
-  useEffect(() => {
-    if (lastPage) {
-      setCoursePageNum(lastPage);
+    return () =>{
+      dispatch({
+        type: COURSES_ALL_ACTIONS_TYPE.RESET_COURSES_PAGINATION,
+      });
     }
-  }, [lastPage]);
+
+  }, []);
 
   return (
     <div className="details-page courses ">
@@ -59,19 +82,9 @@ const CoursePage = () => {
 
       <CoursesData
         userData={user}
-        pageNum={lastPage}
+        getNextCourse={getNextCourse}
         coursePageNum={coursePageNum}
-        getPageNumber={getPageNumber}
       />
-
-      {/* <GlobalHead 
-      searchData={searchData} 
-      openModal={openModal} 
-      DATA_SEARCH_VALUE={'COURSES_SEARCH_VALUE'} 
-      dataSearchValues={coursesSearchValues}
-      statusType="courses"
-      />
-      <CoursesData coursePageNum={coursePageNum} getPageNumber={getPageNumber} /> */}
     </div>
   );
 };

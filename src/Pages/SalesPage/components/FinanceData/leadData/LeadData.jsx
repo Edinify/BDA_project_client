@@ -6,6 +6,8 @@ import Loading from "../../../../../globalComponents/Loading/Loading";
 import { getIncomePaginationAction } from "../../../../../redux/actions/incomeActions";
 import LeadCard from "./LeadCard";
 import { getLeadPaginationAction } from "../../../../../redux/actions/leadActions";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const LeadData = () => {
   const dispatch = useDispatch();
@@ -56,6 +58,17 @@ const LeadData = () => {
         <Loading />
       ) : (
         <>
+        <InfiniteScroll
+            dataLength={leads.length}
+            // next={getNextTeachers}
+            // hasMore={totalLength > teachers.length || loading}
+            hasMore={leads.length || loading}
+            loader={<SmallLoading/>}
+            endMessage={
+              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+            }
+            scrollThreshold={1}
+          >
           <table className="details-table incomes-table">
             <thead>
               <tr>
@@ -75,6 +88,7 @@ const LeadData = () => {
               ))}
             </tbody>
           </table>
+          </InfiniteScroll>
 
           <div className="details-list-tablet incomes-page  ">
             {leads?.map((lead, i) => (
@@ -87,7 +101,7 @@ const LeadData = () => {
             ))}
           </div>
 
-          {totalPages > 1 && (
+          {/* {totalPages > 1 && (
             <div className="pages-pagination">
               <Pagination
                 current={incomesPageNum}
@@ -96,7 +110,7 @@ const LeadData = () => {
                 onChange={getPageNumberIncomes}
               />
             </div>
-          )}
+          )} */}
         </>
       )}
     </>

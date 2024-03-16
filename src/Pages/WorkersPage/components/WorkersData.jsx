@@ -5,9 +5,11 @@ import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const WorkersData = ({ userData, pageNum, getPageNumber }) => {
-  const { workers, totalPages, loading } = useSelector(
+const WorkersData = ({ userData, pageNum, getNextTeachers }) => {
+  const { workers, totalLength, loading } = useSelector(
     (state) => state.workersPagination
   );
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
@@ -19,14 +21,13 @@ const WorkersData = ({ userData, pageNum, getPageNumber }) => {
     "Email",
     "Mobil nömrə",
     "Pozisiya",
+    "Doğum günü",
+    "Profillər",
     "",
   ];
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
         <>
           {openMoreModal && (
             <MoreModal
@@ -41,6 +42,18 @@ const WorkersData = ({ userData, pageNum, getPageNumber }) => {
               type="workers"
             />
           )}
+           <InfiniteScroll
+            style={{ overflowX: "none" }}
+            dataLength={workers.length}
+            next={getNextTeachers}
+            hasMore={totalLength > workers.length || loading}
+            loader={<SmallLoading />}
+            endMessage={
+              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+            }
+            height={550}
+            scrollThreshold={0.7}
+          >
           <table
             className={`details-table  teacher-table ${
               userData.power === "only-show" ? "only-show" : "update"
@@ -68,6 +81,7 @@ const WorkersData = ({ userData, pageNum, getPageNumber }) => {
               ))}
             </tbody>
           </table>
+          </InfiniteScroll>
 
           <div className="details-list-tablet">
             {workers?.map((teacher, i) => (
@@ -83,7 +97,7 @@ const WorkersData = ({ userData, pageNum, getPageNumber }) => {
             ))}
           </div>
 
-          {totalPages > 1 && (
+          {/* {totalPages > 1 && (
             <div className="pages-pagination">
               <Pagination
                 current={pageNum}
@@ -92,9 +106,8 @@ const WorkersData = ({ userData, pageNum, getPageNumber }) => {
                 onChange={getPageNumber}
               />
             </div>
-          )}
+          )} */}
         </>
-      )}
     </>
   );
 };

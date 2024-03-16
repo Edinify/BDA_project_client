@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WORKER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteWorkerAction } from "../../../redux/actions/workersActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
+import moment from "moment";
+import WorkerProfileDropdown from "./WorkerProfileDropdown";
 const WorkerCard = ({
   data,
   mode,
@@ -25,6 +27,7 @@ const WorkerCard = ({
       },
     });
   };
+
   const deleteItem = () => {
     const pageNumber =
       lastPage > 1 ? (workers.length > 1 ? lastPage : lastPage - 1) : 1;
@@ -43,13 +46,12 @@ const WorkerCard = ({
     setOpenMoreModal(true);
   };
 
-  // // console.log(worker)
   return (
     <>
       {mode === "desktop" ? (
         <tr>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>
               <div className="table-scroll-text">{data.fullName}</div>
               <div className="right-fade"></div>
@@ -79,12 +81,21 @@ const WorkerCard = ({
               <div className="right-fade"></div>
             </div>
           </td>
-          {/* <td>
-            <div className="td-con">
-              <div className="table-scroll-text profiles">{profiles}</div>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text profiles">
+                {data?.birthday
+                  ? moment(data?.birthday).locale("az").format("DD MMMM YYYY")
+                  : ""}
+              </div>
               <div className="right-fade"></div>
             </div>
-          </td> */}
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "400px" }}>
+              <WorkerProfileDropdown data={data} />
+            </div>
+          </td>
 
           <td>
             <UpdateDeleteModal
@@ -120,18 +131,17 @@ const WorkerCard = ({
               </li> */}
             </ul>
           </div>
-          
-            <div className="right">
-              <UpdateDeleteModal
-                updateItem={updateItem}
-                deleteItem={deleteItem}
-                data={data}
-                openConfirmModal={openConfirmModal}
-                state={worker}
-                openMoreModal={openMoreModal}
-              />
-            </div>
-          
+
+          <div className="right">
+            <UpdateDeleteModal
+              updateItem={updateItem}
+              deleteItem={deleteItem}
+              data={data}
+              openConfirmModal={openConfirmModal}
+              state={worker}
+              openMoreModal={openMoreModal}
+            />
+          </div>
         </div>
       )}
     </>

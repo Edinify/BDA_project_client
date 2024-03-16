@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWorkersPaginationAction } from "../../redux/actions/workersActions";
-import { WORKER_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import { WORKER_MODAL_ACTION_TYPE,WORKER_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
 import WorkersData from "./components/WorkersData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const WorkersPage = () => {
   const dispatch = useDispatch();
-  const { lastPage } = useSelector((state) => state.workersPagination);
+  const { lastPage,workers } = useSelector((state) => state.workersPagination);
   const { workersSearchValues } = useSelector((state) => state.searchValues);
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =
@@ -22,6 +22,20 @@ const WorkersPage = () => {
       dispatch(getWorkersPaginationAction(pageNumber, ""));
     }
   };
+
+
+  // ============
+
+  const getNextTeachers = () => {
+    if (workersSearchValues) {
+      dispatch(getWorkersPaginationAction(workers?.length || 0, workersSearchValues));
+    } else {
+      dispatch(getWorkersPaginationAction(workers?.length || 0, ""));
+    }
+  };
+
+  // ========
+
   const openModal = () => {
     dispatch({
       type: WORKER_MODAL_ACTION_TYPE.GET_WORKER_MODAL,
@@ -35,10 +49,16 @@ const WorkersPage = () => {
 
   useEffect(() => {
     if (workersSearchValues) {
-      dispatch(getWorkersPaginationAction(1, workersSearchValues));
+      dispatch(getWorkersPaginationAction(0, workersSearchValues));
     } else {
-      dispatch(getWorkersPaginationAction(1, ""));
+      dispatch(getWorkersPaginationAction(0, ""));
     }
+
+    return () => {
+      dispatch({
+        type: WORKER_ALL_ACTIONS_TYPE.RESET_WORKER_PAGINATION,
+      });
+    };
   }, []);
 
   return (
@@ -53,7 +73,7 @@ const WorkersPage = () => {
       <WorkersData
         userData={userData}
         pageNum={lastPage}
-        getPageNumber={getPageNumber}
+        getNextTeachers={getNextTeachers}
       />
     </div>
   );

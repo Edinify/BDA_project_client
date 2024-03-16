@@ -5,9 +5,11 @@ import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
-  const { totalPages, loading, consultationData } = useSelector(
+const ConsultationData = ({ pageNum, getNextConsultation, userData }) => {
+  const { totalLength, loading, consultationData } = useSelector(
     (state) => state.consultationPagination
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
@@ -18,12 +20,19 @@ const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
     "Təlimçi",
     "Mobil nömrə",
     "İxtisas",
+    "Persona",
+    "Sahə biliyi",
     "Əlaqə tarixi",
     "Konsultasiya tarixi",
     "Konsultasiya saatı",
+    "Ləğv səbəbi",
+    "Əlavə məlumat",
+    "Bizi haradan eşitdiniz",
     "Status",
     "",
   ];
+
+  console.log(consultationData, "consultation data");
 
   useEffect(() => {
     if (openMoreModal) {
@@ -35,9 +44,6 @@ const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
         <>
           {openMoreModal && (
             <MoreModal
@@ -48,8 +54,21 @@ const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
           )}
 
           {openConfirmModal && <ConfirmModal type="consultation" />}
+          
 
           <div className="table-con">
+          <InfiniteScroll
+            style={{ overflowX: "none" }}
+            dataLength={consultationData.length}
+            next={getNextConsultation}
+            hasMore={totalLength > consultationData.length || loading}
+            loader={<SmallLoading />}
+            endMessage={
+              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+            }
+            height={550}
+            scrollThreshold={0.7}
+          >
             <table className="details-table consultation-page ">
               <thead>
                 <tr>
@@ -71,6 +90,7 @@ const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
                 ))}
               </tbody>
             </table>
+            </InfiniteScroll>
           </div>
 
           <div className="details-list-tablet with-more">
@@ -85,19 +105,7 @@ const ConsultationData = ({ pageNum, getPageNumber, userData }) => {
               />
             ))}
           </div>
-
-          {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={pageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )}
         </>
-      )}
     </>
   );
 };

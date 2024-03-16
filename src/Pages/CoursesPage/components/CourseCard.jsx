@@ -35,7 +35,6 @@ const CourseCard = ({
     updateItem("more");
     setOpenMoreModal(true);
   };
-
   const openConfirmModal = () => {
     dispatch({
       type: COURSES_MODAL_ACTION_TYPE.OPEN_COURSE_CONFIRM_MODAL,
@@ -46,7 +45,6 @@ const CourseCard = ({
       },
     });
   };
-  // // console.log(course)
   return (
     <>
       {mode === "desktop" ? (
@@ -58,6 +56,40 @@ const CourseCard = ({
               <div className="right-fade"></div>
             </div>
           </td>
+          {data?.payments.slice(0, 3).map((item, index) => (
+            <td key={item._id}>
+              <div className="td-con">
+                <div className="table-scroll-text">{item.payment || "boş"}</div>
+                <div>{item.paymentType === "Tədris müddəti" && `${item.part} hissəli `}</div>
+                <div className="right-fade"></div>
+              </div>
+            </td>
+          ))}
+          {data?.payments.length < 3 && (
+            <td>
+              <div className="td-con">
+                <div className="table-scroll-text">boş</div>
+                <div className="right-fade"></div>
+              </div>
+            </td>
+          )}
+          {data?.payments.length < 2 && (
+            <td>
+              <div className="td-con">
+                <div className="table-scroll-text">boş</div>
+                <div className="right-fade"></div>
+              </div>
+            </td>
+          )}
+          {data?.payments.length < 1 && (
+            <td>
+              <div className="td-con">
+                <div className="table-scroll-text">boş</div>
+                <div className="right-fade"></div>
+              </div>
+            </td>
+          )}
+
           {course?.power !== "only-show" ? (
             <td>
               <UpdateDeleteModal

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeachersPaginationAction } from "../../redux/actions/teachersActions";
-import { TEACHERS_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import { TEACHERS_MODAL_ACTION_TYPE,TEACHER_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
 import TeachersData from "./components/TeachersData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 const TeachersPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { lastPage } = useSelector((state) => state.teachersPagination);
+  const { lastPage,teachers } = useSelector((state) => state.teachersPagination);
   const { teachersSearchValues } = useSelector((state) => state.searchValues);
   const { teacherStatus } = useSelector((state) => state.teacherStatus);
   const { courseId } = useSelector((state) => state.studentStatus);
@@ -23,10 +23,13 @@ const TeachersPage = () => {
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
 
-  const filterTeachers = () =>
+  const filterTeachers = () =>{
+    dispatch({
+      type: TEACHER_ALL_ACTIONS_TYPE.RESET_TEACHER_PAGINATION,
+    });
     dispatch(
       getTeachersPaginationAction(
-        1,
+        0,
         teachersSearchValues,
         teacherStatus
           ? teacherStatus !== "all"
@@ -37,7 +40,7 @@ const TeachersPage = () => {
         courseId
       )
     );
-
+  }
   const getPageNumber = (pageNumber) => {
     setTeacherPageNum(pageNumber);
     if (teachersSearchValues) {
@@ -68,6 +71,41 @@ const TeachersPage = () => {
       );
     }
   };
+  // ============
+
+  const getNextTeachers = () => {
+    if (teachersSearchValues) {
+      dispatch(
+        getTeachersPaginationAction(
+          teachers?.length || 0,
+          teachersSearchValues,
+          teacherStatus
+            ? teacherStatus !== "all"
+              ? teacherStatus
+              : "all"
+            : "all",
+          role,
+          courseId
+        )
+      );
+    } else {
+      dispatch(
+        getTeachersPaginationAction(
+          teachers?.length || 0,
+          "",
+          teacherStatus
+          ? teacherStatus !== "all"
+            ? teacherStatus
+            : "all"
+          : "all",
+          role,
+          courseId
+        )
+      );
+    }
+  };
+
+  // ========
   const openModal = () => {
     dispatch({
       type: TEACHERS_MODAL_ACTION_TYPE.GET_TEACHERS_MODAL,
@@ -78,7 +116,7 @@ const TeachersPage = () => {
     e.preventDefault();
     dispatch(
       getTeachersPaginationAction(
-        1,
+        0,
         teachersSearchValues,
         teacherStatus
           ? teacherStatus !== "all"
@@ -96,25 +134,12 @@ const TeachersPage = () => {
       setTeacherPageNum(lastPage);
     }
   }, [lastPage]);
-  useEffect(() => {
-    if (teacherStatus) {
-      getPageNumber(1);
-    }
-  }, [teacherStatus]);
-
-  // useEffect(() => {
-  //   if (teachersSearchValues) {
-  //     dispatch(getTeachersPaginationAction(1, teachersSearchValues, "all"));
-  //   } else {
-  //     dispatch(getTeachersPaginationAction(1, "", "all"));
-  //   }
-  // }, [dispatch]);
-
+  
   useEffect(() => {
     if (location.pathname === "/teachers") {
       dispatch(
         getTeachersPaginationAction(
-          1,
+          0,
           teachersSearchValues || "",
           "all",
           "teacher"
@@ -124,7 +149,7 @@ const TeachersPage = () => {
     } else if (location.pathname === "/teachers/mentors") {
       dispatch(
         getTeachersPaginationAction(
-          1,
+          0,
           teachersSearchValues || "",
           "all",
           "mentor"
@@ -132,7 +157,14 @@ const TeachersPage = () => {
       );
       setRole("mentor");
     }
-  }, [location.pathname]);
+    
+    return () => {
+      dispatch({
+        type: TEACHER_ALL_ACTIONS_TYPE.RESET_TEACHER_PAGINATION,
+      });
+    };
+
+  }, []);
 
   return (
     <div className="details-page teachers-page ">
@@ -155,7 +187,7 @@ const TeachersPage = () => {
 
       <TeachersData
         teacherPageNum={teacherPageNum}
-        getPageNumber={getPageNumber}
+        getNextTeachers={getNextTeachers}
         userData={userData}
       />
     </div>

@@ -2,6 +2,7 @@ import { WORKER_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState = {
   workers: [],
+  totalLength: 0,
   totalPages: 1,
   lastPage: "",
   loading: false,
@@ -29,14 +30,21 @@ export const workersPaginationReducer = (state = initialState, action) => {
     case WORKER_ALL_ACTIONS_TYPE.GET_WORKER_PAGINATION:
       return {
         ...state,
-        ...action.payload,
+        workers: [...state.workers, ...action.payload.workers],
+        totalLength: action.payload.totalLength,
       };
-
     case WORKER_ALL_ACTIONS_TYPE.CREATE_WORKER:
       return {
         ...state,
-        workers: [...state.workers, action.payload],
+        workers:  [action.payload, ...state.workers],
+        totalLength: state.totalLength + 1,
       };
+    case WORKER_ALL_ACTIONS_TYPE.RESET_WORKER_PAGINATION:
+        return {
+          ...state,
+          workers: [],
+          totalLength: 0,
+        };
     case WORKER_ALL_ACTIONS_TYPE.UPDATE_WORKER:
       return {
         ...state,

@@ -27,6 +27,7 @@ const refreshApi = axios.create({
   withCredentials: true,
 });
 
+
 const toastSuccess = (message) => {
   toast.success(message, {
     position: "top-right",
@@ -52,7 +53,7 @@ const toastError = (message) => {
     theme: "colored",
   });
 };
-const pageLoading = (loadingValue) => ({
+const setLoadingCoursesAction = (loadingValue) => ({
   type: COURSES_ALL_ACTIONS_TYPE.COURSE_LOADING,
   payload: loadingValue,
 });
@@ -60,6 +61,7 @@ const modalLoading = (loadingValue) => ({
   type: COURSES_MODAL_ACTION_TYPE.COURSE_MODAL_LOADING,
   payload: loadingValue,
 });
+
 const courseModalOpen = (value) => ({
   type: COURSES_MODAL_ACTION_TYPE.COURSE_OPEN_MODAL,
   payload: value,
@@ -75,21 +77,20 @@ export const getAllCoursesAction = () => async (dispatch) => {
 };
 
 export const getCoursesPaginationAction =
-  (pageNumber, searchQuery) => async (dispatch) => {
-    dispatch(pageLoading(true));
+  (length, searchQuery) => async (dispatch) => {
+    dispatch(setLoadingCoursesAction(true));
+    
     try {
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}`
+        `/pagination/?length=${length || 0}&searchQuery=${searchQuery}`
       );
-      dispatch({
-        type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_LAST_PAGE,
-        payload: pageNumber,
-      });
       dispatch({
         type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION,
         payload: data,
       });
+      
     } catch (error) {
+      console.log(error)
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -102,12 +103,8 @@ export const getCoursesPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}`
+            `/pagination/?length=${length}&searchQuery=${searchQuery}`
           );
-          dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_LAST_PAGE,
-            payload: pageNumber,
-          });
           dispatch({
             type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION,
             payload: data,
@@ -123,16 +120,19 @@ export const getCoursesPaginationAction =
         dispatch(logoutAction());
       }
     } finally {
-      dispatch(pageLoading(false));
+      dispatch(setLoadingCoursesAction(false));
     }
   };
 export const createCoursesAction = (courseData) => async (dispatch) => {
-  dispatch(modalLoading(true));
+  dispatch(setLoadingCoursesAction(true));
   // console.log(courseData);
   try {
     const { data } = await API.post("/", courseData);
-    // console.log(data);
-    dispatch(getCoursesPaginationAction(data.lastPage, ""));
+    console.log(data);
+    dispatch({
+      type: COURSES_ALL_ACTIONS_TYPE.CREATE_COURSE,
+      payload: data,
+    });
     dispatch(courseModalOpen(false));
     toastSuccess("Yeni fənn yaradıldı");
   } catch (error) {

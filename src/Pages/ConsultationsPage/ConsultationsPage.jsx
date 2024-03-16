@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getConsultationPaginationAction } from "../../redux/actions/consultationsActions";
-import { CONSULTATION_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import { CONSULTATION_MODAL_ACTION_TYPE,CONSULTATION_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import ConsultationData from "./components/ConsultationData";
 import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 const ConsultationsPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { lastPage } = useSelector((state) => state.consultationPagination);
+  const { lastPage,consultationData } = useSelector((state) => state.consultationPagination);
   const { consultationSearchValues } = useSelector(
     (state) => state.searchValues
   );
@@ -36,6 +36,25 @@ const ConsultationsPage = () => {
     }
   };
 
+
+  // ============
+
+  const getNextConsultation = () => {
+    if (consultationSearchValues) {
+      dispatch(
+        getConsultationPaginationAction(
+          consultationData,
+          consultationSearchValues,
+          status
+        )
+      );
+    } else {
+      dispatch(getConsultationPaginationAction(consultationData, "", status));
+    }
+  };
+
+  // ========
+
   const openModal = () => {
     dispatch({
       type: CONSULTATION_MODAL_ACTION_TYPE.GET_CONSULTATION_MODAL,
@@ -57,15 +76,26 @@ const ConsultationsPage = () => {
     } else {
       dispatch(getConsultationPaginationAction(1, "", status));
     }
+    return () =>{
+      dispatch({
+        type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
+      });
+    }
   }, [location.pathname]);
 
   useEffect(() => {
     if (consultationSearchValues) {
       dispatch(
-        getConsultationPaginationAction(1, consultationSearchValues, status)
+        getConsultationPaginationAction(0, consultationSearchValues, status)
       );
     } else {
-      dispatch(getConsultationPaginationAction(1, "", status));
+      dispatch(getConsultationPaginationAction(0, "", status));
+    }
+
+    return () =>{
+      dispatch({
+        type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
+      });
     }
   }, []);
 
@@ -90,7 +120,7 @@ const ConsultationsPage = () => {
 
       <ConsultationData
         pageNum={lastPage}
-        getPageNumber={getPageNumber}
+        getNextConsultation={getNextConsultation}
         userData={userData}
       />
     </div>
