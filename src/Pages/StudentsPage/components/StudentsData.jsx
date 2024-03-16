@@ -6,15 +6,11 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const StudentsData = ({
-  studentPageNum,
-  userData,
-  getNextStudents,
-}) => {
-  const { students, totalLength } = useSelector(
+const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
+  const { students, hasMore } = useSelector(
     (state) => state.studentsPagination
   );
-  const { loading } = useSelector((state) => state.studentsPagination);
+ 
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.studentsModal);
   const tableHead = [
@@ -39,7 +35,7 @@ const StudentsData = ({
     }
   }, [openMoreModal]);
 
-  // console.log(students,"student")
+  console.log(hasMore,"has more")
 
   return (
     <>
@@ -56,7 +52,7 @@ const StudentsData = ({
       <InfiniteScroll
         dataLength={students.length}
         next={getNextStudents}
-        hasMore={totalLength > students.length || loading}
+        hasMore={hasMore}
         loader={<SmallLoading />}
         endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
         height={550}
@@ -84,7 +80,7 @@ const StudentsData = ({
                 mode="desktop"
                 student={userData}
                 setOpenMoreModal={setOpenMoreModal}
-                cellNumber={i + 1 + (studentPageNum - 1) * 10}
+                cellNumber={i + 1}
               />
             ))}
           </tbody>
@@ -103,17 +99,6 @@ const StudentsData = ({
           />
         ))}
       </div>
-
-      {/* {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={studentPageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )} */}
     </>
   );
 };

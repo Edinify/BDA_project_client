@@ -67,16 +67,6 @@ const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
             ))}
           </div>
 
-          {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={pageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )}
         </>
     </>
   );
