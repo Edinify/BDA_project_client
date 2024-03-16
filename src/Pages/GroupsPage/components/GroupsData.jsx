@@ -11,7 +11,7 @@ import SmallLoading from "../../../globalComponents/Loading/components/SmallLoad
 const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const dispatch = useDispatch();
-  const { groupData, totalLength, loading } = useSelector(
+  const { groupData, hasMore } = useSelector(
     (state) => state.groupsPagination
   );
   const { openConfirmModal } = useSelector((state) => state.groupModal);
@@ -54,7 +54,7 @@ const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
           <InfiniteScroll
             dataLength={groupData.length}
             next={getNextTeachers}
-            hasMore={totalLength > groupData.length || loading}
+            hasMore={hasMore}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -82,7 +82,7 @@ const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
                     data={teacher}
                     group={userData}
                     mode="desktop"
-                    cellNumber={i + 1 + (pageNum - 1) * 10}
+                    cellNumber={i + 1}
                     setOpenMoreModal={setOpenMoreModal}
                   />
                 ))}
@@ -97,22 +97,11 @@ const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
                 data={teacher}
                 group={userData}
                 mode="tablet"
-                cellNumber={i + 1 + (pageNum - 1) * 10}
+                cellNumber={i + 1}
                 setOpenMoreModal={setOpenMoreModal}
               />
             ))}
           </div>
-
-          {/* {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={pageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )} */}
         </>
     </>
   );

@@ -3,6 +3,7 @@ import { EVENTS_ALL_ACTIONS_TYPE } from "../actions-type";
 const initialState = {
   events: [],
   totalLength:0,
+  hasMore: true,
   totalPages: 1,
   lastPage: "",
   loading: false,
@@ -27,6 +28,7 @@ export const eventsPaginationReducer = (state = initialState, action) => {
         ...state,
         events: [...state.events, ...action.payload.events],
         totalLength: action.payload.totalLength,
+        hasMore: !(action.payload.students.length < 10),
       };
     case EVENTS_ALL_ACTIONS_TYPE.CREATE_EVENT:
       return {
@@ -39,6 +41,7 @@ export const eventsPaginationReducer = (state = initialState, action) => {
         ...state,
         events: [],
         totalLength: 0,
+        hasMore: true,
       };
     case EVENTS_ALL_ACTIONS_TYPE.UPDATE_EVENT:
       return {

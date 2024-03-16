@@ -5,6 +5,7 @@ const initialState = {
   groupsByMore: [],
   totalPages: 1,
   totalLength:0,
+  hasMore: true,
   lastPage: "",
   loading: false,
   loadingAll: false
@@ -28,12 +29,14 @@ export const groupsPaginationReducer = (state = initialState, action) => {
         ...state,
         groupData: [...state.groupData, ...action.payload.groupData],
         totalLength: action.payload.totalLength,
+        hasMore: !(action.payload.groupData.length < 10),
       };
     case GROUP_ALL_ACTIONS_TYPE.RESET_GROUP_PAGINATION:
       return {
         ...state,
         groupData: [],
         totalLength: 0,
+        hasMore: true,
       };
     case GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL_ADD:
       return {

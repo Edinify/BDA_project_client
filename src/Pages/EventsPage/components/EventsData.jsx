@@ -9,7 +9,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const EventsData = ({ userData, eventPageNum, getNextTeachers }) => {
-  const { events, totalLength } = useSelector((state) => state.eventsPagination);
+  const { events, hasMore } = useSelector((state) => state.eventsPagination);
   const { loading } = useSelector((state) => state.eventsPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.coursesModal);
@@ -52,7 +52,7 @@ const EventsData = ({ userData, eventPageNum, getNextTeachers }) => {
           <InfiniteScroll
             dataLength={events.length}
             next={getNextTeachers}
-            hasMore={totalLength > events.length || loading}
+            hasMore={hasMore}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -80,7 +80,7 @@ const EventsData = ({ userData, eventPageNum, getNextTeachers }) => {
                     data={event}
                     userData={userData}
                     mode="desktop"
-                    cellNumber={i + 1 + (eventPageNum - 1) * 10}
+                    cellNumber={i + 1}
                     setOpenMoreModal={setOpenMoreModal}
                   />
                 ))}
@@ -96,7 +96,7 @@ const EventsData = ({ userData, eventPageNum, getNextTeachers }) => {
                 data={event}
                 userData={userData}
                 mode="mobile"
-                cellNumber={i + 1 + (eventPageNum - 1) * 10}
+                cellNumber={i + 1}
                 setOpenMoreModal={setOpenMoreModal}
               />
             ))}

@@ -10,7 +10,7 @@ import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const StudentsPage = () => {
   const dispatch = useDispatch();
-  const { students, totalLength } = useSelector(
+  const { students, totalLength,loading } = useSelector(
     (state) => state.studentsPagination
   );
   const { studentSearchValues } = useSelector((state) => state.searchValues);
@@ -18,7 +18,6 @@ const StudentsPage = () => {
     (state) => state.studentStatus
   );
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
-  const { loading } = useSelector((state) => state.studentsPagination);
 
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =

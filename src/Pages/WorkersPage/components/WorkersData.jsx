@@ -8,8 +8,8 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const WorkersData = ({ userData, pageNum, getNextTeachers }) => {
-  const { workers, totalLength, loading } = useSelector(
+const WorkersData = ({ userData, getNextTeachers }) => {
+  const { workers, hasMore } = useSelector(
     (state) => state.workersPagination
   );
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
@@ -46,7 +46,7 @@ const WorkersData = ({ userData, pageNum, getNextTeachers }) => {
             style={{ overflowX: "none" }}
             dataLength={workers.length}
             next={getNextTeachers}
-            hasMore={totalLength > workers.length || loading}
+            hasMore={hasMore}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -74,7 +74,7 @@ const WorkersData = ({ userData, pageNum, getNextTeachers }) => {
                   data={teacher}
                   worker={userData}
                   mode="desktop"
-                  cellNumber={i + 1 + (pageNum - 1) * 10}
+                  cellNumber={i + 1}
                   setOpenConfirmModal={setOpenConfirmModal}
                   setOpenMoreModal={setOpenMoreModal}
                 />
@@ -90,7 +90,7 @@ const WorkersData = ({ userData, pageNum, getNextTeachers }) => {
                 data={teacher}
                 worker={userData}
                 mode="tablet"
-                cellNumber={i + 1 + (pageNum - 1) * 10}
+                cellNumber={i + 1}
                 setOpenMoreModal={setOpenMoreModal}
                 setOpenConfirmModal={setOpenConfirmModal}
               />
