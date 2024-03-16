@@ -5,8 +5,6 @@ import { TUITION_FEE_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { deleteStudentAction } from "../../../redux/actions/studentsActions";
 import moment from "moment";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
-import { FormControl, InputLabel, MenuItem } from "@mui/material";
-import { Select } from "antd";
 
 const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   const dispatch = useDispatch();

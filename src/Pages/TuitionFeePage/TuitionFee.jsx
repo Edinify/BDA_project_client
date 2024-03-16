@@ -10,14 +10,13 @@ import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const TuitionFeePage = () => {
   const dispatch = useDispatch();
-  const { lastPage, currentLength } = useSelector(
+  const { loading, currentLength } = useSelector(
     (state) => state.tuitionFeePagination
   );
   const { tuitionFeeSearchValues } = useSelector((state) => state.searchValues);
   const { courseId } = useSelector((state) => state.studentStatus);
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const { paymentStatus } = useSelector((state) => state.paymentStatus);
-  const { loading } = useSelector((state) => state.tuitionFeePagination);
 
   const filterTuition = () => {
     console.log("filterrrrrrr");
@@ -35,8 +34,6 @@ const TuitionFeePage = () => {
       )
     );
   };
-
-  // console.log(selectedGroup)
 
   const getNextTuitionFees = () => {
     console.log(loading, "loading");
@@ -124,10 +121,7 @@ const TuitionFeePage = () => {
         profile={"tuitionFee"}
         statusType="tutionFee"
       />
-      <TuitionFeeData
-        pageNum={lastPage}
-        getNextTuitionFees={getNextTuitionFees}
-      />
+      <TuitionFeeData getNextTuitionFees={getNextTuitionFees} />
     </div>
   );
 };
