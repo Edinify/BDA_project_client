@@ -82,7 +82,6 @@ const toastError = (message) => {
 export const getTuitionFeePaginationAction =
   (length, searchQuery, courseId, groupId, paymentStatus) =>
   async (dispatch) => {
-    // console.log(courseId,groupId)
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
@@ -90,7 +89,7 @@ export const getTuitionFeePaginationAction =
           courseId || ""
         }&groupId=${groupId || ""}&paymentStatus=${paymentStatus || "all"}`
       );
-  
+
       dispatch({
         type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_PAGINATION,
         payload: data,
@@ -128,53 +127,53 @@ export const getTuitionFeePaginationAction =
     }
   };
 
-export const updateTuitionFeeAction =
-  (newData, page = 1, searchValue = "") =>
-  async (dispatch) => {
-    dispatch(modalLoading(true));
-    try {
-      const { data } = await API.patch(`/payment`, newData);
+export const updateTuitionFeeAction = (newData) => async (dispatch) => {
+  dispatch(modalLoading(true));
+  try {
+    const { data } = await API.patch(`/payment`, newData);
 
-      // console.log(data, "salam tuition fee action");
-      dispatch({ type: TUITION_FEE_MODAL_ACTION_TYPE.CLOSE_CONFIRM_MODAL });
-      dispatch(getTuitionFeePaginationAction(page, searchValue));
+    dispatch({
+      type: TUITION_FEE_ALL_ACTIONS_TYPE.UPDATE_TUITION_FEE,
+      payload: data,
+    });
+    dispatch({ type: TUITION_FEE_MODAL_ACTION_TYPE.CLOSE_CONFIRM_MODAL });
 
-      toastSuccess("Təhsil haqqı yeniləndi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          // const { data } = await API.patch(`/${_id}`, teacherData);
-          // dispatch({
-          //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
-          //   payload: data,
-          // });
-          // dispatch({
-          //   type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
-          //   payload: false,
-          // });
-          toastSuccess("Xəta baş verdi!");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+    toastSuccess("Təhsil haqqı yeniləndi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        // const { data } = await API.patch(`/${_id}`, teacherData);
+        // dispatch({
+        //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
+        //   payload: data,
+        // });
+        // dispatch({
+        //   type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
+        //   payload: false,
+        // });
+        toastSuccess("Xəta baş verdi!");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      if (error?.response?.data?.key === "email-already-exist") {
-        toastError("Bu email ilə istifadəçi mövcuddur");
-      }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan təlimçi yenilənə bilməz");
-      }
-    } finally {
-      dispatch(modalLoading(false));
     }
-  };
+    if (error?.response?.data?.key === "email-already-exist") {
+      toastError("Bu email ilə istifadəçi mövcuddur");
+    }
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan təlimçi yenilənə bilməz");
+    }
+  } finally {
+    dispatch(modalLoading(false));
+  }
+};

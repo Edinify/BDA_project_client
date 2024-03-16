@@ -6,6 +6,7 @@ const initialState = {
   paymentsResults: {},
   totalLength: 0,
   currentLength: 0,
+  hasMore: true,
   loading: false,
   loadingAll: false,
 };
@@ -35,6 +36,15 @@ export const tuitionFeeDataPaginationReducer = (
         totalLength: action.payload.totalLength,
         currentLength: action.payload.currentLength,
         paymentsResults: action.payload.paymentsResults,
+        hasMore: !(action.payload.tutionFees.length < 10),
+      };
+    case TUITION_FEE_ALL_ACTIONS_TYPE.RESET_TUITION_FEE_PAGINATION:
+      return {
+        ...state,
+        tuitionFeeData: [],
+        totalLength: 0,
+        currentLength: 0,
+        hasMore: true,
       };
     case TUITION_FEE_ALL_ACTIONS_TYPE.TUITION_FEE_LOADING:
       return {

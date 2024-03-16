@@ -8,10 +8,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const TuitionFeeData = ({ pageNum, getNextTuitionFees }) => {
-  const { tuitionFeeData, totalLength, currentLength } = useSelector(
+  const { tuitionFeeData, totalLength, currentLength, hasMore } = useSelector(
     (state) => state.tuitionFeePagination
   );
-  const { loading } = useSelector((state) => state.tuitionFeePagination);
+  // const { loading } = useSelector((state) => state.tuitionFeePagination);
 
   const { openConfirmModal } = useSelector((state) => state.tuitionFeeModal);
 
@@ -37,7 +37,13 @@ const TuitionFeeData = ({ pageNum, getNextTuitionFees }) => {
     }
   }, [openMoreModal]);
 
-  console.log(totalLength, currentLength, loading, tuitionFeeData.length);
+  console.log(
+    totalLength,
+    currentLength,
+    // loading,
+    tuitionFeeData.length,
+    hasMore
+  );
 
   return (
     <>
@@ -52,16 +58,16 @@ const TuitionFeeData = ({ pageNum, getNextTuitionFees }) => {
       {openConfirmModal && <ConfirmModal type="tuitionFee" />}
 
       <InfiniteScroll
-        dataLength={currentLength}
+        dataLength={tuitionFeeData.length}
         next={getNextTuitionFees}
-        hasMore={totalLength > currentLength || loading}
+        hasMore={hasMore}
         loader={<SmallLoading />}
         endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
         height={450}
         scrollThreshold={0.8}
       >
         <div className="table-con">
-          <table className="details-table ">
+          <table className="details-table">
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
