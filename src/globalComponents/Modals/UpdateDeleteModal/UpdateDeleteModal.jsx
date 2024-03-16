@@ -172,8 +172,8 @@ const UpdateDeleteModal = ({
               Ödənişlər
             </h4>
           )}
-
-          {/* {profil !== "syllabus" &&
+{/* 
+          {profil !== "syllabus" &&
             profil !== "lessonTable" &&
             profil !== "sales" &&
             profil !== "careers" && (

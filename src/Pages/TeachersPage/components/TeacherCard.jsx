@@ -26,7 +26,7 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
   const listData = [
     { key: "Fənn", value: courses },
     { key: "Email", value: data.email },
-    { key: "Telefon nömrəsi", value: data.phone },
+    { key: "Mobil nömrə", value: data.phone },
     { key: "Email", value: data.email },
   ];
 

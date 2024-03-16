@@ -67,7 +67,7 @@ const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
             ))}
           </div>
 
-          {totalPages > 1 && (
+          {/* {totalPages > 1 && (
             <div className="pages-pagination">
               <Pagination
                 current={pageNum}
@@ -76,7 +76,7 @@ const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
                 onChange={getPageNumber}
               />
             </div>
-          )}
+          )} */}
         </>
     </>
   );

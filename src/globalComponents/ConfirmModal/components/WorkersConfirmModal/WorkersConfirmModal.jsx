@@ -24,7 +24,7 @@ const WorkersConfirmModal = ({ workerModalData }) => {
     { title: "Ad soyad", value: workerModalData?.fullName },
     { title: "Email", value: workerModalData?.email },
     { title: "Doğum tarixi", value: workerModalData?.birthday },
-    { title: "Telefon nömrəsi", value: workerModalData?.phone },
+    { title: "Mobil nömrə", value: workerModalData?.phone },
     { title: "Pozisiya", value: workerModalData?.position },
     { title: "Profil", value: profiles },
   ];

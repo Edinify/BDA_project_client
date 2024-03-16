@@ -19,13 +19,15 @@ const TuitionFeeData = ({ pageNum, getNextTuitionFees }) => {
 
   const tableHead = [
     "Tələbənin adı",
+    "Mobil nörmə",
     "Qrup",
     "Məbləğ",
     "Yekun məbləğ",
     "Yekun qalıq",
     "Endirim",
     "Ödəniş növü",
-    "Cari ayın ödənişi",
+    "Ümumi ödəniləcək məbləğ",
+    "Status",
     "",
   ];
 
@@ -67,7 +69,7 @@ const TuitionFeeData = ({ pageNum, getNextTuitionFees }) => {
         scrollThreshold={0.8}
       >
         <div className="table-con">
-          <table className="details-table">
+          <table className="details-table tuition-table  ">
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
