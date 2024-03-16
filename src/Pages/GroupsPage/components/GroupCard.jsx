@@ -34,7 +34,7 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
 
   let lessonDates = data.lessonDate.map((item, index) => (
     <span className="lesson-date" key={index}>
-      gün: {item.day}, saat: {item.time} {item.practical ? "(Praktika)" : ""}{" "}
+      gün: {item.day}, saat: {item.time} {item.practical ? "(Lab day)" : ""}{" "}
       <br />
     </span>
   ));

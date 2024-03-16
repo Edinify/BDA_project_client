@@ -88,10 +88,10 @@ export function useCustomHook() {
   const personaList = [
     { name: "Həvəsli", key: "enthusiastic" },
     { name: "Narazı", key: "dissatisfied" },
-    { name: "Müahidəçi", key: "contractor" },
+    { name: "Müşahidəçi", key: "contractor" },
     { name: "Demaqoq", key: "demagog" },
     { name: "Ekstravert", key: "extrovert" },
-    { name: "İntravert", key: "introvert" },
+    { name: "İntrovert", key: "introvert" },
     { name: "Ailəcanlı", key: "familyFriendly" },
   ];
   const discountReasonList = [

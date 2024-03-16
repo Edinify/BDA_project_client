@@ -254,7 +254,7 @@
   color: #00bb00;
 }
 .table-modal-content .child-status p:nth-child(3) {
-  color: #FBA013;
+  color: #fba013;
 }
 .modal-select ul {
   display: flex;
@@ -281,17 +281,17 @@
   color: #5d5d5d;
   background-color: var(--neutrals-100);
 }
-.modal-select ul li:nth-child(1) {
-  border-radius: 8px 0 0 8px;
-}
-.modal-select ul li:nth-child(3) {
-  border-radius: 0 8px 8px 0;
-}
+
 
 .modal-select ul li:nth-child(1) {
   border-radius: 8px 0 0 8px;
 }
+
 .modal-select ul li:nth-child(3) {
+  border-radius: 0 8px 8px 0;
+}
+
+.modal-select.events ul li:nth-child(2) {
   border-radius: 0 8px 8px 0;
 }
 

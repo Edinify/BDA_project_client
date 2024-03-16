@@ -173,14 +173,14 @@ const UpdateDeleteModal = ({
             </h4>
           )}
 
-          {profil !== "syllabus" &&
+          {/* {profil !== "syllabus" &&
             profil !== "lessonTable" &&
             profil !== "sales" &&
             profil !== "careers" && (
               <h4 className="confirm" onClick={() => openMoreModal()}>
                 Ətraflı
               </h4>
-            )}
+            )} */}
           {deleteBtn && profil !== "careers" && profil !== "tuitionFee" && (
             <h4
               className={`delete-func ${dataType === "branches" ? "only" : ""}`}

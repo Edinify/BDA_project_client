@@ -12,6 +12,7 @@ import { TeachersDropdown } from "./TeachersDropdown/TeachersDropdown";
 import { ReactComponent as HalfCircleICon } from "../../assets/icons/filter/half-circle-svgrepo-com.svg";
 import { PaymentStatusDropdown } from "./PaymentStatusDropdown/PaymentStatusDropdown";
 import PaymentResult from "./PaymentResult/PaymentResult";
+import LessonStatusResult from "./LessonStatusResult/LessonStatusResult";
 
 const GlobalHead = ({
   searchData,
@@ -191,6 +192,10 @@ const GlobalHead = ({
                       </button>
                     </div>
                   )}
+                  <div className="lesson-table-page-header-container"  >
+                    <div className="lesson-status-header">
+                    <LessonStatusResult/>
+                    </div>
                   <div className="lesson-page-filter-container">
                     <div className="lesson-table-header-content">
                       <div className="lesson-table-status">
@@ -211,6 +216,7 @@ const GlobalHead = ({
                         </button>
                       </div>
                     </div>
+                  </div>
                   </div>
                 </div>
               )}

@@ -56,6 +56,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
       className: "student-count",
     },
   ];
+
   const updateItem = (modalType) => {
     dispatch({
       type: LESSON_TABLE_MODAL_ACTION_TYPE.GET_LESSON_TABLE_MODAL,
@@ -93,7 +94,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
     });
   };
 
-  console.log(data, "pow");
+  // console.log(data, "pow");
 
   return (
     <>
@@ -115,7 +116,11 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
             <div className="td-con">
               <div className="table-scroll-text">{`${
                 data?.topic?.orderNumber || ""
-              }. ${data?.topic?.name || ""}`}</div>
+              }. ${
+                data?.topic?.name === "Praktika"
+                  ? "Lab day"
+                  : data?.topic?.name || ""
+              }`}</div>
               <div className="right-fade"></div>
             </div>
           </td>
