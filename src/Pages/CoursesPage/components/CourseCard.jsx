@@ -56,7 +56,7 @@ const CourseCard = ({
               <div className="right-fade"></div>
             </div>
           </td>
-          {data?.payments.slice(0, 3).map((item, index) => (
+          {data?.payments.slice(0, 3).map((item) => (
             <td key={item._id}>
               <div className="td-con">
                 <div className="table-scroll-text">{item.payment || ""}</div>

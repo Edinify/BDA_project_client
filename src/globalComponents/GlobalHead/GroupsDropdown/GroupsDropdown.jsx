@@ -47,6 +47,8 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
     };
   }, [dispatch]);
 
+
+  console.log(dataList,"data")
   const handleSelectAll = () => {
     setDropdownOpen(false);
     dispatch({
