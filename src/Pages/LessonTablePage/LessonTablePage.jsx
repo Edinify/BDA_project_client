@@ -8,8 +8,10 @@ import { toast } from "react-toastify";
 
 const LessonTablePage = () => {
   const dispatch = useDispatch();
-  const { lastPage,status } = useSelector((state) => state.lessonTablePagination);
-  const { startDate,endDate } = useSelector((state) => state.datepicker);
+  const { lastPage, status } = useSelector(
+    (state) => state.lessonTablePagination
+  );
+  const { startDate, endDate } = useSelector((state) => state.datepicker);
   // console.log(startDate,endDate)
   const { lessonTableSearchValues } = useSelector(
     (state) => state.searchValues
@@ -20,16 +22,18 @@ const LessonTablePage = () => {
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
-  const filterLessons = () => dispatch(
-    getLessonTablePaginationAction(
-      1,
-      lessonTableSearchValues,
-      selectedGroup._id,
-      startDate,
-      endDate,
-      status
-    )
-  )
+  const filterLessons = () =>
+    dispatch(
+      getLessonTablePaginationAction(
+        1,
+        lessonTableSearchValues,
+        selectedGroup._id,
+        startDate,
+        endDate,
+        status
+      )
+    );
+
   const getPageNumber = (pageNumber) => {
     if (lessonTableSearchValues) {
       dispatch(
@@ -44,9 +48,14 @@ const LessonTablePage = () => {
       );
     } else {
       dispatch(
-        getLessonTablePaginationAction(pageNumber, "", selectedGroup._id,startDate,
-        endDate,
-        status)
+        getLessonTablePaginationAction(
+          pageNumber,
+          "",
+          selectedGroup._id,
+          startDate,
+          endDate,
+          status
+        )
       );
     }
   };

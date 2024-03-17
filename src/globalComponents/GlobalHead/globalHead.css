@@ -5,6 +5,10 @@
   top: 86px;
   z-index: 100;
 }
+
+.details-page.lesson-page .details-header {
+  top: 0;
+}
 .details-header-container {
   width: 100%;
 }

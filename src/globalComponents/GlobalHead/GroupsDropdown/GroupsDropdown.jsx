@@ -47,8 +47,6 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
     };
   }, [dispatch]);
 
-
-  console.log(dataList,"data")
   const handleSelectAll = () => {
     setDropdownOpen(false);
     dispatch({
@@ -56,8 +54,6 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
       payload: "",
     });
   };
-
-
 
   return (
     <div

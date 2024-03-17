@@ -37,71 +37,68 @@ const TeachersData = ({ teacherPageNum, getNextTeachers, userData }) => {
     }
   }, [openMoreModal]);
 
-
   // console.log(totalLength , teachers.length )
   return (
     <>
-        <>
-          {openMoreModal && (
-            <MoreModal
-              setOpenMoreModal={setOpenMoreModal}
-              type="teacher"
-              userData={userData}
-            />
-          )}
-          {openConfirmModal && <ConfirmModal type="teacher" />}
-          <InfiniteScroll
-            dataLength={teachers.length}
-            next={getNextTeachers}
-            hasMore={totalLength > teachers.length || loading}
-            loader={<SmallLoading />}
-            endMessage={
-              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
-            }
-            height={550}
-            scrollThreshold={0.7}
+      <>
+        {openMoreModal && (
+          <MoreModal
+            setOpenMoreModal={setOpenMoreModal}
+            type="teacher"
+            userData={userData}
+          />
+        )}
+        {openConfirmModal && <ConfirmModal type="teacher" />}
+        <InfiniteScroll
+          dataLength={teachers.length}
+          next={getNextTeachers}
+          hasMore={teachers.length || loading}
+          loader={<SmallLoading />}
+          endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
+          height={550}
+          scrollThreshold={0.7}
+        >
+          <table
+            className={`details-table  teacher-table ${
+              userData.power === "only-show" ? "only-show" : "update"
+            } `}
           >
-            <table
-              className={`details-table  teacher-table ${
-                userData.power === "only-show" ? "only-show" : "update"
-              } `}
-            >
-              <thead>
-                <tr>
-                  {tableHead.map((head, i) => (
-                    <th key={i}>{head.label}</th>
-                  ))}
-                </tr>
-              </thead>
-
-              <tbody>
-                {teachers?.map((teacher, i) => (
-                  <TeacherCard
-                    key={i}
-                    data={teacher}
-                    mode="desktop"
-                    teacher={userData}
-                    cellNumber={i + 1 + (teacherPageNum - 1) * 10}
-                    setOpenMoreModal={setOpenMoreModal}
-                  />
+            <thead>
+              <tr>
+                {tableHead.map((head, i) => (
+                  <th key={i}>{head.label}</th>
                 ))}
-              </tbody>
-            </table>
-          </InfiniteScroll>
+              </tr>
+            </thead>
 
-          <div className="details-list-tablet with-more">
-            {teachers?.map((teacher, i) => (
-              <TeacherCard
-                key={i}
-                data={teacher}
-                mode="tablet"
-                teacher={userData}
-                cellNumber={i + 1 + (teacherPageNum - 1) * 10}
-                setOpenMoreModal={setOpenMoreModal}
-              />
-            ))}
-          </div>
-        </>
+            <tbody>
+              {teachers?.map((teacher, i) => (
+                <TeacherCard
+                  key={i}
+                  data={teacher}
+                  mode="desktop"
+                  teacher={userData}
+                  cellNumber={i + 1 + (teacherPageNum - 1) * 10}
+                  setOpenMoreModal={setOpenMoreModal}
+                />
+              ))}
+            </tbody>
+          </table>
+        </InfiniteScroll>
+
+        <div className="details-list-tablet with-more">
+          {teachers?.map((teacher, i) => (
+            <TeacherCard
+              key={i}
+              data={teacher}
+              mode="tablet"
+              teacher={userData}
+              cellNumber={i + 1 + (teacherPageNum - 1) * 10}
+              setOpenMoreModal={setOpenMoreModal}
+            />
+          ))}
+        </div>
+      </>
     </>
   );
 };

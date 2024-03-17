@@ -45,50 +45,58 @@ const CourseCard = ({
       },
     });
   };
+
+  const wholePayment = data.payments.find(
+    (payment) => payment.paymentType === "Tam"
+  );
+  const teachingPeriodPayment = data.payments.find(
+    (payment) => payment.paymentType === "Tədris müddəti"
+  );
+  const partPayment = data.payments.find(
+    (payment) => payment.paymentType === "10 hissəli"
+  );
+
   return (
     <>
       {mode === "desktop" ? (
         <tr className="class-table">
           <td>
             <div className="td-con">
-              {/* <div className="cell-number">{cellNumber}.</div> */}
               <div className="table-scroll-text">{data.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
-          {data?.payments.slice(0, 3).map((item) => (
-            <td key={item._id}>
-              <div className="td-con">
-                <div className="table-scroll-text">{item.payment || ""}</div>
-                <div>{item.paymentType === "Tədris müddəti" && `${item.part} hissəli `}</div>
-                <div className="right-fade"></div>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {`${
+                  wholePayment?.payment ? `${wholePayment?.payment} AZN` : ""
+                }`}{" "}
               </div>
-            </td>
-          ))}
-          {data?.payments.length < 3 && (
-            <td>
-              <div className="td-con">
-                <div className="table-scroll-text"></div>
-                <div className="right-fade"></div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {" "}
+                {`${
+                  teachingPeriodPayment?.payment
+                    ? `${teachingPeriodPayment?.payment} AZN - ${teachingPeriodPayment.part} hissəli`
+                    : ""
+                }`}{" "}
               </div>
-            </td>
-          )}
-          {data?.payments.length < 2 && (
-            <td>
-              <div className="td-con">
-                <div className="table-scroll-text"></div>
-                <div className="right-fade"></div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {`${partPayment?.payment ? `${partPayment?.payment} AZN` : ""}`}
               </div>
-            </td>
-          )}
-          {data?.payments.length < 1 && (
-            <td>
-              <div className="td-con">
-                <div className="table-scroll-text"></div>
-                <div className="right-fade"></div>
-              </div>
-            </td>
-          )}
+              <div className="right-fade"></div>
+            </div>
+          </td>
 
           {course?.power !== "only-show" ? (
             <td>
