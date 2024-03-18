@@ -462,7 +462,7 @@
   height: 85%;
 }
 
-@media screen and (min-width: 700px) and (max-width: 1280px) {
+/* @media screen and (min-width: 700px) and (max-width: 1280px) {
   .dashboard-main.desktop {
     display: none;
   }
@@ -470,7 +470,6 @@
     display: block;
   }
 
-  /* LESSON AMOUNT */
   .dashboard-main .lessons-amount {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -480,9 +479,7 @@
     margin-bottom: 0;
     margin-right: 8px;
   }
-  /* .dashboard-main .lessons-amount .content-box:last-child {
-    margin-right: 0;
-  } */
+ 
   .dashboard-main > .left .content-box,
   .dashboard-main > .right > .top .content-box,
   .dashboard-main .lessons-amount .content-box,
@@ -528,7 +525,6 @@
     margin: 8px 8px 0 0;
   }
 
-  /* FINANCE */
   .dashboard-main .finance-statictics {
     width: 100%;
   }
@@ -563,7 +559,6 @@
     margin-bottom: 12px;
   }
 
-  /* WHERE HEARD LESSON STATISTICS */
   .dashboard-main .finance-statictics .tablet-last-box .lesson-statistics {
     margin-bottom: 12px;
   }
@@ -612,7 +607,7 @@
   }
   
   
-}
+} */
 
 @media screen and (max-width: 700px) {
   .dashboard-main.desktop {

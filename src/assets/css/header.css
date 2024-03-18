@@ -7,6 +7,10 @@
 .main-header .header-content {
   display: flex;
 }
+.main-header.open{
+  z-index: 1;
+  position: relative;
+}
 
 .main-header .header-content .header-content-container {
   margin: 16px 0;

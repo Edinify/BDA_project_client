@@ -29,6 +29,9 @@ const GlobalHead = ({
   const { user } = useSelector((state) => state.user);
   const [showAddBtn, setShowAddBtn] = useState(false);
   const location = useLocation();
+  const {openSidebar} = useSelector(state=>state.openSidebar);
+
+
 
   useEffect(() => {
     if (user.role === "super-admin") {
@@ -43,7 +46,7 @@ const GlobalHead = ({
   }, []);
 
   return (
-    <div className="details-header">
+    <div className={`details-header ${openSidebar ? "open" :""} `}>
       <div className="container">
         <div className="details-header-container">
           <div

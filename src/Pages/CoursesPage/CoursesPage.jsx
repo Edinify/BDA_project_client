@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { COURSES_MODAL_ACTION_TYPE,COURSES_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
+import {
+  COURSES_MODAL_ACTION_TYPE,
+  COURSES_ALL_ACTIONS_TYPE,
+} from "../../redux/actions-type";
 import { getCoursesPaginationAction } from "../../redux/actions/coursesActions";
 import CoursesData from "./components/CoursesData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
-import { useCustomHook } from "../../globalComponents/GlobalFunctions/globalFunctions";
-
-import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
 
 const CoursePage = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const CoursePage = () => {
     }
   };
 
-    // ============
+  // ============
 
   const getNextCourse = () => {
     if (coursesSearchValues) {
@@ -38,9 +38,7 @@ const CoursePage = () => {
         getCoursesPaginationAction(courses?.length || 0, coursesSearchValues)
       );
     } else {
-      dispatch(
-        getCoursesPaginationAction(courses?.length || 0, "")
-      );
+      dispatch(getCoursesPaginationAction(courses?.length || 0, ""));
     }
   };
 
@@ -62,12 +60,11 @@ const CoursePage = () => {
       dispatch(getCoursesPaginationAction(0, ""));
     }
 
-    return () =>{
+    return () => {
       dispatch({
         type: COURSES_ALL_ACTIONS_TYPE.RESET_COURSES_PAGINATION,
       });
-    }
-
+    };
   }, []);
 
   return (

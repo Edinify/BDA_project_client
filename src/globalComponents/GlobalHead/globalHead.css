@@ -5,6 +5,9 @@
   top: 86px;
   z-index: 100;
 }
+.details-header.open{
+  z-index: 10;
+}
 
 .details-page.lesson-page .details-header {
   top: 0;
