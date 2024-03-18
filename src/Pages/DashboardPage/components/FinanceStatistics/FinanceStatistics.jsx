@@ -15,7 +15,7 @@ import { ReactComponent as ArrowRihgt3 } from "../../../../assets/icons/dashboar
 import { ReactComponent as ArrowRihgt4 } from "../../../../assets/icons/dashboard/arrow-right4.svg";
 import { Table } from "../../../../globalComponents/Table/Table";
 
-const FinanceStatistics = ({ dashboardKeys }) => {
+const FinanceStatistics = () => {
   const dispatch = useDispatch();
   const { dashboardFinanceData } = useSelector((state) => state.dashboardData);
 
@@ -98,7 +98,7 @@ const FinanceStatistics = ({ dashboardKeys }) => {
             </div>
           </div>
           <LessonStatistics />
-          <WhereHeard dashboardKeys={dashboardKeys} />
+          <WhereHeard  />
         </div>
 
         <div className="right">
