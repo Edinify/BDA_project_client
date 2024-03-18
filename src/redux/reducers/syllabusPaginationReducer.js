@@ -15,7 +15,6 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
       return {
         ...state,
         syllabusData: action.payload,
-        // loading: false,
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.GET_ACTIVE_SYLLABUS:
       return {
@@ -36,9 +35,10 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
         hasMore: !(action.payload.syllabusData.length < 10),
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.CREATE_SYLLABUS:
+      console.log(action.payload)
       return {
         ...state,
-        syllabusData:  [action.payload, ...state.syllabusData],
+        syllabusData:  [action.payload, ...state.syllabusData].sort((a, b) => a.orderNumber - b.orderNumber),
         totalLength: state.totalLength + 1,
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.RESET_SYLLABUS_PAGINATION:

@@ -160,6 +160,7 @@ export const getWorkersPaginationAction =
         payload: data,
       });
     } catch (error) {
+      console.log(error)
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -195,8 +196,10 @@ export const createWorkerAction = (workerData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/create", workerData);
-    // console.log(data);
-    dispatch(getWorkersPaginationAction(data.lastPage, ""));
+    dispatch({
+      type:  WORKER_ALL_ACTIONS_TYPE.CREATE_WORKER,
+      payload: data,
+    });
     dispatch({
       type: WORKER_MODAL_ACTION_TYPE.WORKER_OPEN_MODAL,
       payload: false,

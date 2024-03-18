@@ -24,11 +24,12 @@ export const eventsPaginationReducer = (state = initialState, action) => {
         loading: action.payload,
       };
     case EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_PAGINATION:
-      return {
+       return {
         ...state,
         events: [...state.events, ...action.payload.events],
         totalLength: action.payload.totalLength,
         hasMore: !(action.payload.students.length < 10),
+        
       };
     case EVENTS_ALL_ACTIONS_TYPE.CREATE_EVENT:
       return {

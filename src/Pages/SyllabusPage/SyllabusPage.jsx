@@ -68,7 +68,7 @@ const SyllabusPage = () => {
     e.preventDefault();
     if (selectedCourse) {
       dispatch(
-        getSyllabusPaginationAction(1, syllabusSearchValues, selectedCourse._id)
+        getSyllabusPaginationAction(0, syllabusSearchValues, selectedCourse._id)
       );
     } else {
       toast.error("İxtisas seçməlisiniz", {
@@ -86,9 +86,10 @@ const SyllabusPage = () => {
   };
 
   useEffect(() => {
+    console.log(selectedCourse._id)
     if (syllabusSearchValues) {
       dispatch(getSyllabusPaginationAction(0, syllabusSearchValues, ""));
-    } else {
+    } else if(selectedCourse._id) {
       dispatch(getSyllabusPaginationAction(0, "", ""));
     }
 

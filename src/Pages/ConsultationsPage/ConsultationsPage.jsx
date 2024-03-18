@@ -50,7 +50,7 @@ const ConsultationsPage = () => {
   const searchData = (e) => {
     e.preventDefault();
     dispatch(
-      getConsultationPaginationAction(1, consultationSearchValues, status)
+      getConsultationPaginationAction(0, consultationSearchValues, status)
     );
   };
 
@@ -69,21 +69,6 @@ const ConsultationsPage = () => {
     }
   }, [location.pathname]);
 
-  useEffect(() => {
-    if (consultationSearchValues) {
-      dispatch(
-        getConsultationPaginationAction(0, consultationSearchValues, status)
-      );
-    } else {
-      dispatch(getConsultationPaginationAction(0, "", status));
-    }
-
-    return () =>{
-      dispatch({
-        type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
-      });
-    }
-  }, []);
 
   return (
     <div className="details-page ">

@@ -29,7 +29,7 @@ const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
     "",
   ];
 
-  console.log(groupData,"group data")
+  // console.log(groupData,"group data")
 
   useEffect(() => {
     if (openMoreModal) {

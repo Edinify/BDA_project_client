@@ -19,7 +19,6 @@ const EventsPage = () => {
       payload: { data: { status: false }, openModal: true },
     });
   };
-
   // ============
 
   const getNextTeachers = () => {

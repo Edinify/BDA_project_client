@@ -35,7 +35,7 @@ const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
     }
   }, [openMoreModal]);
 
-  console.log(hasMore,"has more")
+  // console.log(hasMore,"has more")
 
   return (
     <>

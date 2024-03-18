@@ -26,9 +26,9 @@ export const consultationPaginationReducer = (state = initialState, action) => {
     case CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_PAGINATION:
       return {
         ...state,
-        consultationData: [...state.consultationData, ...action.payload.consultationData],
+        consultationData: [...state.consultationData, ...action.payload.consultations],
         totalLength: action.payload.totalLength,
-        hasMore: !(action.payload.consultationData.length < 10),
+        hasMore: !(action.payload.consultations.length < 10),
       };
     case CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION:
       return {

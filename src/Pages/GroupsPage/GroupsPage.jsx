@@ -28,7 +28,7 @@ const GroupsPage = () => {
 
       dispatch(
         getGroupsPaginationAction(
-          groupData?.length || 0,
+          0,
           groupsSearchValues, 
           status,
           courseId,

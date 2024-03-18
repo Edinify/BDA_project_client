@@ -14,7 +14,7 @@ const ConsultationData = ({  getNextConsultation, userData }) => {
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.consultationModal);
-
+    // console.log(consultationData)
   const tableHead = [
     "Tələbə",
     "Təlimçi",
@@ -32,7 +32,7 @@ const ConsultationData = ({  getNextConsultation, userData }) => {
     "",
   ];
 
-  console.log(consultationData, "consultation data");
+  // console.log(consultationData, "consultation data");
 
   useEffect(() => {
     if (openMoreModal) {
@@ -93,7 +93,7 @@ const ConsultationData = ({  getNextConsultation, userData }) => {
             </InfiniteScroll>
           </div>
 
-          <div className="details-list-tablet with-more">
+          {/* <div className="details-list-tablet with-more">
             {consultationData?.map((student, i) => (
               <ConsultationCard
                 key={i}
@@ -104,7 +104,7 @@ const ConsultationData = ({  getNextConsultation, userData }) => {
                 consultation={userData}
               />
             ))}
-          </div>
+          </div> */}
         </>
     </>
   );

@@ -74,6 +74,7 @@ export const getEventsPaginationAction =
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}`
       );
+      console.log(data)
       dispatch({
         type: EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_PAGINATION,
         payload: data,

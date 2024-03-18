@@ -9,8 +9,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const EventsData = ({ userData, eventPageNum, getNextTeachers }) => {
-  const { events, hasMore } = useSelector((state) => state.eventsPagination);
-  const { loading } = useSelector((state) => state.eventsPagination);
+  const { events, hasMore,totalLength } = useSelector((state) => state.eventsPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.coursesModal);
   const tableHead = [
@@ -36,7 +35,7 @@ const EventsData = ({ userData, eventPageNum, getNextTeachers }) => {
     }
   }, [openMoreModal]);
 
-  // console.log(userData);
+  console.log(totalLength);
   return (
     <>
         <>
