@@ -1,6 +1,7 @@
 import { EVENTS_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState = {
+  data:[],
   events: [],
   totalLength:0,
   hasMore: true,
@@ -28,7 +29,7 @@ export const eventsPaginationReducer = (state = initialState, action) => {
         ...state,
         events: [...state.events, ...action.payload.events],
         totalLength: action.payload.totalLength,
-        hasMore: !(action.payload.students.length < 10),
+        hasMore: !(action.payload.events.length < 10),
         
       };
     case EVENTS_ALL_ACTIONS_TYPE.CREATE_EVENT:
