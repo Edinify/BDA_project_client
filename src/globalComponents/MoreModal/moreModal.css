@@ -141,9 +141,14 @@
   transition: 0.3s;
   font-size: 16px;
   font-weight: 600;
+
 }
 .more-modal .confirm-btns .cancel{
   background-color: var(--error-600);
+}
+.confirm-btns .confirm.disabled{
+  cursor: unset;
+  background-color: #b29bff;
 }
 
 @media screen and (max-width: 1280px) {

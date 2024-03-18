@@ -118,7 +118,7 @@ const WorkerCard = ({
                 <p>{data.email ? data.email : "boş"}</p>
               </li>
               <li>
-                <span>Telefon nömrəsi:</span>
+                <span>Mobil nömrə:</span>
                 <p>{data.phone ? data.phone : "boş"}</p>
               </li>
               <li>

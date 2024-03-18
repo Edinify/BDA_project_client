@@ -566,3 +566,27 @@ export const cancelStudentChangesAction =
       dispatch(studentModalLoading(false));
     }
   };
+
+export const downloadContractAction = async ({
+  fullName,
+  studentId,
+  groupId,
+}) => {
+  try {
+    const response = await API.get(
+      `/contract?studentId=${studentId}&groupId=${groupId}`,
+      { responseType: "blob" }
+    );
+
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    });
+
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fullName || "";
+    a.click();
+    window.URL.revokeObjectURL(url);
+  } catch (error) {}
+};

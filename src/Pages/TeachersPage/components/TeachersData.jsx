@@ -22,7 +22,7 @@ const TeachersData = ({ teacherPageNum, getNextTeachers, userData }) => {
     { id: 3, label: "Seriya" },
     { id: 4, label: "Doğum tarixi" },
     { id: 5, label: "Email" },
-    { id: 6, label: "Telefon nömrəsi" },
+    { id: 6, label: "Mobil nömrə" },
     { id: 7, label: "Fənn" },
     { id: 8, label: "Qoşulma tarixi" },
     { id: 9, label: "Status" },

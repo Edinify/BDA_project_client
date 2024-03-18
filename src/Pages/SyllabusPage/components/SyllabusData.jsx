@@ -66,7 +66,6 @@ const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
               />
             ))}
           </div>
-
         </>
     </>
   );

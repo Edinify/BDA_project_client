@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./updateDeleteModal.css";
 import { useDispatch, useSelector } from "react-redux";
 import { FUNC_COMPONENT_ACTION_TYPE } from "../../../redux/actions-type";
 import { ReactComponent as MoreIcon } from "../../../assets/icons/more.svg";
@@ -7,7 +6,7 @@ import DeleteItemModal from "../DeleteItemModal/DeleteItemModal";
 import { downloadContractAction } from "../../../redux/actions/studentsActions";
 import { MdOutlineFileDownload } from "react-icons/md";
 
-const UpdateDeleteModal = ({
+export const UpdateDeleteModal = ({
   updateItem = () => {},
   deleteItem = () => {},
   openMoreModal,
@@ -21,7 +20,6 @@ const UpdateDeleteModal = ({
   const { funcComp } = useSelector((state) => state.funcComponent);
   const { user } = useSelector((state) => state.user);
   const [updateBtn, setUpdateBtn] = useState(false);
-  const [contractBtn, setContractBtn] = useState(false);
   const [confirmBtn, setConfirmBtn] = useState(false);
   const [changesBtn, setChangesBtn] = useState(false);
   const [paymentsBtn, setPaymentsBtn] = useState(false);
@@ -74,10 +72,6 @@ const UpdateDeleteModal = ({
       if (profil === "tuitionFee") {
         setPaymentsBtn(true);
       }
-
-      if (profil === "students") {
-        setContractBtn(true);
-      }
     } else if (user?.role === "worker") {
       const power = user?.profiles?.find(
         (item) => item.profile === profil
@@ -86,7 +80,6 @@ const UpdateDeleteModal = ({
       if (power === "all") {
         setConfirmBtn(true);
         setDeleteBtn(true);
-        setContractBtn(true);
       }
 
       if (power === "update" && profil !== "tuitionFee") {
@@ -189,6 +182,18 @@ const UpdateDeleteModal = ({
             </h4>
           )}
 
+          <h4 className="confirm" onClick={downloadContract}>
+            Müqavilə
+          </h4>
+          {/*
+            {profil !== "syllabus" &&
+              profil !== "lessonTable" &&
+              profil !== "sales" &&
+              profil !== "careers" && (
+                <h4 className="confirm" onClick={() => openMoreModal()}>
+                  Ətraflı
+                </h4>
+              )} */}
           {deleteBtn && profil !== "careers" && profil !== "tuitionFee" && (
             <h4
               className={`delete-func ${dataType === "branches" ? "only" : ""}`}
@@ -198,20 +203,7 @@ const UpdateDeleteModal = ({
             </h4>
           )}
 
-          {contractBtn && (
-            <h4
-              className="confirm"
-              onClick={downloadContract}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "10px",
-              }}
-            >
-              <span>Müqavilə</span>
-              <MdOutlineFileDownload style={{}} />
-            </h4>
-          )}
+          <MdOutlineFileDownload />
         </>
       </div>
       {showDeleteModal && (
@@ -223,5 +215,3 @@ const UpdateDeleteModal = ({
     </div>
   );
 };
-
-export default UpdateDeleteModal;

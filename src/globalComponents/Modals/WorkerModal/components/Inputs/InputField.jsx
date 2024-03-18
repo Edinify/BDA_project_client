@@ -45,7 +45,7 @@ export default function InputField({
     },
     {
       inputName: "phone",
-      label: "Telefon nömrəsi",
+      label: "Mobil nömrə",
       type: "tel",
       marginTop: "24px",
       marginBottom: "0",
