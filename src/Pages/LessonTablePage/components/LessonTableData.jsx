@@ -19,6 +19,8 @@ const LessonTableData = ({ pageNum, getPageNumber, userData }) => {
   const [students, setStudents] = useState({ data: [], lessonId: "" });
   const [updatedResultData, setUpdatedResultData] = useState("");
 
+
+
   const tableHead =
     userData?.power === "only-show"
       ? ["Dərs günü", "Dərs saatı", "Mövzu", "Müəllim", "Status", "Tələbələr"]

@@ -55,8 +55,6 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
     });
   };
 
-
-
   return (
     <div
       className={`global-category-dropdown dropdown-name data-status ${deviceType} ${

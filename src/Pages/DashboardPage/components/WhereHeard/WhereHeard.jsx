@@ -4,7 +4,7 @@ import DateDropdown from "../../../../globalComponents/DateDropdown/DateDropdown
 import DateRangeModal from "../../../../globalComponents/Modals/DateRangeModal/DateRangeModal";
 import { getDashboardAdvertisingAction } from "../../../../redux/actions/dashboardAction";
 
-const WhereHeard = ({ dashboardKeys ,type}) => {
+const WhereHeard = ({ type}) => {
   const dispatch = useDispatch();
   const { advertising } = useSelector((state) => state.dashboardData);
   const [openCalendar, setOpenCalendar] = useState(false);
@@ -20,7 +20,9 @@ const WhereHeard = ({ dashboardKeys ,type}) => {
     dispatch(getDashboardAdvertisingAction("", "", option.key));
   };
 
-  // console.log(advertising, "bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+
+  console.log(advertising,"advertisinggg")
+
 
   return (
     <>

@@ -97,7 +97,7 @@ const WorkerCard = ({
             </div>
           </td>
 
-          <td>
+          <td  >
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}

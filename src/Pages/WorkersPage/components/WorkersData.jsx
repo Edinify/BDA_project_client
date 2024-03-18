@@ -26,34 +26,33 @@ const WorkersData = ({ userData, pageNum, getNextTeachers }) => {
     "",
   ];
 
+  
   return (
     <>
-        <>
-          {openMoreModal && (
-            <MoreModal
-              userData={userData}
-              setOpenMoreModal={setOpenMoreModal}
-              type="worker"
-            />
-          )}
-          {openConfirmModal && (
-            <ConfirmModal
-              setOpenConfirmModal={setOpenConfirmModal}
-              type="workers"
-            />
-          )}
-           <InfiniteScroll
-            style={{ overflowX: "none" }}
-            dataLength={workers.length}
-            next={getNextTeachers}
-            hasMore={totalLength > workers.length || loading}
-            loader={<SmallLoading />}
-            endMessage={
-              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
-            }
-            height={550}
-            scrollThreshold={0.7}
-          >
+      <>
+        {openMoreModal && (
+          <MoreModal
+            userData={userData}
+            setOpenMoreModal={setOpenMoreModal}
+            type="worker"
+          />
+        )}
+        {openConfirmModal && (
+          <ConfirmModal
+            setOpenConfirmModal={setOpenConfirmModal}
+            type="workers"
+          />
+        )}
+        <InfiniteScroll
+          style={{ overflowX: "none" }}
+          dataLength={workers.length}
+          next={getNextTeachers}
+          hasMore={totalLength > workers.length || loading}
+          loader={<SmallLoading />}
+          endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
+          height={550}
+          scrollThreshold={0.7}
+        >
           <table
             className={`details-table  teacher-table ${
               userData.power === "only-show" ? "only-show" : "update"
@@ -81,23 +80,23 @@ const WorkersData = ({ userData, pageNum, getNextTeachers }) => {
               ))}
             </tbody>
           </table>
-          </InfiniteScroll>
+        </InfiniteScroll>
 
-          <div className="details-list-tablet">
-            {workers?.map((teacher, i) => (
-              <WorkerCard
-                key={i}
-                data={teacher}
-                worker={userData}
-                mode="tablet"
-                cellNumber={i + 1 + (pageNum - 1) * 10}
-                setOpenMoreModal={setOpenMoreModal}
-                setOpenConfirmModal={setOpenConfirmModal}
-              />
-            ))}
-          </div>
+        <div className="details-list-tablet">
+          {workers?.map((teacher, i) => (
+            <WorkerCard
+              key={i}
+              data={teacher}
+              worker={userData}
+              mode="tablet"
+              cellNumber={i + 1 + (pageNum - 1) * 10}
+              setOpenMoreModal={setOpenMoreModal}
+              setOpenConfirmModal={setOpenConfirmModal}
+            />
+          ))}
+        </div>
 
-          {/* {totalPages > 1 && (
+        {/* {totalPages > 1 && (
             <div className="pages-pagination">
               <Pagination
                 current={pageNum}
@@ -107,7 +106,7 @@ const WorkersData = ({ userData, pageNum, getNextTeachers }) => {
               />
             </div>
           )} */}
-        </>
+      </>
     </>
   );
 };

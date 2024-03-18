@@ -6,7 +6,7 @@ import { TableColumns } from "./TableColumns";
 const TableBody = () => {
   const { lessonHours } = useCustomHook();
 
-  console.log(lessonHours, "lllllllllllllllllllllll");
+  // console.log(lessonHours, "lllllllllllllllllllllll");
 
   return (
     <tbody>
