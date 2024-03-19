@@ -2,6 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { STUDENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { deleteStudentAction } from "../../../redux/actions/studentsActions";
+import moment from "moment";
+import "moment/locale/az";
+import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 
 const StudentCard = ({
   data,
@@ -17,6 +20,17 @@ const StudentCard = ({
   );
   const { studentSearchValues } = useSelector((state) => state.searchValues);
   const { studentStatus } = useSelector((state) => state.studentStatus);
+
+  const { whereComingList, whereSendList } = useCustomHook();
+
+  const whereComingName = whereComingList.find(
+    (item) => item.key === data?.whereComing
+  )?.name;
+
+  const whereSendName = whereSendList.find(
+    (item) => item.key === data?.whereSend
+  )?.name;
+
   let courses =
     Array.isArray(data?.courses) && data?.courses.length > 0
       ? data.courses
@@ -24,12 +38,12 @@ const StudentCard = ({
             return `${course.name}`;
           })
           .join(", ")
-      : "boş";
+      : "";
   const listData = [
     { key: "İxtisas", value: courses },
     {
       key: "Mobil nömrə",
-      value: data?.phone ? data?.phone : "boş",
+      value: data?.phone ? data?.phone : "",
     },
   ];
 
@@ -40,7 +54,7 @@ const StudentCard = ({
             return `${group.group.name}`;
           })
           .join(",")
-      : "boş";
+      : "";
 
   const updateItem = (modalType) => {
     dispatch({
@@ -89,7 +103,23 @@ const StudentCard = ({
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{courses}</div>
+              <div className="table-scroll-text">{data?.fin || ""}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data?.seria || ""}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "150px" }}>
+              <div className="table-scroll-text">
+                {data?.birthday
+                  ? moment(data.birthday).locale("az").format("DD MMMM YYYY ")
+                  : "" || ""}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -100,7 +130,28 @@ const StudentCard = ({
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text">{whereSendName || ""}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text">
+                {whereComingName || ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text">{courses}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text">
                 {groupName}
                 {/* {data.groups.map((item) => (
@@ -147,11 +198,11 @@ const StudentCard = ({
             <div className="groups-list">
               <h2>Qruplar</h2>
               <ul>
-                {data.groups.map((groupsData) => (
+                {data?.groups?.map((groupsData) => (
                   <li key={groupsData.group._id}>
-                    <span>Qrup adı: {groupsData.group.name}</span>
-                    Qrup İxtisası: {groupsData.group.course.name} <br />
-                    Ümumi ödəniş: {groupsData.totalAmount} <br />
+                    <span>Qrup adı: {groupsData?.group?.name}</span>
+                    Qrup İxtisası: {groupsData?.group?.course?.name} <br />
+                    Ümumi ödəniş: {groupsData?.totalAmount} <br />
                   </li>
                 ))}
               </ul>

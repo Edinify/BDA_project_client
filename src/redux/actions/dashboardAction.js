@@ -303,13 +303,13 @@ export const getDashboardAdvertisingAction =
           endDate || ""
         }&monthCount=${monthCount || ""}`
       );
-      // console.log(data,"where")
+      console.log(data,"where")
       dispatch({
         type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_ADVERTISING,
         payload: data,
       });
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;

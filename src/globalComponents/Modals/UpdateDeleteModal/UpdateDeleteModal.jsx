@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { FUNC_COMPONENT_ACTION_TYPE } from "../../../redux/actions-type";
 import { ReactComponent as MoreIcon } from "../../../assets/icons/more.svg";
 import DeleteItemModal from "../DeleteItemModal/DeleteItemModal";
+import { downloadContractAction } from "../../../redux/actions/studentsActions";
+import { MdOutlineFileDownload } from "react-icons/md";
 
 const UpdateDeleteModal = ({
   updateItem = () => {},
@@ -17,8 +19,10 @@ const UpdateDeleteModal = ({
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { funcComp } = useSelector((state) => state.funcComponent);
+  console.log(funcComp);
   const { user } = useSelector((state) => state.user);
   const [updateBtn, setUpdateBtn] = useState(false);
+  const [contractBtn, setContractBtn] = useState(false);
   const [confirmBtn, setConfirmBtn] = useState(false);
   const [changesBtn, setChangesBtn] = useState(false);
   const [paymentsBtn, setPaymentsBtn] = useState(false);
@@ -49,12 +53,20 @@ const UpdateDeleteModal = ({
     }
   };
 
+  const downloadContract = () => {
+    downloadContractAction({
+      fullName: data?.fullName,
+      studentId: data?._id,
+      groupId: data?.groups[0]?.group?._id,
+    });
+  };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [handleClickOutside]);
 
   useEffect(() => {
     if (user?.role === "super-admin") {
@@ -62,6 +74,10 @@ const UpdateDeleteModal = ({
       setDeleteBtn(true);
       if (profil === "tuitionFee") {
         setPaymentsBtn(true);
+      }
+
+      if (profil === "students") {
+        setContractBtn(true);
       }
     } else if (user?.role === "worker") {
       const power = user?.profiles?.find(
@@ -71,6 +87,7 @@ const UpdateDeleteModal = ({
       if (power === "all") {
         setConfirmBtn(true);
         setDeleteBtn(true);
+        setContractBtn(true);
       }
 
       if (power === "update" && profil !== "tuitionFee") {
@@ -100,7 +117,9 @@ const UpdateDeleteModal = ({
     ) {
       setUpdateBtn(true);
     }
-  });
+  }, []);
+
+  // console.log("update delete modal");
   return (
     <div className="func-component">
       {badge && (
@@ -118,7 +137,7 @@ const UpdateDeleteModal = ({
       )}
       <MoreIcon className="more-icon" onMouseDown={handleToggleModal} />
       <div
-        className={`delete-update-modal ${
+        className={`delete-update-modal  ${
           funcComp === data._id ? "active" : ""
         }`}
         ref={modalRef}
@@ -173,20 +192,27 @@ const UpdateDeleteModal = ({
             </h4>
           )}
 
-          {profil !== "syllabus" &&
-            profil !== "lessonTable" &&
-            profil !== "sales" &&
-            profil !== "careers" && (
-              <h4 className="confirm" onClick={() => openMoreModal()}>
-                Ətraflı
-              </h4>
-            )}
           {deleteBtn && profil !== "careers" && profil !== "tuitionFee" && (
             <h4
               className={`delete-func ${dataType === "branches" ? "only" : ""}`}
               onClick={() => setShowDeleteModal(true)}
             >
               Sil
+            </h4>
+          )}
+
+          {contractBtn && (
+            <h4
+              className="confirm"
+              onClick={downloadContract}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "10px",
+              }}
+            >
+              <span>Müqavilə</span>
+              <MdOutlineFileDownload style={{}} />
             </h4>
           )}
         </>

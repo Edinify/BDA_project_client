@@ -1,7 +1,7 @@
 .more-modal {
   border-radius: 8px 0 0 0;
   /* padding: 12px 0 16px 12px; */
-  z-index: 100;
+  z-index: 1000;
   position: fixed;
   right: 0;
   bottom: 0;
@@ -141,9 +141,14 @@
   transition: 0.3s;
   font-size: 16px;
   font-weight: 600;
+
 }
 .more-modal .confirm-btns .cancel{
   background-color: var(--error-600);
+}
+.confirm-btns .confirm.disabled{
+  cursor: unset;
+  background-color: #b29bff;
 }
 
 @media screen and (max-width: 1280px) {

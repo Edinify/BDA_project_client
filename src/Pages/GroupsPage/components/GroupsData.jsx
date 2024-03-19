@@ -5,11 +5,13 @@ import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const GroupsData = ({ pageNum, getPageNumber, userData }) => {
+const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const dispatch = useDispatch();
-  const { groupData, totalPages, loading } = useSelector(
+  const { groupData, hasMore } = useSelector(
     (state) => state.groupsPagination
   );
   const { openConfirmModal } = useSelector((state) => state.groupModal);
@@ -17,12 +19,17 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
   const tableHead = [
     "Qrup adı",
     "İxtisas",
+    "Müəllimlər",
     "Təlimçilər",
+    "Tələbələr",
     "Dərs günləri",
     "Başlama tarixi",
     "Bitmə tarixi",
+    "Status",
     "",
   ];
+
+  // console.log(groupData,"group data")
 
   useEffect(() => {
     if (openMoreModal) {
@@ -34,9 +41,6 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
         <>
           {openMoreModal && (
             <MoreModal
@@ -47,33 +51,44 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
           )}
 
           {openConfirmModal && <ConfirmModal type="groups" />}
-
-          <table
-            className={`details-table  teacher-table ${
-              userData.power === "only-show" ? "only-show" : "update"
-            } `}
+          <InfiniteScroll
+            dataLength={groupData.length}
+            next={getNextTeachers}
+            hasMore={hasMore}
+            loader={<SmallLoading />}
+            endMessage={
+              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
+            }
+            height={500}
+            scrollThreshold={0.8}
           >
-            <thead>
-              <tr>
-                {tableHead.map((head, i) => (
-                  <th key={i}>{head}</th>
-                ))}
-              </tr>
-            </thead>
+            <table
+              className={`details-table  teacher-table ${
+                userData.power === "only-show" ? "only-show" : "update"
+              } `}
+            >
+              <thead>
+                <tr>
+                  {tableHead.map((head, i) => (
+                    <th key={i}>{head}</th>
+                  ))}
+                </tr>
+              </thead>
 
-            <tbody>
-              {groupData?.map((teacher, i) => (
-                <GroupCard
-                  key={i}
-                  data={teacher}
-                  group={userData}
-                  mode="desktop"
-                  cellNumber={i + 1 + (pageNum - 1) * 10}
-                  setOpenMoreModal={setOpenMoreModal}
-                />
-              ))}
-            </tbody>
-          </table>
+              <tbody>
+                {groupData?.map((teacher, i) => (
+                  <GroupCard
+                    key={i}
+                    data={teacher}
+                    group={userData}
+                    mode="desktop"
+                    cellNumber={i + 1}
+                    setOpenMoreModal={setOpenMoreModal}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </InfiniteScroll>
 
           <div className="details-list-tablet">
             {groupData?.map((teacher, i) => (
@@ -82,24 +97,12 @@ const GroupsData = ({ pageNum, getPageNumber, userData }) => {
                 data={teacher}
                 group={userData}
                 mode="tablet"
-                cellNumber={i + 1 + (pageNum - 1) * 10}
+                cellNumber={i + 1}
                 setOpenMoreModal={setOpenMoreModal}
               />
             ))}
           </div>
-
-          {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={pageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )}
         </>
-      )}
     </>
   );
 };

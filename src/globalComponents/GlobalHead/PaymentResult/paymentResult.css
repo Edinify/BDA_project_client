@@ -4,6 +4,11 @@
   padding: 0 16px;
 }
 
+.payment-result-container.lesson-status{
+  width: 60%;
+  margin: 10px 0;
+}
+
 .payment-result-container .payment-res-content {
   display: flex;
   flex-direction: column;

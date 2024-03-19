@@ -1,27 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import StudentCard from "./StudentCard";
-import { Pagination } from "antd";
-import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
-import LoadingBtn from "../../../globalComponents/Loading/components/LoadingBtn/LoadingBtn";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const StudentsData = ({
-  studentPageNum,
-  getPageNumber,
-  userData,
-  getNextStudents,
-}) => {
-  const { students, totalLength } = useSelector(
+const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
+  const { students, hasMore } = useSelector(
     (state) => state.studentsPagination
   );
-  const { loading } = useSelector((state) => state.studentsPagination);
+ 
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.studentsModal);
-  const tableHead = ["Tələbə adı", "İxtisas", "Mobil nömrə", "Qrup", "Q/B", ""];
+  const tableHead = [
+    "Tələbə adı",
+    "Fin",
+    "Seriya",
+    "Doğum günü",
+    "Mobil nömrə",
+    "Bizi haradan eşidiblər?",
+    "Haradan gəliblər",
+    "İxtisas",
+    "Qrup",
+    "Q/B",
+    "",
+  ];
 
   useEffect(() => {
     if (openMoreModal) {
@@ -30,6 +34,8 @@ const StudentsData = ({
       document.body.style.overflowY = "overlay";
     }
   }, [openMoreModal]);
+
+  // console.log(hasMore,"has more")
 
   return (
     <>
@@ -42,20 +48,15 @@ const StudentsData = ({
       )}
 
       {openConfirmModal && <ConfirmModal type="student" />}
+
       <InfiniteScroll
-        style={{
-          overflow: "none",
-        }}
         dataLength={students.length}
         next={getNextStudents}
-        hasMore={totalLength > students.length || loading}
+        hasMore={hasMore}
         loader={<SmallLoading />}
-        endMessage={
-          <p style={{ textAlign: "center", fontSize: "20px" }}>
-            {/* <p>Tamamlandı</p> */}
-          </p>
-        }
-        scrollThreshold={1}
+        endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
+        height={550}
+        scrollThreshold={0.7}
       >
         <table
           style={{ marginBottom: "50px" }}
@@ -79,7 +80,7 @@ const StudentsData = ({
                 mode="desktop"
                 student={userData}
                 setOpenMoreModal={setOpenMoreModal}
-                cellNumber={i + 1 + (studentPageNum - 1) * 10}
+                cellNumber={i + 1}
               />
             ))}
           </tbody>
@@ -94,21 +95,10 @@ const StudentsData = ({
             mode="tablet"
             student={userData}
             setOpenMoreModal={setOpenMoreModal}
-            cellNumber={i + 1 + (studentPageNum - 1) * 10}
+            cellNumber={i + 1}
           />
         ))}
       </div>
-
-      {/* {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={studentPageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )} */}
     </>
   );
 };

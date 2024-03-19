@@ -68,16 +68,13 @@ const eventModalOpen = (value) => ({
 });
 
 export const getEventsPaginationAction =
-  (pageNumber, searchQuery) => async (dispatch) => {
+  (length, searchQuery) => async (dispatch) => {
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}`
+        `/pagination/?length=${length}&searchQuery=${searchQuery}`
       );
-      dispatch({
-        type: EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_LAST_PAGE,
-        payload: pageNumber,
-      });
+      console.log(data)
       dispatch({
         type: EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_PAGINATION,
         payload: data,
@@ -95,14 +92,10 @@ export const getEventsPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}`
+            `/pagination/?length=${length}&searchQuery=${searchQuery}`
           );
           dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_LAST_PAGE,
-            payload: pageNumber,
-          });
-          dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION,
+            type: EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_PAGINATION,
             payload: data,
           });
         } catch (error) {
@@ -125,8 +118,10 @@ export const createEventAction = (eventData) => async (dispatch) => {
 
   try {
     const { data } = await API.post("/", eventData);
-
-    dispatch(getEventsPaginationAction(data.lastPage, ""));
+    dispatch({
+      type: EVENTS_ALL_ACTIONS_TYPE.CREATE_EVENT,
+      payload: data,
+    });
     dispatch(eventModalOpen(false));
     toastSuccess("Yeni tədbir yaradıldı");
   } catch (error) {

@@ -2,9 +2,8 @@ import { CAREER_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState = {
   careerData: [],
-  totalPages: 1,
-  totalLength:0,
-  lastPage: "",
+  currentLength: 0,
+  hasMore: true,
   loading: false,
 };
 
@@ -30,26 +29,22 @@ export const careerPaginationReducer = (state = initialState, action) => {
     case CAREER_ALL_ACTIONS_TYPE.GET_CAREER_PAGINATION:
       return {
         ...state,
-        careerData: action.payload.careers,
-        totalPages: action.payload.totalPages,
+        careerData: [...state.careerData, ...action.payload.careers],
+        currentLength: action.payload.currentLength,
+        hasMore: !(action.payload.careers.length < 10),
       };
-      case CAREER_ALL_ACTIONS_TYPE.RESET_CAREER_PAGINATION:
-        return{
-          ...state,
-          careerData:[],
-          totalLength:0
-        }
-
-    case CAREER_ALL_ACTIONS_TYPE.CREATE_CAREER:
+    case CAREER_ALL_ACTIONS_TYPE.RESET_CAREER_PAGINATION:
       return {
         ...state,
-        careerData: [...state.careerData, action.payload],
+        careerData: [],
+        hasMore: true,
+        currentLength: 0,
       };
     case CAREER_ALL_ACTIONS_TYPE.UPDATE_CAREER:
       return {
         ...state,
-        careerData: state.careerData.map((teacher) =>
-          teacher._id === action.payload._id ? action.payload : teacher
+        careerData: state.careerData.map((student) =>
+          student._id === action.payload._id ? action.payload : student
         ),
       };
     case CAREER_ALL_ACTIONS_TYPE.DELETE_CAREER:

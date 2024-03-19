@@ -26,7 +26,7 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
       type: DROPDOWN_GROUP_ACTIONS_TYPE.SELECT_GROUP,
       payload: group,
     });
-    dispatch(getLessonTablePaginationAction(1, "", group._id, "", ""));
+    dispatch(getLessonTablePaginationAction(0, "", group._id, "", ""));
   };
 
   useEffect(() => {
@@ -45,7 +45,15 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
         type: DROPDOWN_GROUP_ACTIONS_TYPE.CLEAR_GROUP,
       });
     };
-  }, [location]);
+  }, [dispatch]);
+
+  const handleSelectAll = () => {
+    setDropdownOpen(false);
+    dispatch({
+      type: DROPDOWN_GROUP_ACTIONS_TYPE.SELECT_GROUP,
+      payload: "",
+    });
+  };
 
   return (
     <div
@@ -65,6 +73,9 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
 
       <div className="dropdown-body">
         <ul>
+          {location.pathname === "/career" && (
+            <li onClick={handleSelectAll}>Hamısı</li>
+          )}
           {dataList.map((item) => (
             <li key={item._id} onClick={() => getCourse(item)}>
               {selectedGroup === item._id && <CheckIcon />}

@@ -5,6 +5,7 @@ const initialState = {
   studentsByCourse: [],
   studentsByMore: [],
   totalLength: 0,
+  hasMore: true,
   lastPage: "",
   loading: false,
   loadingAll: false,
@@ -40,12 +41,14 @@ export const StudentsPaginationReducer = (state = initialState, action) => {
         ...state,
         students: [...state.students, ...action.payload.students],
         totalLength: action.payload.totalLength,
+        hasMore: !(action.payload.students.length < 10),
       };
     case STUDENTS_ALL_ACTIONS_TYPE.RESET_STUDENT_PAGINATION:
       return {
         ...state,
         students: [],
         totalLength: 0,
+        hasMore: true,
       };
     case STUDENTS_ALL_ACTIONS_TYPE.STUDENT_LOADING:
       return {
@@ -58,7 +61,6 @@ export const StudentsPaginationReducer = (state = initialState, action) => {
         loadingAll: action.payload,
       };
     case STUDENTS_ALL_ACTIONS_TYPE.CREATE_STUDENT:
-      console.log(action.payload, "hhhddddddddddddddd");
       return {
         ...state,
         students: [action.payload, ...state.students],

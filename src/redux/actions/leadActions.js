@@ -64,19 +64,15 @@ const modalLoading = (loadingValue) => ({
 });
 
 export const getLeadPaginationAction =
-  (page = 1, startDate = "", endDate = "", monthCount = "") =>
+  (length, startDate = "", endDate = "", monthCount = "") =>
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
-        `/pagination?page=${page}&startDate=${startDate}&endDate=${endDate}&monthCount=${monthCount}
+        `/pagination?length=${length}&startDate=${startDate}&endDate=${endDate}&monthCount=${monthCount}
         `
       );
 
-      dispatch({
-        type: LEAD_ACTION_TYPE.GET_LEAD_LAST_PAGE,
-        payload: page,
-      });
       dispatch({
         type: LEAD_ACTION_TYPE.GET_LEAD_PAGINATION,
         payload: data,
@@ -96,19 +92,10 @@ export const getLeadPaginationAction =
           );
 
           const { data } = await API.get(
-            `/?page=${page}&startDate=${startDate || ""}&endDate=${
+            `/?length=${length}&startDate=${startDate || ""}&endDate=${
               endDate || ""
             }&monthCount=${monthCount || ""}`
           );
-
-          dispatch({
-            type: INCOME_ACTION_TYPE.GET_INCOME_LAST_PAGE,
-            payload: page,
-          });
-          dispatch({
-            type: INCOME_ACTION_TYPE.GET_INCOME_PAGINATION,
-            payload: data,
-          });
         } catch (error) {
           // console.log(error);
           if (error?.response?.status === 401) {

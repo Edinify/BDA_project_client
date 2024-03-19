@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getConsultationPaginationAction } from "../../redux/actions/consultationsActions";
-import { CONSULTATION_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import {
+  CONSULTATION_MODAL_ACTION_TYPE,
+  CONSULTATION_ALL_ACTIONS_TYPE,
+} from "../../redux/actions-type";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import ConsultationData from "./components/ConsultationData";
 import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
@@ -10,7 +13,9 @@ import { useLocation } from "react-router-dom";
 const ConsultationsPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { lastPage } = useSelector((state) => state.consultationPagination);
+  const { totalLength, loading, consultationData } = useSelector(
+    (state) => state.consultationPagination
+  );
   const { consultationSearchValues } = useSelector(
     (state) => state.searchValues
   );
@@ -22,19 +27,31 @@ const ConsultationsPage = () => {
     userData.role !== "super-admin"
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
-  const getPageNumber = (pageNumber) => {
+  // ============
+
+  const getNextConsultation = () => {
+    if (loading) return;
+
     if (consultationSearchValues) {
       dispatch(
         getConsultationPaginationAction(
-          pageNumber,
+          consultationData?.length || 0,
           consultationSearchValues,
           status
         )
       );
     } else {
-      dispatch(getConsultationPaginationAction(pageNumber, "", status));
+      dispatch(
+        getConsultationPaginationAction(
+          consultationData?.length || 0,
+          "",
+          status
+        )
+      );
     }
   };
+
+  // ========
 
   const openModal = () => {
     dispatch({
@@ -44,30 +61,36 @@ const ConsultationsPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
+
+    dispatch({
+      type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
+    });
+
     dispatch(
-      getConsultationPaginationAction(1, consultationSearchValues, status)
+      getConsultationPaginationAction(0, consultationSearchValues, status)
     );
   };
 
   useEffect(() => {
     if (consultationSearchValues) {
+      dispatch({
+        type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
+      });
       dispatch(
-        getConsultationPaginationAction(1, consultationSearchValues, status)
+        getConsultationPaginationAction(0, consultationSearchValues, status)
       );
     } else {
-      dispatch(getConsultationPaginationAction(1, "", status));
+      dispatch({
+        type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
+      });
+      dispatch(getConsultationPaginationAction(0, "", status));
     }
+    return () => {
+      dispatch({
+        type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
+      });
+    };
   }, [location.pathname]);
-
-  useEffect(() => {
-    if (consultationSearchValues) {
-      dispatch(
-        getConsultationPaginationAction(1, consultationSearchValues, status)
-      );
-    } else {
-      dispatch(getConsultationPaginationAction(1, "", status));
-    }
-  }, []);
 
   return (
     <div className="details-page ">
@@ -79,6 +102,7 @@ const ConsultationsPage = () => {
         addBtn={status === "appointed" ? true : false}
         statusType="consultation"
         profile={"consultation"}
+        count={totalLength}
       />
 
       <HeadTabs
@@ -89,8 +113,7 @@ const ConsultationsPage = () => {
       />
 
       <ConsultationData
-        pageNum={lastPage}
-        getPageNumber={getPageNumber}
+        getNextConsultation={getNextConsultation}
         userData={userData}
       />
     </div>

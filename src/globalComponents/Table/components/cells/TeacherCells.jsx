@@ -16,7 +16,7 @@ const TeacherCells = ({ time, groups, index }) => {
               (lesson) => lesson.day == index && lesson.time === time.time
             );
 
-            console.log(date, "dateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+            // console.log(date, "dateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
             return (
               <li

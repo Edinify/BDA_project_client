@@ -1,40 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLessonTablePaginationAction } from "../../redux/actions/lessonTableActions";
-import { LESSON_TABLE_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import {
+  LESSON_TABLE_ALL_ACTIONS_TYPE,
+  LESSON_TABLE_MODAL_ACTION_TYPE,
+} from "../../redux/actions-type";
 import LessonTableData from "./components/LessonTableData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import { toast } from "react-toastify";
 
 const LessonTablePage = () => {
   const dispatch = useDispatch();
-  const { lastPage,status } = useSelector((state) => state.lessonTablePagination);
-  const { startDate,endDate } = useSelector((state) => state.datepicker);
-  // console.log(startDate,endDate)
+  const { status, lessonTableData, loading } = useSelector(
+    (state) => state.lessonTablePagination
+  );
+  const { startDate, endDate } = useSelector((state) => state.datepicker);
   const { lessonTableSearchValues } = useSelector(
     (state) => state.searchValues
   );
-  let userData = JSON.parse(localStorage.getItem("userData"));
-  userData =
-    userData.role !== "super-admin"
-      ? userData.profiles
-      : JSON.parse(localStorage.getItem("userData"));
+
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
-  const filterLessons = () => dispatch(
-    getLessonTablePaginationAction(
-      1,
-      lessonTableSearchValues,
-      selectedGroup._id,
-      startDate,
-      endDate,
-      status
-    )
-  )
-  const getPageNumber = (pageNumber) => {
+
+  const filterLessons = () => {
+    dispatch({ type: LESSON_TABLE_ALL_ACTIONS_TYPE.RESET_LESSON_TABLE });
+
+    dispatch(
+      getLessonTablePaginationAction(
+        0,
+        lessonTableSearchValues,
+        selectedGroup._id,
+        startDate,
+        endDate,
+        status
+      )
+    );
+  };
+
+  const getNextLessons = () => {
+    if (loading) return;
+
     if (lessonTableSearchValues) {
       dispatch(
         getLessonTablePaginationAction(
-          pageNumber,
+          lessonTableData?.length || 0,
           lessonTableSearchValues,
           selectedGroup._id,
           startDate,
@@ -44,12 +52,18 @@ const LessonTablePage = () => {
       );
     } else {
       dispatch(
-        getLessonTablePaginationAction(pageNumber, "", selectedGroup._id,startDate,
-        endDate,
-        status)
+        getLessonTablePaginationAction(
+          lessonTableData?.length || 0,
+          "",
+          selectedGroup._id,
+          startDate,
+          endDate,
+          status
+        )
       );
     }
   };
+
   const openModal = () => {
     if (selectedGroup) {
       const students = selectedGroup.students.map((student) => ({
@@ -77,11 +91,15 @@ const LessonTablePage = () => {
       });
     }
   };
+
   const searchData = (e) => {
     e.preventDefault();
+
+    dispatch({ type: LESSON_TABLE_ALL_ACTIONS_TYPE.RESET_LESSON_TABLE });
+
     dispatch(
       getLessonTablePaginationAction(
-        1,
+        0,
         lessonTableSearchValues,
         selectedGroup._id,
         startDate,
@@ -91,6 +109,7 @@ const LessonTablePage = () => {
     );
   };
 
+  console.log("lesson table page");
   return (
     <div className="details-page lesson-page ">
       <GlobalHead
@@ -104,11 +123,7 @@ const LessonTablePage = () => {
         profile={"lessonTable"}
       />
 
-      <LessonTableData
-        pageNum={lastPage}
-        getPageNumber={getPageNumber}
-        userData={userData}
-      />
+      {selectedGroup && <LessonTableData getNextLessons={getNextLessons} />}
     </div>
   );
 };

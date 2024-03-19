@@ -35,7 +35,6 @@ const CourseCard = ({
     updateItem("more");
     setOpenMoreModal(true);
   };
-
   const openConfirmModal = () => {
     dispatch({
       type: COURSES_MODAL_ACTION_TYPE.OPEN_COURSE_CONFIRM_MODAL,
@@ -46,18 +45,59 @@ const CourseCard = ({
       },
     });
   };
-  // // console.log(course)
+
+  const wholePayment = data.payments.find(
+    (payment) => payment.paymentType === "Tam"
+  );
+  const teachingPeriodPayment = data.payments.find(
+    (payment) => payment.paymentType === "Tədris müddəti"
+  );
+  const partPayment = data.payments.find(
+    (payment) => payment.paymentType === "10 hissəli"
+  );
+
   return (
     <>
       {mode === "desktop" ? (
         <tr className="class-table">
           <td>
             <div className="td-con">
-              {/* <div className="cell-number">{cellNumber}.</div> */}
-              <div className="table-scroll-text">{data.name}</div>
+              <div className="table-scroll-text">{cellNumber}. {data.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {`${
+                  wholePayment?.payment ? `${wholePayment?.payment} AZN` : ""
+                }`}{" "}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {" "}
+                {`${
+                  teachingPeriodPayment?.payment
+                    ? `${teachingPeriodPayment?.payment} AZN - ${teachingPeriodPayment.part} hissəli`
+                    : ""
+                }`}{" "}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {`${partPayment?.payment ? `${partPayment?.payment} AZN` : ""}`}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+
           {course?.power !== "only-show" ? (
             <td>
               <UpdateDeleteModal

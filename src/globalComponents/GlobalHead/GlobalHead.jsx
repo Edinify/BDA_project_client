@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./globalHead.css";
 import { ReactComponent as PlusIcon } from "../../assets/icons/Plus.svg";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { StatusDropdown } from "./StatusDropdown/StatusDropdown";
 import Search from "./Search/Search";
 import { CoursesDropdown } from "./CoursesDropdown/CoursesDropdown";
 import { GroupsDropdown } from "./GroupsDropdown/GroupsDropdown";
-import { DatePick } from "../../globalComponents/DatePicker/DatePicker";
-import { TeachersDropdown } from "./TeachersDropdown/TeachersDropdown";
-import { ReactComponent as HalfCircleICon } from "../../assets/icons/filter/half-circle-svgrepo-com.svg";
-import { PaymentStatusDropdown } from "./PaymentStatusDropdown/PaymentStatusDropdown";
-import PaymentResult from "./PaymentResult/PaymentResult";
+import LessonTableHead from "./LessonTableHead/LessonTableHead";
+import TeacherPageHead from "./TeacherPageHead/TeacherPageHead";
+import StudentPageHead from "./StudentPageHead/StudentPageHead";
+import CareerPageHead from "./CareerPageHead/CareerPageHead";
+import GroupsPageHead from "./GroupsPageHead/GroupsPageHead";
+import TuitionPageHead from "./TuitionPageHead/TuitionPageHead";
 
 const GlobalHead = ({
   searchData,
@@ -23,6 +24,7 @@ const GlobalHead = ({
   search = true,
   addBtn = true,
   profile,
+  count,
 }) => {
   const { user } = useSelector((state) => state.user);
   const [showAddBtn, setShowAddBtn] = useState(false);
@@ -70,163 +72,46 @@ const GlobalHead = ({
                   )}
 
               {statusType === "teacher" && (
-                <div className="teacher-header-filter-container">
-                  <div className="teahcer-page-add-btn">
-                    <button className="add-detail" onClick={openModal}>
-                      <PlusIcon />
-                      Əlavə et
-                    </button>
-                  </div>
-                  <div className="teacher-header-filter">
-                    {search && (
-                      <Search
-                        searchData={searchData}
-                        dataSearchValues={dataSearchValues}
-                        className="search-input-con desktop"
-                        DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
-                      />
-                    )}
-                    <StatusDropdown statusType="teacher" deviceType="desktop" />
-                    <CoursesDropdown deviceType="desktop" />
-                    <GroupsDropdown deviceType="desktop" />
-
-                    <div className="lesson-table-btn-container teacher ">
-                      <button className="add-detail" onClick={() => filter()}>
-                        Tətbiq et
-                      </button>
-                    </div>
-                    <div className="circle-icon">
-                      <p className="filter-count">10</p>
-                      <HalfCircleICon />
-                    </div>
-                  </div>
-                </div>
+                <TeacherPageHead
+                  searchData={searchData}
+                  DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+                  dataSearchValues={dataSearchValues}
+                  filter={filter}
+                  openModal={openModal}
+                  search={search}
+                  count={count}
+                />
               )}
-              {/* {statusType === "student" && (
-                <StatusDropdown statusType="student" deviceType="desktop" />
-              )} */}
+
               {statusType === "syllabus" && (
                 <CoursesDropdown deviceType="desktop" />
               )}
               {statusType === "student" && (
-                <div className="student-filter-header">
-                  <CoursesDropdown deviceType="desktop" />
-                  <GroupsDropdown deviceType="desktop" />
-                  <div className="lesson-table-btn-container student ">
-                    <button className="add-detail" onClick={() => filter()}>
-                      Tətbiq et
-                    </button>
-                  </div>
-                  <div className="circle-icon">
-                    <p className="filter-count">10</p>
-                    <HalfCircleICon />
-                  </div>
-                </div>
-
-                // <StatusDropdown statusType="student" deviceType="mobile" />
+                <StudentPageHead filter={filter} count={count} />
               )}
-              {statusType === "career" && (
-                <div className="career-filter-header">
-                  <CoursesDropdown deviceType="desktop" />
-                  <GroupsDropdown deviceType="desktop" />
-                  <div className="lesson-table-btn-container student ">
-                    <button className="add-detail" onClick={() => filter()}>
-                      Tətbiq et
-                    </button>
-                  </div>
-                </div>
-
-              )}
-              {statusType === "groups" && (
-                <div className="groups-filter-header">
-                  <CoursesDropdown deviceType="desktop" />
-                  <TeachersDropdown deviceType="desktop" />
-                  <div className="lesson-table-btn-container groups ">
-                    <button className="add-detail" onClick={() => filter()}>
-                      Tətbiq et
-                    </button>
-                  </div>
-                  <div className="circle-icon">
-                    <p className="filter-count">10</p>
-                    <HalfCircleICon />
-                  </div>
-                </div>
-              )}
+              {statusType === "career" && <CareerPageHead filter={filter} />}
+              {statusType === "groups" && <GroupsPageHead filter={filter} count={count} />}
 
               {statusType === "tutionFee" && (
-                <div className="tuition-fee-container">
-                  <div className="tuition-fee-payment-container">
-                    <PaymentResult />
-                  </div>
-                  <div className="tution-fee-filter-header">
-                    {search && (
-                      <Search
-                        searchData={searchData}
-                        dataSearchValues={dataSearchValues}
-                        className="search-input-con desktop"
-                        DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
-                      />
-                    )}
-                    <CoursesDropdown deviceType="desktop" />
-                    <GroupsDropdown deviceType="desktop" />
-                    <PaymentStatusDropdown
-                      deviceType="desktop"
-                      statusType="tution-fee"
-                    />
-                    <div className="lesson-table-btn-container tution ">
-                      <button className="add-detail" onClick={() => filter()}>
-                        Tətbiq et
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                <TuitionPageHead
+                  search={search}
+                  filter={filter}
+                  searchData={searchData}
+                  dataSearchValues={dataSearchValues}
+                  DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+                />
               )}
               {statusType === "lesson-table" && (
-                <div className="lesson-page-header-container">
-                  {showAddBtn && (
-                    <div className="lesson-page-add-btn">
-                      <button className="add-detail" onClick={openModal}>
-                        <PlusIcon />
-                        Əlavə et
-                      </button>
-                    </div>
-                  )}
-                  <div className="lesson-page-filter-container">
-                    <div className="lesson-table-header-content">
-                      <div className="lesson-table-status">
-                        <GroupsDropdown deviceType="desktop" />
-                        <StatusDropdown
-                          statusType="lesson-table"
-                          deviceType="desktop"
-                        />
-                      </div>
-                      <div className="lesson-table-datepick">
-                        <DatePick deviceType="desktop" />
-                      </div>
-                    </div>
-                    <div className="lesson-page-apply-btn">
-                      <div className="lesson-table-btn-container lesson-page ">
-                        <button className="add-detail" onClick={() => filter()}>
-                          Tətbiq et
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <LessonTableHead
+                  showAddBtn={showAddBtn}
+                  openModal={openModal}
+                  filter={filter}
+                />
               )}
             </div>
             {addBtn && showAddBtn && (
               <div className="lesson-table-add-btn">
-                {
-                  statusType === "lesson-table" && null
-                  // <button className="add-detail" onClick={openModal}>
-                  //   <PlusIcon />
-                  //   Əlavə et
-                  // </button>
-                  // <div className="lesson-table-btn-container desktop ">
-                  //   <button className="add-detail">Tətbiq et</button>
-                  // </div>
-                }
+                {statusType === "lesson-table" && null}
                 {statusType === "teacher" && null}
                 {statusType !== "lesson-table" && statusType !== "teacher" && (
                   <button className="add-detail" onClick={openModal}>
@@ -246,13 +131,6 @@ const GlobalHead = ({
             <GroupsDropdown deviceType="mobile" />
           )}
         </div>
-        {/* {statusType === "lesson-table" && (
-          <div className="apply-btn">
-            <button className="add-detail" onClick={openModal}>
-              Əlavə et
-            </button>
-          </div>
-        )} */}
       </div>
     </div>
   );

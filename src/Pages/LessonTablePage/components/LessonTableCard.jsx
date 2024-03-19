@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LESSON_TABLE_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
@@ -6,7 +5,7 @@ import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActio
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
 
-const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
+const LessonTableCard = ({ data, mode = "desktop", setStudents }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
   const { lessonTableData, lastPage } = useSelector(
@@ -15,7 +14,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
   const { lessonTableSearchValues } = useSelector(
     (state) => state.searchValues
   );
-  const lessonDay = data.date
+  const lessonDay = data?.date
     ? `${moment(data.date).locale("az").format("DD.MM.YYYY")}, ${
         weeksArrFullName[
           moment(new Date(data.date)).day() === 7
@@ -37,7 +36,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
       value: lessonDay,
     },
     { key: "Dərs saatı", value: data.time },
-    { key: "İxtisas", value: data.group.course.name },
+    { key: "İxtisas", value: data.group?.course?.name },
     {
       key: "Mövzu",
       value: `${data?.topic?.orderNumber}. ${data?.topic?.name}`,
@@ -56,6 +55,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
       className: "student-count",
     },
   ];
+
   const updateItem = (modalType) => {
     dispatch({
       type: LESSON_TABLE_MODAL_ACTION_TYPE.GET_LESSON_TABLE_MODAL,
@@ -93,7 +93,8 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
     });
   };
 
-  console.log(data, "pow");
+  // console.log(data, "pow");
+  console.log("lesson table card");
 
   return (
     <>
@@ -115,7 +116,11 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
             <div className="td-con">
               <div className="table-scroll-text">{`${
                 data?.topic?.orderNumber || ""
-              }. ${data?.topic?.name || ""}`}</div>
+              }. ${
+                data?.topic?.name === "Praktika"
+                  ? "Lab day"
+                  : data?.topic?.name || ""
+              }`}</div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -162,7 +167,6 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
               deleteItem={deleteItem}
               data={data}
               openConfirmModal={openConfirmModal}
-              state={lesson}
               profil={"lessonTable"}
             />
           </td>
@@ -184,18 +188,15 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
               ))}
             </ul>
           </div>
-          {lesson?.power === "only-show" ? null : (
-            <div className="right">
-              <UpdateDeleteModal
-                updateItem={updateItem}
-                deleteItem={deleteItem}
-                data={data}
-                state={lesson}
-                openConfirmModal={openConfirmModal}
-                profil={"lessonTable"}
-              />
-            </div>
-          )}
+          <div className="right">
+            <UpdateDeleteModal
+              updateItem={updateItem}
+              deleteItem={deleteItem}
+              data={data}
+              openConfirmModal={openConfirmModal}
+              profil={"lessonTable"}
+            />
+          </div>
         </div>
       )}
     </>

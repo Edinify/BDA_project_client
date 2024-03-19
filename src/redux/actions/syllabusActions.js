@@ -67,6 +67,10 @@ const toastError = (message) => {
     theme: "colored",
   });
 };
+const setLoadingSyllabusAction = (loadingValue) => ({
+  type: SYLLABUS_ALL_ACTIONS_TYPE.SYLLABUS_LOADING,
+  payload: loadingValue,
+});
 const pageLoading = (loadingValue) => ({
   type: SYLLABUS_ALL_ACTIONS_TYPE.SYLLABUS_LOADING,
   payload: loadingValue,
@@ -148,22 +152,18 @@ export const getSyllabusActiveAction = () => async (dispatch) => {
 };
 
 export const getSyllabusPaginationAction =
-  (pageNumber, searchQuery, courseId) => async (dispatch) => {
-    dispatch(pageLoading(true));
+  (length, searchQuery, courseId) => async (dispatch) => {
+    dispatch(setLoadingSyllabusAction(true));
     try {
       const { data } = await API.get(
-        `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${courseId}`
+        `/pagination?length=${length}&searchQuery=${searchQuery}&courseId=${courseId || ""}`
       );
-      dispatch({
-        type: SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_LAST_PAGE,
-        payload: pageNumber,
-      });
-
       dispatch({
         type: SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_PAGINATION,
         payload: data,
       });
     } catch (error) {
+      console.log(error)
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -176,13 +176,8 @@ export const getSyllabusPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${courseId}`
+            `/pagination?length=${length}&searchQuery=${searchQuery}&courseId=${courseId}`
           );
-
-          dispatch({
-            type: SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_LAST_PAGE,
-            payload: pageNumber,
-          });
 
           dispatch({
             type: SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_PAGINATION,
@@ -196,7 +191,7 @@ export const getSyllabusPaginationAction =
         }
       }
     } finally {
-      dispatch(pageLoading(false));
+      dispatch(setLoadingSyllabusAction(false));
     }
   };
 
@@ -204,9 +199,13 @@ export const createSyllabusAction = (syllabusData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/", syllabusData);
-    dispatch(
-      getSyllabusPaginationAction(data.lastPage, "", syllabusData.courseId)
-    );
+    // dispatch(
+    //   getSyllabusPaginationAction(data.lastPage, "", syllabusData.courseId)
+    // );
+    dispatch({
+      type: SYLLABUS_ALL_ACTIONS_TYPE.CREATE_SYLLABUS,
+      payload: data,
+    });
     dispatch({
       type: SYLLABUS_MODAL_ACTION_TYPE.SYLLABUS_OPEN_MODAL,
       payload: false,

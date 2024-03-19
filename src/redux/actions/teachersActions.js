@@ -3,6 +3,7 @@ import {
   MENTOR_TYPES,
   TEACHER_ALL_ACTIONS_TYPE,
   TEACHERS_MODAL_ACTION_TYPE,
+  
 } from "../actions-type";
 import { toast } from "react-toastify";
 import { logoutAction } from "./auth";
@@ -41,6 +42,11 @@ REGISTERAPI.interceptors.request.use((req) => {
   }
 
   return req;
+});
+
+const setLoadingStudentsAction = (loadingValue) => ({
+  type:TEACHER_ALL_ACTIONS_TYPE.TEACHER_LOADING,
+  payload: loadingValue,
 });
 
 const toastSuccess = (message) => {
@@ -179,29 +185,20 @@ export const getTeachersByCourseId = (courseId) => async (dispatch) => {
 };
 
 export const getTeachersPaginationAction =
-  (pageNumber, searchQuery, status = "all", role,courseId) =>
+  (length, searchQuery, status = "all", role,courseId) =>
   async (dispatch) => {
-    dispatch(pageLoading(true));
+    console.log(length)
+    dispatch(setLoadingStudentsAction(true));
     try {
-      // console.log(pageNumber, "pageNumber");
-      // console.log(searchQuery, "searchQuery");
-      // console.log(status, "status");
-      // console.log(role, "role");
-
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
+        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
       );
-
-      dispatch({
-        type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_LAST_PAGE,
-        payload: pageNumber,
-      });
-
       dispatch({
         type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_PAGINATION,
         payload: data,
       });
     } catch (error) {
+      console.log(error)
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -214,14 +211,9 @@ export const getTeachersPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}`
+            `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
           );
-
-          dispatch({
-            type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_LAST_PAGE,
-            payload: pageNumber,
-          });
-
+    
           dispatch({
             type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_PAGINATION,
             payload: data,
@@ -242,29 +234,13 @@ export const createTeacherAction =
   (teacherData, pathName) => async (dispatch) => {
     dispatch(modalLoading(true));
 
-    // console.log(pathName, "path name");
     try {
       const { data } = await API.post("/", teacherData);
 
-      if (pathName === "/teachers" && data.teacher.role === "teacher") {
-        dispatch(
-          getTeachersPaginationAction(
-            data.lastPage,
-            "",
-            "all",
-            data.teacher.role
-          )
-        );
-      } else if (pathName !== "/teachers" && data.teacher.role === "mentor") {
-        dispatch(
-          getTeachersPaginationAction(
-            data.lastPage,
-            "",
-            "all",
-            data.teacher.role
-          )
-        );
-      }
+      dispatch({
+        type: TEACHER_ALL_ACTIONS_TYPE.CREATE_TEACHER,
+        payload: data,
+      });
 
       dispatch({
         type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,

@@ -7,13 +7,11 @@ import CoursesPage from "../Pages/CoursesPage/CoursesPage";
 import TuitionFeePage from "../Pages/TuitionFeePage/TuitionFee";
 import ConsultationsPage from "../Pages/ConsultationsPage/ConsultationsPage";
 import GroupsPage from "../Pages/GroupsPage/GroupsPage";
-import WorkersPage from "../Pages/WorkersPage/WorkersPage";
 import CareerPage from "../Pages/CareerPage/CareerPage";
 import SyllabusPage from "../Pages/SyllabusPage/SyllabusPage";
 import LessonTablePage from "../Pages/LessonTablePage/LessonTablePage";
 import EventsPage from "../Pages/EventsPage/EventsPage";
-import { useSelector } from "react-redux";
-import Loading from "../globalComponents/Loading/Loading";
+import {Dashboard} from "../Pages/DashboardPage/DashboardPage"
 
 const WorkersPanelRoute = (user) => {
   // const { user } = useSelector((state) => state.user);
@@ -21,6 +19,9 @@ const WorkersPanelRoute = (user) => {
     (profilesObj, item) => ({ ...profilesObj, [item.profile]: true }),
     {}
   );
+
+
+  console.log(profiles,"profiles")
 
 
 
@@ -76,6 +77,7 @@ const WorkersPanelRoute = (user) => {
         <Route path="/lessonTable" element={<LessonTablePage />} />
       )}
       {profiles?.events && <Route path="/events" element={<EventsPage />} />}
+      {profiles?.dashboard &&  <Route path="/dashboard" element={<Dashboard />} />}
     </>
   );
 };

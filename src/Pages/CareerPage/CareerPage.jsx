@@ -10,13 +10,17 @@ import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const CareerPage = () => {
   const dispatch = useDispatch();
-  const { lastPage } = useSelector((state) => state.careerPagination);
+  const { currentLength, loading } = useSelector(
+    (state) => state.careerPagination
+  );
+
   const { careerSearchValues } = useSelector((state) => state.searchValues);
   const { courseId } = useSelector((state) => state.studentStatus);
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
 
   const careerFilter = () => {
     dispatch({ type: CAREER_ALL_ACTIONS_TYPE.RESET_CAREER_PAGINATION });
+
     dispatch(
       getCareerPaginationAction(
         0,
@@ -27,11 +31,13 @@ const CareerPage = () => {
     );
   };
 
-  const getPageNumber = (pageNumber) => {
+  const getNextCareers = () => {
+    if (loading) return;
+
     if (careerSearchValues) {
       dispatch(
         getCareerPaginationAction(
-          pageNumber,
+          currentLength || 0,
           careerSearchValues,
           courseId,
           selectedGroup._id
@@ -39,7 +45,12 @@ const CareerPage = () => {
       );
     } else {
       dispatch(
-        getCareerPaginationAction(pageNumber, "", courseId, selectedGroup._id)
+        getCareerPaginationAction(
+          currentLength || 0,
+          "",
+          courseId,
+          selectedGroup._id
+        )
       );
     }
   };
@@ -51,9 +62,12 @@ const CareerPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
+
+    dispatch({ type: CAREER_ALL_ACTIONS_TYPE.RESET_CAREER_PAGINATION });
+
     dispatch(
       getCareerPaginationAction(
-        1,
+        0,
         careerSearchValues,
         courseId,
         selectedGroup._id
@@ -84,7 +98,7 @@ const CareerPage = () => {
         statusType="career"
         filter={careerFilter}
       />
-      <CareerData pageNum={lastPage} getPageNumber={getPageNumber} />
+      <CareerData getNextCareers={getNextCareers} />
     </div>
   );
 };

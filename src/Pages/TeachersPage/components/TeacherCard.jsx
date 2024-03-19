@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { TEACHERS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteTeacherAction } from "../../../redux/actions/teachersActions";
+import moment from "moment";
+import "moment/locale/az";
 const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
   const dispatch = useDispatch();
   const { teachers, lastPage } = useSelector(
@@ -19,12 +21,12 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
             return `${course.name}`;
           })
           .join(", ")
-      : "boş";
+      : "";
 
   const listData = [
     { key: "Fənn", value: courses },
     { key: "Email", value: data.email },
-    { key: "Telefon nömrəsi", value: data.phone },
+    { key: "Mobil nömrə", value: data.phone },
     { key: "Email", value: data.email },
   ];
 
@@ -66,30 +68,71 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
       {mode === "desktop" ? (
         <tr>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{width:"200px"}} >
               <div className="cell-number">{cellNumber}.</div>
               <div className="table-scroll-text">{data?.fullName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
-              <div className="table-scroll-text">{courses}</div>
+            <div className="td-con" style={{width:"120px"}}>
+              <div className="table-scroll-text">{data?.fin}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{width:"120px"}}>
+              <div className="table-scroll-text">{data?.seria}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con"style={{width:"200px"}} >
+              <div className="table-scroll-text">
+                {data?.birthday
+                  ? moment(data.birthday).locale("az").format("DD MMMM YYYY ")
+                  : "" || ""}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td className="email">
-            <div className="td-con">
+            <div className="td-con" style={{width:"200px"}} >
               <div className="table-scroll-text">{data?.email}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{width:"200px"}} >
               <div className="table-scroll-text phone">{data?.phone}</div>
               <div className="right-fade"></div>
             </div>
           </td>
+          <td>
+            <div className="td-con" style={{width:"200px"}}>
+              <div className="table-scroll-text">{courses}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{width:"200px"}} >
+              <div className="table-scroll-text phone">
+                {data?.createdAt
+                  ? moment(data.createdAt).locale("az").format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.status ? "Aktiv" : "Deaktiv"}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+         
 
           <td>
             <UpdateDeleteModal
