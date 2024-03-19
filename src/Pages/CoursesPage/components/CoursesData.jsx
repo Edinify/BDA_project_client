@@ -9,7 +9,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
-  const { courses, totalLength,loading } = useSelector(
+  const { courses, hasMore} = useSelector(
     (state) => state.coursesPagination
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
@@ -47,7 +47,7 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
             style={{ overflowX: "none" }}
             dataLength={courses.length}
             next={getNextCourse}
-            hasMore={totalLength > courses.length || loading}
+            hasMore={hasMore}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -75,7 +75,7 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
                     data={courseName}
                     course={userData}
                     mode="desktop"
-                    cellNumber={i + 1 + (coursePageNum - 1) * 10}
+                    cellNumber={i + 1}
                     setOpenMoreModal={setOpenMoreModal}
                   />
                 ))}
@@ -91,7 +91,7 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
                 data={courseName}
                 course={userData}
                 mode="mobile"
-                cellNumber={i + 1 + (coursePageNum - 1) * 10}
+                cellNumber={i + 1}
                 setOpenMoreModal={setOpenMoreModal}
               />
             ))}

@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 const ConsultationsPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { lastPage,consultationData } = useSelector((state) => state.consultationPagination);
+  const { totalLength,loading,consultationData } = useSelector((state) => state.consultationPagination);
   const { consultationSearchValues } = useSelector(
     (state) => state.searchValues
   );
@@ -22,34 +22,20 @@ const ConsultationsPage = () => {
     userData.role !== "super-admin"
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
-  const getPageNumber = (pageNumber) => {
-    if (consultationSearchValues) {
-      dispatch(
-        getConsultationPaginationAction(
-          pageNumber,
-          consultationSearchValues,
-          status
-        )
-      );
-    } else {
-      dispatch(getConsultationPaginationAction(pageNumber, "", status));
-    }
-  };
-
-
   // ============
 
   const getNextConsultation = () => {
+    if (loading) return;
     if (consultationSearchValues) {
       dispatch(
         getConsultationPaginationAction(
-          consultationData,
+          consultationData?.length || 0,
           consultationSearchValues,
           status
         )
       );
     } else {
-      dispatch(getConsultationPaginationAction(consultationData, "", status));
+      dispatch(getConsultationPaginationAction(consultationData?.length || 0, "", status));
     }
   };
 
@@ -65,24 +51,9 @@ const ConsultationsPage = () => {
   const searchData = (e) => {
     e.preventDefault();
     dispatch(
-      getConsultationPaginationAction(1, consultationSearchValues, status)
+      getConsultationPaginationAction(0, consultationSearchValues, status)
     );
   };
-
-  useEffect(() => {
-    if (consultationSearchValues) {
-      dispatch(
-        getConsultationPaginationAction(1, consultationSearchValues, status)
-      );
-    } else {
-      dispatch(getConsultationPaginationAction(1, "", status));
-    }
-    return () =>{
-      dispatch({
-        type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
-      });
-    }
-  }, [location.pathname]);
 
   useEffect(() => {
     if (consultationSearchValues) {
@@ -92,13 +63,13 @@ const ConsultationsPage = () => {
     } else {
       dispatch(getConsultationPaginationAction(0, "", status));
     }
-
     return () =>{
       dispatch({
         type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
       });
     }
-  }, []);
+  }, [location.pathname]);
+
 
   return (
     <div className="details-page ">
@@ -110,6 +81,7 @@ const ConsultationsPage = () => {
         addBtn={status === "appointed" ? true : false}
         statusType="consultation"
         profile={"consultation"}
+        count={totalLength}
       />
 
       <HeadTabs
@@ -120,7 +92,6 @@ const ConsultationsPage = () => {
       />
 
       <ConsultationData
-        pageNum={lastPage}
         getNextConsultation={getNextConsultation}
         userData={userData}
       />

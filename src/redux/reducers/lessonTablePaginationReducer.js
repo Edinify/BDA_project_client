@@ -2,10 +2,13 @@ import { LESSON_TABLE_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState = {
   lessonTableData: [],
-  totalPages: 1,
-  lastPage: "",
+  confirmedCount: 0,
+  cancelledCount: 0,
+  unviewedCount: 0,
+  totalCount: 0,
+  hasMore: true,
   loading: false,
-  status:""
+  status: "",
 };
 
 export const lessonTablePaginationReducer = (state = initialState, action) => {
@@ -18,8 +21,8 @@ export const lessonTablePaginationReducer = (state = initialState, action) => {
     case LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_TABLE_PAGINATION:
       return {
         ...state,
-        lessonTableData: action.payload.lessons,
-        totalPages: action.payload.totalPages
+        lessonTableData: [...state.lessonTableData, ...action.payload.lessons],
+        hasMore: !(action.payload.lessons.length < 10),
       };
 
     case LESSON_TABLE_ALL_ACTIONS_TYPE.CREATE_LESSON_TABLE:
@@ -34,6 +37,8 @@ export const lessonTablePaginationReducer = (state = initialState, action) => {
           teacher._id === action.payload._id ? action.payload : teacher
         ),
       };
+    case LESSON_TABLE_ALL_ACTIONS_TYPE.RESET_LESSON_TABLE:
+      return initialState;
     case LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE:
       return {
         ...state,

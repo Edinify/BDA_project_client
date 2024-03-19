@@ -134,7 +134,7 @@ const UpdateDeleteModal = ({
       )}
       <MoreIcon className="more-icon" onMouseDown={handleToggleModal} />
       <div
-        className={`delete-update-modal ${
+        className={`delete-update-modal  ${
           funcComp === data._id ? "active" : ""
         }`}
         ref={modalRef}

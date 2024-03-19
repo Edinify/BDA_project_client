@@ -35,7 +35,7 @@ const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
     }
   }, [openMoreModal]);
 
-  console.log(hasMore,"has more")
+  // console.log(hasMore,"has more")
 
   return (
     <>
@@ -95,7 +95,7 @@ const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
             mode="tablet"
             student={userData}
             setOpenMoreModal={setOpenMoreModal}
-            cellNumber={i + 1 + (studentPageNum - 1) * 10}
+            cellNumber={i + 1}
           />
         ))}
       </div>

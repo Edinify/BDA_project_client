@@ -8,12 +8,11 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const TeachersData = ({ teacherPageNum, getNextTeachers, userData }) => {
+const TeachersData = ({ getNextTeachers, userData }) => {
   const dispatch = useDispatch();
-  const { teachers, totalLength } = useSelector(
+  const { teachers, hasMore } = useSelector(
     (state) => state.teachersPagination
   );
-  const { loading } = useSelector((state) => state.teachersPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.teachersModal);
   const tableHead = [
@@ -52,7 +51,7 @@ const TeachersData = ({ teacherPageNum, getNextTeachers, userData }) => {
         <InfiniteScroll
           dataLength={teachers.length}
           next={getNextTeachers}
-          hasMore={teachers.length || loading}
+          hasMore={hasMore}
           loader={<SmallLoading />}
           endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
           height={550}
@@ -78,7 +77,7 @@ const TeachersData = ({ teacherPageNum, getNextTeachers, userData }) => {
                   data={teacher}
                   mode="desktop"
                   teacher={userData}
-                  cellNumber={i + 1 + (teacherPageNum - 1) * 10}
+                  cellNumber={i + 1}
                   setOpenMoreModal={setOpenMoreModal}
                 />
               ))}
@@ -93,7 +92,7 @@ const TeachersData = ({ teacherPageNum, getNextTeachers, userData }) => {
               data={teacher}
               mode="tablet"
               teacher={userData}
-              cellNumber={i + 1 + (teacherPageNum - 1) * 10}
+              cellNumber={i + 1}
               setOpenMoreModal={setOpenMoreModal}
             />
           ))}

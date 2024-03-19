@@ -6,7 +6,7 @@ import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActio
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
 
-const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
+const LessonTableCard = ({ data, mode, setStudents }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
   const { lessonTableData, lastPage } = useSelector(
@@ -95,6 +95,7 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
   };
 
   // console.log(data, "pow");
+  console.log("lesson table card");
 
   return (
     <>
@@ -167,7 +168,6 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
               deleteItem={deleteItem}
               data={data}
               openConfirmModal={openConfirmModal}
-              state={lesson}
               profil={"lessonTable"}
             />
           </td>
@@ -189,18 +189,15 @@ const LessonTableCard = ({ data, mode, setStudents, lesson }) => {
               ))}
             </ul>
           </div>
-          {lesson?.power === "only-show" ? null : (
-            <div className="right">
-              <UpdateDeleteModal
-                updateItem={updateItem}
-                deleteItem={deleteItem}
-                data={data}
-                state={lesson}
-                openConfirmModal={openConfirmModal}
-                profil={"lessonTable"}
-              />
-            </div>
-          )}
+          <div className="right">
+            <UpdateDeleteModal
+              updateItem={updateItem}
+              deleteItem={deleteItem}
+              data={data}
+              openConfirmModal={openConfirmModal}
+              profil={"lessonTable"}
+            />
+          </div>
         </div>
       )}
     </>

@@ -156,7 +156,7 @@ export const getSyllabusPaginationAction =
     dispatch(setLoadingSyllabusAction(true));
     try {
       const { data } = await API.get(
-        `/pagination?length=${length}&searchQuery=${searchQuery}&courseId=${courseId}`
+        `/pagination?length=${length}&searchQuery=${searchQuery}&courseId=${courseId || ""}`
       );
       dispatch({
         type: SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_PAGINATION,
@@ -191,7 +191,7 @@ export const getSyllabusPaginationAction =
         }
       }
     } finally {
-      dispatch(pageLoading(false));
+      dispatch(setLoadingSyllabusAction(false));
     }
   };
 
@@ -199,9 +199,13 @@ export const createSyllabusAction = (syllabusData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/", syllabusData);
-    dispatch(
-      getSyllabusPaginationAction(data.lastPage, "", syllabusData.courseId)
-    );
+    // dispatch(
+    //   getSyllabusPaginationAction(data.lastPage, "", syllabusData.courseId)
+    // );
+    dispatch({
+      type: SYLLABUS_ALL_ACTIONS_TYPE.CREATE_SYLLABUS,
+      payload: data,
+    });
     dispatch({
       type: SYLLABUS_MODAL_ACTION_TYPE.SYLLABUS_OPEN_MODAL,
       payload: false,

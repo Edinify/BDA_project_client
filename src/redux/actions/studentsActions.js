@@ -253,7 +253,7 @@ export const getStudentsPaginationAction =
   async (dispatch) => {
     dispatch(setLoadingStudentsAction(true));
 
-    console.log(searchQuery, "ssssssssssssssssssssss");
+    // console.log(searchQuery, "ssssssssssssssssssssss");
     try {
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}`

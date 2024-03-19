@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 const SyllabusPage = () => {
   const dispatch = useDispatch();
-  const { lastPage, syllabusData } = useSelector(
+  const { totalLength,loading, syllabusData } = useSelector(
     (state) => state.syllabusPagination
   );
   const { syllabusSearchValues } = useSelector((state) => state.searchValues);
@@ -24,6 +24,7 @@ const SyllabusPage = () => {
       : JSON.parse(localStorage.getItem("userData"));
 
   const getNextSyllabus = () => {
+    if (loading) return;
     if (syllabusSearchValues) {
       dispatch(
         getSyllabusPaginationAction(
@@ -67,7 +68,7 @@ const SyllabusPage = () => {
     e.preventDefault();
     if (selectedCourse) {
       dispatch(
-        getSyllabusPaginationAction(1, syllabusSearchValues, selectedCourse._id)
+        getSyllabusPaginationAction(0, syllabusSearchValues, selectedCourse._id)
       );
     } else {
       toast.error("İxtisas seçməlisiniz", {
@@ -85,9 +86,10 @@ const SyllabusPage = () => {
   };
 
   useEffect(() => {
+    console.log(selectedCourse._id)
     if (syllabusSearchValues) {
       dispatch(getSyllabusPaginationAction(0, syllabusSearchValues, ""));
-    } else {
+    } else if(selectedCourse._id) {
       dispatch(getSyllabusPaginationAction(0, "", ""));
     }
 
@@ -105,10 +107,11 @@ const SyllabusPage = () => {
         DATA_SEARCH_VALUE={"SYLLABUS_SEARCH_VALUE"}
         dataSearchValues={syllabusSearchValues}
         statusType="syllabus"
+        count={totalLength}
       />
 
       <SyllabusData
-        pageNum={lastPage}
+        // pageNum={lastPage}
         getNextSyllabus={getNextSyllabus}
         userData={userData}
       />
