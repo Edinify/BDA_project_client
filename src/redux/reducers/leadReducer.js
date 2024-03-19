@@ -3,8 +3,7 @@ import { LEAD_ACTION_TYPE } from "../actions-type";
 const initialState = {
   leads: [],
   loading: false,
-  totalPages: 1,
-  lastPage: 1,
+  hasMore: true,
 };
 
 export const leadReducer = (state = initialState, action) => {
@@ -19,8 +18,8 @@ export const leadReducer = (state = initialState, action) => {
     case LEAD_ACTION_TYPE.GET_LEAD_PAGINATION:
       return {
         ...state,
-        leads: action.payload.leads,
-        totalPages: action.payload.totalPages,
+        leads: [...state.leads, ...action.payload.leads],
+        hasMore: !(action.payload.leads.length < 10),
       };
 
     case LEAD_ACTION_TYPE.UPDATE_LEAD:
@@ -34,8 +33,10 @@ export const leadReducer = (state = initialState, action) => {
     case LEAD_ACTION_TYPE.CREATE_LEAD:
       return {
         ...state,
-        leads: [...state?.leads, action.payload],
+        leads: [action.payload, ...state.leads],
       };
+    case LEAD_ACTION_TYPE.RESET_LEAD:
+      return initialState;
     case LEAD_ACTION_TYPE.DELETE_LEAD:
       return {
         ...state,

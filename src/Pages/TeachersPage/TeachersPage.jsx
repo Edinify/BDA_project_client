@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeachersPaginationAction } from "../../redux/actions/teachersActions";
-import { TEACHERS_MODAL_ACTION_TYPE,TEACHER_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
+import {
+  TEACHERS_MODAL_ACTION_TYPE,
+  TEACHER_ALL_ACTIONS_TYPE,
+} from "../../redux/actions-type";
 import TeachersData from "./components/TeachersData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
@@ -10,11 +13,12 @@ import { useLocation } from "react-router-dom";
 const TeachersPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { totalLength,teachers,loading } = useSelector((state) => state.teachersPagination);
+  const { totalLength, teachers, loading } = useSelector(
+    (state) => state.teachersPagination
+  );
   const { teachersSearchValues } = useSelector((state) => state.searchValues);
   const { teacherStatus } = useSelector((state) => state.teacherStatus);
   const { courseId } = useSelector((state) => state.studentStatus);
-  const [teacherPageNum, setTeacherPageNum] = useState(1);
   const [role, setRole] = useState("teacher");
 
   let userData = JSON.parse(localStorage.getItem("userData"));
@@ -23,10 +27,11 @@ const TeachersPage = () => {
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
 
-  const filterTeachers = () =>{
+  const filterTeachers = () => {
     dispatch({
       type: TEACHER_ALL_ACTIONS_TYPE.RESET_TEACHER_PAGINATION,
     });
+
     dispatch(
       getTeachersPaginationAction(
         0,
@@ -40,7 +45,7 @@ const TeachersPage = () => {
         courseId
       )
     );
-  }
+  };
   // ============
 
   const getNextTeachers = () => {
@@ -66,10 +71,10 @@ const TeachersPage = () => {
           teachers?.length || 0,
           "",
           teacherStatus
-          ? teacherStatus !== "all"
-            ? teacherStatus
-            : "all"
-          : "all",
+            ? teacherStatus !== "all"
+              ? teacherStatus
+              : "all"
+            : "all",
           role,
           courseId
         )
@@ -86,6 +91,11 @@ const TeachersPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
+
+    dispatch({
+      type: TEACHER_ALL_ACTIONS_TYPE.RESET_TEACHER_PAGINATION,
+    });
+
     dispatch(
       getTeachersPaginationAction(
         0,
@@ -99,9 +109,13 @@ const TeachersPage = () => {
       )
     );
   };
-  
+
   useEffect(() => {
     if (location.pathname === "/teachers") {
+      dispatch({
+        type: TEACHER_ALL_ACTIONS_TYPE.RESET_TEACHER_PAGINATION,
+      });
+
       dispatch(
         getTeachersPaginationAction(
           0,
@@ -112,6 +126,10 @@ const TeachersPage = () => {
       );
       setRole("teacher");
     } else if (location.pathname === "/teachers/mentors") {
+      dispatch({
+        type: TEACHER_ALL_ACTIONS_TYPE.RESET_TEACHER_PAGINATION,
+      });
+
       dispatch(
         getTeachersPaginationAction(
           0,
@@ -122,14 +140,13 @@ const TeachersPage = () => {
       );
       setRole("mentor");
     }
-    
+
     return () => {
       dispatch({
         type: TEACHER_ALL_ACTIONS_TYPE.RESET_TEACHER_PAGINATION,
       });
     };
-
-  }, []);
+  }, [location]);
 
   return (
     <div className="details-page teachers-page ">
@@ -151,10 +168,7 @@ const TeachersPage = () => {
         secondPathname={"Tyutorlar"}
       />
 
-      <TeachersData
-        getNextTeachers={getNextTeachers}
-        userData={userData}
-      />
+      <TeachersData getNextTeachers={getNextTeachers} userData={userData} />
     </div>
   );
 };

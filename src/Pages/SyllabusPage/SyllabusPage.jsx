@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 const SyllabusPage = () => {
   const dispatch = useDispatch();
-  const { totalLength,loading, syllabusData } = useSelector(
+  const { totalLength, loading, syllabusData } = useSelector(
     (state) => state.syllabusPagination
   );
   const { syllabusSearchValues } = useSelector((state) => state.searchValues);
@@ -25,6 +25,7 @@ const SyllabusPage = () => {
 
   const getNextSyllabus = () => {
     if (loading) return;
+
     if (syllabusSearchValues) {
       dispatch(
         getSyllabusPaginationAction(
@@ -66,7 +67,10 @@ const SyllabusPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    if (selectedCourse) {
+
+    dispatch({ type: SYLLABUS_ALL_ACTIONS_TYPE.RESET_SYLLABUS_PAGINATION });
+
+    if (selectedCourse?._id) {
       dispatch(
         getSyllabusPaginationAction(0, syllabusSearchValues, selectedCourse._id)
       );
@@ -86,10 +90,10 @@ const SyllabusPage = () => {
   };
 
   useEffect(() => {
-    console.log(selectedCourse._id)
+    console.log(selectedCourse._id);
     if (syllabusSearchValues) {
       dispatch(getSyllabusPaginationAction(0, syllabusSearchValues, ""));
-    } else if(selectedCourse._id) {
+    } else if (selectedCourse._id) {
       dispatch(getSyllabusPaginationAction(0, "", ""));
     }
 
@@ -111,9 +115,9 @@ const SyllabusPage = () => {
       />
 
       <SyllabusData
-        // pageNum={lastPage}
         getNextSyllabus={getNextSyllabus}
         userData={userData}
+        selectedCourse={selectedCourse}
       />
     </div>
   );

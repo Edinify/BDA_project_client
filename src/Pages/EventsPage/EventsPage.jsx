@@ -66,7 +66,6 @@ const EventsPage = () => {
 
       <EventsData
         userData={user}
-        eventPageNum={eventPageNum}
         getNextTeachers={getNextTeachers}
       />
 

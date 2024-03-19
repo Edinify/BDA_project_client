@@ -4,7 +4,6 @@ const initialState = {
   careerData: [],
   currentLength: 0,
   hasMore: true,
-  lastPage: "",
   loading: false,
 };
 

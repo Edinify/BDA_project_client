@@ -10,7 +10,9 @@ import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const WorkersPage = () => {
   const dispatch = useDispatch();
-  const { totalLength,loading,workers } = useSelector((state) => state.workersPagination);
+  const { totalLength, loading, workers } = useSelector(
+    (state) => state.workersPagination
+  );
   const { workersSearchValues } = useSelector((state) => state.searchValues);
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =
@@ -18,9 +20,9 @@ const WorkersPage = () => {
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
 
-
   const getNextTeachers = () => {
     if (loading) return;
+
     if (workersSearchValues) {
       dispatch(
         getWorkersPaginationAction(workers?.length || 0, workersSearchValues)
@@ -30,7 +32,6 @@ const WorkersPage = () => {
     }
   };
 
-
   const openModal = () => {
     dispatch({
       type: WORKER_MODAL_ACTION_TYPE.GET_WORKER_MODAL,
@@ -39,6 +40,10 @@ const WorkersPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
+
+    dispatch({
+      type: WORKER_ALL_ACTIONS_TYPE.RESET_WORKER_PAGINATION,
+    });
     dispatch(getWorkersPaginationAction(0, workersSearchValues));
   };
 
@@ -66,10 +71,7 @@ const WorkersPage = () => {
         profile={"workers"}
         count={totalLength}
       />
-      <WorkersData
-        userData={userData}
-        getNextTeachers={getNextTeachers}
-      />
+      <WorkersData userData={userData} getNextTeachers={getNextTeachers} />
     </div>
   );
 };

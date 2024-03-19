@@ -57,7 +57,7 @@ const CareerData = ({ getNextCareers }) => {
           loader={<SmallLoading />}
           endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
           height={550}
-          scrollThreshold={0.7}
+          scrollThreshold={0.9}
         >
           <table className="details-table career-table">
             <thead>

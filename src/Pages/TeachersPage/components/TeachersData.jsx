@@ -54,7 +54,7 @@ const TeachersData = ({ getNextTeachers, userData }) => {
           hasMore={hasMore}
           loader={<SmallLoading />}
           endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
-          height={550}
+          height={450}
           scrollThreshold={0.7}
         >
           <table
@@ -85,7 +85,7 @@ const TeachersData = ({ getNextTeachers, userData }) => {
           </table>
         </InfiniteScroll>
 
-        <div className="details-list-tablet with-more">
+        {/* <div className="details-list-tablet with-more">
           {teachers?.map((teacher, i) => (
             <TeacherCard
               key={i}
@@ -96,7 +96,7 @@ const TeachersData = ({ getNextTeachers, userData }) => {
               setOpenMoreModal={setOpenMoreModal}
             />
           ))}
-        </div>
+        </div> */}
       </>
     </>
   );

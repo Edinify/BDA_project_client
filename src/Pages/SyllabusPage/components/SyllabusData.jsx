@@ -6,8 +6,7 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
-const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
-  const dispatch = useDispatch();
+const SyllabusData = ({ getNextSyllabus, userData,selectedCourse }) => {
   const { syllabusData, hasMore } = useSelector(
     (state) => state.syllabusPagination
   );
@@ -17,21 +16,18 @@ const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
 
   return (
     <>
-        <>
-          {openConfirmModal && <ConfirmModal type="syllabus" />}
-          <InfiniteScroll
-            style={{ overflowX: "none" }}
-            dataLength={syllabusData.length}
-            next={getNextSyllabus}
-            hasMore={hasMore}
-            loader={<SmallLoading />}
-            endMessage={
-              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
-            }
-            height={550}
-            scrollThreshold={0.7}
-          >
-
+      <>
+        {openConfirmModal && <ConfirmModal type="syllabus" />}
+        <InfiniteScroll
+          style={{ overflowX: "none" }}
+          dataLength={syllabusData.length }
+          next={getNextSyllabus}
+          hasMore={hasMore && selectedCourse?._id}
+          loader={<SmallLoading />}
+          endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
+          height={550}
+          scrollThreshold={0.9}
+        >
           <table className="details-table syllabus-table">
             <thead>
               <tr>
@@ -53,20 +49,20 @@ const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
               ))}
             </tbody>
           </table>
-          </InfiniteScroll>
+        </InfiniteScroll>
 
-          <div className="details-list-tablet syllabus-tablet">
-            {syllabusData?.map((teacher, i) => (
-              <SyllabusCard
-                key={i}
-                data={teacher}
-                syllabus={userData}
-                mode="tablet"
-                cellNumber={i + 1}
-              />
-            ))}
-          </div>
-        </>
+        <div className="details-list-tablet syllabus-tablet">
+          {syllabusData?.map((teacher, i) => (
+            <SyllabusCard
+              key={i}
+              data={teacher}
+              syllabus={userData}
+              mode="tablet"
+              cellNumber={i + 1}
+            />
+          ))}
+        </div>
+      </>
     </>
   );
 };

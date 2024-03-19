@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LESSON_TABLE_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
@@ -6,7 +5,7 @@ import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActio
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
 
-const LessonTableCard = ({ data, mode, setStudents }) => {
+const LessonTableCard = ({ data, mode = "desktop", setStudents }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
   const { lessonTableData, lastPage } = useSelector(
@@ -15,7 +14,7 @@ const LessonTableCard = ({ data, mode, setStudents }) => {
   const { lessonTableSearchValues } = useSelector(
     (state) => state.searchValues
   );
-  const lessonDay = data.date
+  const lessonDay = data?.date
     ? `${moment(data.date).locale("az").format("DD.MM.YYYY")}, ${
         weeksArrFullName[
           moment(new Date(data.date)).day() === 7

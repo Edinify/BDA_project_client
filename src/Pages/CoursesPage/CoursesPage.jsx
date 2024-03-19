@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { COURSES_MODAL_ACTION_TYPE,COURSES_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
+import {
+  COURSES_MODAL_ACTION_TYPE,
+  COURSES_ALL_ACTIONS_TYPE,
+} from "../../redux/actions-type";
 import { getCoursesPaginationAction } from "../../redux/actions/coursesActions";
 import CoursesData from "./components/CoursesData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
@@ -10,9 +13,10 @@ import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
 
 const CoursePage = () => {
   const dispatch = useDispatch();
-  const { courses,totalLength,loading } = useSelector((state) => state.coursesPagination);
+  const { courses, totalLength, loading } = useSelector(
+    (state) => state.coursesPagination
+  );
   const { coursesSearchValues } = useSelector((state) => state.searchValues);
-  const [coursePageNum, setCoursePageNum] = useState(1);
   const { user } = useSelector((state) => state.user);
 
   const openModal = () => {
@@ -22,18 +26,17 @@ const CoursePage = () => {
     });
   };
 
-    // ============
+  // ============
 
   const getNextCourse = () => {
     if (loading) return;
+
     if (coursesSearchValues) {
       dispatch(
         getCoursesPaginationAction(courses?.length || 0, coursesSearchValues)
       );
     } else {
-      dispatch(
-        getCoursesPaginationAction(courses?.length || 0, "")
-      );
+      dispatch(getCoursesPaginationAction(courses?.length || 0, ""));
     }
   };
 
@@ -44,6 +47,7 @@ const CoursePage = () => {
     dispatch({
       type: COURSES_ALL_ACTIONS_TYPE.RESET_COURSES_PAGINATION,
     });
+
     dispatch(getCoursesPaginationAction(0, coursesSearchValues));
   };
 
@@ -54,12 +58,11 @@ const CoursePage = () => {
       dispatch(getCoursesPaginationAction(0, ""));
     }
 
-    return () =>{
+    return () => {
       dispatch({
         type: COURSES_ALL_ACTIONS_TYPE.RESET_COURSES_PAGINATION,
       });
-    }
-
+    };
   }, []);
 
   return (
@@ -73,11 +76,7 @@ const CoursePage = () => {
         count={totalLength}
       />
 
-      <CoursesData
-        userData={user}
-        getNextCourse={getNextCourse}
-        coursePageNum={coursePageNum}
-      />
+      <CoursesData userData={user} getNextCourse={getNextCourse} />
     </div>
   );
 };

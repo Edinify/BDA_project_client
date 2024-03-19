@@ -3,10 +3,8 @@ import { GROUP_ALL_ACTIONS_TYPE } from "../actions-type";
 const initialState = {
   groupData: [],
   groupsByMore: [],
-  totalPages: 1,
   totalLength:0,
   hasMore: true,
-  lastPage: "",
   loading: false,
   loadingAll: false
 };

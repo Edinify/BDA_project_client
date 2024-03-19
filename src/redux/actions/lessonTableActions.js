@@ -87,6 +87,8 @@ export const getLessonTablePaginationAction =
           startDate || ""
         }&endDate=${endDate || ""}&status=${status || ""}`
       );
+      console.log(length);
+      console.log(data);
 
       dispatch({
         type: LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_TABLE_PAGINATION,
@@ -128,11 +130,16 @@ export const createLessonTableAction =
     dispatch(modalLoading(true));
     try {
       const { data } = await API.post("/", lessonTableData);
-      dispatch(getLessonTablePaginationAction(data.lastPage, "", data.group));
+
+      dispatch({
+        type: LESSON_TABLE_ALL_ACTIONS_TYPE.CREATE_LESSON_TABLE,
+        payload: data,
+      });
       dispatch({
         type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
         payload: false,
       });
+
       toastSuccess("Yeni dərs yaradıldı");
     } catch (error) {
       const originalRequest = error.config;
@@ -147,7 +154,11 @@ export const createLessonTableAction =
             })
           );
           const { data } = await API.post("/create", lessonTableData);
-          dispatch(getLessonTablePaginationAction(data.lastPage, ""));
+
+          dispatch({
+            type: LESSON_TABLE_ALL_ACTIONS_TYPE.CREATE_LESSON_TABLE,
+            payload: data,
+          });
           dispatch({
             type: LESSON_TABLE_MODAL_ACTION_TYPE.LESSON_TABLE_OPEN_MODAL,
             payload: false,

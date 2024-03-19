@@ -204,8 +204,7 @@
 .details-table.career-table thead,
 .details-table.consultation-page thead,
 .details-table.syllabus-table thead,
-.details-table.lesson-table thead
- {
+.details-table.lesson-table thead {
   position: sticky;
   background-color: white;
   z-index: 10;
@@ -296,6 +295,11 @@
   text-align: center;
 }
 
+.details-table.incomes-table tr th:nth-last-child(4) {
+  width: 100px !important;
+}
+
+
 /* details-table END*/
 
 /* details-tablet*/
@@ -333,7 +337,7 @@
   overflow-x: scroll;
 }
 
-.scroll  tr td:last-child{
+.scroll tr td:last-child {
   border: 1px solid red;
 }
 
@@ -352,8 +356,7 @@
 .details-table.events-table tr th:last-child,
 .details-table.events-table tr td:last-child,
 .details-table.tuition-table tr th:last-child,
-.details-table.tuition-table tr td:last-child
- {
+.details-table.tuition-table tr td:last-child {
   position: sticky;
   z-index: 1;
   right: 0;
