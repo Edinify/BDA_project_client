@@ -41,7 +41,12 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
       type: STUDENT_STATUS_FILTER_ACTION_TYPE.GET_STUDENT_COURSEID,
       payload: course._id,
     });
-    dispatch(getSyllabusPaginationAction(1, "", course._id));
+
+    dispatch({
+      type: SYLLABUS_ALL_ACTIONS_TYPE.RESET_SYLLABUS_PAGINATION,
+    });
+
+    dispatch(getSyllabusPaginationAction(0, "", course._id));
   };
 
   useEffect(() => {

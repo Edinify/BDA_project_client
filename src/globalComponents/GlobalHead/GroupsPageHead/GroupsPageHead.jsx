@@ -3,7 +3,7 @@ import { CoursesDropdown } from "../CoursesDropdown/CoursesDropdown";
 import { TeachersDropdown } from "../TeachersDropdown/TeachersDropdown";
 import { ReactComponent as HalfCircleICon } from "../../../assets/icons/filter/half-circle-svgrepo-com.svg";
 
-const GroupsPageHead = ({ filter }) => {
+const GroupsPageHead = ({ filter, count }) => {
   return (
     <div className="groups-filter-header">
       <CoursesDropdown deviceType="desktop" />
@@ -14,7 +14,7 @@ const GroupsPageHead = ({ filter }) => {
         </button>
       </div>
       <div className="circle-icon">
-        <p className="filter-count">10</p>
+        <p className="filter-count">{count}</p>
         <HalfCircleICon />
       </div>
     </div>

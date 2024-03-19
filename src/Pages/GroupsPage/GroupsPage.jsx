@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroupsPaginationAction } from "../../redux/actions/groupsActions";
-import { GROUP_MODAL_ACTION_TYPE,GROUP_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
+import {
+  GROUP_MODAL_ACTION_TYPE,
+  GROUP_ALL_ACTIONS_TYPE,
+} from "../../redux/actions-type";
 import GroupsData from "./components/GroupsData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
@@ -10,45 +13,59 @@ import { useLocation } from "react-router-dom";
 const GroupsPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { totalLength,loading,groupData } = useSelector((state) => state.groupsPagination);
+  const { totalLength, loading, groupData } = useSelector(
+    (state) => state.groupsPagination
+  );
   const { groupsSearchValues } = useSelector((state) => state.searchValues);
-  const {courseId } = useSelector((state) => state.studentStatus);
+  const { courseId } = useSelector((state) => state.studentStatus);
   const { selectedTeacher } = useSelector((state) => state.dropdownTeacher);
   const [status, setStatus] = useState("waiting");
-  // console.log(selectedTeacher)
+
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =
     userData.role !== "super-admin"
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
 
-  
-    const filterGroup = () => {
-      dispatch({ type: GROUP_ALL_ACTIONS_TYPE.RESET_GROUP_PAGINATION });
+  const filterGroup = () => {
+    dispatch({ type: GROUP_ALL_ACTIONS_TYPE.RESET_GROUP_PAGINATION });
 
+    dispatch(
+      getGroupsPaginationAction(
+        0,
+        groupsSearchValues,
+        status,
+        courseId,
+        selectedTeacher._id
+      )
+    );
+  };
+
+  const getNextTeachers = () => {
+    if (loading) return;
+
+    if (groupsSearchValues) {
       dispatch(
         getGroupsPaginationAction(
-          0,
-          groupsSearchValues, 
+          groupData?.length || 0,
+          groupsSearchValues,
           status,
           courseId,
           selectedTeacher._id
         )
-    )}   
-  // ============
-
-  const getNextTeachers = () => {
-    if (loading) return;
-    if (groupsSearchValues) {
-      dispatch(
-        getGroupsPaginationAction(groupData?.length || 0, groupsSearchValues, status,'','')
       );
     } else {
-      dispatch(getGroupsPaginationAction(groupData?.length || 0, "", status,'',''));
+      dispatch(
+        getGroupsPaginationAction(
+          groupData?.length || 0,
+          "",
+          status,
+          courseId,
+          selectedTeacher._id
+        )
+      );
     }
   };
-
-  // ========
 
   const openModal = () => {
     dispatch({
@@ -58,19 +75,52 @@ const GroupsPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    dispatch(getGroupsPaginationAction(0, groupsSearchValues, status,'',''));
+    dispatch({ type: GROUP_ALL_ACTIONS_TYPE.RESET_GROUP_PAGINATION });
+
+    dispatch(
+      getGroupsPaginationAction(
+        0,
+        groupsSearchValues,
+        status,
+        courseId,
+        selectedTeacher._id
+      )
+    );
   };
 
   useEffect(() => {
     if (location.pathname === "/groups/current") {
-      dispatch(getGroupsPaginationAction(0, groupsSearchValues || "", "current",'',''));
+      dispatch({ type: GROUP_ALL_ACTIONS_TYPE.RESET_GROUP_PAGINATION });
+
+      dispatch(
+        getGroupsPaginationAction(
+          0,
+          groupsSearchValues || "",
+          "current",
+          "",
+          ""
+        )
+      );
       setStatus("current");
     } else if (location.pathname === "/groups/waiting") {
-      dispatch(getGroupsPaginationAction(0, groupsSearchValues || "", "waiting",'',''));
+      dispatch({ type: GROUP_ALL_ACTIONS_TYPE.RESET_GROUP_PAGINATION });
+
+      dispatch(
+        getGroupsPaginationAction(
+          0,
+          groupsSearchValues || "",
+          "waiting",
+          "",
+          ""
+        )
+      );
       setStatus("waiting");
-    }
-    else if (location.pathname==="/groups/ended"){
-      dispatch(getGroupsPaginationAction(0, groupsSearchValues || "", "ended",'',''));
+    } else if (location.pathname === "/groups/ended") {
+      dispatch({ type: GROUP_ALL_ACTIONS_TYPE.RESET_GROUP_PAGINATION });
+
+      dispatch(
+        getGroupsPaginationAction(0, groupsSearchValues || "", "ended", "", "")
+      );
       setStatus("ended");
     }
 
@@ -103,10 +153,7 @@ const GroupsPage = () => {
         thirdPathname={"Bitmiş qruplar"}
       />
 
-      <GroupsData
-        getNextTeachers={getNextTeachers}
-        userData={userData}
-      />
+      <GroupsData getNextTeachers={getNextTeachers} userData={userData} />
     </div>
   );
 };

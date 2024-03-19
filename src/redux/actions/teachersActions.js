@@ -234,7 +234,6 @@ export const createTeacherAction =
   (teacherData, pathName) => async (dispatch) => {
     dispatch(modalLoading(true));
 
-    // console.log(pathName, "path name");
     try {
       const { data } = await API.post("/", teacherData);
 

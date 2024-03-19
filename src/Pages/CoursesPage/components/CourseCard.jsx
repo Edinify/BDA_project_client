@@ -62,7 +62,7 @@ const CourseCard = ({
         <tr className="class-table">
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.name}</div>
+              <div className="table-scroll-text">{cellNumber}. {data.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>

@@ -10,9 +10,10 @@ import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const CoursePage = () => {
   const dispatch = useDispatch();
-  const { courses,totalLength,loading } = useSelector((state) => state.coursesPagination);
+  const { courses, totalLength, loading } = useSelector(
+    (state) => state.coursesPagination
+  );
   const { coursesSearchValues } = useSelector((state) => state.searchValues);
-  const [coursePageNum, setCoursePageNum] = useState(1);
   const { user } = useSelector((state) => state.user);
 
   const openModal = () => {
@@ -26,6 +27,7 @@ const CoursePage = () => {
 
   const getNextCourse = () => {
     if (loading) return;
+
     if (coursesSearchValues) {
       dispatch(
         getCoursesPaginationAction(courses?.length || 0, coursesSearchValues)
@@ -42,6 +44,7 @@ const CoursePage = () => {
     dispatch({
       type: COURSES_ALL_ACTIONS_TYPE.RESET_COURSES_PAGINATION,
     });
+
     dispatch(getCoursesPaginationAction(0, coursesSearchValues));
   };
 
@@ -70,11 +73,7 @@ const CoursePage = () => {
         count={totalLength}
       />
 
-      <CoursesData
-        userData={user}
-        getNextCourse={getNextCourse}
-        coursePageNum={coursePageNum}
-      />
+      <CoursesData userData={user} getNextCourse={getNextCourse} />
     </div>
   );
 };

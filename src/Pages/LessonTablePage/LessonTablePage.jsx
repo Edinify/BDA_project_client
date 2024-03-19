@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLessonTablePaginationAction } from "../../redux/actions/lessonTableActions";
-import { LESSON_TABLE_MODAL_ACTION_TYPE } from "../../redux/actions-type";
+import {
+  LESSON_TABLE_ALL_ACTIONS_TYPE,
+  LESSON_TABLE_MODAL_ACTION_TYPE,
+} from "../../redux/actions-type";
 import LessonTableData from "./components/LessonTableData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import { toast } from "react-toastify";
@@ -17,7 +20,10 @@ const LessonTablePage = () => {
   );
 
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
-  const filterLessons = () =>
+
+  const filterLessons = () => {
+    dispatch({ type: LESSON_TABLE_ALL_ACTIONS_TYPE.RESET_LESSON_TABLE });
+
     dispatch(
       getLessonTablePaginationAction(
         0,
@@ -28,6 +34,7 @@ const LessonTablePage = () => {
         status
       )
     );
+  };
 
   const getNextLessons = () => {
     if (loading) return;
@@ -87,6 +94,9 @@ const LessonTablePage = () => {
 
   const searchData = (e) => {
     e.preventDefault();
+
+    dispatch({ type: LESSON_TABLE_ALL_ACTIONS_TYPE.RESET_LESSON_TABLE });
+
     dispatch(
       getLessonTablePaginationAction(
         0,
@@ -99,7 +109,7 @@ const LessonTablePage = () => {
     );
   };
 
-  console.log('lesson table page')
+  console.log("lesson table page");
   return (
     <div className="details-page lesson-page ">
       <GlobalHead

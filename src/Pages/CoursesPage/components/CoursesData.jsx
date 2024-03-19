@@ -8,7 +8,7 @@ import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
+const CoursesData = ({ userData, getNextCourse }) => {
   const { courses, hasMore} = useSelector(
     (state) => state.coursesPagination
   );
@@ -53,7 +53,7 @@ const CoursesData = ({ userData, getNextCourse, coursePageNum }) => {
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
             }
             scrollThreshold={0.7}
-            height={600}
+            height={540}
           >
             <table
               className={`details-table  courses-table ${

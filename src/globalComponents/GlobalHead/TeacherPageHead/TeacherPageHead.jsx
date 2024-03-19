@@ -13,6 +13,7 @@ const TeacherPageHead = ({
   searchData,
   dataSearchValues,
   DATA_SEARCH_VALUE,
+  count,
 }) => {
   return (
     <div className="teacher-header-filter-container">
@@ -33,7 +34,7 @@ const TeacherPageHead = ({
         )}
         <StatusDropdown statusType="teacher" deviceType="desktop" />
         <CoursesDropdown deviceType="desktop" />
-        <GroupsDropdown deviceType="desktop" />
+        {/* <GroupsDropdown deviceType="desktop" /> */}
 
         <div className="lesson-table-btn-container teacher ">
           <button className="add-detail" onClick={() => filter()}>
@@ -41,7 +42,7 @@ const TeacherPageHead = ({
           </button>
         </div>
         <div className="circle-icon">
-          <p className="filter-count">10</p>
+          <p className="filter-count">{count}</p>
           <HalfCircleICon />
         </div>
       </div>

@@ -5,7 +5,6 @@ const initialState = {
   confirmedCount: 0,
   cancelledCount: 0,
   unviewedCount: 0,
-  totalCount: 0,
   hasMore: true,
   loading: false,
   status: "",
@@ -23,22 +22,36 @@ export const lessonTablePaginationReducer = (state = initialState, action) => {
         ...state,
         lessonTableData: [...state.lessonTableData, ...action.payload.lessons],
         hasMore: !(action.payload.lessons.length < 10),
+        confirmedCount: action.payload.confirmedCount,
+        cancelledCount: action.payload.cancelledCount,
+        unviewedCount: action.payload.unviewedCount,
       };
 
     case LESSON_TABLE_ALL_ACTIONS_TYPE.CREATE_LESSON_TABLE:
       return {
         ...state,
-        lessonTableData: [...state.lessonTableData, action.payload],
+        lessonTableData: [action.payload],
+        hasMore: false,
+        unviewedCount: state.unviewedCount + 1,
       };
     case LESSON_TABLE_ALL_ACTIONS_TYPE.UPDATE_LESSON_TABLE:
       return {
         ...state,
-        lessonTableData: state.lessonTableData.map((teacher) =>
-          teacher._id === action.payload._id ? action.payload : teacher
+        lessonTableData: state.lessonTableData.map((lesson) =>
+          lesson._id === action.payload.lesson._id
+            ? action.payload.lesson
+            : lesson
         ),
+        confirmedCount: action.payload.confirmedCount,
+        cancelledCount: action.payload.cancelledCount,
+        unviewedCount: action.payload.unviewedCount,
       };
     case LESSON_TABLE_ALL_ACTIONS_TYPE.RESET_LESSON_TABLE:
-      return initialState;
+      return {
+        ...state,
+        lessonTableData: [],
+        hasMore: true,
+      };
     case LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE:
       return {
         ...state,

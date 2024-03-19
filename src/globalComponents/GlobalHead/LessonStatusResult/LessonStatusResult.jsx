@@ -6,19 +6,19 @@ import { ReactComponent as OtherPayIcon } from "../../../assets/icons/lessonStat
 // import "../../paymentResult.css";
 import { useSelector } from "react-redux";
 const LessonStatusResult = () => {
-  const { paymentsResults } = useSelector(
-    (state) => state.tuitionFeePagination
+  const { confirmedCount, cancelledCount, unviewedCount } = useSelector(
+    (state) => state.lessonTablePagination
   );
 
   const paymentData = [
     {
       id: 1,
       name: "Keçirilib",
-      count: 0,
+      count: confirmedCount,
       img: <TodayPayIcon />,
     },
-    { id: 2, name: "Gözləyir", count: 0, img: <OtherPayIcon /> },
-    { id: 3, name: "Ləğv edilib", count: 0, img: <LatePayIcon /> },
+    { id: 2, name: "Gözləyir", count: unviewedCount, img: <OtherPayIcon /> },
+    { id: 3, name: "Ləğv edilib", count: cancelledCount, img: <LatePayIcon /> },
   ];
   return (
     <div className="payment-result-container lesson-status ">

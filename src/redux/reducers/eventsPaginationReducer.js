@@ -5,8 +5,6 @@ const initialState = {
   events: [],
   totalLength:0,
   hasMore: true,
-  totalPages: 1,
-  lastPage: "",
   loading: false,
 };
 

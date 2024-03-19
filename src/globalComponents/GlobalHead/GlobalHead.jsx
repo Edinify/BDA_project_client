@@ -82,6 +82,7 @@ const GlobalHead = ({
                   filter={filter}
                   openModal={openModal}
                   search={search}
+                  count={count}
                 />
               )}
 
@@ -92,7 +93,7 @@ const GlobalHead = ({
                 <StudentPageHead filter={filter} count={count} />
               )}
               {statusType === "career" && <CareerPageHead filter={filter} />}
-              {statusType === "groups" && <GroupsPageHead filter={filter} />}
+              {statusType === "groups" && <GroupsPageHead filter={filter} count={count} />}
 
               {statusType === "tutionFee" && (
                 <TuitionPageHead

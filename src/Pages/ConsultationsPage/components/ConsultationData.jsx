@@ -66,8 +66,8 @@ const ConsultationData = ({  getNextConsultation, userData }) => {
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
             }
-            height={550}
-            scrollThreshold={0.7}
+            height={500}
+            scrollThreshold={0.8}
           >
             <table className="details-table consultation-page ">
               <thead>

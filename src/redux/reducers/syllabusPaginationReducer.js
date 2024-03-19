@@ -3,9 +3,7 @@ import { SYLLABUS_ALL_ACTIONS_TYPE } from "../actions-type";
 const initialState = {
   syllabusData: [],
   totalLength: 0,
-  totalPages: 1,
   hasMore: true,
-  lastPage: "",
   loading: false,
 };
 
@@ -35,10 +33,12 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
         hasMore: !(action.payload.syllabusData.length < 10),
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.CREATE_SYLLABUS:
-      console.log(action.payload)
+      console.log(action.payload);
       return {
         ...state,
-        syllabusData:  [action.payload, ...state.syllabusData].sort((a, b) => a.orderNumber - b.orderNumber),
+        syllabusData: [action.payload, ...state.syllabusData].sort(
+          (a, b) => a.orderNumber - b.orderNumber
+        ),
         totalLength: state.totalLength + 1,
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.RESET_SYLLABUS_PAGINATION:

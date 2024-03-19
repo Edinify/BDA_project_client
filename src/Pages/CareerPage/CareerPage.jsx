@@ -37,7 +37,7 @@ const CareerPage = () => {
     if (careerSearchValues) {
       dispatch(
         getCareerPaginationAction(
-          currentLength,
+          currentLength || 0,
           careerSearchValues,
           courseId,
           selectedGroup._id
@@ -46,7 +46,7 @@ const CareerPage = () => {
     } else {
       dispatch(
         getCareerPaginationAction(
-          currentLength,
+          currentLength || 0,
           "",
           courseId,
           selectedGroup._id

@@ -30,6 +30,12 @@ const LeadCard = ({ data, mode, cellNumber }) => {
     <>
       {mode === "desktop" ? (
         <tr>
+          <td >
+            <div className="td-con">
+              <div className="table-scroll-text">{cellNumber}.</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
           <td>
             <div className="td-con">
               <div className="table-scroll-text">{data?.count}</div>

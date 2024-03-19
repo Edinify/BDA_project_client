@@ -18,6 +18,7 @@ const UpdateDeleteModal = ({
 }) => {
   const dispatch = useDispatch();
   const { funcComp } = useSelector((state) => state.funcComponent);
+  console.log(funcComp);
   const { user } = useSelector((state) => state.user);
   const [updateBtn, setUpdateBtn] = useState(false);
   const [contractBtn, setContractBtn] = useState(false);
@@ -122,7 +123,9 @@ const UpdateDeleteModal = ({
     ) {
       setUpdateBtn(true);
     }
-  },[data?.changes?._id,data?.topic?.name,profil,user?.profiles,user?.role]);
+  }, []);
+
+  // console.log("update delete modal");
   return (
     <div className="func-component">
       {badge && (

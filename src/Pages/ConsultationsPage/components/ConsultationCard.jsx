@@ -7,7 +7,7 @@ import { deleteConsultationAction } from "../../../redux/actions/consultationsAc
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import { useLocation } from "react-router-dom";
 
-const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
+const ConsultationCard = ({cellNumber, mode, setOpenMoreModal, data, consultation }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { students, lastPage } = useSelector(
@@ -107,7 +107,7 @@ const ConsultationCard = ({ mode, setOpenMoreModal, data, consultation }) => {
           <td>
             <div className="td-con" style={{ width: "150px" }}>
               {/* <div className="cell-number">{cellNumber}.</div> */}
-              <div className="table-scroll-text">{data?.studentName}</div>
+              <div className="table-scroll-text">{cellNumber}. {data?.studentName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
