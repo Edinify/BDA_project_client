@@ -8,7 +8,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
   const dispatch = useDispatch();
-  const { syllabusData, totalLength, loading } = useSelector(
+  const { syllabusData, hasMore } = useSelector(
     (state) => state.syllabusPagination
   );
   const { openConfirmModal } = useSelector((state) => state.syllabusModal);
@@ -23,7 +23,7 @@ const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
             style={{ overflowX: "none" }}
             dataLength={syllabusData.length}
             next={getNextSyllabus}
-            hasMore={totalLength > syllabusData.length || loading}
+            hasMore={hasMore}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -48,7 +48,7 @@ const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
                   data={teacher}
                   mode="desktop"
                   syllabus={userData}
-                  cellNumber={i + 1 + (pageNum - 1) * 10}
+                  cellNumber={i + 1}
                 />
               ))}
             </tbody>
@@ -62,21 +62,10 @@ const SyllabusData = ({ pageNum, getNextSyllabus, userData }) => {
                 data={teacher}
                 syllabus={userData}
                 mode="tablet"
-                cellNumber={i + 1 + (pageNum - 1) * 10}
+                cellNumber={i + 1}
               />
             ))}
           </div>
-
-          {/* {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={pageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )} */}
         </>
     </>
   );

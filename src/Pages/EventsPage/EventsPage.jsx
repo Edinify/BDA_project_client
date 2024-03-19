@@ -8,7 +8,7 @@ import { getEventsPaginationAction } from "../../redux/actions/eventsActions";
 
 const EventsPage = () => {
   const dispatch = useDispatch();
-  const { lastPage,events } = useSelector((state) => state.eventsPagination);
+  const { totalLength,loading,events } = useSelector((state) => state.eventsPagination);
   const { eventsSearchValues } = useSelector((state) => state.searchValues);
   const [eventPageNum, setEventPageNum] = useState(1);
   const { user } = useSelector((state) => state.user);
@@ -19,18 +19,10 @@ const EventsPage = () => {
       payload: { data: { status: false }, openModal: true },
     });
   };
-  const getPageNumber = (pageNumber) => {
-    setEventPageNum(pageNumber);
-    if (eventsSearchValues) {
-      dispatch(getEventsPaginationAction(pageNumber, eventsSearchValues));
-    } else {
-      dispatch(getEventsPaginationAction(pageNumber, ""));
-    }
-  };
-
   // ============
 
   const getNextTeachers = () => {
+    if (loading) return;
     if (eventsSearchValues) {
       dispatch(getEventsPaginationAction(events?.length || 0, eventsSearchValues));
     } else {
@@ -60,11 +52,6 @@ const EventsPage = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (lastPage) {
-      setEventPageNum(lastPage);
-    }
-  }, [lastPage]);
 
   return (
     <div className="details-page courses ">
@@ -74,11 +61,11 @@ const EventsPage = () => {
         DATA_SEARCH_VALUE={"EVENTS_SEARCH_VALUE"}
         dataSearchValues={eventsSearchValues}
         profile="events"
+        count={totalLength}
       />
 
       <EventsData
         userData={user}
-        pageNum={lastPage}
         eventPageNum={eventPageNum}
         getNextTeachers={getNextTeachers}
       />

@@ -253,7 +253,7 @@ export const getStudentsPaginationAction =
   async (dispatch) => {
     dispatch(setLoadingStudentsAction(true));
 
-    console.log(searchQuery, "ssssssssssssssssssssss");
+    // console.log(searchQuery, "ssssssssssssssssssssss");
     try {
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}`
@@ -566,3 +566,27 @@ export const cancelStudentChangesAction =
       dispatch(studentModalLoading(false));
     }
   };
+
+export const downloadContractAction = async ({
+  fullName,
+  studentId,
+  groupId,
+}) => {
+  try {
+    const response = await API.get(
+      `/contract?studentId=${studentId}&groupId=${groupId}`,
+      { responseType: "blob" }
+    );
+
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    });
+
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fullName || "";
+    a.click();
+    window.URL.revokeObjectURL(url);
+  } catch (error) {}
+};

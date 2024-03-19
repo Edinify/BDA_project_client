@@ -4,12 +4,11 @@ import { ReactComponent as ArrowIcon } from "../../../assets/icons/arrow-down-dr
 import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg";
 import {
   SYLLABUS_ALL_ACTIONS_TYPE,
-  STUDENT_STATUS_FILTER_ACTION_TYPE
+  STUDENT_STATUS_FILTER_ACTION_TYPE,
 } from "../../../redux/actions-type";
 import { getAllCoursesAction } from "../../../redux/actions/coursesActions";
 import { getSyllabusPaginationAction } from "../../../redux/actions/syllabusActions";
-import { useLocation } from "react-router-dom";
-
+// import { useLocation } from "react-router-dom";
 
 export const CoursesDropdown = ({ deviceType = "" }) => {
   const dispatch = useDispatch();
@@ -17,17 +16,19 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
   const { selectedCourse } = useSelector((state) => state.syllabusCourse);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const location = useLocation()
-
+  // const location = useLocation();
 
   useEffect(() => {
     return () => {
       dispatch({
         type: SYLLABUS_ALL_ACTIONS_TYPE.CLEAR_COURSE,
       });
-    }
-  }, [location])
-  
+
+      dispatch({
+        type: STUDENT_STATUS_FILTER_ACTION_TYPE.CLEAR_STUDENT_COURSEID,
+      });
+    };
+  }, [dispatch]);
 
   const getCourse = (course) => {
     // console.log(course)
@@ -39,13 +40,18 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
     dispatch({
       type: STUDENT_STATUS_FILTER_ACTION_TYPE.GET_STUDENT_COURSEID,
       payload: course._id,
-    })
+    });
     dispatch(getSyllabusPaginationAction(1, "", course._id));
   };
 
   useEffect(() => {
     dispatch(getAllCoursesAction());
-  }, []);
+  }, [dispatch]);
+
+
+  const handleChangeDrop=()=>{
+    setDropdownOpen(!dropdownOpen)
+  }
 
   return (
     <div
@@ -55,7 +61,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
     >
       <div
         className="dropdown-head"
-        onClick={() => setDropdownOpen(!dropdownOpen)}
+        onClick={handleChangeDrop}
       >
         <h2>{selectedCourse ? selectedCourse.name : "İxtisaslar"}</h2>
         <div className="arrow-icon">

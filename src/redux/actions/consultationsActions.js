@@ -132,7 +132,7 @@ export const getActiveConsultationAction = (payload) => async (dispatch) => {
     }
   } finally {
     dispatch(pageLoading(false));
-    dispatch(setLoadingConsultationAction(false));
+    // dispatch(setLoadingConsultationAction(false));
   }
 };
 
@@ -140,10 +140,12 @@ export const getConsultationPaginationAction =
   (length, searchQuery, status = "appointed") =>
   async (dispatch) => {
     dispatch(pageLoading(true));
+    console.log(true)
     try {
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}`
       );
+      
       dispatch({
         type: CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_PAGINATION,
         payload: data,
@@ -186,7 +188,10 @@ export const createConsultationAction =
     dispatch(modalLoading(true));
     try {
       const { data } = await API.post("/", consultationData);
-      dispatch(getConsultationPaginationAction(data.lastPage, "", "appointed"));
+      dispatch({
+        type: CONSULTATION_ALL_ACTIONS_TYPE.CREATE_CONSULTATION,
+        payload: data,
+      });
       dispatch({
         type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_OPEN_MODAL,
         payload: false,

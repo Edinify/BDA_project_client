@@ -76,10 +76,7 @@ const pageLoading = (loadingValue) => ({
   type: GROUP_ALL_ACTIONS_TYPE.GROUP_LOADING,
   payload: loadingValue,
 });
-// const setLoadingCoursesAction = (loadingValue) => ({
-//   type: COURSES_ALL_ACTIONS_TYPE.COURSE_LOADING,
-//   payload: loadingValue,
-// });
+
 const modalLoading = (loadingValue) => ({
   type: GROUP_MODAL_ACTION_TYPE.GROUP_MODAL_LOADING,
   payload: loadingValue,
@@ -247,7 +244,7 @@ export const getGroupsPaginationAction =
     // console.log(status, "statussss");
     try {
       const { data } = await API.get(
-        `/pagination?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&teacherId=${teacherId}`
+        `/pagination?length=${length}&searchQuery=${searchQuery || ""}&status=${status}&courseId=${courseId || ""}&teacherId=${teacherId || ""}`
       );
       dispatch({
         type: GROUP_ALL_ACTIONS_TYPE.GET_GROUP_PAGINATION,
@@ -255,7 +252,7 @@ export const getGroupsPaginationAction =
       });
     } catch (error) {
       const originalRequest = error.config;
-      // console.log(error);
+      console.log(error);
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
         try {
@@ -296,13 +293,17 @@ export const createGroupAction = (groupData) => async (dispatch) => {
 
   try {
     const { data } = await API.post("/", groupData);
-    dispatch(getGroupsPaginationAction(data.lastPage, "", status, "", ""));
+    dispatch({
+      type: GROUP_ALL_ACTIONS_TYPE.CREATE_GROUP,
+      payload: data,
+    });
     dispatch({
       type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
       payload: false,
     });
     toastSuccess("Yeni əməkdaş yaradıldı");
   } catch (error) {
+    console.log(error)
     const originalRequest = error.config;
     // console.log(error);
     if (error?.response?.status === 403 && !originalRequest._retry) {

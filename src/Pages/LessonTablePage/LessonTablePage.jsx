@@ -8,24 +8,19 @@ import { toast } from "react-toastify";
 
 const LessonTablePage = () => {
   const dispatch = useDispatch();
-  const { lastPage, status } = useSelector(
+  const { status, lessonTableData, loading } = useSelector(
     (state) => state.lessonTablePagination
   );
   const { startDate, endDate } = useSelector((state) => state.datepicker);
-  // console.log(startDate,endDate)
   const { lessonTableSearchValues } = useSelector(
     (state) => state.searchValues
   );
-  let userData = JSON.parse(localStorage.getItem("userData"));
-  userData =
-    userData.role !== "super-admin"
-      ? userData.profiles
-      : JSON.parse(localStorage.getItem("userData"));
+
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const filterLessons = () =>
     dispatch(
       getLessonTablePaginationAction(
-        1,
+        0,
         lessonTableSearchValues,
         selectedGroup._id,
         startDate,
@@ -34,11 +29,13 @@ const LessonTablePage = () => {
       )
     );
 
-  const getPageNumber = (pageNumber) => {
+  const getNextLessons = () => {
+    if (loading) return;
+
     if (lessonTableSearchValues) {
       dispatch(
         getLessonTablePaginationAction(
-          pageNumber,
+          lessonTableData?.length || 0,
           lessonTableSearchValues,
           selectedGroup._id,
           startDate,
@@ -49,7 +46,7 @@ const LessonTablePage = () => {
     } else {
       dispatch(
         getLessonTablePaginationAction(
-          pageNumber,
+          lessonTableData?.length || 0,
           "",
           selectedGroup._id,
           startDate,
@@ -59,6 +56,7 @@ const LessonTablePage = () => {
       );
     }
   };
+
   const openModal = () => {
     if (selectedGroup) {
       const students = selectedGroup.students.map((student) => ({
@@ -86,11 +84,12 @@ const LessonTablePage = () => {
       });
     }
   };
+
   const searchData = (e) => {
     e.preventDefault();
     dispatch(
       getLessonTablePaginationAction(
-        1,
+        0,
         lessonTableSearchValues,
         selectedGroup._id,
         startDate,
@@ -100,6 +99,7 @@ const LessonTablePage = () => {
     );
   };
 
+  console.log('lesson table page')
   return (
     <div className="details-page lesson-page ">
       <GlobalHead
@@ -113,11 +113,7 @@ const LessonTablePage = () => {
         profile={"lessonTable"}
       />
 
-      <LessonTableData
-        pageNum={lastPage}
-        getPageNumber={getPageNumber}
-        userData={userData}
-      />
+      {selectedGroup && <LessonTableData getNextLessons={getNextLessons} />}
     </div>
   );
 };

@@ -77,19 +77,14 @@ const modalLoading = (loadingValue) => ({
 });
 
 export const getCareerPaginationAction =
-  (pageNumber, searchQuery, courseId = "", groupId = "") =>
+  (length, searchQuery, courseId = "", groupId = "") =>
   async (dispatch) => {
     dispatch(pageLoading(true));
-    // console.log(groupId,"course")
+
     try {
       const { data } = await API.get(
-        `/?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${courseId}&groupId=${groupId}`
+        `/?length=${length}&searchQuery=${searchQuery}&courseId=${courseId}&groupId=${groupId}`
       );
-      // console.log(data);
-      dispatch({
-        type: CAREER_ALL_ACTIONS_TYPE.GET_CAREER_LAST_PAGE,
-        payload: pageNumber || 1,
-      });
 
       dispatch({
         type: CAREER_ALL_ACTIONS_TYPE.GET_CAREER_PAGINATION,
@@ -108,13 +103,8 @@ export const getCareerPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${courseId}&groupId=${groupId}`
+            `/?length=${length}&searchQuery=${searchQuery}&courseId=${courseId}&groupId=${groupId}`
           );
-
-          dispatch({
-            type: CAREER_ALL_ACTIONS_TYPE.GET_CAREER_LAST_PAGE,
-            payload: pageNumber,
-          });
 
           dispatch({
             type: CAREER_ALL_ACTIONS_TYPE.GET_CAREER_PAGINATION,
@@ -132,54 +122,56 @@ export const getCareerPaginationAction =
     }
   };
 
-export const updateCareerAction =
-  (newData, page = 1, searchValue = "") =>
-  async (dispatch) => {
-    dispatch(modalLoading(true));
-    try {
-      const { data } = await API.patch(`/`, newData);
-      dispatch({
-        type: CAREER_MODAL_ACTION_TYPE.CAREER_OPEN_MODAL,
-        payload: false,
-      });
+export const updateCareerAction = (newData) => async (dispatch) => {
+  dispatch(modalLoading(true));
+  try {
+    const { data } = await API.patch(`/`, newData);
 
-      dispatch(getCareerPaginationAction(page, searchValue));
-      toastSuccess("Karyera yeniləndi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          // const { data } = await API.patch(`/${_id}`, careerData);
-          // dispatch({
-          //   type: CAREER_ALL_ACTIONS_TYPE.UPDATE_CAREER,
-          //   payload: data,
-          // });
-          // dispatch({
-          //   type: CAREER_MODAL_ACTION_TYPE.CAREER_OPEN_MODAL,
-          //   payload: false,
-          // });
-          // toastSuccess("İşçi yeniləndi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+    dispatch({
+      type: CAREER_ALL_ACTIONS_TYPE.UPDATE_CAREER,
+      payload: data,
+    });
+    dispatch({
+      type: CAREER_MODAL_ACTION_TYPE.CAREER_OPEN_MODAL,
+      payload: false,
+    });
+
+    toastSuccess("Karyera yeniləndi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        // const { data } = await API.patch(`/${_id}`, careerData);
+        // dispatch({
+        //   type: CAREER_ALL_ACTIONS_TYPE.UPDATE_CAREER,
+        //   payload: data,
+        // });
+        // dispatch({
+        //   type: CAREER_MODAL_ACTION_TYPE.CAREER_OPEN_MODAL,
+        //   payload: false,
+        // });
+        // toastSuccess("İşçi yeniləndi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      if (error?.response?.data?.key === "email-already-exist") {
-        toastError("Bu email ilə istifadəçi mövcuddur");
-      }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan əməkdaş yenilənə bilməz");
-      }
-    } finally {
-      dispatch(modalLoading(false));
     }
-  };
+    if (error?.response?.data?.key === "email-already-exist") {
+      toastError("Bu email ilə istifadəçi mövcuddur");
+    }
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan əməkdaş yenilənə bilməz");
+    }
+  } finally {
+    dispatch(modalLoading(false));
+  }
+};

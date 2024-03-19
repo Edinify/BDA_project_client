@@ -5,17 +5,27 @@
 .delete-update-modal {
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  z-index: 100;
+  z-index: 100000;
   border-radius: 8px;
+  border-top-right-radius: 0;
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 25px;
-  right: 14px;
+  top: 12px;
+  right: 37px;
   opacity: 0;
   visibility: hidden;
   transition: 0.3s;
   transform: translateY(10px);
+}
+.delete-update-modal::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(to top right, white 50%, transparent 50%);
+  transform: rotate(90deg);
+  right: -10px;
 }
 
 .delete-update-modal.active {

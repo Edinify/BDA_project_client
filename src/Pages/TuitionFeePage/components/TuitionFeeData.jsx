@@ -7,8 +7,8 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const TuitionFeeData = ({ pageNum, getNextTuitionFees }) => {
-  const { tuitionFeeData, totalLength, currentLength, hasMore } = useSelector(
+const TuitionFeeData = ({ getNextTuitionFees }) => {
+  const { tuitionFeeData, hasMore } = useSelector(
     (state) => state.tuitionFeePagination
   );
   // const { loading } = useSelector((state) => state.tuitionFeePagination);
@@ -38,14 +38,6 @@ const TuitionFeeData = ({ pageNum, getNextTuitionFees }) => {
       document.body.style.overflowY = "overlay";
     }
   }, [openMoreModal]);
-
-  console.log(
-    totalLength,
-    currentLength,
-    // loading,
-    tuitionFeeData.length,
-    hasMore
-  );
 
   return (
     <>
@@ -99,7 +91,7 @@ const TuitionFeeData = ({ pageNum, getNextTuitionFees }) => {
             data={data}
             mode="tablet"
             setOpenMoreModal={setOpenMoreModal}
-            cellNumber={i + 1 + (pageNum - 1) * 10}
+            cellNumber={i + 1}
           />
         ))}
       </div>

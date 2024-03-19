@@ -3,6 +3,7 @@ import { WORKER_ALL_ACTIONS_TYPE } from "../actions-type";
 const initialState = {
   workers: [],
   totalLength: 0,
+  hasMore: true,
   totalPages: 1,
   lastPage: "",
   loading: false,
@@ -32,6 +33,7 @@ export const workersPaginationReducer = (state = initialState, action) => {
         ...state,
         workers: [...state.workers, ...action.payload.workers],
         totalLength: action.payload.totalLength,
+        hasMore: !(action.payload.workers.length < 10),
       };
     case WORKER_ALL_ACTIONS_TYPE.CREATE_WORKER:
       return {
@@ -44,6 +46,7 @@ export const workersPaginationReducer = (state = initialState, action) => {
           ...state,
           workers: [],
           totalLength: 0,
+          hasMore: true,
         };
     case WORKER_ALL_ACTIONS_TYPE.UPDATE_WORKER:
       return {

@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSyllabusPaginationAction } from "../../redux/actions/syllabusActions";
-import { SYLLABUS_MODAL_ACTION_TYPE,SYLLABUS_ALL_ACTIONS_TYPE } from "../../redux/actions-type";
+import {
+  SYLLABUS_MODAL_ACTION_TYPE,
+  SYLLABUS_ALL_ACTIONS_TYPE,
+} from "../../redux/actions-type";
 import SyllabusData from "./components/SyllabusData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import { toast } from "react-toastify";
 
 const SyllabusPage = () => {
   const dispatch = useDispatch();
-  const { lastPage,syllabusData } = useSelector((state) => state.syllabusPagination);
+  const { totalLength,loading, syllabusData } = useSelector(
+    (state) => state.syllabusPagination
+  );
   const { syllabusSearchValues } = useSelector((state) => state.searchValues);
   const { selectedCourse } = useSelector((state) => state.syllabusCourse);
 
@@ -18,35 +23,26 @@ const SyllabusPage = () => {
       ? userData.profiles
       : JSON.parse(localStorage.getItem("userData"));
 
-  const getPageNumber = (pageNumber) => {
+  const getNextSyllabus = () => {
+    if (loading) return;
     if (syllabusSearchValues) {
       dispatch(
         getSyllabusPaginationAction(
-          pageNumber,
+          syllabusData?.length || 0,
           syllabusSearchValues,
           selectedCourse._id
         )
       );
     } else {
-      dispatch(getSyllabusPaginationAction(pageNumber, "", selectedCourse._id));
-    }
-  };
-
-   // ============
-
-   const getNextSyllabus = () => {
-    if (syllabusSearchValues) {
       dispatch(
-        getSyllabusPaginationAction(syllabusData?.length || 0, syllabusSearchValues, selectedCourse._id)
-      );
-    } else {
-      dispatch(
-        getSyllabusPaginationAction(syllabusData?.length || 0, "", selectedCourse._id)
+        getSyllabusPaginationAction(
+          syllabusData?.length || 0,
+          "",
+          selectedCourse._id
+        )
       );
     }
   };
-
-  // ========
 
   const openModal = () => {
     if (selectedCourse) {
@@ -72,7 +68,7 @@ const SyllabusPage = () => {
     e.preventDefault();
     if (selectedCourse) {
       dispatch(
-        getSyllabusPaginationAction(1, syllabusSearchValues, selectedCourse._id)
+        getSyllabusPaginationAction(0, syllabusSearchValues, selectedCourse._id)
       );
     } else {
       toast.error("İxtisas seçməlisiniz", {
@@ -89,20 +85,19 @@ const SyllabusPage = () => {
     }
   };
 
-
   useEffect(() => {
+    console.log(selectedCourse._id)
     if (syllabusSearchValues) {
-      dispatch(getSyllabusPaginationAction(0, syllabusSearchValues,""));
-    } else {
-      dispatch(getSyllabusPaginationAction(0, "",""));
+      dispatch(getSyllabusPaginationAction(0, syllabusSearchValues, ""));
+    } else if(selectedCourse._id) {
+      dispatch(getSyllabusPaginationAction(0, "", ""));
     }
 
-    return () =>{
+    return () => {
       dispatch({
         type: SYLLABUS_ALL_ACTIONS_TYPE.RESET_SYLLABUS_PAGINATION,
       });
-    }
-
+    };
   }, []);
   return (
     <div className="details-page teachers-page ">
@@ -112,10 +107,11 @@ const SyllabusPage = () => {
         DATA_SEARCH_VALUE={"SYLLABUS_SEARCH_VALUE"}
         dataSearchValues={syllabusSearchValues}
         statusType="syllabus"
+        count={totalLength}
       />
 
       <SyllabusData
-        pageNum={lastPage}
+        // pageNum={lastPage}
         getNextSyllabus={getNextSyllabus}
         userData={userData}
       />

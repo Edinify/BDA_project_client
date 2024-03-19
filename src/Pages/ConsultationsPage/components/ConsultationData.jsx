@@ -8,13 +8,13 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const ConsultationData = ({ pageNum, getNextConsultation, userData }) => {
-  const { totalLength, loading, consultationData } = useSelector(
+const ConsultationData = ({  getNextConsultation, userData }) => {
+  const { hasMore, consultationData } = useSelector(
     (state) => state.consultationPagination
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.consultationModal);
-
+    // console.log(consultationData)
   const tableHead = [
     "Tələbə",
     "Təlimçi",
@@ -32,7 +32,7 @@ const ConsultationData = ({ pageNum, getNextConsultation, userData }) => {
     "",
   ];
 
-  console.log(consultationData, "consultation data");
+  // console.log(consultationData, "consultation data");
 
   useEffect(() => {
     if (openMoreModal) {
@@ -61,7 +61,7 @@ const ConsultationData = ({ pageNum, getNextConsultation, userData }) => {
             style={{ overflowX: "none" }}
             dataLength={consultationData.length}
             next={getNextConsultation}
-            hasMore={totalLength > consultationData.length || loading}
+            hasMore={hasMore}
             loader={<SmallLoading />}
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
@@ -85,7 +85,7 @@ const ConsultationData = ({ pageNum, getNextConsultation, userData }) => {
                     mode="desktop"
                     consultation={userData}
                     setOpenMoreModal={setOpenMoreModal}
-                    cellNumber={i + 1 + (pageNum - 1) * 10}
+                    cellNumber={i + 1}
                   />
                 ))}
               </tbody>
@@ -93,18 +93,18 @@ const ConsultationData = ({ pageNum, getNextConsultation, userData }) => {
             </InfiniteScroll>
           </div>
 
-          <div className="details-list-tablet with-more">
+          {/* <div className="details-list-tablet with-more">
             {consultationData?.map((student, i) => (
               <ConsultationCard
                 key={i}
                 data={student}
                 mode="tablet"
                 setOpenMoreModal={setOpenMoreModal}
-                cellNumber={i + 1 + (pageNum - 1) * 10}
+                cellNumber={i + 1}
                 consultation={userData}
               />
             ))}
-          </div>
+          </div> */}
         </>
     </>
   );

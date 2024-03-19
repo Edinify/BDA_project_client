@@ -74,6 +74,7 @@ export const getEventsPaginationAction =
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}`
       );
+      console.log(data)
       dispatch({
         type: EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_PAGINATION,
         payload: data,
@@ -117,8 +118,10 @@ export const createEventAction = (eventData) => async (dispatch) => {
 
   try {
     const { data } = await API.post("/", eventData);
-
-    dispatch(getEventsPaginationAction(data.lastPage, ""));
+    dispatch({
+      type: EVENTS_ALL_ACTIONS_TYPE.CREATE_EVENT,
+      payload: data,
+    });
     dispatch(eventModalOpen(false));
     toastSuccess("Yeni tədbir yaradıldı");
   } catch (error) {

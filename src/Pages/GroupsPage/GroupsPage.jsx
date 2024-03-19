@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 const GroupsPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { lastPage,groupData } = useSelector((state) => state.groupsPagination);
+  const { totalLength,loading,groupData } = useSelector((state) => state.groupsPagination);
   const { groupsSearchValues } = useSelector((state) => state.searchValues);
   const {courseId } = useSelector((state) => state.studentStatus);
   const { selectedTeacher } = useSelector((state) => state.dropdownTeacher);
@@ -23,18 +23,22 @@ const GroupsPage = () => {
       : JSON.parse(localStorage.getItem("userData"));
 
   
-    const filterGroup = () => dispatch(
-      getGroupsPaginationAction(
-        1,
-        groupsSearchValues, 
-        status,
-        courseId,
-        selectedTeacher._id
-      )
-    )   
+    const filterGroup = () => {
+      dispatch({ type: GROUP_ALL_ACTIONS_TYPE.RESET_GROUP_PAGINATION });
+
+      dispatch(
+        getGroupsPaginationAction(
+          0,
+          groupsSearchValues, 
+          status,
+          courseId,
+          selectedTeacher._id
+        )
+    )}   
   // ============
 
   const getNextTeachers = () => {
+    if (loading) return;
     if (groupsSearchValues) {
       dispatch(
         getGroupsPaginationAction(groupData?.length || 0, groupsSearchValues, status,'','')
@@ -87,6 +91,7 @@ const GroupsPage = () => {
         dataSearchValues={groupsSearchValues}
         profile={"groups"}
         statusType="groups"
+        count={totalLength}
       />
 
       <HeadTabs
@@ -99,7 +104,6 @@ const GroupsPage = () => {
       />
 
       <GroupsData
-        pageNum={lastPage}
         getNextTeachers={getNextTeachers}
         userData={userData}
       />

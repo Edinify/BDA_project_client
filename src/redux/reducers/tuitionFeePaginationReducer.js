@@ -4,7 +4,6 @@ const initialState = {
   tuitionFeeData: [],
   tuitionFeeDataByMore: [],
   paymentsResults: {},
-  totalLength: 0,
   currentLength: 0,
   hasMore: true,
   loading: false,
@@ -33,7 +32,6 @@ export const tuitionFeeDataPaginationReducer = (
       return {
         ...state,
         tuitionFeeData: [...state.tuitionFeeData, ...action.payload.tutionFees],
-        totalLength: action.payload.totalLength,
         currentLength: action.payload.currentLength,
         paymentsResults: action.payload.paymentsResults,
         hasMore: !(action.payload.tutionFees.length < 10),
@@ -42,7 +40,6 @@ export const tuitionFeeDataPaginationReducer = (
       return {
         ...state,
         tuitionFeeData: [],
-        totalLength: 0,
         currentLength: 0,
         hasMore: true,
       };
