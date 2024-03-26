@@ -6,14 +6,14 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const LessonTableData = ({ getNextLessons, pageNum }) => {
+const LessonTableData = ({ getNextLessons }) => {
   const { lessonTableData, hasMore } = useSelector(
     (state) => state.lessonTablePagination
   );
   const { openStudentModal } = useSelector((state) => state.lessonTableModal);
   const { user } = useSelector((state) => state.user);
   const { openConfirmModal } = useSelector((state) => state.lessonTableModal);
-  const [students, setStudents] = useState({ data: [], lessonId: "" });
+  const [targetLesson, setTargetLesson] = useState({});
   const [updatedResultData, setUpdatedResultData] = useState("");
 
   const tableHead =
@@ -36,8 +36,8 @@ const LessonTableData = ({ getNextLessons, pageNum }) => {
     <>
       {openStudentModal && (
         <StudentLessonModal
-          students={students}
-          setStudents={setStudents}
+          targetLesson={targetLesson}
+          setTargetLesson={setTargetLesson}
           setUpdatedResultData={setUpdatedResultData}
           updatedResultData={updatedResultData}
         />
@@ -69,11 +69,11 @@ const LessonTableData = ({ getNextLessons, pageNum }) => {
           <tbody>
             {lessonTableData?.map((lesson, i) => (
               <LessonTableCard
-                key={i}
+                key={lesson._id}
                 data={lesson}
                 mode="desktop"
                 cellNumber={i + 1}
-                setStudents={setStudents}
+                setTargetLesson={setTargetLesson}
               />
             ))}
           </tbody>

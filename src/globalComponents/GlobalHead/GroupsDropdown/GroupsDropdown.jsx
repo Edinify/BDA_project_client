@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as ArrowIcon } from "../../../assets/icons/arrow-down-dropdown.svg";
 import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg";
-import { DROPDOWN_GROUP_ACTIONS_TYPE } from "../../../redux/actions-type";
+import {
+  DROPDOWN_GROUP_ACTIONS_TYPE,
+  LESSON_TABLE_ALL_ACTIONS_TYPE,
+} from "../../../redux/actions-type";
 import {
   getGroupsAction,
   getGroupsWithMentorAction,
@@ -26,6 +29,7 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
       type: DROPDOWN_GROUP_ACTIONS_TYPE.SELECT_GROUP,
       payload: group,
     });
+    dispatch({ type: LESSON_TABLE_ALL_ACTIONS_TYPE.RESET_LESSON_TABLE });
     dispatch(getLessonTablePaginationAction(0, "", group._id, "", ""));
   };
 

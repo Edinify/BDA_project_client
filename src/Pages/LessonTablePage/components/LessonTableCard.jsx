@@ -5,7 +5,7 @@ import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActio
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
 
-const LessonTableCard = ({ data, mode = "desktop", setStudents }) => {
+const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
   const { lessonTableData, lastPage } = useSelector(
@@ -24,7 +24,7 @@ const LessonTableCard = ({ data, mode = "desktop", setStudents }) => {
       }`
     : "";
   const openStudentsList = () => {
-    setStudents({ data: data.students, lessonId: data._id });
+    setTargetLesson(data);
     dispatch({
       type: LESSON_TABLE_MODAL_ACTION_TYPE.STUDENT_MODAL,
       payload: true,
