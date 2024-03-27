@@ -13,12 +13,14 @@ import Teacher from "./components/SelectCollection/Teacher";
 import Mentor from "./components/SelectCollection/Mentor";
 import StudentsList from "./components/SelectCollection/StudentList/StudentList";
 import Status from "./components/Status/Status";
+import TutorStatus from "./components/TutorStatus/TutorStatus";
 
 const LessonTableModal = () => {
   const dispatch = useDispatch();
   const { lessonTableModalData: modalData } = useSelector(
     (state) => state.lessonTableModal
   );
+
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
 
   const inputNameArr1 = ["date", "time"];
@@ -135,14 +137,25 @@ const LessonTableModal = () => {
         </Box>
 
         {modalData?._id ? (
-          <div className="modal-buttons">
-            <Status updateModalState={updateModalState} modalData={modalData} />
+          <div className="modal-buttons lesson-table-modal ">
+            <div className="modal-tutor-status">
+              <TutorStatus
+                updateModalState={updateModalState}
+                modalData={modalData}
+              />
+            </div>
+            <div className="modal-teacher-status">
+              <Status
+                updateModalState={updateModalState}
+                modalData={modalData}
+              />
 
-            <SubmitBtn
-              formik={formik}
-              modalData={modalData}
-              funcType="update"
-            />
+              <SubmitBtn
+                formik={formik}
+                modalData={modalData}
+                funcType="update"
+              />
+            </div>
           </div>
         ) : (
           <div className="modal-buttons">

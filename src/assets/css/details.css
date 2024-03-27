@@ -16,7 +16,12 @@
   text-align: start;
   border: 0.5px solid var(--neutrals-500);
   border-top: none;
+  min-width: 200px;
 }
+.details-table tr th:last-child{
+  min-width: 10px;
+}
+
 .details-table tr td {
   color: #1e1e1e;
   font-size: 16px;
