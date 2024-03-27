@@ -116,7 +116,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
             <div className="td-con">
               <div className="table-scroll-text">{`${
                 data?.topic?.orderNumber || ""
-              }. ${
+              }${data?.topic?.orderNumber ? "." : ""} ${
                 data?.topic?.name === "Praktika"
                   ? "Lab day"
                   : data?.topic?.name || ""
