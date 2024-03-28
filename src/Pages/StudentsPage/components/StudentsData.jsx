@@ -13,6 +13,7 @@ const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
  
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.studentsModal);
+  
   const tableHead = [
     "Tələbə adı",
     "Fin",
@@ -39,13 +40,7 @@ const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
 
   return (
     <>
-      {openMoreModal && (
-        <MoreModal
-          setOpenMoreModal={setOpenMoreModal}
-          type="student"
-          userData={userData}
-        />
-      )}
+      
 
       {openConfirmModal && <ConfirmModal type="student" />}
 

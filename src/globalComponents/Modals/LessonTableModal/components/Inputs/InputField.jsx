@@ -15,6 +15,7 @@ export default function InputField({
   const { weeksArrFullName } = useCustomHook();
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [shrink, setShrink] = useState(false);
+  const { user } = useSelector((state) => state.user);
   const inputData = [
     {
       inputName: "group",
@@ -107,7 +108,11 @@ export default function InputField({
         value={
           inputData.find((item) => item.inputName === inputName)?.inputValue
         }
-        disabled={inputName === "group"}
+        disabled={
+          inputName === "group" ||
+          user?.role === "teacher" ||
+          user?.role === "mentor"
+        }
         onWheel={(e) => e.target.blur()}
         onChange={(e) => updateModalState(inputName, e.target.value)}
         onBlur={(e) => {

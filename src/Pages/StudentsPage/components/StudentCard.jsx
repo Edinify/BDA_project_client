@@ -5,6 +5,8 @@ import { deleteStudentAction } from "../../../redux/actions/studentsActions";
 import moment from "moment";
 import "moment/locale/az";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
+import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
+import { useState } from "react";
 
 const StudentCard = ({
   data,
@@ -30,6 +32,8 @@ const StudentCard = ({
   const whereSendName = whereSendList.find(
     (item) => item.key === data?.whereSend
   )?.name;
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   let courses =
     Array.isArray(data?.courses) && data?.courses.length > 0
@@ -92,6 +96,12 @@ const StudentCard = ({
 
   return (
     <>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {mode === "desktop" ? (
         <tr>
           <td>
@@ -137,9 +147,7 @@ const StudentCard = ({
           </td>
           <td>
             <div className="td-con" style={{ width: "200px" }}>
-              <div className="table-scroll-text">
-                {whereComingName || ""}
-              </div>
+              <div className="table-scroll-text">{whereComingName || ""}</div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -180,6 +188,7 @@ const StudentCard = ({
               openConfirmModal={openConfirmModal}
               openMoreModal={openMoreModal}
               profil="students"
+              setShowDeleteModal={setShowDeleteModal}
             />
           </td>
         </tr>
@@ -214,7 +223,7 @@ const StudentCard = ({
             </div>
           ) : (
             <div className="right">
-              <UpdateDeleteModal
+              {/* <UpdateDeleteModal
                 updateItem={updateItem}
                 deleteItem={deleteItem}
                 data={data}
@@ -223,7 +232,7 @@ const StudentCard = ({
                 openConfirmModal={openConfirmModal}
                 openMoreModal={openMoreModal}
                 profil={"students"}
-              />
+              /> */}
             </div>
           )}
         </div>

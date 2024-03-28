@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import "./updateDeleteModal.css";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FUNC_COMPONENT_ACTION_TYPE } from "../../../redux/actions-type";
 import { ReactComponent as MoreIcon } from "../../../assets/icons/more.svg";
@@ -7,31 +6,25 @@ import DeleteItemModal from "../DeleteItemModal/DeleteItemModal";
 import { downloadContractAction } from "../../../redux/actions/studentsActions";
 import { MdOutlineFileDownload } from "react-icons/md";
 
-const UpdateDeleteModal = ({
+export const UpdateDeleteModal = ({
   updateItem = () => {},
   deleteItem = () => {},
   data,
   dataType = "",
   openConfirmModal,
   profil,
-  setShowDeleteModal,
 }) => {
   const dispatch = useDispatch();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { funcComp } = useSelector((state) => state.funcComponent);
   const { user } = useSelector((state) => state.user);
   const [updateBtn, setUpdateBtn] = useState(false);
-  const [contractBtn, setContractBtn] = useState(false);
   const [confirmBtn, setConfirmBtn] = useState(false);
   const [changesBtn, setChangesBtn] = useState(false);
   const [paymentsBtn, setPaymentsBtn] = useState(false);
   const [deleteBtn, setDeleteBtn] = useState(false);
   const [badge, setBadge] = useState(false);
 
-  const handleShowDeleteModal = () => {
-    setShowDeleteModal(true);
-  };
-
-  console.log(funcComp, "comp");
   const modalRef = useRef(null);
 
   const handleClickOutside = () => {
@@ -40,6 +33,8 @@ const UpdateDeleteModal = ({
       payload: false,
     });
   };
+
+  console.log(data,"Data")
 
   const handleToggleModal = (e) => {
     e.stopPropagation();
@@ -69,7 +64,7 @@ const UpdateDeleteModal = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [handleClickOutside]);
+  }, []);
 
   useEffect(() => {
     if (user?.role === "super-admin") {
@@ -77,10 +72,6 @@ const UpdateDeleteModal = ({
       setDeleteBtn(true);
       if (profil === "tuitionFee") {
         setPaymentsBtn(true);
-      }
-
-      if (profil === "students") {
-        setContractBtn(true);
       }
     } else if (user?.role === "worker") {
       const power = user?.profiles?.find(
@@ -90,10 +81,6 @@ const UpdateDeleteModal = ({
       if (power === "all") {
         setConfirmBtn(true);
         setDeleteBtn(true);
-
-        if (profil === "students") {
-          setContractBtn(true);
-        }
       }
 
       if (power === "update" && profil !== "tuitionFee") {
@@ -117,15 +104,13 @@ const UpdateDeleteModal = ({
       if (power !== "only-show") {
         setUpdateBtn(true);
       }
-    } else if (user?.role === "teacher" && data?.topic?.name !== "Praktika") {
-      setUpdateBtn(true);
-    } else if (user?.role === "mentor") {
+    } else if (
+      user?.role === "teacher" ||
+      (user?.role === "mentor" && data?.topic?.name === "Praktika")
+    ) {
       setUpdateBtn(true);
     }
-    console.log(data, "newwwwwwwwwwwwwwwwwwwwwwwwww");
-  }, []);
-
-  // console.log("update delete modal");
+  });
   return (
     <div className="func-component">
       {badge && (
@@ -143,14 +128,14 @@ const UpdateDeleteModal = ({
       )}
       <MoreIcon className="more-icon" onMouseDown={handleToggleModal} />
       <div
-        className={`delete-update-modal  ${
+        className={`delete-update-modal ${
           funcComp === data._id ? "active" : ""
         }`}
         ref={modalRef}
       >
         <>
           {dataType !== "feedback" && profil !== "tuitionFee" && updateBtn && (
-            <h4 onClick={updateItem}>Yenilə</h4>
+            <h4 onClick={() => updateItem()}>Yenilə</h4>
           )}
           {confirmBtn && (
             <h4 className="confirm" onClick={openConfirmModal}>
@@ -198,33 +183,36 @@ const UpdateDeleteModal = ({
             </h4>
           )}
 
+          <h4 className="confirm" onClick={downloadContract}>
+            Müqavilə
+          </h4>
+          {/*
+            {profil !== "syllabus" &&
+              profil !== "lessonTable" &&
+              profil !== "sales" &&
+              profil !== "careers" && (
+                <h4 className="confirm" onClick={() => openMoreModal()}>
+                  Ətraflı
+                </h4>
+              )} */}
           {deleteBtn && profil !== "careers" && profil !== "tuitionFee" && (
             <h4
               className={`delete-func ${dataType === "branches" ? "only" : ""}`}
-              onClick={handleShowDeleteModal}
+              onClick={() => setShowDeleteModal(true)}
             >
               Sil
             </h4>
           )}
 
-          {contractBtn && (
-            <h4
-              className="confirm"
-              onClick={downloadContract}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "10px",
-              }}
-            >
-              <span>Müqavilə</span>
-              <MdOutlineFileDownload style={{}} />
-            </h4>
-          )}
+          <MdOutlineFileDownload />
         </>
       </div>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
     </div>
   );
 };
-
-export default UpdateDeleteModal;

@@ -7,9 +7,6 @@ import {
 import { getCoursesPaginationAction } from "../../redux/actions/coursesActions";
 import CoursesData from "./components/CoursesData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
-import { useCustomHook } from "../../globalComponents/GlobalFunctions/globalFunctions";
-
-import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
 
 const CoursePage = () => {
   const dispatch = useDispatch();

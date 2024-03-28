@@ -10,7 +10,7 @@ import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const StudentsPage = () => {
   const dispatch = useDispatch();
-  const { students, totalLength,loading } = useSelector(
+  const { lastPage, students, totalLength } = useSelector(
     (state) => state.studentsPagination
   );
   const { studentSearchValues } = useSelector((state) => state.searchValues);
@@ -18,6 +18,7 @@ const StudentsPage = () => {
     (state) => state.studentStatus
   );
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
+  const [studentPageNum, setStudentPageNum] = useState(1);
 
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =
@@ -43,9 +44,32 @@ const StudentsPage = () => {
     );
   };
 
+  const getPageNumber = (pageNumber) => {
+    setStudentPageNum(pageNumber);
+    if (studentSearchValues) {
+      dispatch(
+        getStudentsPaginationAction(
+          pageNumber,
+          studentSearchValues,
+          studentStatus ? studentStatus : "all",
+          courseId,
+          selectedGroup._id
+        )
+      );
+    } else {
+      dispatch(
+        getStudentsPaginationAction(
+          pageNumber,
+          "",
+          studentStatus ? studentStatus : "all",
+          courseId,
+          selectedGroup._id
+        )
+      );
+    }
+  };
+
   const getNextStudents = () => {
-    if (loading) return;
-    console.log(loading)
     if (studentSearchValues) {
       dispatch(
         getStudentsPaginationAction(
@@ -93,7 +117,20 @@ const StudentsPage = () => {
         selectedGroup._id
       )
     );
+    setStudentPageNum(1);
   };
+
+  useEffect(() => {
+    if (lastPage) {
+      setStudentPageNum(lastPage);
+    }
+  }, [lastPage]);
+
+  useEffect(() => {
+    if (studentStatus) {
+      getPageNumber(1);
+    }
+  }, [studentStatus]);
 
   useEffect(() => {
     if (studentSearchValues) {
@@ -111,6 +148,7 @@ const StudentsPage = () => {
     };
   }, [dispatch]);
 
+  // console.log(lastPage, "last page in student");
   return (
     <div className="details-page students-page">
       <GlobalHead
@@ -124,7 +162,12 @@ const StudentsPage = () => {
         count={totalLength}
       />
 
-      <StudentsData getNextStudents={getNextStudents} userData={userData} />
+      <StudentsData
+        studentPageNum={studentPageNum}
+        getPageNumber={getPageNumber}
+        getNextStudents={getNextStudents}
+        userData={userData}
+      />
     </div>
   );
 };

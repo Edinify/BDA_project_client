@@ -13,6 +13,7 @@ import Teacher from "./components/SelectCollection/Teacher";
 import Mentor from "./components/SelectCollection/Mentor";
 import StudentsList from "./components/SelectCollection/StudentList/StudentList";
 import Status from "./components/Status/Status";
+import MentorStatus from "./components/SelectCollection/MentorStatus";
 
 const LessonTableModal = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const LessonTableModal = () => {
     (state) => state.lessonTableModal
   );
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
+  const { user } = useSelector((state) => state.user);
 
   const inputNameArr1 = ["date", "time"];
 
@@ -76,7 +78,7 @@ const LessonTableModal = () => {
     updateModalState("group", selectedGroup._id);
   }, []);
 
-  // console.log(modalData, "moododd");
+  console.log(modalData, "modal dataaaaaaaaaaaaaaaaaa");
 
   return (
     <div className="create-update-modal-con teacher-modal">
@@ -131,12 +133,29 @@ const LessonTableModal = () => {
               updateModalState={updateModalState}
               modalData={modalData}
             />
+            {modalData?._id &&
+              user.role !== "teacher" &&
+              modalData?.topic?.name !== "Praktika" && (
+                <MentorStatus
+                  updateModalState={updateModalState}
+                  modalData={modalData}
+                />
+              )}
           </div>
         </Box>
 
         {modalData?._id ? (
           <div className="modal-buttons">
-            <Status updateModalState={updateModalState} modalData={modalData} />
+            {(!(
+              (user.role === "mentor" &&
+                modalData?.topic?.name !== "Praktika") ||
+              (user.role === "teacher" && modalData?.topic?.name === "Praktika")
+            ) && (
+              <Status
+                updateModalState={updateModalState}
+                modalData={modalData}
+              />
+            )) || <div></div>}
 
             <SubmitBtn
               formik={formik}

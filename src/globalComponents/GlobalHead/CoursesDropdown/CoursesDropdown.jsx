@@ -8,7 +8,7 @@ import {
 } from "../../../redux/actions-type";
 import { getAllCoursesAction } from "../../../redux/actions/coursesActions";
 import { getSyllabusPaginationAction } from "../../../redux/actions/syllabusActions";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
 export const CoursesDropdown = ({ deviceType = "" }) => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
   const { selectedCourse } = useSelector((state) => state.syllabusCourse);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const location = useLocation();
+  // const location = useLocation();
 
   useEffect(() => {
     return () => {
@@ -28,7 +28,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
         type: STUDENT_STATUS_FILTER_ACTION_TYPE.CLEAR_STUDENT_COURSEID,
       });
     };
-  }, [location]);
+  }, [dispatch]);
 
   const getCourse = (course) => {
     // console.log(course)
@@ -51,7 +51,12 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
 
   useEffect(() => {
     dispatch(getAllCoursesAction());
-  }, []);
+  }, [dispatch]);
+
+
+  const handleChangeDrop=()=>{
+    setDropdownOpen(!dropdownOpen)
+  }
 
   return (
     <div
@@ -61,7 +66,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
     >
       <div
         className="dropdown-head"
-        onClick={() => setDropdownOpen(!dropdownOpen)}
+        onClick={handleChangeDrop}
       >
         <h2>{selectedCourse ? selectedCourse.name : "İxtisaslar"}</h2>
         <div className="arrow-icon">

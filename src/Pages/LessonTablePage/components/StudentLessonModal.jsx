@@ -119,7 +119,9 @@ const StudentLessonModal = ({ targetLesson, setTargetLesson }) => {
           ))}
         </div>
         {!(
-          user?.role === "mentor" && targetLesson?.topic?.name !== "Praktika"
+          (user?.role === "mentor" &&
+            targetLesson?.topic?.name !== "Praktika") ||
+          (user?.role === "teacher" && targetLesson?.topic?.name === "Praktika")
         ) && (
           <div className="confirm-btn">
             <button onClick={updateLessonStudents}>Təsdiqlə</button>

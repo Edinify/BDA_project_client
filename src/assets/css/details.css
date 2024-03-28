@@ -16,7 +16,12 @@
   text-align: start;
   border: 0.5px solid var(--neutrals-500);
   border-top: none;
+  min-width: 200px;
 }
+.details-table tr th:last-child{
+  min-width: 10px;
+}
+
 .details-table tr td {
   color: #1e1e1e;
   font-size: 16px;
@@ -149,6 +154,16 @@
 .details-table.lesson-table tr th:nth-last-child(2),
 .details-table.lesson-table tr td:nth-last-child(2) {
   width: 140px;
+}
+
+.details-table.lesson-table tr th:nth-last-child(4),
+.details-table.lesson-table tr td:nth-last-child(4) {
+  width: 100px;
+}
+
+.details-table.lesson-table tr th:nth-last-child(8),
+.details-table.lesson-table tr td:nth-last-child(8) {
+  width: 100px;
 }
 
 /* only-show */
@@ -363,6 +378,7 @@
   background-color: var(--neutrals-200);
   /* box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); */
 }
+
 
 
 @media screen and (max-width: 700px) {
