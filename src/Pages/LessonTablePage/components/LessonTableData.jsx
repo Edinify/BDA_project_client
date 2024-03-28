@@ -26,6 +26,7 @@ const LessonTableData = ({ getNextLessons }) => {
           "Müəllim",
           "Mentor",
           "Tələbələr",
+          "Mentor saatı",
           "Status",
           "",
         ];

@@ -13,15 +13,15 @@ import Teacher from "./components/SelectCollection/Teacher";
 import Mentor from "./components/SelectCollection/Mentor";
 import StudentsList from "./components/SelectCollection/StudentList/StudentList";
 import Status from "./components/Status/Status";
-import TutorStatus from "./components/TutorStatus/TutorStatus";
+import MentorStatus from "./components/SelectCollection/MentorStatus";
 
 const LessonTableModal = () => {
   const dispatch = useDispatch();
   const { lessonTableModalData: modalData } = useSelector(
     (state) => state.lessonTableModal
   );
-
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
+  const { user } = useSelector((state) => state.user);
 
   const inputNameArr1 = ["date", "time"];
 
@@ -78,7 +78,7 @@ const LessonTableModal = () => {
     updateModalState("group", selectedGroup._id);
   }, []);
 
-  // console.log(modalData, "moododd");
+  console.log(modalData, "modal dataaaaaaaaaaaaaaaaaa");
 
   return (
     <div className="create-update-modal-con teacher-modal">
@@ -133,29 +133,26 @@ const LessonTableModal = () => {
               updateModalState={updateModalState}
               modalData={modalData}
             />
+            {modalData?._id &&
+              user.role !== "teacher" &&
+              modalData?.topic?.name !== "Praktika" && (
+                <MentorStatus
+                  updateModalState={updateModalState}
+                  modalData={modalData}
+                />
+              )}
           </div>
         </Box>
 
         {modalData?._id ? (
-          <div className="modal-buttons lesson-table-modal ">
-            <div className="modal-tutor-status">
-              <TutorStatus
-                updateModalState={updateModalState}
-                modalData={modalData}
-              />
-            </div>
-            <div className="modal-teacher-status">
-              <Status
-                updateModalState={updateModalState}
-                modalData={modalData}
-              />
+          <div className="modal-buttons">
+            <Status updateModalState={updateModalState} modalData={modalData} />
 
-              <SubmitBtn
-                formik={formik}
-                modalData={modalData}
-                funcType="update"
-              />
-            </div>
+            <SubmitBtn
+              formik={formik}
+              modalData={modalData}
+              funcType="update"
+            />
           </div>
         ) : (
           <div className="modal-buttons">

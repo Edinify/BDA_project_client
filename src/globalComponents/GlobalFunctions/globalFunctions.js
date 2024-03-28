@@ -53,6 +53,11 @@ export function useCustomHook() {
     { name: "Keçirilib", key: "confirmed" },
     { name: "Ləğv edilib", key: "cancelled" },
   ];
+
+  const mentorHourList = [
+    { name: "Keçirilib", key: "confirmed" },
+    { name: "Keçirilməyib", key: "cancelled" },
+  ];
   const fineTypeList = [
     { name: "Şifahi xəbərdarlıq", key: "verbalWarning" },
     { name: "Yazılı xəbərdarlıq", key: "writtenWarning" },
