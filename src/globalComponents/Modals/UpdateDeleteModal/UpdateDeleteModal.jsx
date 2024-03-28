@@ -19,7 +19,6 @@ const UpdateDeleteModal = ({
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { funcComp } = useSelector((state) => state.funcComponent);
-  console.log(funcComp);
   const { user } = useSelector((state) => state.user);
   const [updateBtn, setUpdateBtn] = useState(false);
   const [contractBtn, setContractBtn] = useState(false);

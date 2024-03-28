@@ -68,6 +68,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
           date: data?.date,
           time: data?.time,
           topic: data?.topic,
+          mentorHour: data?.mentorHour,
           status: data?.status,
         },
         openModal: modalType !== "more" ? true : false,
@@ -93,8 +94,6 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
     });
   };
 
-  // console.log(data, "pow");
-  console.log("lesson table card");
 
   return (
     <>
