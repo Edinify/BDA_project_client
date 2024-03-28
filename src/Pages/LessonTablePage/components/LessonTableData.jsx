@@ -24,9 +24,9 @@ const LessonTableData = ({ getNextLessons }) => {
           "Dərs saatı",
           "Mövzu",
           "Müəllim",
-          "Mentor",
+          "Tyutor",
           "Tələbələr",
-          "Mentor saatı",
+          "Tyutor saatı",
           "Status",
           "",
         ];

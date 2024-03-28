@@ -146,7 +146,16 @@ const LessonTableModal = () => {
 
         {modalData?._id ? (
           <div className="modal-buttons">
-            <Status updateModalState={updateModalState} modalData={modalData} />
+            {(!(
+              (user.role === "mentor" &&
+                modalData?.topic?.name !== "Praktika") ||
+              (user.role === "teacher" && modalData?.topic?.name === "Praktika")
+            ) && (
+              <Status
+                updateModalState={updateModalState}
+                modalData={modalData}
+              />
+            )) || <div></div>}
 
             <SubmitBtn
               formik={formik}

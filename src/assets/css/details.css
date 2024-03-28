@@ -156,6 +156,16 @@
   width: 140px;
 }
 
+.details-table.lesson-table tr th:nth-last-child(4),
+.details-table.lesson-table tr td:nth-last-child(4) {
+  width: 100px;
+}
+
+.details-table.lesson-table tr th:nth-last-child(8),
+.details-table.lesson-table tr td:nth-last-child(8) {
+  width: 100px;
+}
+
 /* only-show */
 .details-table.student-table.only-show tr th,
 .details-table.student-table.only-show tr td {

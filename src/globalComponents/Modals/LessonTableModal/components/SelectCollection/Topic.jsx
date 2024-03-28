@@ -11,6 +11,7 @@ const Topic = ({ formik, modalData, updateModalState }) => {
   const { syllabusData: dataList } = useSelector(
     (state) => state.syllabusPagination
   );
+  const { user } = useSelector((state) => state.user);
   let inputValue = modalData.topic
     ? `${modalData?.topic?.orderNumber || ""}${
         modalData.topic.name === "Praktika" ? "" : "."
@@ -56,10 +57,13 @@ const Topic = ({ formik, modalData, updateModalState }) => {
               value={inputValue}
               onBlur={() => formik.setFieldTouched("topic", true)}
             />
-            <DropdownIcon
-              setOpenDropdown={setOpenDropdown}
-              openDropdown={openDropdown}
-            />
+
+            {!(user?.role === "teacher" || user?.role === "mentor") && (
+              <DropdownIcon
+                setOpenDropdown={setOpenDropdown}
+                openDropdown={openDropdown}
+              />
+            )}
           </div>
 
           <ul

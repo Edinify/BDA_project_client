@@ -14,7 +14,7 @@ const UpdateDeleteModal = ({
   dataType = "",
   openConfirmModal,
   profil,
-  setShowDeleteModal
+  setShowDeleteModal,
 }) => {
   const dispatch = useDispatch();
   const { funcComp } = useSelector((state) => state.funcComponent);
@@ -27,13 +27,11 @@ const UpdateDeleteModal = ({
   const [deleteBtn, setDeleteBtn] = useState(false);
   const [badge, setBadge] = useState(false);
 
+  const handleShowDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
 
-  const handleShowDeleteModal=()=>{
-    setShowDeleteModal(true)
-  }
-
-
-  console.log(funcComp,"comp")
+  console.log(funcComp, "comp");
   const modalRef = useRef(null);
 
   const handleClickOutside = () => {
@@ -92,7 +90,10 @@ const UpdateDeleteModal = ({
       if (power === "all") {
         setConfirmBtn(true);
         setDeleteBtn(true);
-        setContractBtn(true);
+
+        if (profil === "students") {
+          setContractBtn(true);
+        }
       }
 
       if (power === "update" && profil !== "tuitionFee") {
@@ -116,9 +117,12 @@ const UpdateDeleteModal = ({
       if (power !== "only-show") {
         setUpdateBtn(true);
       }
-    } else if (user?.role === "teacher" || user?.role === "mentor") {
+    } else if (user?.role === "teacher" && data?.topic?.name !== "Praktika") {
+      setUpdateBtn(true);
+    } else if (user?.role === "mentor") {
       setUpdateBtn(true);
     }
+    console.log(data, "newwwwwwwwwwwwwwwwwwwwwwwwww");
   }, []);
 
   // console.log("update delete modal");
@@ -219,7 +223,6 @@ const UpdateDeleteModal = ({
           )}
         </>
       </div>
-      
     </div>
   );
 };
