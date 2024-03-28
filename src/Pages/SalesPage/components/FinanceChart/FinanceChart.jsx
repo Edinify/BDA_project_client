@@ -90,7 +90,7 @@ const FinanceChart = () => {
     setSeries(salesChart.series);
   }, [salesChart]);
 
-  // console.log(salesChart, " chaaart");
+  // // console.log(salesChart, " chaaart");
   return (
     <div className="finance-chart">
       <Chart

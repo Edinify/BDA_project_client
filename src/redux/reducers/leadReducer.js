@@ -23,7 +23,7 @@ export const leadReducer = (state = initialState, action) => {
       };
 
     case LEAD_ACTION_TYPE.UPDATE_LEAD:
-      // console.log(action.payload, "payloooooad");
+      // // console.log(action.payload, "payloooooad");
       return {
         ...state,
         leads: state.leads.map((lead) =>

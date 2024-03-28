@@ -19,7 +19,7 @@ const TuitionFeePage = () => {
   const { paymentStatus } = useSelector((state) => state.paymentStatus);
 
   const filterTuition = () => {
-    console.log("filterrrrrrr");
+    // console.log("filterrrrrrr");
     dispatch({
       type: TUITION_FEE_ALL_ACTIONS_TYPE.RESET_TUITION_FEE_PAGINATION,
     });
@@ -36,10 +36,10 @@ const TuitionFeePage = () => {
   };
 
   const getNextTuitionFees = () => {
-    console.log(loading, "loading");
+    // console.log(loading, "loading");
     if (loading) return;
 
-    console.log("getNextTuitionFees");
+    // console.log("getNextTuitionFees");
     if (tuitionFeeSearchValues) {
       dispatch(
         getTuitionFeePaginationAction(

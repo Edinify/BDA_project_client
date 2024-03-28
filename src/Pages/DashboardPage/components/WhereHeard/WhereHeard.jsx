@@ -21,7 +21,7 @@ const WhereHeard = ({ type}) => {
   };
 
 
-  console.log(advertising,"advertisinggg")
+  // console.log(advertising,"advertisinggg")
 
 
   return (

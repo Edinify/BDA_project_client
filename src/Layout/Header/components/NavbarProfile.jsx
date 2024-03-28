@@ -44,9 +44,9 @@ const NavbarProfile = () => {
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
-    // // console.log(file.size,"file")
+    // // // console.log(file.size,"file")
     // if(file?.size  >16){
-    //   // console.log("file's size is too large")
+    //   // // console.log("file's size is too large")
     // }
 
     const reader = new FileReader();

@@ -71,7 +71,7 @@ export const getWeeklyGroupsAction = () => async (dispatch) => {
     const { data } = await API.get("/all");
     dispatch({ type: GROUP_WEEKLY_ACTION_TYPE.GET_GROUP_WEEKLY_TABLE, payload: data });
   } catch (error) {
-    // console.log(error);
+    // // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -92,7 +92,7 @@ export const getWeeklyGroupsAction = () => async (dispatch) => {
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
-        // console.log(error);
+        // // console.log(error);
       }
     }
   }

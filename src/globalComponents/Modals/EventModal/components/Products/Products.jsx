@@ -9,7 +9,7 @@ const Products = ({ modalData }) => {
   const [product, setProduct] = useState("");
   const dispatch = useDispatch();
 
-  // console.log(modalData, "course modal data");
+  // // console.log(modalData, "course modal data");
 
   // add new payment section
   const addData = () => {

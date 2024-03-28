@@ -32,7 +32,7 @@ const WorkerModal = () => {
     validationSchema: ValidationSchema,
   });
 
-  // console.log(modalData, "worker modal data");
+  // // console.log(modalData, "worker modal data");
 
   const setInputValue = useCallback(
     (key, value) =>
@@ -53,10 +53,10 @@ const WorkerModal = () => {
           : "";
       setInputValue("profiles", formikValue);
     } else {
-      // // console.log(keyName, value)
+      // // // console.log(keyName, value)
       setInputValue(keyName, value);
     }
-    // console.log(keyName, value);
+    // // console.log(keyName, value);
     dispatch({
       type: WORKER_MODAL_ACTION_TYPE.GET_WORKER_MODAL,
       payload: {

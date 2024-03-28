@@ -36,7 +36,7 @@ export const getSalesChartAction =
   (startDate, endDate, monthCount, courseId = "") =>
   async (dispatch) => {
     try {
-      // console.log("sssssssssssssssssssssssssssss");
+      // // console.log("sssssssssssssssssssssssssssss");
       dispatch(pageLoading(true));
       const { data } = await API.get(
         `/chart/?startDate=${startDate || ""}&endDate=${
@@ -76,7 +76,7 @@ export const getSalesChartAction =
             payload: data,
           });
         } catch (error) {
-          // console.log(error);
+          // // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -98,7 +98,7 @@ export const getFinanceDataAction =
         payload: data,
       });
     } catch (error) {
-      // console.log(error);
+      // // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -121,7 +121,7 @@ export const getFinanceDataAction =
             payload: data,
           });
         } catch (error) {
-          // console.log(error);
+          // // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }

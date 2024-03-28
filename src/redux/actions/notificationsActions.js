@@ -48,7 +48,7 @@ export const getNotificationsAdminAction = () => async (dispatch) => {
           payload: data,
         });
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -86,7 +86,7 @@ export const getNotificationsTeacherAction = () => async (dispatch) => {
           payload: data,
         });
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -124,7 +124,7 @@ export const getNotificationsStudentAction = () => async (dispatch) => {
           payload: data,
         });
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -161,7 +161,7 @@ export const viewedAllNotifications = () => async (dispatch) => {
           payload: data,
         });
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }

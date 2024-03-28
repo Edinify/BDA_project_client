@@ -20,7 +20,7 @@ export const StudentModal = () => {
   );
   const inputNameArr1 = ["fin", "seria", "birthday", "phone"];
 
-  // console.log(modalData,"studentModal")
+  // // console.log(modalData,"studentModal")
   // formik
   const formik = useFormik({
     initialValues: {

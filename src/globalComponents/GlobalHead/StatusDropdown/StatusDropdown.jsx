@@ -64,7 +64,7 @@ export const StatusDropdown = ({ statusType, deviceType = "" }) => {
   }, []);
 
   const handleClick = (item) => {
-    // console.log(item.key)
+    // // console.log(item.key)
     dispatch({
       type: LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_STATUS,
       payload: item.key,

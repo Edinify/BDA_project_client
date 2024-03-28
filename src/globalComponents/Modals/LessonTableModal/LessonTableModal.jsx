@@ -43,8 +43,8 @@ const LessonTableModal = () => {
   );
 
   const updateModalState = (keyName, value) => {
-    // console.log("keyname:", keyName);
-    // console.log("value:", value);
+    // // console.log("keyname:", keyName);
+    // // console.log("value:", value);
     if (keyName === "profiles") {
       const formikValue =
         value.length > 0
@@ -76,7 +76,7 @@ const LessonTableModal = () => {
     updateModalState("group", selectedGroup._id);
   }, []);
 
-  // console.log(modalData, "moododd");
+  // // console.log(modalData, "moododd");
 
   return (
     <div className="create-update-modal-con teacher-modal">

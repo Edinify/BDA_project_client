@@ -78,7 +78,7 @@ export const getLeadPaginationAction =
         payload: data,
       });
     } catch (error) {
-      // console.log(error);
+      // // console.log(error);
       const originalRequest = error.config;
       if (error.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -97,7 +97,7 @@ export const getLeadPaginationAction =
             }&monthCount=${monthCount || ""}`
           );
         } catch (error) {
-          // console.log(error);
+          // // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -123,7 +123,7 @@ export const createLeadAction = (incomesData) => async (dispatch) => {
     });
     toastSuccess("Yeni məhsul əlavə edildi");
   } catch (error) {
-    // console.log(error);
+    // // console.log(error);
     const originalRequest = error.config;
     toastError("Xəta baş verdi.");
     if (error.response?.status === 403 && !originalRequest._retry) {
@@ -145,7 +145,7 @@ export const createLeadAction = (incomesData) => async (dispatch) => {
         });
         toastSuccess("Yeni məhsul əlavə edildi");
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -174,7 +174,7 @@ export const updateLeadAction = (_id, leadData) => async (dispatch) => {
     });
     toastSuccess("Məhsul yeniləndi");
   } catch (error) {
-    // console.log(error);
+    // // console.log(error);
     toastError("Xəta baş verdi.");
     const originalRequest = error.config;
     if (error.response?.status === 403 && !originalRequest._retry) {
@@ -195,7 +195,7 @@ export const updateLeadAction = (_id, leadData) => async (dispatch) => {
         });
         toastSuccess("Məhsul yeniləndi");
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -217,7 +217,7 @@ export const deleteLeadAction =
       });
       toastSuccess("Məhsul silindi");
     } catch (error) {
-      // console.log(error);
+      // // console.log(error);
       toastError("Xəta baş verdi.");
       const originalRequest = error.config;
       if (error.response?.status === 403 && !originalRequest._retry) {
@@ -238,7 +238,7 @@ export const deleteLeadAction =
           );
           toastSuccess("Məhsul silindi");
         } catch (error) {
-          // console.log(error);
+          // // console.log(error);
           if (error?.response?.status === 401) {
             dispatch(logoutAction());
           }

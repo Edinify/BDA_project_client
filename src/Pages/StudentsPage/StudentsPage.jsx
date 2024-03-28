@@ -45,7 +45,7 @@ const StudentsPage = () => {
 
   const getNextStudents = () => {
     if (loading) return;
-    console.log(loading)
+    // console.log(loading)
     if (studentSearchValues) {
       dispatch(
         getStudentsPaginationAction(

@@ -30,7 +30,7 @@ const LessonTableData = ({ getNextLessons }) => {
           "",
         ];
 
-  console.log(lessonTableData);
+
 
   return (
     <>
@@ -79,18 +79,6 @@ const LessonTableData = ({ getNextLessons }) => {
           </tbody>
         </table>
       </InfiniteScroll>
-
-      {/* <div className="details-list-tablet">
-        {lessonTableData?.map((teacher, i) => (
-          <LessonTableCard
-            key={i}
-            data={teacher}
-            mode="tablet"
-            cellNumber={i + 1}
-            setStudents={setStudents}
-          />
-        ))}
-      </div> */}
     </>
   );
 };

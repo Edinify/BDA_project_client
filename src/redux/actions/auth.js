@@ -31,14 +31,14 @@ const toastError = (message) => {
 };
 
 export const loginAction = (authData) => async (dispatch) => {
-  // console.log(authData)
+  // // console.log(authData)
   dispatch(setLoadingAction(true));
   try {
     const { data } = await API.post("/auth/login", authData);
-    // console.log(data, "bla bla bla");
+    // // console.log(data, "bla bla bla");
     dispatch({ type: AUTH_ALL_ACTION_TYPE.LOGIN, payload: { data: data } });
   } catch (error) {
-    // console.log(error);
+    // // console.log(error);
     if (error?.response?.status === 404) {
       toastError("Email və ya şifrə yalnışdır");
     }

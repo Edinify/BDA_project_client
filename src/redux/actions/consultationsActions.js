@@ -98,7 +98,7 @@ export const getActiveConsultationAction = (payload) => async (dispatch) => {
     }
   } catch (error) {
     const originalRequest = error.config;
-    // console.log(error);
+    // // console.log(error);
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
@@ -124,7 +124,7 @@ export const getActiveConsultationAction = (payload) => async (dispatch) => {
           });
         }
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -140,7 +140,7 @@ export const getConsultationPaginationAction =
   (length, searchQuery, status = "appointed") =>
   async (dispatch) => {
     dispatch(pageLoading(true));
-    console.log(true)
+    // console.log(true)
     try {
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}`
@@ -151,7 +151,7 @@ export const getConsultationPaginationAction =
         payload: data,
       });
     } catch (error) {
-      // console.log(error);
+      // // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -172,7 +172,7 @@ export const getConsultationPaginationAction =
             payload: data,
           });
         } catch (error) {
-          // console.log(error);
+          // // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -198,7 +198,7 @@ export const createConsultationAction =
       });
       toastSuccess("Yeni konsultasiya yaradıldı");
     } catch (error) {
-      // console.log(error);
+      // // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -226,7 +226,7 @@ export const createConsultationAction =
           }
         }
       }
-      // console.log(error);
+      // // console.log(error);
     } finally {
       dispatch(modalLoading(false));
     }
@@ -275,7 +275,7 @@ export const updateConsultationAction =
           }
         }
       }
-      // console.log(error);
+      // // console.log(error);
     } finally {
       dispatch(modalLoading(false));
     }
@@ -325,7 +325,7 @@ export const deleteConsultationAction =
       if (error?.response?.data?.key === "has-current-week-lessons") {
         toastError("Cari həftədə  dərsi olan konsultasiya silinə bilməz");
       }
-      // console.log(error);
+      // // console.log(error);
       toastError(error?.response?.data.message);
     }
   };
@@ -375,7 +375,7 @@ export const confirmConsultationChangesAction =
           }
         }
       }
-      // console.log(error);
+      // // console.log(error);
     } finally {
       dispatch(modalLoading(false));
     }
@@ -426,7 +426,7 @@ export const cancelConsultationChangesAction =
           }
         }
       }
-      // console.log(error);
+      // // console.log(error);
     } finally {
       dispatch(modalLoading(false));
     }

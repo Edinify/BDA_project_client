@@ -13,7 +13,7 @@ const SyllabusCard = ({ data, mode, syllabus }) => {
   );
   const { syllabusSearchValues } = useSelector((state) => state.searchValues);
 
-  // console.log(syllabus.power, "powerfff");
+  // // console.log(syllabus.power, "powerfff");
   const updateItem = (modalType) => {
     dispatch({
       type: SYLLABUS_MODAL_ACTION_TYPE.GET_SYLLABUS_MODAL,

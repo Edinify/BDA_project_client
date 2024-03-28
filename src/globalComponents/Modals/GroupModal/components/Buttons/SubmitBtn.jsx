@@ -70,9 +70,9 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
           return true;
         }
       } else {
-        // console.log(formik);
-        // console.log(formik.errors, "formik errroors");
-        // console.log(modalData);
+        // // console.log(formik);
+        // // console.log(formik.errors, "formik errroors");
+        // // console.log(modalData);
         if (formik.isValid && modalData?.name && modalData.course) {
           return false;
         } else {
@@ -82,7 +82,7 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
     });
   }, [formik.errors]);
 
-  // console.log(modalData, "moooodal data");
+  // // console.log(modalData, "moooodal data");
 
   return (
     <div>

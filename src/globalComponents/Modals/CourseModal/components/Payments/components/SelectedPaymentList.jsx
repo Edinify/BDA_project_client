@@ -6,7 +6,7 @@ import { TextField } from "@mui/material";
 const SelectedPaymentList = (deleteData, modalData) => {
   const { paymentTypeList } = useCustomHook();
 
-  // console.log(modalData.payments);
+  // // console.log(modalData.payments);
   return (
     <ul className="category-list courses-li">
       {modalData?.payments?.map((item, index) => (

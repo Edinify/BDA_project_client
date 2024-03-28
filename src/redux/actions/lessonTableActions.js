@@ -87,8 +87,8 @@ export const getLessonTablePaginationAction =
           startDate || ""
         }&endDate=${endDate || ""}&status=${status || ""}`
       );
-      console.log(length);
-      console.log(data);
+      // console.log(length);
+      // console.log(data);
 
       dispatch({
         type: LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_TABLE_PAGINATION,
@@ -165,13 +165,13 @@ export const createLessonTableAction =
           });
           toastSuccess("Yeni dərs yaradıldı");
         } catch (error) {
-          // console.log(error);
+          // // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
         }
       }
-      // console.log(error);
+      // // console.log(error);
     } finally {
       dispatch(modalLoading(false));
     }
@@ -235,7 +235,7 @@ export const deleteLessonTableAction =
   async (dispatch) => {
     try {
       const { data } = await API.delete(`/${_id}`);
-      // console.log(data, "deleted lessonnnnnn");
+      // // console.log(data, "deleted lessonnnnnn");
       dispatch(
         getLessonTablePaginationAction(pageNumber, searchQuery, data.group)
       );
@@ -272,7 +272,7 @@ export const deleteLessonTableAction =
       if (error?.response?.data?.key === "has-current-week-lessons") {
         toastError("Cari həftədə  dərsi olan dərs silinə bilməz");
       }
-      // console.log(error);
+      // // console.log(error);
       toastError(error?.response?.data.message);
     }
   };

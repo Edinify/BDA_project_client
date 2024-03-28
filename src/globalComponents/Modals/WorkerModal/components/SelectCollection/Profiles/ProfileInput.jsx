@@ -17,7 +17,7 @@ const ProfileInput = ({
     (item) => item.key === data.profile
   )?.name;
 
-  console.log(generalProfileList, "generalProfileList");
+  // console.log(generalProfileList, "generalProfileList");
   const addPower = (selectedPower) => {
     const profileData = [...modalData?.profiles];
     profileData[index] = { ...profileData[index], power: selectedPower };
@@ -25,7 +25,7 @@ const ProfileInput = ({
     setOpenDropdown(false);
   };
 
-  console.log(data, 'rehman')
+  // console.log(data, 'rehman')
 
   return (
     <li>

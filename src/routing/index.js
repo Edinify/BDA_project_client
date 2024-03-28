@@ -28,16 +28,16 @@ export const Routing = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const token = localStorage.getItem("auth");
 
-  // console.log(user,"userrrrrrr");
-  // console.log(auth);
+  // // console.log(user,"userrrrrrr");
+  // // console.log(auth);
   useEffect(() => {
     if (token) {
-      // console.log(1);
+      // // console.log(1);
       if (!user._id) {
-        // console.log(2);
+        // // console.log(2);
         dispatch(userAction());
       } else if (user.role === "super-admin" && !notFound) {
-        // console.log(3);
+        // // console.log(3);
         if (location.pathname.startsWith("/login")) {
           navigate("/");
         }
@@ -45,7 +45,7 @@ export const Routing = () => {
         (user.role === "teacher" || user.role === "mentor") &&
         !notFound
       ) {
-        // console.log(4);
+        // // console.log(4);
         if (location.pathname.startsWith("/login")) {
           navigate("/teacher-panel");
         }
@@ -90,23 +90,23 @@ export const Routing = () => {
         }
       }
     } else if (forgetPassword.login) {
-      // console.log(6);
+      // // console.log(6);
       navigate("/login");
     } else {
       if (forgetPassword.email) {
-        // console.log(7);
+        // // console.log(7);
         navigate("/forget");
       } else if (forgetPassword.otp) {
-        // console.log(8);
+        // // console.log(8);
         navigate("/send");
       } else if (forgetPassword.changePassword) {
-        // console.log(9);
+        // // console.log(9);
         navigate("/change");
       }
     }
   }, [auth, user, forgetPassword]);
 
-  // console.log(location.pathname, "pathname");
+  // // console.log(location.pathname, "pathname");
   return (
     <div className={userData ? "main-container" : ""}>
       {userData && <Sidebar />}

@@ -90,7 +90,7 @@ const SyllabusPage = () => {
   };
 
   useEffect(() => {
-    console.log(selectedCourse._id);
+    // console.log(selectedCourse._id);
     if (syllabusSearchValues) {
       dispatch(getSyllabusPaginationAction(0, syllabusSearchValues, ""));
     } else if (selectedCourse._id) {

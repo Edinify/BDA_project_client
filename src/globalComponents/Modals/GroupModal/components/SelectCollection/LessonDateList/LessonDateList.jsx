@@ -41,7 +41,7 @@ const LessonDateList = ({ formik, updateModalState, modalData }) => {
     setSelectedDay("");
   };
 
-  // console.log(selectedDay, "selected day");
+  // // console.log(selectedDay, "selected day");
 
   return (
     <div>

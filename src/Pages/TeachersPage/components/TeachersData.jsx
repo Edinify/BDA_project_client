@@ -36,7 +36,7 @@ const TeachersData = ({ getNextTeachers, userData }) => {
     }
   }, [openMoreModal]);
 
-  // console.log(totalLength , teachers.length )
+  // // console.log(totalLength , teachers.length )
   return (
     <>
       <>

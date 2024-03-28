@@ -99,7 +99,7 @@ const ConsultationCard = ({cellNumber, mode, setOpenMoreModal, data, consultatio
     });
   };
 
-  // console.log(constStatusList, "consttttttttttt");
+  // // console.log(constStatusList, "consttttttttttt");
   return (
     <>
       {mode === "desktop" ? (

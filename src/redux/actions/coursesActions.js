@@ -72,7 +72,7 @@ export const getAllCoursesAction = () => async (dispatch) => {
     const { data } = await API.get("/all");
     dispatch({ type: ALL_COURSES_ACTION.GET_ALL_COURSE, payload: data });
   } catch (error) {
-    // console.log(error);
+    // // console.log(error);
   }
 };
 
@@ -90,7 +90,7 @@ export const getCoursesPaginationAction =
       });
       
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -110,7 +110,7 @@ export const getCoursesPaginationAction =
             payload: data,
           });
         } catch (error) {
-          // console.log(error);
+          // // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -125,10 +125,10 @@ export const getCoursesPaginationAction =
   };
 export const createCoursesAction = (courseData) => async (dispatch) => {
   dispatch(setLoadingCoursesAction(true));
-  // console.log(courseData);
+  // // console.log(courseData);
   try {
     const { data } = await API.post("/", courseData);
-    console.log(data);
+    // console.log(data);
     dispatch({
       type: COURSES_ALL_ACTIONS_TYPE.CREATE_COURSE,
       payload: data,
@@ -160,7 +160,7 @@ export const createCoursesAction = (courseData) => async (dispatch) => {
     if (error?.response?.status === 403) {
       dispatch(logoutAction());
     }
-    // console.log(error);
+    // // console.log(error);
     if (error?.response?.data?.key === "course-already-exists") {
       toastError("Bu ad ilə fənn artıq mövcuddur");
     }
@@ -200,7 +200,7 @@ export const updateCoursesAction = (_id, courseData) => async (dispatch) => {
         }
       }
     }
-    // console.log(error);
+    // // console.log(error);
     toastError(error?.response?.data?.message);
     if (error?.response?.data?.key === "course-already-exists") {
       dispatch(courseModalOpen(true));
@@ -244,7 +244,7 @@ export const deleteCoursesAction =
           }
         }
       }
-      // console.log(error);
+      // // console.log(error);
       toastError(error?.response?.data.message);
     }
   };

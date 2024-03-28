@@ -31,7 +31,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
   }, [location]);
 
   const getCourse = (course) => {
-    // console.log(course)
+    // // console.log(course)
     setDropdownOpen(false);
     dispatch({
       type: SYLLABUS_ALL_ACTIONS_TYPE.SELECT_COURSE_FOR_SYLLABUS,

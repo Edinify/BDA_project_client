@@ -21,7 +21,7 @@ const GroupInput = ({
     (item) => item.group._id === data.group._id
   );
 
-  // console.log(data, "dataaaaaaa");
+  // // console.log(data, "dataaaaaaa");
 
   const addPaymentType = (item) => {
     groupData[foundIndex] = {
@@ -47,7 +47,7 @@ const GroupInput = ({
       [key]: value,
     };
 
-    // console.log(groupData);
+    // // console.log(groupData);
     updateModalState("groups", groupData);
   };
 
@@ -83,7 +83,7 @@ const GroupInput = ({
         payments: paymentArr,
         totalAmount: totalAmount,
       };
-      // console.log("helllooooooo");
+      // // console.log("helllooooooo");
       updateModalState("groups", groupData);
     }
   }, [data.discount, data.amount, data.paymentStartDate]);

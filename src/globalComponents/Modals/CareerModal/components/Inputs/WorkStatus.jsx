@@ -19,7 +19,7 @@ const WorkStatus = ({ formik, modalData, updateModalState }) => {
     setOpenDropdown(false);
   };
 
-  // console.log(modalData,"modal")
+  // // console.log(modalData,"modal")
   return (
     <>
       <div className="class-input">
@@ -59,7 +59,7 @@ const WorkStatus = ({ formik, modalData, updateModalState }) => {
           >
             {dataList.map((item) => (
               <li key={item.key} onClick={() => addData(item.key)}>
-                {console.log(item.name)}
+                {/* { console.log(item.name)} */}
                 <h4>{item.name}</h4>
               </li>
             ))}

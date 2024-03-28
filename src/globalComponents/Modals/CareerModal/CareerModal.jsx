@@ -27,7 +27,7 @@ const CareerModal = () => {
     "workStartDate",
   ];
 
-  // console.log(modalData,"modal data")
+  // // console.log(modalData,"modal data")
   // formik
   const formik = useFormik({
     initialValues: {},
@@ -60,10 +60,6 @@ const CareerModal = () => {
     });
   };
 
-  console.log(
-    modalData,
-    "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
-  );
 
   return (
     <div className="create-update-modal-con teacher-modal">

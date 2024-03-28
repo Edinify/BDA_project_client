@@ -33,7 +33,7 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
         hasMore: !(action.payload.syllabusData.length < 10),
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.CREATE_SYLLABUS:
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         syllabusData: [action.payload, ...state.syllabusData].sort(

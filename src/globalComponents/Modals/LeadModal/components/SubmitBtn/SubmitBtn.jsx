@@ -39,7 +39,7 @@ export default function SubmitBtn({
   useEffect(() => {
     setIsDisabled(() => {
       if (funcType === "update") {
-        // console.log(Object.keys(formik.errors).length > 0);
+        // // console.log(Object.keys(formik.errors).length > 0);
         if (Object.keys(formik.errors).length > 0) {
           return true;
         } else {

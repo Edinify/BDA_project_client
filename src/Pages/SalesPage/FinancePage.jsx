@@ -19,7 +19,7 @@ const FinancePage = () => {
   } = useFinanceCustomHook();
 
   useEffect(() => {
-    // console.log(leadActivateGet, "lead activate get");
+    // // console.log(leadActivateGet, "lead activate get");
     if (leadActivateGet === "update" || leadActivateGet === "delete") {
       getFinanceDataAfterUpdate();
     } else if (leadActivateGet === "create") {

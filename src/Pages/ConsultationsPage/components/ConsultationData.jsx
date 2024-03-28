@@ -14,7 +14,7 @@ const ConsultationData = ({  getNextConsultation, userData }) => {
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.consultationModal);
-    // console.log(consultationData)
+    // // console.log(consultationData)
   const tableHead = [
     "Tələbə",
     "Təlimçi",
@@ -32,7 +32,7 @@ const ConsultationData = ({  getNextConsultation, userData }) => {
     "",
   ];
 
-  // console.log(consultationData, "consultation data");
+  // // console.log(consultationData, "consultation data");
 
   useEffect(() => {
     if (openMoreModal) {

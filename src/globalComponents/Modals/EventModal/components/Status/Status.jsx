@@ -20,7 +20,7 @@ const Status = ({ modalData, setInputValue }) => {
     setInputValue("status", status);
   };
 
-  // console.log(modalData, "modal data in status");
+  // // console.log(modalData, "modal data in status");
   return (
     <>
       <div className="modal-select events ">

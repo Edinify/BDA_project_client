@@ -18,7 +18,7 @@ export const EventModal = () => {
     (state) => state.eventModal
   );
 
-  // console.log(modalData, "ggggggggggggggggggggg");
+  // // console.log(modalData, "ggggggggggggggggggggg");
   // formik
   const formik = useFormik({
     initialValues: {},

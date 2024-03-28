@@ -88,7 +88,7 @@ export const TuitionFeeModal = () => {
     });
   };
 
-  // // console.log(modalData);
+  // // // console.log(modalData);
   return (
     <div className="create-update-modal-con student-modal">
       <div className="create-update-modal">

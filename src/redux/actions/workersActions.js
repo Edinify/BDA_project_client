@@ -86,7 +86,7 @@ export const getWorkersAction = () => async (dispatch) => {
     const { data } = await API.get("/all");
     dispatch({ type: WORKER_ALL_ACTIONS_TYPE.GET_ALL_WORKERS, payload: data });
   } catch (error) {
-    // console.log(error);
+    // // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -107,7 +107,7 @@ export const getWorkersAction = () => async (dispatch) => {
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
-        // console.log(error);
+        // // console.log(error);
       }
     }
   }
@@ -121,7 +121,7 @@ export const getWorkersActiveAction = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    // console.log(error);
+    // // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -139,7 +139,7 @@ export const getWorkersActiveAction = () => async (dispatch) => {
           payload: data,
         });
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -160,7 +160,7 @@ export const getWorkersPaginationAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -180,7 +180,7 @@ export const getWorkersPaginationAction =
             payload: data,
           });
         } catch (error) {
-          // console.log(error);
+          // // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -192,7 +192,7 @@ export const getWorkersPaginationAction =
   };
 
 export const createWorkerAction = (workerData) => async (dispatch) => {
-  // console.log(workerData);
+  // // console.log(workerData);
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/create", workerData);
@@ -225,7 +225,7 @@ export const createWorkerAction = (workerData) => async (dispatch) => {
         });
         toastSuccess("Yeni əməkdaş yaradıldı");
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -235,7 +235,7 @@ export const createWorkerAction = (workerData) => async (dispatch) => {
     if (error?.response?.data?.key === "email-already-exist") {
       toastError("Bu email ilə istifadəçi mövcuddur");
     }
-    // console.log(error);
+    // // console.log(error);
   } finally {
     dispatch(modalLoading(false));
   }
@@ -252,7 +252,7 @@ export const updateWorkerAction = (_id, workerData) => async (dispatch) => {
     });
     toastSuccess("İşçi yeniləndi");
   } catch (error) {
-    // console.log(error);
+    // // console.log(error);
     const originalRequest = error.config;
     if (error?.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -327,7 +327,7 @@ export const deleteWorkerAction =
       if (error?.response?.data?.key === "has-current-week-lessons") {
         toastError("Cari həftədə  dərsi olan əməkdaş silinə bilməz");
       }
-      // console.log(error);
+      // // console.log(error);
       toastError(error?.response?.data.message);
     }
   };
@@ -351,7 +351,7 @@ export const changeWorkerPasswordAction = (oldPassword, newPassword) => {
         toastError("köhnə şifrə yalnışdır");
         return;
       }
-      // console.log(error);
+      // // console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -371,7 +371,7 @@ export const changeWorkerPasswordAction = (oldPassword, newPassword) => {
 
           dispatch(logoutAction());
         } catch (error) {
-          // console.log(error);
+          // // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }

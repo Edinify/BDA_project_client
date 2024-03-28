@@ -18,7 +18,7 @@ const StudentConfirmModal = () => {
   const { user } = useSelector((state) => state.user);
   const [btns, setBtns] = useState(true);
   const dispatch = useDispatch();
-  // console.log(studentsModalData, "studentsModalData");
+  // // console.log(studentsModalData, "studentsModalData");
 
   let beforeCourses =
     Array.isArray(studentsModalData?.courses) &&

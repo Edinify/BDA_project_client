@@ -65,7 +65,7 @@ const modalLoading = (loadingValue) => ({
 export const getExpensesPaginationAction =
   (page = 1, startDate, endDate, monthCount, category, sort) =>
   async (dispatch) => {
-    // // console.log(page, startDate, endDate, monthCount, category, sort);
+    // // // console.log(page, startDate, endDate, monthCount, category, sort);
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
@@ -84,7 +84,7 @@ export const getExpensesPaginationAction =
         payload: data,
       });
     } catch (error) {
-      // console.log(error);
+      // // console.log(error);
       const originalRequest = error.config;
       if (error.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -114,7 +114,7 @@ export const getExpensesPaginationAction =
             payload: data,
           });
         } catch (error) {
-          // console.log(error);
+          // // console.log(error);
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
@@ -129,7 +129,7 @@ export const createExpensesAction = (expensesData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/", expensesData);
-    // // console.log(data);
+    // // // console.log(data);
     dispatch(
       getExpensesPaginationAction(data.lastPage, "", "", 1, "", "oldest")
     );
@@ -166,7 +166,7 @@ export const createExpensesAction = (expensesData) => async (dispatch) => {
         });
         toastSuccess("Yeni məhsul əlavə edildi");
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         toastError("Xəta baş verdi.");
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
@@ -213,7 +213,7 @@ export const updateExpensesAction = (_id, expensesData) => async (dispatch) => {
         });
         toastSuccess("Məhsul yeniləndi");
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }
@@ -253,7 +253,7 @@ export const deleteExpensesAction = ({_id, page, startDate, endDate, monthCount,
         dispatch(getExpensesPaginationAction(page, startDate, endDate, monthCount, category, sort));
         toastSuccess("Məhsul silindi");
       } catch (error) {
-        // console.log(error);
+        // // console.log(error);
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
         }

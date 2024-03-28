@@ -30,7 +30,7 @@ const CoursesData = ({ userData, getNextCourse }) => {
       document.body.style.overflowY = "overlay";
     }
   }, [openMoreModal]);
-  // console.log(courses)
+  // // console.log(courses)
   return (
     <>
         <>

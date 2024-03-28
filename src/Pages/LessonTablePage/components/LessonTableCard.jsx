@@ -93,9 +93,6 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
     });
   };
 
-  // console.log(data, "pow");
-  console.log("lesson table card");
-
   return (
     <>
       {mode === "desktop" ? (

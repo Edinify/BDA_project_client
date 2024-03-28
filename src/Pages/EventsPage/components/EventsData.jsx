@@ -37,7 +37,7 @@ const EventsData = ({ userData, getNextTeachers }) => {
     }
   }, [openMoreModal]);
 
-  console.log(data);
+  // console.log(data);
   return (
     <>
       {openMoreModal && (

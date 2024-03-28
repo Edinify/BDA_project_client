@@ -3,7 +3,7 @@ import Payment from "./Payment";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
-  // console.log(data, "data in paymentsss");
+  // // console.log(data, "data in paymentsss");
   return (
     <div style={{ borderTop: "1px solid gray", padding: "20px 0" }}>
       {/* <RadioGroup

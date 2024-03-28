@@ -40,7 +40,7 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
   };
 
   useEffect(() => {
-    // console.log(formik.errors, "formik errors");
+    // // console.log(formik.errors, "formik errors");
     setIsDisabled(() => {
       if (funcType === "update") {
         if (Object.keys(formik.errors).length === 0) {

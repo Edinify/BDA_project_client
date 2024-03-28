@@ -31,16 +31,16 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
     setIsDisabled(() => {
       if (funcType === "update") {
         if (Object.keys(formik.errors).length === 0 && modalData?.fullName) {
-          // console.log(1);
+          // // console.log(1);
           return false;
         } else if (
           Object.keys(formik.errors).length === 1 &&
           formik.errors.password === "Bu xana tələb olunur."
         ) {
-          // console.log(2);
+          // // console.log(2);
           return false;
         } else {
-          // console.log(3);
+          // // console.log(3);
           return true;
         }
       } else {

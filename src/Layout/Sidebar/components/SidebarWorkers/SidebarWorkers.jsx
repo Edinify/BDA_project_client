@@ -30,7 +30,7 @@ const SidebarStudent = ({ closeSidebar,profiles }) => {
       {
         profiles.map((data) =>{
           const {profile,_id} = data
-          // // console.log(data)
+          // // // console.log(data)
           return(
             <li key={_id}>
               <NavLink 
