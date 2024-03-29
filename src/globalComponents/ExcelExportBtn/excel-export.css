@@ -1,0 +1,7 @@
+.excel-export-btn{
+    cursor: pointer;
+}
+.excel-export-btn svg{
+    width: 30px;
+    height: 20px;
+}

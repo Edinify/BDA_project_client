@@ -591,7 +591,8 @@ export const downloadContractAction = async ({
   } catch (error) {}
 };
 
-export const downloadExcelAction = async () => {
+export const downloadExcelAction = () => async (dispatch) => {
+  dispatch(setLoadingStudentsAction(true));
   try {
     const response = await API.get(`/excel`, {
       responseType: "blob",
@@ -605,5 +606,9 @@ export const downloadExcelAction = async () => {
     document.body.appendChild(link);
     link.click();
     link.parentNode.removeChild(link);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  } finally {
+    dispatch(setLoadingStudentsAction(false));
+  }
 };
