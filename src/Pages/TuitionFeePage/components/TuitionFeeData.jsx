@@ -16,6 +16,7 @@ const TuitionFeeData = ({ getNextTuitionFees }) => {
   const { openConfirmModal } = useSelector((state) => state.tuitionFeeModal);
 
   const [openMoreModal, setOpenMoreModal] = useState(false);
+  const [scrollHeight, setScrollHeight] = useState(1);
 
   const tableHead = [
     "Tələbənin adı",
@@ -39,6 +40,30 @@ const TuitionFeeData = ({ getNextTuitionFees }) => {
     }
   }, [openMoreModal]);
 
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
+
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight 
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight -
+        mainHeader.offsetHeight -
+        detailsHeader.offsetHeight 
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       {openMoreModal && (
@@ -57,8 +82,8 @@ const TuitionFeeData = ({ getNextTuitionFees }) => {
         hasMore={hasMore}
         loader={<SmallLoading />}
         endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
-        height={450}
-        scrollThreshold={0.8}
+        height={scrollHeight}
+        scrollThreshold={0.7}
       >
         <div className="table-con">
           <table className="details-table tuition-table  ">

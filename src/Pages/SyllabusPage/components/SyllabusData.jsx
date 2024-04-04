@@ -11,8 +11,33 @@ const SyllabusData = ({ getNextSyllabus, userData,selectedCourse }) => {
     (state) => state.syllabusPagination
   );
   const { openConfirmModal } = useSelector((state) => state.syllabusModal);
+  const [scrollHeight, setScrollHeight] = useState(1);
+
 
   const tableHead = ["No", "Mövzü", ""];
+
+
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
+
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
@@ -25,7 +50,7 @@ const SyllabusData = ({ getNextSyllabus, userData,selectedCourse }) => {
           hasMore={hasMore && selectedCourse?._id}
           loader={<SmallLoading />}
           endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
-          height={550}
+          height={scrollHeight}
           scrollThreshold={0.9}
         >
           <table className="details-table syllabus-table">
