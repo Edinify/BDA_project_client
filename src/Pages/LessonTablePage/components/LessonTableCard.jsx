@@ -30,6 +30,8 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
       payload: true,
     });
   };
+
+  console.log(data, "leson data");
   const listData = [
     {
       key: "Dərs günü",
@@ -68,6 +70,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
           date: data?.date,
           time: data?.time,
           topic: data?.topic,
+          mentorHour: data?.mentorHour,
           status: data?.status,
         },
         openModal: modalType !== "more" ? true : false,
@@ -139,6 +142,17 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
                 {data.students.length} ...
               </div>
               <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">
+                {data?.topic?.name === "Praktika"
+                  ? ""
+                  : data.mentorHour
+                  ? <span style={{color:"#07bc0c"}} >Keçirilib</span>
+                  : <span style={{color:"#e74c3c"}} >Keçirilməyib</span>}
+              </div>
             </div>
           </td>
           <td

@@ -109,7 +109,6 @@ const LessonTablePage = () => {
     );
   };
 
-
   return (
     <div className="details-page lesson-page ">
       <GlobalHead

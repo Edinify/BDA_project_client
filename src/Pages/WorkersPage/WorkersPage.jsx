@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWorkersPaginationAction } from "../../redux/actions/workersActions";
 import {
@@ -7,6 +7,7 @@ import {
 } from "../../redux/actions-type";
 import WorkersData from "./components/WorkersData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
+
 
 const WorkersPage = () => {
   const dispatch = useDispatch();

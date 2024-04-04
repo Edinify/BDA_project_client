@@ -282,7 +282,6 @@
   background-color: var(--neutrals-100);
 }
 
-
 .modal-select ul li:nth-child(1) {
   border-radius: 8px 0 0 8px;
 }
@@ -319,6 +318,26 @@
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
+}
+.modal-buttons.lesson-table-modal {
+  display: flex;
+  flex-direction: column;
+}
+.modal-buttons.lesson-table-modal .modal-tutor-status {
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  /* border-bottom: 1px solid var(--neutrals-400); */
+}
+.modal-buttons.lesson-table-modal .modal-tutor-status .modal-select ul li:nth-child(2){
+  border-radius: 0 8px 8px 0;
+}
+.modal-buttons.lesson-table-modal .modal-teacher-status {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 .student-modal-save-btn {
   display: flex;

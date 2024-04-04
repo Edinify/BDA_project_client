@@ -8,7 +8,7 @@ const Teacher = ({ formik, modalData, updateModalState }) => {
   const { teachers } = useSelector(
     (state) => state.dropdownGroup.selectedGroup
   );
-
+  const { user } = useSelector((state) => state.user);
   const inputValue =
     teachers?.find((teacher) => teacher._id === modalData.teacher)?.fullName ||
     "";
@@ -43,10 +43,13 @@ const Teacher = ({ formik, modalData, updateModalState }) => {
               value={inputValue}
               onBlur={() => formik.setFieldTouched("teacher", true)}
             />
-            <DropdownIcon
-              setOpenDropdown={setOpenDropdown}
-              openDropdown={openDropdown}
-            />
+
+            {!(user?.role === "teacher" || user?.role === "mentor") && (
+              <DropdownIcon
+                setOpenDropdown={setOpenDropdown}
+                openDropdown={openDropdown}
+              />
+            )}
           </div>
 
           <ul
