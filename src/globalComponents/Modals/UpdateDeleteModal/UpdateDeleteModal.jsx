@@ -31,7 +31,6 @@ const UpdateDeleteModal = ({
     setShowDeleteModal(true);
   };
 
-  console.log(funcComp, "comp");
   const modalRef = useRef(null);
 
   const handleClickOutside = () => {
@@ -122,10 +121,8 @@ const UpdateDeleteModal = ({
     } else if (user?.role === "mentor") {
       setUpdateBtn(true);
     }
-    console.log(data, "newwwwwwwwwwwwwwwwwwwwwwwwww");
   }, []);
 
-  // console.log("update delete modal");
   return (
     <div className="func-component">
       {badge && (

@@ -5,15 +5,16 @@ import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
+import { height } from "@mui/system";
 
 const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
   const { students, hasMore } = useSelector(
     (state) => state.studentsPagination
   );
- 
-  const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.studentsModal);
-  
+  const [openMoreModal, setOpenMoreModal] = useState(false);
+  const [scrollHeight, setScrollHeight] = useState(1);
+
   const tableHead = [
     "Tələbə adı",
     "Fin",
@@ -36,12 +37,32 @@ const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
     }
   }, [openMoreModal]);
 
-  // console.log(hasMore,"has more")
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
+
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  console.log(scrollHeight);
 
   return (
     <>
-      
-
       {openConfirmModal && <ConfirmModal type="student" />}
 
       <InfiniteScroll
@@ -50,7 +71,7 @@ const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
         hasMore={hasMore}
         loader={<SmallLoading />}
         endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
-        height={550}
+        height={scrollHeight}
         scrollThreshold={0.7}
       >
         <table

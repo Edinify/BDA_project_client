@@ -1,7 +1,7 @@
 import React from "react";
 // import { ReactComponent as LogoTabletIcon } from "../../assets/icons/sidebar/Logo-tablet.svg";
-import {ReactComponent as LogoTabletIcon} from "../../assets/icons/logo/bdaLogoMoba.svg";
-import bdaLogo from '../../assets/icons/logo/bdaLogo.png'
+import { ReactComponent as LogoTabletIcon } from "../../assets/icons/logo/bdaLogoMoba.svg";
+import bdaLogo from "../../assets/icons/logo/bdaLogo.png";
 import { useSelector, useDispatch } from "react-redux";
 import SidebarAdmin from "./components/SidebarAdmin/SidebarAdmin";
 import SidebarSuperAdmin from "./components/SidebarSuperAdmin/SidebarSuperAdmin";
@@ -41,6 +41,9 @@ const Sidebar = () => {
             <SidebarAdmin closeSidebar={closeSidebar} />
           )}
           {userData?.role === "teacher" && (
+            <SidebarTeacher closeSidebar={closeSidebar} />
+          )}
+          {userData?.role === "mentor" && (
             <SidebarTeacher closeSidebar={closeSidebar} />
           )}
           {userData?.role === "worker" && (

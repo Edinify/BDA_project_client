@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  DOWNLOAD_EXCEL_ACTION_TYPE,
   STUDENTS_ALL_ACTIONS_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -53,6 +54,12 @@ const studentModalLoading = (loadingValue) => ({
   type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_MODAL_LOADING,
   payload: loadingValue,
 });
+
+const downloadExcelLoading = (value) => ({
+  type: DOWNLOAD_EXCEL_ACTION_TYPE.LOADING,
+  payload: value,
+});
+
 const toastSuccess = (message) => {
   toast.success(message, {
     position: "top-right",
@@ -589,4 +596,28 @@ export const downloadContractAction = async ({
     a.click();
     window.URL.revokeObjectURL(url);
   } catch (error) {}
+};
+
+export const downloadExcelAction = () => async (dispatch) => {
+  dispatch(downloadExcelLoading(true));
+  try {
+    const response = await API.get(`/excel`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "students.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+
+    dispatch(downloadExcelLoading(false));
+  } catch (error) {
+    console.log(error);
+  } finally {
+    dispatch(setLoadingStudentsAction(false));
+  }
 };

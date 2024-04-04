@@ -2,6 +2,7 @@ import React from "react";
 import { CoursesDropdown } from "../CoursesDropdown/CoursesDropdown";
 import { GroupsDropdown } from "../GroupsDropdown/GroupsDropdown";
 import { ReactComponent as HalfCircleICon } from "../../../assets/icons/filter/half-circle-svgrepo-com.svg";
+import ExcelExportBtn from "../../../globalComponents/ExcelExportBtn/ExcelExportBtn";
 
 const StudentPageHead = ({ filter, count }) => {
   return (
@@ -17,6 +18,7 @@ const StudentPageHead = ({ filter, count }) => {
         <p className="filter-count">{count || 0}</p>
         <HalfCircleICon />
       </div>
+      <ExcelExportBtn pageName="student" />
     </div>
   );
 };

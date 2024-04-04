@@ -10,7 +10,7 @@ export const Header = () => {
   const openSidebarFunc = () => {
     dispatch({ type: SIDEBAR_ACTION_TYPE.SIDEBAR_OPEN_MODAL, payload: true });
   };
-  const {openSidebar} = useSelector(state=>state.openSidebar);
+  const { openSidebar } = useSelector((state) => state.openSidebar);
 
   const getPageTitle = (pathname) => {
     switch (pathname) {
@@ -47,6 +47,8 @@ export const Header = () => {
         return "Tədbirlər";
       case "/dashboard":
         return "İdarəetmə paneli";
+      case "/teacher-panel":
+        return "Dərs cədvəli";
       default:
         return "";
     }
@@ -55,7 +57,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className={`main-header ${openSidebar ? "open" :""} `  } >
+      <header className={`main-header ${openSidebar ? "open" : ""} `}>
         <div className="container">
           <div className="header-content">
             <div className="header-content-container">

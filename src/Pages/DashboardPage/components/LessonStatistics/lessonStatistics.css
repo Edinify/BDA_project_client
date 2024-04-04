@@ -95,7 +95,7 @@ background-color: #00bc85;
 }
 
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 880px) {
   /* LESSON STATISTICS */
   .dashboard-main .lesson-statistics {
     width: 100%;

@@ -81,17 +81,16 @@ const LessonTableData = ({ getNextLessons }) => {
         </table>
       </InfiniteScroll>
 
-      {/* <div className="details-list-tablet">
+      <div className="details-list-tablet">
         {lessonTableData?.map((teacher, i) => (
           <LessonTableCard
             key={i}
             data={teacher}
             mode="tablet"
             cellNumber={i + 1}
-            setStudents={setStudents}
           />
         ))}
-      </div> */}
+      </div>
     </>
   );
 };
