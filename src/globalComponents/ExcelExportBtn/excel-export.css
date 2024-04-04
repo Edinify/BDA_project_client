@@ -1,7 +1,9 @@
-.excel-export-btn{
-    cursor: pointer;
+.excel-export-btn {
+  cursor: pointer;
+  background: transparent;
 }
-.excel-export-btn svg{
-    width: 30px;
-    height: 20px;
+
+.excel-download {
+  color: var(--primary-500);
+  font-size: 25px !important;
 }

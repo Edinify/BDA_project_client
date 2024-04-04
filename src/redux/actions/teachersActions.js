@@ -1,9 +1,9 @@
 import axios from "axios";
 import {
+  DOWNLOAD_EXCEL_ACTION_TYPE,
   MENTOR_TYPES,
   TEACHER_ALL_ACTIONS_TYPE,
   TEACHERS_MODAL_ACTION_TYPE,
-  
 } from "../actions-type";
 import { toast } from "react-toastify";
 import { logoutAction } from "./auth";
@@ -45,8 +45,13 @@ REGISTERAPI.interceptors.request.use((req) => {
 });
 
 const setLoadingStudentsAction = (loadingValue) => ({
-  type:TEACHER_ALL_ACTIONS_TYPE.TEACHER_LOADING,
+  type: TEACHER_ALL_ACTIONS_TYPE.TEACHER_LOADING,
   payload: loadingValue,
+});
+
+const downloadExcelLoading = (value) => ({
+  type: DOWNLOAD_EXCEL_ACTION_TYPE.LOADING,
+  payload: value,
 });
 
 const toastSuccess = (message) => {
@@ -185,20 +190,22 @@ export const getTeachersByCourseId = (courseId) => async (dispatch) => {
 };
 
 export const getTeachersPaginationAction =
-  (length, searchQuery, status = "all", role,courseId) =>
+  (length, searchQuery, status = "all", role, courseId) =>
   async (dispatch) => {
-    console.log(length)
+    console.log(length);
     dispatch(setLoadingStudentsAction(true));
     try {
       const { data } = await API.get(
-        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
+        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${
+          courseId || ""
+        }`
       );
       dispatch({
         type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_PAGINATION,
         payload: data,
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -211,9 +218,11 @@ export const getTeachersPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${courseId || ""}`
+            `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&role=${role}&courseId=${
+              courseId || ""
+            }`
           );
-    
+
           dispatch({
             type: TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_PAGINATION,
             payload: data,
@@ -739,3 +748,23 @@ export const cancelTeacherChangesAction =
       dispatch(modalLoading(false));
     }
   };
+
+export const downloadTeachersExcelAction = (role) => async (dispatch) => {
+  dispatch(downloadExcelLoading(true));
+  try {
+    const response = await API.get(`/excel?role=${role || "teacher"}`, {
+      responseType: "blob",
+    });
+    const fileName = role === "mentor" ? "tyutor.xlsx" : "teachers.xlsx";
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+    dispatch(downloadExcelLoading(false));
+  } catch (error) {}
+};

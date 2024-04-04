@@ -5,6 +5,8 @@ import { CoursesDropdown } from "../CoursesDropdown/CoursesDropdown";
 import { GroupsDropdown } from "../GroupsDropdown/GroupsDropdown";
 import { ReactComponent as PlusIcon } from "../../../assets/icons/Plus.svg";
 import { ReactComponent as HalfCircleICon } from "../../../assets/icons/filter/half-circle-svgrepo-com.svg";
+import { downloadTeachersExcelAction } from "../../../redux/actions/teachersActions";
+import ExcelExportBtn from "../../ExcelExportBtn/ExcelExportBtn";
 
 const TeacherPageHead = ({
   openModal,
@@ -45,6 +47,8 @@ const TeacherPageHead = ({
           <p className="filter-count">{count}</p>
           <HalfCircleICon />
         </div>
+
+        <ExcelExportBtn pageName="teacher" />
       </div>
     </div>
   );

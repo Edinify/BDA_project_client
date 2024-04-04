@@ -10,7 +10,7 @@ import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const StudentsPage = () => {
   const dispatch = useDispatch();
-  const { lastPage, students, totalLength } = useSelector(
+  const { lastPage, students, totalLength, loading } = useSelector(
     (state) => state.studentsPagination
   );
   const { studentSearchValues } = useSelector((state) => state.searchValues);
@@ -70,6 +70,8 @@ const StudentsPage = () => {
   };
 
   const getNextStudents = () => {
+    if (loading) return;
+
     if (studentSearchValues) {
       dispatch(
         getStudentsPaginationAction(
