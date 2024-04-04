@@ -609,7 +609,7 @@
   
 } */
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 880px) {
   .dashboard-main.desktop {
     display: none;
   }
