@@ -39,7 +39,7 @@ export const Routing = () => {
       } else if (user.role === "super-admin" && !notFound) {
         // console.log(3);
         if (location.pathname.startsWith("/login")) {
-          navigate("/");
+          navigate("/dashboard");
         }
       } else if (
         (user.role === "teacher" || user.role === "mentor") &&

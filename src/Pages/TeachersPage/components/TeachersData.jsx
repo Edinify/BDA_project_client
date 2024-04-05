@@ -15,6 +15,8 @@ const TeachersData = ({ getNextTeachers, userData }) => {
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.teachersModal);
+  const [scrollHeight, setScrollHeight] = useState(1);
+
   const tableHead = [
     { id: 1, label: "Təlimçi adı" },
     { id: 2, label: "Fin" },
@@ -36,7 +38,32 @@ const TeachersData = ({ getNextTeachers, userData }) => {
     }
   }, [openMoreModal]);
 
-  // console.log(totalLength , teachers.length )
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
+    const globalHeads = document.querySelector(".global-head-tabs");
+
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight -
+          globalHeads.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight -
+        mainHeader.offsetHeight -
+        detailsHeader.offsetHeight -
+        globalHeads.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <>
       <>
@@ -54,7 +81,7 @@ const TeachersData = ({ getNextTeachers, userData }) => {
           hasMore={hasMore}
           loader={<SmallLoading />}
           endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
-          height={450}
+          height={scrollHeight}
           scrollThreshold={0.7}
         >
           <table

@@ -31,7 +31,7 @@ export const careerPaginationReducer = (state = initialState, action) => {
         ...state,
         careerData: [...state.careerData, ...action.payload.careers],
         currentLength: action.payload.currentLength,
-        hasMore: !(action.payload.careers.length < 10),
+        hasMore: !(action.payload.careers.length < 20),
       };
     case CAREER_ALL_ACTIONS_TYPE.RESET_CAREER_PAGINATION:
       return {

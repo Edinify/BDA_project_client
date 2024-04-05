@@ -14,6 +14,8 @@ const CoursesData = ({ userData, getNextCourse }) => {
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.coursesModal);
+  const [scrollHeight, setScrollHeight] = useState(1);
+
   const tableHead = [
     { id: 1, label: "Fənn adı" },
     { id: 2, label: "Tam" },
@@ -30,6 +32,29 @@ const CoursesData = ({ userData, getNextCourse }) => {
       document.body.style.overflowY = "overlay";
     }
   }, [openMoreModal]);
+
+
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
+
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   // console.log(courses)
   return (
     <>
@@ -53,7 +78,7 @@ const CoursesData = ({ userData, getNextCourse }) => {
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
             }
             scrollThreshold={0.7}
-            height={540}
+            height={scrollHeight}
           >
             <table
               className={`details-table  courses-table ${

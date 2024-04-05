@@ -6,13 +6,36 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
-const SyllabusData = ({ getNextSyllabus, userData,selectedCourse }) => {
+const SyllabusData = ({ getNextSyllabus, userData, selectedCourse }) => {
   const { syllabusData, hasMore } = useSelector(
     (state) => state.syllabusPagination
   );
   const { openConfirmModal } = useSelector((state) => state.syllabusModal);
+  const [scrollHeight, setScrollHeight] = useState(1);
 
   const tableHead = ["No", "Mövzü", ""];
+
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
+
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
@@ -20,13 +43,13 @@ const SyllabusData = ({ getNextSyllabus, userData,selectedCourse }) => {
         {openConfirmModal && <ConfirmModal type="syllabus" />}
         <InfiniteScroll
           style={{ overflowX: "none" }}
-          dataLength={syllabusData.length }
+          dataLength={syllabusData.length}
           next={getNextSyllabus}
           hasMore={hasMore && selectedCourse?._id}
           loader={<SmallLoading />}
           endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
-          height={550}
-          scrollThreshold={0.9}
+          height={scrollHeight}
+          scrollThreshold={0.7}
         >
           <table className="details-table syllabus-table">
             <thead>

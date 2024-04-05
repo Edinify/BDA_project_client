@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import StudentCard from "./StudentCard";
-import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
-import { height } from "@mui/system";
 
 const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
   const { students, hasMore } = useSelector(

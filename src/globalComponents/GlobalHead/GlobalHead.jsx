@@ -13,6 +13,7 @@ import StudentPageHead from "./StudentPageHead/StudentPageHead";
 import CareerPageHead from "./CareerPageHead/CareerPageHead";
 import GroupsPageHead from "./GroupsPageHead/GroupsPageHead";
 import TuitionPageHead from "./TuitionPageHead/TuitionPageHead";
+import ExcelExportBtn from "../ExcelExportBtn/ExcelExportBtn";
 
 const GlobalHead = ({
   searchData,
@@ -29,9 +30,7 @@ const GlobalHead = ({
   const { user } = useSelector((state) => state.user);
   const [showAddBtn, setShowAddBtn] = useState(false);
   const location = useLocation();
-  const {openSidebar} = useSelector(state=>state.openSidebar);
-
-
+  const { openSidebar } = useSelector((state) => state.openSidebar);
 
   useEffect(() => {
     if (user.role === "super-admin") {
@@ -46,7 +45,7 @@ const GlobalHead = ({
   }, []);
 
   return (
-    <div className={`details-header ${openSidebar ? "open" :""} `}>
+    <div className={`details-header ${openSidebar ? "open" : ""} `}>
       <div className="container">
         <div className="details-header-container">
           <div
@@ -66,12 +65,17 @@ const GlobalHead = ({
               location.pathname === "/tuitionFee"
                 ? null
                 : search && (
-                    <Search
-                      searchData={searchData}
-                      dataSearchValues={dataSearchValues}
-                      className="search-input-con desktop"
-                      DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
-                    />
+                    <>
+                      <Search
+                        searchData={searchData}
+                        dataSearchValues={dataSearchValues}
+                        className="search-input-con desktop"
+                        DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+                      />
+                      {statusType === "course" && (
+                        <ExcelExportBtn pageName={"course"} />
+                      )}
+                    </>
                   )}
 
               {statusType === "teacher" && (
@@ -87,13 +91,18 @@ const GlobalHead = ({
               )}
 
               {statusType === "syllabus" && (
-                <CoursesDropdown deviceType="desktop" />
+                <>
+                  <CoursesDropdown deviceType="desktop" />
+                  <ExcelExportBtn pageName={"syllabus"} />
+                </>
               )}
               {statusType === "student" && (
                 <StudentPageHead filter={filter} count={count} />
               )}
               {statusType === "career" && <CareerPageHead filter={filter} />}
-              {statusType === "groups" && <GroupsPageHead filter={filter} count={count} />}
+              {statusType === "groups" && (
+                <GroupsPageHead filter={filter} count={count} />
+              )}
 
               {statusType === "tutionFee" && (
                 <TuitionPageHead

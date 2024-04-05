@@ -219,6 +219,7 @@
 .details-table.career-table thead,
 .details-table.consultation-page thead,
 .details-table.syllabus-table thead,
+.details-table.tuition-table thead,
 .details-table.lesson-table thead {
   position: sticky;
   background-color: white;

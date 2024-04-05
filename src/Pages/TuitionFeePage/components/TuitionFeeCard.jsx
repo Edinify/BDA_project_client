@@ -45,7 +45,6 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
     },
   ];
 
-
   const updateItem = (modalType) => {
     dispatch({
       type: TUITION_FEE_MODAL_ACTION_TYPE.GET_TUITION_FEE_MODAL,
@@ -114,14 +113,14 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
       {mode === "desktop" ? (
         <tr>
           <td>
-            <div className="td-con" style={{width:"200px"}} >
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>
               <div className="table-scroll-text no-wrap">{data?.fullName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con" style={{width:"200px"}} >
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text no-wrap">{data?.phone}</div>
               <div className="right-fade"></div>
             </div>

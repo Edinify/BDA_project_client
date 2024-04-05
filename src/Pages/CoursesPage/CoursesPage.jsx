@@ -70,6 +70,7 @@ const CoursePage = () => {
         DATA_SEARCH_VALUE={"COURSES_SEARCH_VALUE"}
         dataSearchValues={coursesSearchValues}
         profile="courses"
+        statusType={'course'}
         count={totalLength}
       />
 

@@ -8,13 +8,15 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const ConsultationData = ({  getNextConsultation, userData }) => {
+const ConsultationData = ({ getNextConsultation, userData }) => {
   const { hasMore, consultationData } = useSelector(
     (state) => state.consultationPagination
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.consultationModal);
-    // console.log(consultationData)
+  const [scrollHeight, setScrollHeight] = useState(1);
+
+  // console.log(consultationData)
   const tableHead = [
     "Tələbə",
     "Təlimçi",
@@ -42,21 +44,47 @@ const ConsultationData = ({  getNextConsultation, userData }) => {
     }
   }, [openMoreModal]);
 
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
+    const globalHeads = document.querySelector(".global-head-tabs");
+
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight -
+          globalHeads.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight -
+        mainHeader.offsetHeight -
+        detailsHeader.offsetHeight -
+        globalHeads.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
-        <>
-          {openMoreModal && (
-            <MoreModal
-              userData={userData}
-              setOpenMoreModal={setOpenMoreModal}
-              type="consultation"
-            />
-          )}
+      <>
+        {openMoreModal && (
+          <MoreModal
+            userData={userData}
+            setOpenMoreModal={setOpenMoreModal}
+            type="consultation"
+          />
+        )}
 
-          {openConfirmModal && <ConfirmModal type="consultation" />}
-          
+        {openConfirmModal && <ConfirmModal type="consultation" />}
 
-          <div className="table-con">
+        <div className="table-con">
           <InfiniteScroll
             style={{ overflowX: "none" }}
             dataLength={consultationData.length}
@@ -66,8 +94,8 @@ const ConsultationData = ({  getNextConsultation, userData }) => {
             endMessage={
               <p style={{ textAlign: "center", fontSize: "20px" }}></p>
             }
-            height={500}
-            scrollThreshold={0.8}
+            height={scrollHeight}
+            scrollThreshold={0.7}
           >
             <table className="details-table consultation-page ">
               <thead>
@@ -90,10 +118,10 @@ const ConsultationData = ({  getNextConsultation, userData }) => {
                 ))}
               </tbody>
             </table>
-            </InfiniteScroll>
-          </div>
+          </InfiniteScroll>
+        </div>
 
-          {/* <div className="details-list-tablet with-more">
+        {/* <div className="details-list-tablet with-more">
             {consultationData?.map((student, i) => (
               <ConsultationCard
                 key={i}
@@ -105,7 +133,7 @@ const ConsultationData = ({  getNextConsultation, userData }) => {
               />
             ))}
           </div> */}
-        </>
+      </>
     </>
   );
 };

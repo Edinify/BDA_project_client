@@ -12,6 +12,8 @@ const CareerData = ({ getNextCareers }) => {
     (state) => state.careerPagination
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
+  const [scrollHeight, setScrollHeight] = useState(1);
+
   const tableHead = [
     "Tələbənin adı",
     "Qrup",
@@ -44,6 +46,28 @@ const CareerData = ({ getNextCareers }) => {
     }
   }, [openMoreModal]);
 
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
+
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       {openMoreModal && (
@@ -56,8 +80,8 @@ const CareerData = ({ getNextCareers }) => {
           hasMore={hasMore}
           loader={<SmallLoading />}
           endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
-          height={550}
-          scrollThreshold={0.9}
+          height={scrollHeight}
+          scrollThreshold={0.7}
         >
           <table className="details-table career-table">
             <thead>

@@ -21,7 +21,7 @@ export const lessonTablePaginationReducer = (state = initialState, action) => {
       return {
         ...state,
         lessonTableData: [...state.lessonTableData, ...action.payload.lessons],
-        hasMore: !(action.payload.lessons.length < 10),
+        hasMore: !(action.payload.lessons.length < 20),
         confirmedCount: action.payload.confirmedCount,
         cancelledCount: action.payload.cancelledCount,
         unviewedCount: action.payload.unviewedCount,
