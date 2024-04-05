@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {ReactComponent as StudentsIcon} from "../../../../assets/icons/dashboard/students-svgrepo-com.svg"
-import {ReactComponent as ActiveStudentsIcon} from "../../../../assets/icons/dashboard/active-students-svgrepo-com.svg"
-import {ReactComponent as EventsIcon} from "../../../../assets/icons/dashboard/events-svgrepo-com.svg"
-import {ReactComponent as GroupsIcon} from "../../../../assets/icons/dashboard/groups-svgrepo-com.svg"
+import { ReactComponent as StudentsIcon } from "../../../../assets/icons/dashboard/students-svgrepo-com.svg";
+import { ReactComponent as ActiveStudentsIcon } from "../../../../assets/icons/dashboard/active-students-svgrepo-com.svg";
+import { ReactComponent as EventsIcon } from "../../../../assets/icons/dashboard/events-svgrepo-com.svg";
+import { ReactComponent as GroupsIcon } from "../../../../assets/icons/dashboard/groups-svgrepo-com.svg";
+import { ReactComponent as GroupsEndedIcon } from "../../../../assets/icons/dashboard/group-ended.svg";
+import { ReactComponent as GroupsCurrentIcon } from "../../../../assets/icons/dashboard/group-current.svg";
+import { ReactComponent as GroupsWaitingIcon } from "../../../../assets/icons/dashboard/group-waiting.svg";
 import {
   getActiveStudentsCountAction,
   getAllEventsAction,
@@ -70,11 +73,11 @@ const LessonsAmount = () => {
 
   return (
     <>
-      <section className="lessons-amount"  >
+      <section className="lessons-amount">
         <div className="content-box">
           <div className="left green">
             {/* <CheckIcon /> */}
-            <StudentsIcon/>
+            <StudentsIcon />
           </div>
 
           <div className="right">
@@ -99,7 +102,7 @@ const LessonsAmount = () => {
 
         <div className="content-box cancelled-lessons">
           <div className="left red">
-          <ActiveStudentsIcon/>
+            <ActiveStudentsIcon />
           </div>
 
           <div className="right">
@@ -136,8 +139,8 @@ const LessonsAmount = () => {
           </div>
         </div>
         <div className="content-box">
-          <div className="left grey">
-            <GroupsIcon />
+          <div className="left waiting">
+            <GroupsWaitingIcon />
           </div>
 
           <div className="right">
@@ -150,8 +153,8 @@ const LessonsAmount = () => {
           </div>
         </div>
         <div className="content-box">
-          <div className="left grey">
-            <GroupsIcon />
+          <div className="left current">
+            <GroupsCurrentIcon />
           </div>
 
           <div className="right">
@@ -164,8 +167,8 @@ const LessonsAmount = () => {
           </div>
         </div>
         <div className="content-box">
-          <div className="left grey">
-            <GroupsIcon />
+          <div className="left ended">
+            <GroupsEndedIcon />
           </div>
 
           <div className="right">
