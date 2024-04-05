@@ -4,6 +4,9 @@ import { ReactComponent as StudentsIcon } from "../../../../assets/icons/dashboa
 import { ReactComponent as ActiveStudentsIcon } from "../../../../assets/icons/dashboard/active-students-svgrepo-com.svg";
 import { ReactComponent as EventsIcon } from "../../../../assets/icons/dashboard/events-svgrepo-com.svg";
 import { ReactComponent as GroupsIcon } from "../../../../assets/icons/dashboard/groups-svgrepo-com.svg";
+import { ReactComponent as GroupsEndedIcon } from "../../../../assets/icons/dashboard/group-ended.svg";
+import { ReactComponent as GroupsCurrentIcon } from "../../../../assets/icons/dashboard/group-current.svg";
+import { ReactComponent as GroupsWaitingIcon } from "../../../../assets/icons/dashboard/group-waiting.svg";
 import {
   getActiveStudentsCountAction,
   getAllEventsAction,
@@ -138,8 +141,8 @@ const LessonsAmount = () => {
           </div>
         </div>
         <div className="content-box">
-          <div className="left grey">
-            <GroupsIcon />
+          <div className="left waiting">
+            <GroupsWaitingIcon />
           </div>
 
           <div className="right">
@@ -150,8 +153,8 @@ const LessonsAmount = () => {
           </div>
         </div>
         <div className="content-box">
-          <div className="left grey">
-            <GroupsIcon />
+          <div className="left current">
+            <GroupsCurrentIcon />
           </div>
 
           <div className="right">
@@ -162,8 +165,8 @@ const LessonsAmount = () => {
           </div>
         </div>
         <div className="content-box">
-          <div className="left grey">
-            <GroupsIcon />
+          <div className="left ended">
+            <GroupsEndedIcon />
           </div>
 
           <div className="right">
