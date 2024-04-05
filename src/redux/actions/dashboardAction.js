@@ -128,7 +128,7 @@ export const getAllGroupsAction =
         }&monthCount=${monthCount || ""}`
       );
       dispatch({
-        type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_UNVIEWED_LESSONS,
+        type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_GROUPS_COUNT,
         payload: data,
       });
     } catch (error) {
@@ -255,7 +255,7 @@ export const getDashboardCourseStatisticAction =
           endDate || ""
         }&monthCount=${monthCount || ""}`
       );
-      console.log(data,"filter date")
+      console.log(data, "filter date");
       dispatch({
         type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_COURSE_STATISTIC,
         payload: data,
@@ -303,7 +303,7 @@ export const getDashboardAdvertisingAction =
           endDate || ""
         }&monthCount=${monthCount || ""}`
       );
-      console.log(data,"where")
+      console.log(data, "where");
       dispatch({
         type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_ADVERTISING,
         payload: data,
@@ -433,9 +433,7 @@ export const getDashboardStudentsAmountAction =
     }
   };
 
-
-
-export const getDashboardWeeklyTable = () => async (dispatch) =>{
+export const getDashboardWeeklyTable = () => async (dispatch) => {
   try {
     const { data } = await API.get("/group-table");
     dispatch({
@@ -456,10 +454,10 @@ export const getDashboardWeeklyTable = () => async (dispatch) =>{
         );
 
         const { data } = await API.get("/group-table");
-    dispatch({
-      type: DASHBOARD_ACTIONS_TYPE.GET_WEEKLY_TABLE,
-      payload: data,
-    });
+        dispatch({
+          type: DASHBOARD_ACTIONS_TYPE.GET_WEEKLY_TABLE,
+          payload: data,
+        });
       } catch (error) {
         // console.log(error);
         if (error?.response?.status === 401) {
@@ -468,4 +466,4 @@ export const getDashboardWeeklyTable = () => async (dispatch) =>{
       }
     }
   }
-}
+};

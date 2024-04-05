@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {ReactComponent as StudentsIcon} from "../../../../assets/icons/dashboard/students-svgrepo-com.svg"
-import {ReactComponent as ActiveStudentsIcon} from "../../../../assets/icons/dashboard/active-students-svgrepo-com.svg"
-import {ReactComponent as EventsIcon} from "../../../../assets/icons/dashboard/events-svgrepo-com.svg"
-import {ReactComponent as GroupsIcon} from "../../../../assets/icons/dashboard/groups-svgrepo-com.svg"
+import { ReactComponent as StudentsIcon } from "../../../../assets/icons/dashboard/students-svgrepo-com.svg";
+import { ReactComponent as ActiveStudentsIcon } from "../../../../assets/icons/dashboard/active-students-svgrepo-com.svg";
+import { ReactComponent as EventsIcon } from "../../../../assets/icons/dashboard/events-svgrepo-com.svg";
+import { ReactComponent as GroupsIcon } from "../../../../assets/icons/dashboard/groups-svgrepo-com.svg";
 import {
   getActiveStudentsCountAction,
   getAllEventsAction,
@@ -18,6 +18,10 @@ const LessonsAmount = () => {
     cancelledLessonsData,
     unviewedLessonsData,
     eventsData,
+    allGroupsCount,
+    waitingGroupsCount,
+    currentGroupsCount,
+    endedGroupsCount,
   } = useSelector((state) => state.dashboardData);
   const [openUnviewedLessons, setUnviewedLessons] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
@@ -70,11 +74,11 @@ const LessonsAmount = () => {
 
   return (
     <>
-      <section className="lessons-amount"  >
+      <section className="lessons-amount">
         <div className="content-box">
           <div className="left green">
             {/* <CheckIcon /> */}
-            <StudentsIcon/>
+            <StudentsIcon />
           </div>
 
           <div className="right">
@@ -99,7 +103,7 @@ const LessonsAmount = () => {
 
         <div className="content-box cancelled-lessons">
           <div className="left red">
-          <ActiveStudentsIcon/>
+            <ActiveStudentsIcon />
           </div>
 
           <div className="right">
@@ -130,9 +134,7 @@ const LessonsAmount = () => {
             <div className="top">
               <h2 className="title">Qruplar</h2>
             </div>
-            <p className="amount">
-              {unviewedLessonsData ? unviewedLessonsData : 0}
-            </p>
+            <p className="amount">{allGroupsCount || 0}</p>
           </div>
         </div>
         <div className="content-box">
@@ -144,9 +146,7 @@ const LessonsAmount = () => {
             <div className="top">
               <h2 className="title">Yığılan qruplar</h2>
             </div>
-            <p className="amount">
-              {unviewedLessonsData ? unviewedLessonsData : 0}
-            </p>
+            <p className="amount">{waitingGroupsCount || 0}</p>
           </div>
         </div>
         <div className="content-box">
@@ -158,9 +158,7 @@ const LessonsAmount = () => {
             <div className="top">
               <h2 className="title">Mövcud qruplar</h2>
             </div>
-            <p className="amount">
-              {unviewedLessonsData ? unviewedLessonsData : 0}
-            </p>
+            <p className="amount">{currentGroupsCount || 0}</p>
           </div>
         </div>
         <div className="content-box">
@@ -172,9 +170,7 @@ const LessonsAmount = () => {
             <div className="top">
               <h2 className="title">Bitmiş qruplar</h2>
             </div>
-            <p className="amount">
-              {unviewedLessonsData ? unviewedLessonsData : 0}
-            </p>
+            <p className="amount">{endedGroupsCount || 0}</p>
           </div>
         </div>
         <div className="content-box events">

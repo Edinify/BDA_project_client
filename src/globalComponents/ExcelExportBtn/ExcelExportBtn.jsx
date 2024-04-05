@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import { downloadCoursesExcelAction } from "../../redux/actions/coursesActions";
 import { downloadSyllabusExcelAction } from "../../redux/actions/syllabusActions";
 import { downloadTuitionFeeExcelAction } from "../../redux/actions/tuitionFeeActions";
+import { downloadCareersExcelAction } from "../../redux/actions/careerActions";
 
 const ExcelExportBtn = ({ pageName }) => {
   const location = useLocation();
@@ -31,8 +32,10 @@ const ExcelExportBtn = ({ pageName }) => {
         break;
       case "syllabus":
         dispatch(downloadSyllabusExcelAction(selectedCourse?._id));
-      case 'tuition-fee':
-        dispatch(downloadTuitionFeeExcelAction())
+      case "tuition-fee":
+        dispatch(downloadTuitionFeeExcelAction());
+      case "career":
+        dispatch(downloadCareersExcelAction());
       default:
         return;
     }
