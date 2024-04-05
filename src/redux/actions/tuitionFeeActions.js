@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  DOWNLOAD_EXCEL_ACTION_TYPE,
   TUITION_FEE_ALL_ACTIONS_TYPE,
   TUITION_FEE_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -53,6 +54,12 @@ const modalLoading = (loadingValue) => ({
   type: TUITION_FEE_MODAL_ACTION_TYPE.TUITION_FEE_MODAL_LOADING,
   payload: loadingValue,
 });
+
+const downloadExcelLoading = (value) => ({
+  type: DOWNLOAD_EXCEL_ACTION_TYPE.LOADING,
+  payload: value,
+});
+
 const toastSuccess = (message) => {
   toast.success(message, {
     position: "top-right",
@@ -175,5 +182,29 @@ export const updateTuitionFeeAction = (newData) => async (dispatch) => {
     }
   } finally {
     dispatch(modalLoading(false));
+  }
+};
+
+export const downloadTuitionFeeExcelAction = () => async (dispatch) => {
+  dispatch(downloadExcelLoading(true));
+  try {
+    const response = await API.get(`/excel`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "tuitionfee.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+
+    dispatch(downloadExcelLoading(false));
+  } catch (error) {
+    dispatch(downloadExcelLoading(false));
+    toastError("Xəta baş verdi!");
+    console.log(error.message);
   }
 };

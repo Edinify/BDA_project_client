@@ -34,7 +34,7 @@ export const tuitionFeeDataPaginationReducer = (
         tuitionFeeData: [...state.tuitionFeeData, ...action.payload.tutionFees],
         currentLength: action.payload.currentLength,
         paymentsResults: action.payload.paymentsResults,
-        hasMore: !(action.payload.tutionFees.length < 10),
+        hasMore: !(action.payload.tutionFees.length < 20),
       };
     case TUITION_FEE_ALL_ACTIONS_TYPE.RESET_TUITION_FEE_PAGINATION:
       return {

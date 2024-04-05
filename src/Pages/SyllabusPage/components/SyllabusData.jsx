@@ -6,16 +6,14 @@ import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
-const SyllabusData = ({ getNextSyllabus, userData,selectedCourse }) => {
+const SyllabusData = ({ getNextSyllabus, userData, selectedCourse }) => {
   const { syllabusData, hasMore } = useSelector(
     (state) => state.syllabusPagination
   );
   const { openConfirmModal } = useSelector((state) => state.syllabusModal);
   const [scrollHeight, setScrollHeight] = useState(1);
 
-
   const tableHead = ["No", "Mövzü", ""];
-
 
   useEffect(() => {
     const mainHeader = document.querySelector(".main-header");
@@ -45,13 +43,13 @@ const SyllabusData = ({ getNextSyllabus, userData,selectedCourse }) => {
         {openConfirmModal && <ConfirmModal type="syllabus" />}
         <InfiniteScroll
           style={{ overflowX: "none" }}
-          dataLength={syllabusData.length }
+          dataLength={syllabusData.length}
           next={getNextSyllabus}
           hasMore={hasMore && selectedCourse?._id}
           loader={<SmallLoading />}
           endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
           height={scrollHeight}
-          scrollThreshold={0.9}
+          scrollThreshold={0.7}
         >
           <table className="details-table syllabus-table">
             <thead>

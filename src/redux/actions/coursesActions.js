@@ -3,6 +3,7 @@ import {
   ALL_COURSES_ACTION,
   COURSES_ALL_ACTIONS_TYPE,
   COURSES_MODAL_ACTION_TYPE,
+  DOWNLOAD_EXCEL_ACTION_TYPE,
 } from "../actions-type";
 import { toast } from "react-toastify";
 import { logoutAction } from "./auth";
@@ -26,7 +27,6 @@ const refreshApi = axios.create({
   baseURL: `${apiRoot}/user/auth/refresh_token`,
   withCredentials: true,
 });
-
 
 const toastSuccess = (message) => {
   toast.success(message, {
@@ -61,6 +61,10 @@ const modalLoading = (loadingValue) => ({
   type: COURSES_MODAL_ACTION_TYPE.COURSE_MODAL_LOADING,
   payload: loadingValue,
 });
+const downloadExcelLoading = (value) => ({
+  type: DOWNLOAD_EXCEL_ACTION_TYPE.LOADING,
+  payload: value,
+});
 
 const courseModalOpen = (value) => ({
   type: COURSES_MODAL_ACTION_TYPE.COURSE_OPEN_MODAL,
@@ -79,7 +83,7 @@ export const getAllCoursesAction = () => async (dispatch) => {
 export const getCoursesPaginationAction =
   (length, searchQuery) => async (dispatch) => {
     dispatch(setLoadingCoursesAction(true));
-    
+
     try {
       const { data } = await API.get(
         `/pagination/?length=${length || 0}&searchQuery=${searchQuery}`
@@ -88,9 +92,8 @@ export const getCoursesPaginationAction =
         type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION,
         payload: data,
       });
-      
     } catch (error) {
-      console.log(error)
+      console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -348,3 +351,27 @@ export const cancelCourseChangesAction =
       dispatch(modalLoading(false));
     }
   };
+
+export const downloadCoursesExcelAction = () => async (dispatch) => {
+  dispatch(downloadExcelLoading(true));
+  try {
+    const response = await API.get(`/excel`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "courses.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+
+    dispatch(downloadExcelLoading(false));
+  } catch (error) {
+    dispatch(downloadExcelLoading(false));
+    toastError("Xəta baş verdi!");
+    console.log(error);
+  }
+};

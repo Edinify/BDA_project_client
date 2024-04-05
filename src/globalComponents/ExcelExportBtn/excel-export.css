@@ -1,6 +1,7 @@
 .excel-export-btn {
   cursor: pointer;
   background: transparent;
+  margin-left: 15px;
 }
 
 .excel-download {

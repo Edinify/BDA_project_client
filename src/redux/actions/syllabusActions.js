@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  DOWNLOAD_EXCEL_ACTION_TYPE,
   SYLLABUS_ALL_ACTIONS_TYPE,
   SYLLABUS_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -80,6 +81,11 @@ const modalLoading = (loadingValue) => ({
   payload: loadingValue,
 });
 
+const downloadExcelLoading = (value) => ({
+  type: DOWNLOAD_EXCEL_ACTION_TYPE.LOADING,
+  payload: value,
+});
+
 export const getAllSyllabusAction = (courseId) => async (dispatch) => {
   try {
     const { data } = await API.get(`/all?courseId=${courseId}`);
@@ -156,14 +162,16 @@ export const getSyllabusPaginationAction =
     dispatch(setLoadingSyllabusAction(true));
     try {
       const { data } = await API.get(
-        `/pagination?length=${length}&searchQuery=${searchQuery}&courseId=${courseId || ""}`
+        `/pagination?length=${length}&searchQuery=${searchQuery}&courseId=${
+          courseId || ""
+        }`
       );
       dispatch({
         type: SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_PAGINATION,
         payload: data,
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -456,3 +464,37 @@ export const cancelSyllabusChangesAction =
       dispatch(modalLoading(false));
     }
   };
+
+export const downloadSyllabusExcelAction = (courseId) => async (dispatch) => {
+  dispatch(downloadExcelLoading(true));
+  try {
+    console.log(courseId);
+    if (!courseId) {
+      throw new Error("not-found-courseId");
+    }
+
+    console.log("test2");
+    const response = await API.get(`/excel?courseId=${courseId}`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "syllabus.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+
+    dispatch(downloadExcelLoading(false));
+  } catch (error) {
+    dispatch(downloadExcelLoading(false));
+    if (error.message === "not-found-courseId") {
+      toastError("İxtisas seçməlisiniz");
+    } else {
+      toastError("Xəta baş verdi!");
+    }
+    console.log(error.message);
+  }
+};

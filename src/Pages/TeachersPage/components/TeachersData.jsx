@@ -56,7 +56,7 @@ const TeachersData = ({ getNextTeachers, userData }) => {
       window.innerHeight -
         mainHeader.offsetHeight -
         detailsHeader.offsetHeight -
-        globalHeads.offsetHeight.offsetHeight
+        globalHeads.offsetHeight
     );
 
     window.addEventListener("resize", handleResize);

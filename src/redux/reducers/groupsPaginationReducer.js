@@ -27,7 +27,7 @@ export const groupsPaginationReducer = (state = initialState, action) => {
         ...state,
         groupData: [...state.groupData, ...action.payload.groupData],
         totalLength: action.payload.totalLength,
-        hasMore: !(action.payload.groupData.length < 10),
+        hasMore: !(action.payload.groupData.length < 20),
       };
     case GROUP_ALL_ACTIONS_TYPE.RESET_GROUP_PAGINATION:
       return {

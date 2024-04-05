@@ -24,7 +24,7 @@ export const coursesPaginationReducer=(state=initialState,action)=>{
           return {
             ...state,
             courses: [...state.courses, ...action.payload.courses],
-            hasMore: !(action.payload.courses.length < 10),
+            hasMore: !(action.payload.courses.length < 20),
           };
         case COURSES_ALL_ACTIONS_TYPE.CREATE_COURSE:
           return {

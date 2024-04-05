@@ -36,7 +36,7 @@ export const teacherPaginationReducer = (state = initialState, action) => {
         ...state,
         teachers: [...state.teachers, ...action.payload.teachers],
         totalLength: action.payload.totalLength,
-        hasMore: !(action.payload.teachers.length < 10),
+        hasMore: !(action.payload.teachers.length < 20),
       };
     case TEACHER_ALL_ACTIONS_TYPE.RESET_TEACHER_PAGINATION:
       return {

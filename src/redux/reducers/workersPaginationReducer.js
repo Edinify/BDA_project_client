@@ -33,21 +33,21 @@ export const workersPaginationReducer = (state = initialState, action) => {
         ...state,
         workers: [...state.workers, ...action.payload.workers],
         totalLength: action.payload.totalLength,
-        hasMore: !(action.payload.workers.length < 10),
+        hasMore: !(action.payload.workers.length < 20),
       };
     case WORKER_ALL_ACTIONS_TYPE.CREATE_WORKER:
       return {
         ...state,
-        workers:  [action.payload, ...state.workers],
+        workers: [action.payload, ...state.workers],
         totalLength: state.totalLength + 1,
       };
     case WORKER_ALL_ACTIONS_TYPE.RESET_WORKER_PAGINATION:
-        return {
-          ...state,
-          workers: [],
-          totalLength: 0,
-          hasMore: true,
-        };
+      return {
+        ...state,
+        workers: [],
+        totalLength: 0,
+        hasMore: true,
+      };
     case WORKER_ALL_ACTIONS_TYPE.UPDATE_WORKER:
       return {
         ...state,
