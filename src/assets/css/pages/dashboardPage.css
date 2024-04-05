@@ -32,6 +32,10 @@
 .dashboard-main > .left section {
   margin-bottom: 12px;
 }
+.dashboard-main > .left .lessons-amount{
+  height: 402px;
+  overflow-y: auto;
+}
 
 .dashboard-main .where-heard{
   height: 400px;
