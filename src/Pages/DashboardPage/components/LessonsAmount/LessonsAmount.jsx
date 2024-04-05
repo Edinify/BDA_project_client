@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ReactComponent as CheckIcon } from "../../../../assets/icons/dashboard/check.svg";
-import { ReactComponent as Xicon } from "../../../../assets/icons/dashboard/x-close.svg";
-import { ReactComponent as HelpCircle } from "../../../../assets/icons/dashboard/help-circle-dashboard.svg";
-import { ReactComponent as DotsIcon } from "../../../../assets/icons/dashboard/dots-horizontal-dashboard.svg";
 import {ReactComponent as StudentsIcon} from "../../../../assets/icons/dashboard/students-svgrepo-com.svg"
 import {ReactComponent as ActiveStudentsIcon} from "../../../../assets/icons/dashboard/active-students-svgrepo-com.svg"
 import {ReactComponent as EventsIcon} from "../../../../assets/icons/dashboard/events-svgrepo-com.svg"
@@ -11,7 +7,6 @@ import {ReactComponent as GroupsIcon} from "../../../../assets/icons/dashboard/g
 import {
   getActiveStudentsCountAction,
   getAllEventsAction,
-  getAllStudentsCountAction,
 } from "../../../../redux/actions/dashboardAction";
 import DateDropdown from "../../../../globalComponents/DateDropdown/DateDropdown";
 import DateRangeModal from "../../../../globalComponents/Modals/DateRangeModal/DateRangeModal";
@@ -75,7 +70,7 @@ const LessonsAmount = () => {
 
   return (
     <>
-      <section className="lessons-amount">
+      <section className="lessons-amount"  >
         <div className="content-box">
           <div className="left green">
             {/* <CheckIcon /> */}
@@ -134,6 +129,48 @@ const LessonsAmount = () => {
           <div className="right">
             <div className="top">
               <h2 className="title">Qruplar</h2>
+            </div>
+            <p className="amount">
+              {unviewedLessonsData ? unviewedLessonsData : 0}
+            </p>
+          </div>
+        </div>
+        <div className="content-box">
+          <div className="left grey">
+            <GroupsIcon />
+          </div>
+
+          <div className="right">
+            <div className="top">
+              <h2 className="title">Yığılan qruplar</h2>
+            </div>
+            <p className="amount">
+              {unviewedLessonsData ? unviewedLessonsData : 0}
+            </p>
+          </div>
+        </div>
+        <div className="content-box">
+          <div className="left grey">
+            <GroupsIcon />
+          </div>
+
+          <div className="right">
+            <div className="top">
+              <h2 className="title">Mövcud qruplar</h2>
+            </div>
+            <p className="amount">
+              {unviewedLessonsData ? unviewedLessonsData : 0}
+            </p>
+          </div>
+        </div>
+        <div className="content-box">
+          <div className="left grey">
+            <GroupsIcon />
+          </div>
+
+          <div className="right">
+            <div className="top">
+              <h2 className="title">Bitmiş qruplar</h2>
             </div>
             <p className="amount">
               {unviewedLessonsData ? unviewedLessonsData : 0}
