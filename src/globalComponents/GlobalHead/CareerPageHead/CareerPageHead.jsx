@@ -1,6 +1,7 @@
 import React from "react";
 import { CoursesDropdown } from "../CoursesDropdown/CoursesDropdown";
 import { GroupsDropdown } from "../GroupsDropdown/GroupsDropdown";
+import ExcelExportBtn from "../../ExcelExportBtn/ExcelExportBtn";
 
 const CareerPageHead = ({ filter }) => {
   return (
@@ -12,6 +13,7 @@ const CareerPageHead = ({ filter }) => {
           Tətbiq et
         </button>
       </div>
+      <ExcelExportBtn pageName={"career"} />
     </div>
   );
 };

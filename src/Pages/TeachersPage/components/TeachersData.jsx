@@ -64,6 +64,7 @@ const TeachersData = ({ getNextTeachers, userData }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return (
     <>
       <>

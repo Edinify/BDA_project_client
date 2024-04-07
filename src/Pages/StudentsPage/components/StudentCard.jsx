@@ -173,7 +173,9 @@ const StudentCard = ({
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data?.qbCount || 0}</div>
+              <div className="table-scroll-text">
+                Lab:{data?.practicsQbCount || 0} / Əsas:{data.mainQbCount || 0}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>

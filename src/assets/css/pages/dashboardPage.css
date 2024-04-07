@@ -32,12 +32,15 @@
 .dashboard-main > .left section {
   margin-bottom: 12px;
 }
+.dashboard-main > .left .lessons-amount {
+  height: 402px;
+  overflow-y: auto;
+}
 
-.dashboard-main .where-heard{
+.dashboard-main .where-heard {
   height: 400px;
   overflow-y: scroll;
 }
-
 
 .dashboard-main > .left .content-box,
 .dashboard-main > .right > .top .content-box,
@@ -87,6 +90,17 @@
 .dashboard-main .lessons-amount .content-box > .left.grey {
   /* background-color: rgba(113, 113, 113, 0.1); */
   background-color: rgba(251, 160, 19, 0.1);
+}
+.dashboard-main .lessons-amount .content-box > .left.ended {
+  background-color: #ececec;
+}
+
+.dashboard-main .lessons-amount .content-box > .left.current {
+  background-color: rgba(0, 188, 133, 0.1);
+}
+
+.dashboard-main .lessons-amount .content-box > .left.waiting {
+  background-color: rgba(5, 165, 234, 0.1);
 }
 .dashboard-main .finance-statictics .content-box.finance > .left.blue {
   background-color: rgba(5, 165, 234, 0.1);
@@ -434,9 +448,6 @@
   background-color: var(--neutrals-900);
 }
 
-
-
-
 /* STUDENTS AMOUNT */
 .dashboard-main .students-amount {
   width: 65%;
@@ -660,7 +671,7 @@
   .dashboard-main .lessons-amount .content-box > .right .top svg {
     display: none;
   }
-  .dashboard-main .lessons-amount .content-box.events{
+  .dashboard-main .lessons-amount .content-box.events {
     margin-top: 8px;
   }
 
