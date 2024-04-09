@@ -3,10 +3,10 @@ import { GROUP_ALL_ACTIONS_TYPE } from "../actions-type";
 const initialState = {
   groupData: [],
   groupsByMore: [],
-  totalLength:0,
+  totalLength: 0,
   hasMore: true,
   loading: false,
-  loadingAll: false
+  loadingAll: false,
 };
 
 export const groupsPaginationReducer = (state = initialState, action) => {
@@ -44,10 +44,7 @@ export const groupsPaginationReducer = (state = initialState, action) => {
     case GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL:
       return {
         ...state,
-        groupsByMore: [
-          ...state.groupsByMore,
-          ...action.payload?.groups,
-        ],
+        groupsByMore: [...state.groupsByMore, ...action.payload?.groups],
       };
     case GROUP_ALL_ACTIONS_TYPE.GROUP_LOADING_ALL:
       return {
@@ -57,7 +54,7 @@ export const groupsPaginationReducer = (state = initialState, action) => {
     case GROUP_ALL_ACTIONS_TYPE.CREATE_GROUP:
       return {
         ...state,
-        groupData:  [action.payload, ...state.groupData],
+        groupData: [action.payload, ...state.groupData],
         totalLength: state.totalLength + 1,
       };
     case GROUP_ALL_ACTIONS_TYPE.UPDATE_GROUP:
@@ -71,8 +68,9 @@ export const groupsPaginationReducer = (state = initialState, action) => {
       return {
         ...state,
         groupData: state.groupData.filter(
-          (teacher) => teacher._id !== action.payload
+          (group) => group._id !== action.payload
         ),
+        totalLength: state.totalLength - 1,
       };
     case GROUP_ALL_ACTIONS_TYPE.GET_GROUP_LAST_PAGE:
       return {

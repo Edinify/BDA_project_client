@@ -416,52 +416,48 @@ export const updateStudentsAction = (_id, studentData) => async (dispatch) => {
   }
 };
 
-export const deleteStudentAction =
-  ({ _id, pageNumber, searchQuery, status }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getStudentsPaginationAction(pageNumber, searchQuery, status));
-      dispatch({
-        type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT,
-        payload: _id,
-      });
-      toastSuccess("Tələbə silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
+export const deleteStudentAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+    console.log(data);
+    dispatch({
+      type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT,
+      payload: data._id,
+    });
+    toastSuccess("Tələbə silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
 
-          await API.delete(`/${_id}`);
-          dispatch(
-            getStudentsPaginationAction(pageNumber, searchQuery, status)
-          );
-          dispatch({
-            type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT,
-            payload: _id,
-          });
-          toastSuccess("Tələbə silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT,
+          payload: data._id,
+        });
+        toastSuccess("Tələbə silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan tələbə silinə bilməz");
-      }
-      // console.log(error);
-      toastError(error?.response?.data.message);
     }
-  };
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan tələbə silinə bilməz");
+    }
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmStudentChangesAction =
   (_id, studentData) => async (dispatch) => {

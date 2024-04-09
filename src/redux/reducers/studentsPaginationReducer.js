@@ -79,6 +79,7 @@ export const StudentsPaginationReducer = (state = initialState, action) => {
         students: state.students.filter(
           (student) => student._id !== action.payload
         ),
+        totalLength: state.totalLength - 1,
       };
     case STUDENTS_ALL_ACTIONS_TYPE.GET_STUDENT_LAST_PAGE:
       return {

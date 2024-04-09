@@ -4,16 +4,14 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
+import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
+import { useState } from "react";
 
 const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
-  const { lessonTableData, lastPage } = useSelector(
-    (state) => state.lessonTablePagination
-  );
-  const { lessonTableSearchValues } = useSelector(
-    (state) => state.searchValues
-  );
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const lessonDay = data?.date
     ? `${moment(data.date).locale("az").format("DD.MM.YYYY")}, ${
         weeksArrFullName[
@@ -78,11 +76,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
     });
   };
   const deleteItem = () => {
-    const pageNumber =
-      lastPage > 1 ? (lessonTableData.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data._id;
-    const searchQuery = lessonTableSearchValues;
-    dispatch(deleteLessonTableAction({ _id, pageNumber, searchQuery }));
+    dispatch(deleteLessonTableAction(data._id));
   };
 
   const openConfirmModal = () => {
@@ -98,6 +92,12 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
 
   return (
     <>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {mode === "desktop" ? (
         <tr>
           <td>
@@ -147,11 +147,13 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
           <td>
             <div className="td-con">
               <div className="table-scroll-text">
-                {data?.topic?.name === "Praktika"
-                  ? ""
-                  : data.mentorHour
-                  ? <span style={{color:"#07bc0c"}} >Keçirilib</span>
-                  : <span style={{color:"#e74c3c"}} >Keçirilməyib</span>}
+                {data?.topic?.name === "Praktika" ? (
+                  ""
+                ) : data.mentorHour ? (
+                  <span style={{ color: "#07bc0c" }}>Keçirilib</span>
+                ) : (
+                  <span style={{ color: "#e74c3c" }}>Keçirilməyib</span>
+                )}
               </div>
             </div>
           </td>
@@ -179,6 +181,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               data={data}
               openConfirmModal={openConfirmModal}
               profil={"lessonTable"}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </td>
         </tr>
@@ -206,6 +209,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               data={data}
               openConfirmModal={openConfirmModal}
               profil={"lessonTable"}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </div>
         </div>

@@ -59,8 +59,9 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
       return {
         ...state,
         syllabusData: state.syllabusData.filter(
-          (teacher) => teacher._id !== action.payload
+          (syllabus) => syllabus._id !== action.payload
         ),
+        totalLength: state.totalLength - 1,
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_LAST_PAGE:
       return {

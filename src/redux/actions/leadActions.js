@@ -206,46 +206,46 @@ export const updateLeadAction = (_id, leadData) => async (dispatch) => {
   }
 };
 
-export const deleteLeadAction =
-  (_id, page, startDate, endDate, monthCount) => async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getLeadPaginationAction(page, startDate, endDate, monthCount));
-      dispatch({
-        type: LEAD_MODAL_ACTION_TYPE.LEAD_MODAL_ACTIVATE_GET,
-        payload: "delete",
-      });
-      toastSuccess("Məhsul silindi");
-    } catch (error) {
-      // console.log(error);
-      toastError("Xəta baş verdi.");
-      const originalRequest = error.config;
-      if (error.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
+export const deleteLeadAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
 
-          await API.delete(`/${_id}`);
-          dispatch({ type: INCOME_ACTION_TYPE.DELETE_INCOME, payload: _id });
-          dispatch(
-            getLeadPaginationAction(page, startDate, endDate, monthCount)
-          );
-          toastSuccess("Məhsul silindi");
-        } catch (error) {
-          // console.log(error);
-          if (error?.response?.status === 401) {
-            dispatch(logoutAction());
-          }
+    dispatch({
+      type: LEAD_ACTION_TYPE.DELETE_LEAD,
+      payload: data._id,
+    });
+    toastSuccess("Lead silindi");
+  } catch (error) {
+    // console.log(error);
+    toastError("Xəta baş verdi.");
+    const originalRequest = error.config;
+    if (error.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: LEAD_ACTION_TYPE.DELETE_LEAD,
+          payload: data._id,
+        });
+        toastSuccess("Məhsul silindi");
+      } catch (error) {
+        // console.log(error);
+        if (error?.response?.status === 401) {
+          dispatch(logoutAction());
         }
       }
-      if (error?.response?.status === 403) {
-        dispatch(logoutAction());
-      }
     }
-  };
+    if (error?.response?.status === 403) {
+      dispatch(logoutAction());
+    }
+  }
+};

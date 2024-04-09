@@ -59,8 +59,9 @@ export const workersPaginationReducer = (state = initialState, action) => {
       return {
         ...state,
         workers: state.workers.filter(
-          (teacher) => teacher._id !== action.payload
+          (worker) => worker._id !== action.payload
         ),
+        totalLength: state.totalLength - 1,
       };
     case WORKER_ALL_ACTIONS_TYPE.GET_WORKER_LAST_PAGE:
       return {

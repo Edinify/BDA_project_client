@@ -230,52 +230,47 @@ export const updateLessonTableAction =
     }
   };
 
-export const deleteLessonTableAction =
-  ({ _id, pageNumber, searchQuery }) =>
-  async (dispatch) => {
-    try {
-      const { data } = await API.delete(`/${_id}`);
-      // console.log(data, "deleted lessonnnnnn");
-      dispatch(
-        getLessonTablePaginationAction(pageNumber, searchQuery, data.group)
-      );
-      dispatch({
-        type: LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE,
-        payload: _id,
-      });
-      toastSuccess("Dərs silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(getLessonTablePaginationAction(pageNumber, searchQuery));
-          dispatch({
-            type: LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE,
-            payload: _id,
-          });
-          toastSuccess("Dərs silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+export const deleteLessonTableAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({
+      type: LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE,
+      payload: data,
+    });
+    toastSuccess("Dərs silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE,
+          payload: data,
+        });
+        toastSuccess("Dərs silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan dərs silinə bilməz");
-      }
-      // console.log(error);
-      toastError(error?.response?.data.message);
     }
-  };
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan dərs silinə bilməz");
+    }
+
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmLessonTableChangesAction =
   (_id, lessonTableData) => async (dispatch) => {
