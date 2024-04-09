@@ -8,13 +8,6 @@ const initialState = {
 
 export const leadReducer = (state = initialState, action) => {
   switch (action.type) {
-    // case INCOME_ACTION_TYPE.GET_INCOME:
-    //   return {
-    //     ...state,
-    //     leads: action.payload.leads,
-    //     totalPages: action.payload.totalPages,
-    // loading:false
-    //   };
     case LEAD_ACTION_TYPE.GET_LEAD_PAGINATION:
       return {
         ...state,
@@ -23,7 +16,6 @@ export const leadReducer = (state = initialState, action) => {
       };
 
     case LEAD_ACTION_TYPE.UPDATE_LEAD:
-      // console.log(action.payload, "payloooooad");
       return {
         ...state,
         leads: state.leads.map((lead) =>
@@ -40,7 +32,7 @@ export const leadReducer = (state = initialState, action) => {
     case LEAD_ACTION_TYPE.DELETE_LEAD:
       return {
         ...state,
-        leads: state.leads.filter((lead) => lead._id !== action.payload._id),
+        leads: state.leads.filter((lead) => lead._id !== action.payload),
       };
     case LEAD_ACTION_TYPE.LEAD_LOADING:
       return {

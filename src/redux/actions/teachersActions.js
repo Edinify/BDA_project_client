@@ -346,48 +346,47 @@ export const updateTeacherAction = (_id, teacherData) => async (dispatch) => {
   }
 };
 
-export const deleteTeacherAction =
-  ({ _id, pageNumber, searchQuery, status }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getTeachersPaginationAction(pageNumber, searchQuery, status));
-      dispatch({ type: TEACHER_ALL_ACTIONS_TYPE.DELETE_TEACHER, payload: _id });
-      toastSuccess("Təlimçi silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(
-            getTeachersPaginationAction(pageNumber, searchQuery, status)
-          );
-          dispatch({
-            type: TEACHER_ALL_ACTIONS_TYPE.DELETE_TEACHER,
-            payload: _id,
-          });
-          toastSuccess("Təlimçi silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+export const deleteTeacherAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({
+      type: TEACHER_ALL_ACTIONS_TYPE.DELETE_TEACHER,
+      payload: data._id,
+    });
+    toastSuccess("Təlimçi silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: TEACHER_ALL_ACTIONS_TYPE.DELETE_TEACHER,
+          payload: data._id,
+        });
+        toastSuccess("Təlimçi silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan təlimçi silinə bilməz");
-      }
-      // console.log(error);
-      toastError(error?.response?.data.message);
     }
-  };
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan təlimçi silinə bilməz");
+    }
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const getTeacherLessonStatisticsAction =
   (startDate, endDate, monthCount) => async (dispatch) => {

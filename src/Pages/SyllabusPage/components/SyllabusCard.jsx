@@ -4,16 +4,11 @@ import { SYLLABUS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteSyllabusAction } from "../../../redux/actions/syllabusActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
+import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
 const SyllabusCard = ({ data, mode, syllabus }) => {
   const dispatch = useDispatch();
-  const { selectedCourse } = useSelector((state) => state.syllabusCourse);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const { syllabusData, lastPage } = useSelector(
-    (state) => state.syllabusPagination
-  );
-  const { syllabusSearchValues } = useSelector((state) => state.searchValues);
-
-  // console.log(syllabus.power, "powerfff");
   const updateItem = (modalType) => {
     dispatch({
       type: SYLLABUS_MODAL_ACTION_TYPE.GET_SYLLABUS_MODAL,
@@ -24,12 +19,7 @@ const SyllabusCard = ({ data, mode, syllabus }) => {
     });
   };
   const deleteItem = () => {
-    const pageNumber =
-      lastPage > 1 ? (syllabusData.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data._id;
-    const searchQuery = syllabusSearchValues;
-    const courseId = selectedCourse._id;
-    dispatch(deleteSyllabusAction({ _id, pageNumber, searchQuery, courseId }));
+    dispatch(deleteSyllabusAction(data._id));
   };
 
   const openConfirmModal = () => {
@@ -44,6 +34,12 @@ const SyllabusCard = ({ data, mode, syllabus }) => {
   };
   return (
     <>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {mode === "desktop" ? (
         <tr>
           <td>{data.orderNumber}</td>
@@ -62,6 +58,7 @@ const SyllabusCard = ({ data, mode, syllabus }) => {
               state={syllabus}
               openConfirmModal={openConfirmModal}
               profil={"syllabus"}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </td>
         </tr>
@@ -87,6 +84,7 @@ const SyllabusCard = ({ data, mode, syllabus }) => {
               data={data}
               state={syllabus}
               openConfirmModal={openConfirmModal}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </div>
         </div>

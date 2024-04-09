@@ -6,13 +6,18 @@ import moment from "moment";
 import { deleteConsultationAction } from "../../../redux/actions/consultationsActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import { useLocation } from "react-router-dom";
+import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
 
-const ConsultationCard = ({cellNumber, mode, setOpenMoreModal, data, consultation }) => {
+const ConsultationCard = ({
+  cellNumber,
+  mode,
+  setOpenMoreModal,
+  data,
+  consultation,
+}) => {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const { students, lastPage } = useSelector(
-    (state) => state.consultationPagination
-  );
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const {
     cancelReasonList,
     knowledgeList,
@@ -20,9 +25,7 @@ const ConsultationCard = ({cellNumber, mode, setOpenMoreModal, data, consultatio
     whereComingList,
     personaList,
   } = useCustomHook();
-  const { consultationSearchValues } = useSelector(
-    (state) => state.searchValues
-  );
+
   const listData = [
     { key: "Təlimçi", value: data?.teacher?.fullName },
 
@@ -71,17 +74,7 @@ const ConsultationCard = ({cellNumber, mode, setOpenMoreModal, data, consultatio
     });
   };
   const deleteItem = () => {
-    const pageNumber =
-      lastPage > 1 ? (students.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data?._id;
-    const searchQuery = consultationSearchValues;
-    const status =
-      location.pathname === "/consultation/appointed"
-        ? "appointed"
-        : "completed";
-    dispatch(
-      deleteConsultationAction({ _id, pageNumber, searchQuery, status })
-    );
+    dispatch(deleteConsultationAction(data._id));
   };
   const openMoreModal = () => {
     updateItem("more");
@@ -102,12 +95,20 @@ const ConsultationCard = ({cellNumber, mode, setOpenMoreModal, data, consultatio
   // console.log(constStatusList, "consttttttttttt");
   return (
     <>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {mode === "desktop" ? (
         <tr>
           <td>
             <div className="td-con" style={{ width: "150px" }}>
               {/* <div className="cell-number">{cellNumber}.</div> */}
-              <div className="table-scroll-text">{cellNumber}. {data?.studentName}</div>
+              <div className="table-scroll-text">
+                {cellNumber}. {data?.studentName}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -232,6 +233,7 @@ const ConsultationCard = ({cellNumber, mode, setOpenMoreModal, data, consultatio
               openMoreModal={openMoreModal}
               profil={"consultation"}
               state={consultation}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </td>
         </tr>
@@ -262,6 +264,7 @@ const ConsultationCard = ({cellNumber, mode, setOpenMoreModal, data, consultatio
                 state={consultation}
                 openMoreModal={openMoreModal}
                 profil={"consultation"}
+                setShowDeleteModal={setShowDeleteModal}
               />
             </div>
           )}

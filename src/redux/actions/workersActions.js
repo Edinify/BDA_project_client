@@ -160,7 +160,7 @@ export const getWorkersPaginationAction =
         payload: data,
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -197,7 +197,7 @@ export const createWorkerAction = (workerData) => async (dispatch) => {
   try {
     const { data } = await API.post("/create", workerData);
     dispatch({
-      type:  WORKER_ALL_ACTIONS_TYPE.CREATE_WORKER,
+      type: WORKER_ALL_ACTIONS_TYPE.CREATE_WORKER,
       payload: data,
     });
     dispatch({
@@ -291,46 +291,48 @@ export const updateWorkerAction = (_id, workerData) => async (dispatch) => {
   }
 };
 
-export const deleteWorkerAction =
-  ({ _id, pageNumber, searchQuery }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getWorkersPaginationAction(pageNumber, searchQuery));
-      dispatch({ type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER, payload: _id });
-      toastSuccess("İşçi silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(getWorkersPaginationAction(pageNumber, searchQuery));
-          dispatch({
-            type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER,
-            payload: _id,
-          });
-          toastSuccess("İşçi silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+export const deleteWorkerAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({
+      type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER,
+      payload: data._id,
+    });
+
+    toastSuccess("İşçi silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER,
+          payload: data._id,
+        });
+        toastSuccess("İşçi silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan əməkdaş silinə bilməz");
-      }
-      // console.log(error);
-      toastError(error?.response?.data.message);
     }
-  };
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan əməkdaş silinə bilməz");
+    }
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const changeWorkerPasswordAction = (oldPassword, newPassword) => {
   return async (dispatch) => {

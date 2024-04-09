@@ -17,18 +17,11 @@ const StudentCard = ({
   student,
 }) => {
   const dispatch = useDispatch();
-  const { students, lastPage } = useSelector(
-    (state) => state.studentsPagination
-  );
-  const { studentSearchValues } = useSelector((state) => state.searchValues);
-  const { studentStatus } = useSelector((state) => state.studentStatus);
 
   const { whereComingList, whereSendList } = useCustomHook();
-
   const whereComingName = whereComingList.find(
     (item) => item.key === data?.whereComing
   )?.name;
-
   const whereSendName = whereSendList.find(
     (item) => item.key === data?.whereSend
   )?.name;
@@ -70,12 +63,7 @@ const StudentCard = ({
     });
   };
   const deleteItem = () => {
-    const pageNumber =
-      lastPage > 1 ? (students.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data._id;
-    const searchQuery = studentSearchValues;
-    const status = studentStatus ? studentStatus : "all";
-    dispatch(deleteStudentAction({ _id, pageNumber, searchQuery, status }));
+    dispatch(deleteStudentAction(data._id));
   };
 
   const openMoreModal = () => {

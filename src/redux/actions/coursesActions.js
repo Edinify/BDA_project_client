@@ -214,43 +214,44 @@ export const updateCoursesAction = (_id, courseData) => async (dispatch) => {
   }
 };
 
-export const deleteCoursesAction =
-  ({ _id, pageNumber, searchQuery }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getCoursesPaginationAction(pageNumber, searchQuery));
-      dispatch({ type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE, payload: _id });
-      toastSuccess("Fənn silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(getCoursesPaginationAction(pageNumber, searchQuery));
-          dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE,
-            payload: _id,
-          });
-          toastSuccess("Fənn silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+export const deleteCoursesAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({
+      type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE,
+      payload: data._id,
+    });
+    toastSuccess("Fənn silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE,
+          payload: data._id,
+        });
+        toastSuccess("Fənn silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      // console.log(error);
-      toastError(error?.response?.data.message);
     }
-  };
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmCourseChangesAction =
   (_id, courseData) => async (dispatch) => {

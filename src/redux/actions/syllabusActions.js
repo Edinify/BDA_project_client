@@ -315,51 +315,47 @@ export const updateSyllabusAction = (_id, syllabusData) => async (dispatch) => {
   }
 };
 
-export const deleteSyllabusAction =
-  ({ _id, pageNumber, searchQuery, courseId }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getSyllabusPaginationAction(pageNumber, searchQuery, courseId));
-      dispatch({
-        type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
-        payload: _id,
-      });
-      toastSuccess("İşçi silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(
-            getSyllabusPaginationAction(pageNumber, searchQuery, courseId)
-          );
-          dispatch({
-            type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
-            payload: _id,
-          });
-          toastSuccess("İşçi silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+export const deleteSyllabusAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({
+      type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
+      payload: data._id,
+    });
+    toastSuccess("Syllabus silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
+          payload: data._id,
+        });
+        toastSuccess("Syllabus silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan sillabus silinə bilməz");
-      }
-      // console.log(error);
-      toastError(error?.response?.data.message);
     }
-  };
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan sillabus silinə bilməz");
+    }
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmSyllabusChangesAction =
   (_id, syllabusData) => async (dispatch) => {

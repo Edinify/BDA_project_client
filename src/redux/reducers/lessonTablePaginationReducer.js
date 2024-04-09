@@ -56,8 +56,11 @@ export const lessonTablePaginationReducer = (state = initialState, action) => {
       return {
         ...state,
         lessonTableData: state.lessonTableData.filter(
-          (teacher) => teacher._id !== action.payload
+          (teacher) => teacher._id !== action.payload.deletedLesson._id
         ),
+        confirmedCount: action.payload.confirmedCount,
+        cancelledCount: action.payload.cancelledCount,
+        unviewedCount: action.payload.unviewedCount,
       };
     case LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_TABLE_LAST_PAGE:
       return {
