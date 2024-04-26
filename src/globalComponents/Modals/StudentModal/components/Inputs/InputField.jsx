@@ -1,6 +1,8 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { ReactComponent as Eye } from "../../../../../assets/icons/eye.svg";
+import { ReactComponent as EyeSlash } from "../../../../../assets/icons/eye-slash.svg";
 
 export default function InputField({
   formik,
@@ -9,6 +11,8 @@ export default function InputField({
   updateModalState,
 }) {
   const [shrink, setShrink] = useState(false);
+  const [viewPass, setViewPass] = useState(true);
+
   const inputData = [
     {
       inputName: "fullName",
@@ -53,10 +57,31 @@ export default function InputField({
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
     },
+    {
+      inputName: "email",
+      label: "Email",
+      type: "email",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue: modalData[inputName] || "",
+    },
+    {
+      inputName: "password",
+      label: !modalData._id ? "Şifrə" : "Şifrəni dəyiş",
+      type: viewPass ? "password" : "text",
+      marginTop: "24px",
+      marginBottom: "0",
+      paddingRight: "50px",
+      className: "password-input",
+    },
   ];
 
   return (
-    <div>
+    <div
+      className={
+        inputData.find((item) => item.inputName === inputName).className
+      }
+    >
       <TextField
         sx={{
           "& input": {
@@ -100,16 +125,38 @@ export default function InputField({
           formik.setFieldTouched(inputName, true);
           setShrink(!!e.target.value);
         }}
-        onFocus={() => setShrink(true)}
+        onFocus={() => {
+          setShrink(true);
+          formik.setFieldTouched(inputName, true);
+        }}
       />
 
-      {formik.errors[inputName] &&
+      {/* {inputName === "password" && modalData?._id
+        ? formik.errors[inputName] &&
+          formik.errors[inputName] !== "Bu xana tələb olunur." &&
           formik.touched[inputName] && (
             <small className="validation-err-message">
               {formik.errors[inputName]}
             </small>
-          )}
+          )
+        : formik.errors[inputName] &&
+          formik.touched[inputName] && (
+            <small className="validation-err-message">
+              {formik.errors[inputName]}
+            </small>
+          )} */}
 
+      {inputName === "password" && (
+        <div className="modal-view-icon" onClick={() => setViewPass(!viewPass)}>
+          {viewPass ? <EyeSlash /> : <Eye />}
+        </div>
+      )}
+
+      {formik.errors[inputName] && formik.touched[inputName] && (
+        <small className="validation-err-message">
+          {formik.errors[inputName]}
+        </small>
+      )}
     </div>
   );
 }

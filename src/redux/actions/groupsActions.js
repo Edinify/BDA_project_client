@@ -178,6 +178,38 @@ export const getGroupsWithMentorAction = (mentorId) => async (dispatch) => {
   }
 };
 
+export const getGroupsWithStudentAction = (studentId) => async (dispatch) => {
+  try {
+    const { data } = await API.get(`/with-student?studentId=${studentId}`);
+    dispatch({ type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS, payload: data });
+  } catch (error) {
+    // console.log(error);
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.get("/all");
+        dispatch({
+          type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS,
+          payload: data,
+        });
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+        }
+        // console.log(error);
+      }
+    }
+  }
+};
+
 export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
   dispatch(pageLoading(true));
   try {
@@ -185,7 +217,6 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
       `/with-course?groupsCount=${payload.groupsCount}&searchQuery=${payload.searchQuery}`,
       { params: { courseIds: payload.courseIds } }
     );
-    // // console.log(data);
     if (payload.groupsCount > 0) {
       dispatch({
         type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL,

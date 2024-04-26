@@ -34,7 +34,7 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/" onClick={closeSidebar} className="admin">
+        <NavLink to="/lesson" onClick={closeSidebar} className="admin">
           <TableIcon />
           Cədvəl
         </NavLink>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  CHANGE_PASSPWORD_ACTION_TYPE,
   DOWNLOAD_EXCEL_ACTION_TYPE,
   STUDENTS_ALL_ACTIONS_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
@@ -14,7 +15,7 @@ const refreshApi = axios.create({
 });
 
 const API = axios.create({
-  baseURL: `${apiRoot}/student`,
+  baseURL: `${apiRoot}/user/student`,
   withCredentials: true,
 });
 const REGISTERAPI = axios.create({

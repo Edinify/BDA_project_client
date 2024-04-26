@@ -33,7 +33,7 @@ const SuperAdminPanelRoute = () => {
       <Route path="/sales" element={<FinancePage />} />
       <Route path="/event" element={<EventsPage />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/" element={<LessonTablePage />} />
+      <Route path="/lesson" element={<LessonTablePage />} />
     </>
   );
 };

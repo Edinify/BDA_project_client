@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import moment from "moment";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
 import { Box } from "@mui/material";
-import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
 import { STUDENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
@@ -12,21 +11,31 @@ import WhereComing from "./components/SelectCollection/WhereComing";
 import CoursesList from "./components/SelectCollection/CoursesList/CoursesList";
 import GroupList from "./components/Groups/GroupList";
 import WhereSend from "./components/SelectCollection/WhereSend";
+import { useValidationSchema } from "./components/ValidationSchema/useValidationSchema";
 
 export const StudentModal = () => {
   const dispatch = useDispatch();
   const { studentsModalData: modalData } = useSelector(
     (state) => state.studentsModal
   );
-  const inputNameArr1 = ["fin", "seria", "birthday", "phone"];
+  const inputNameArr1 = [
+    "fin",
+    "seria",
+    "birthday",
+    "phone",
+    "email",
+    "password",
+  ];
 
   // console.log(modalData,"studentModal")
   // formik
   const formik = useFormik({
     initialValues: {
       fullName: modalData.fullName ? modalData.fullName : "",
+      email: modalData?.email ? modalData?.email : "",
+      password: modalData?.password ? modalData?.password : "",
     },
-    validationSchema: ValidationSchema,
+    validationSchema: useValidationSchema(),
   });
   const setInputValue = useCallback(
     (key, value) =>
