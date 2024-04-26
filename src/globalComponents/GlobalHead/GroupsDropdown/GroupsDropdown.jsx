@@ -9,6 +9,7 @@ import {
 import {
   getGroupsAction,
   getGroupsWithMentorAction,
+  getGroupsWithStudentAction,
   getGroupsWithTeacherAction,
 } from "../../../redux/actions/groupsActions";
 import { getLessonTablePaginationAction } from "../../../redux/actions/lessonTableActions";
@@ -38,6 +39,9 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
       dispatch(getGroupsWithTeacherAction(user._id));
     } else if (user?.role === "mentor") {
       dispatch(getGroupsWithMentorAction(user._id));
+    } else if (user?.role === "student") {
+      console.log('salam salam salam', user)
+      dispatch(getGroupsWithStudentAction(user._id));
     } else {
       dispatch(getGroupsAction());
     }

@@ -3,13 +3,13 @@ import React from "react";
 import { ReactComponent as LogoTabletIcon } from "../../assets/icons/logo/bdaLogoMoba.svg";
 import bdaLogo from "../../assets/icons/logo/bdaLogo.png";
 import { useSelector, useDispatch } from "react-redux";
-import SidebarAdmin from "./components/SidebarAdmin/SidebarAdmin";
 import SidebarSuperAdmin from "./components/SidebarSuperAdmin/SidebarSuperAdmin";
 import SidebarTeacher from "./components/SidebarTeacher/SidebarTeacher";
 import { SIDEBAR_ACTION_TYPE } from "../../redux/actions-type";
 import SidebarHead from "./components/SidebarHead/SidebarHead";
 import SidebarWorkers from "./components/SidebarWorkers/SidebarWorkers";
 import { profileGetImage } from "../../redux/actions/profileImageAction";
+import SidebarStudent from "./components/SidebarStudent/SidebarStudent";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -37,9 +37,6 @@ const Sidebar = () => {
           {userData?.role === "super-admin" && (
             <SidebarSuperAdmin closeSidebar={closeSidebar} />
           )}
-          {userData?.role === "admin" && (
-            <SidebarAdmin closeSidebar={closeSidebar} />
-          )}
           {userData?.role === "teacher" && (
             <SidebarTeacher closeSidebar={closeSidebar} />
           )}
@@ -51,6 +48,9 @@ const Sidebar = () => {
               closeSidebar={closeSidebar}
               profiles={userData.profiles}
             />
+          )}
+          {userData?.role === "student" && (
+            <SidebarStudent closeSidebar={closeSidebar} />
           )}
         </div>
       </div>
