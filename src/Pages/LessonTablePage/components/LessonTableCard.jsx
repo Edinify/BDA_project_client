@@ -10,6 +10,7 @@ import { useState } from "react";
 const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const lessonDay = data?.date
@@ -136,14 +137,16 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="student-length">
-            <div onClick={openStudentsList} className="td-con">
-              <div className="table-scroll-text">
-                {data.students.length} ...
+          {user.role === "student" ? null : (
+            <td className="student-length">
+              <div onClick={openStudentsList} className="td-con">
+                <div className="table-scroll-text">
+                  {data.students.length} ...
+                </div>
+                <div className="right-fade"></div>
               </div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
+            </td>
+          )}
           <td>
             <div className="td-con">
               <div className="table-scroll-text">
