@@ -27,6 +27,8 @@ const LessonTableData = ({ getNextLessons }) => {
           "Tyutor",
           "Tyutor saatı",
           "Status",
+          "Davamiyyət",
+          "Tələbə imzası",
           "",
         ]
       : user?.power === "only-show"

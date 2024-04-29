@@ -32,8 +32,6 @@ export const StudentModal = () => {
   const formik = useFormik({
     initialValues: {
       fullName: modalData.fullName ? modalData.fullName : "",
-      email: modalData?.email ? modalData?.email : "",
-      password: modalData?.password ? modalData?.password : "",
     },
     validationSchema: useValidationSchema(),
   });

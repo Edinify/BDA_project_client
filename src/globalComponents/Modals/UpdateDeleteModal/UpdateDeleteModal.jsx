@@ -120,6 +120,8 @@ const UpdateDeleteModal = ({
       setUpdateBtn(true);
     } else if (user?.role === "mentor") {
       setUpdateBtn(true);
+    } else if (user?.role === "student") {
+      setUpdateBtn(true);
     }
   }, []);
 

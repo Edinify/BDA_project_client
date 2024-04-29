@@ -36,7 +36,6 @@ const StudentLessonModal = ({ targetLesson, setTargetLesson }) => {
     setTargetLesson((prev) => ({ ...prev, students: newStudentsList }));
   };
 
-  console.log(targetLesson, "target lesson");
   return (
     <div className="create-update-modal-con">
       <div className="student-lesson-modal">

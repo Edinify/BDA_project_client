@@ -5,12 +5,16 @@ import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActio
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
 import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const [studentData, setStudentData] = useState({
+    attendance: 0,
+    studentSignature: 0,
+  });
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const lessonDay = data?.date
@@ -30,7 +34,6 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
     });
   };
 
-  console.log(data, "leson data");
   const listData = [
     {
       key: "Dərs günü",
@@ -71,6 +74,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
           topic: data?.topic,
           mentorHour: data?.mentorHour,
           status: data?.status,
+          students: data?.students,
         },
         openModal: modalType !== "more" ? true : false,
       },
@@ -90,6 +94,19 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
       },
     });
   };
+
+  useEffect(() => {
+    if (user?.role === "student") {
+      const studentItem = data.students?.find(
+        (item) => item.student._id == user?._id
+      );
+
+      setStudentData({
+        attendance: studentItem.attendance,
+        studentSignature: studentItem.studentSignature,
+      });
+    }
+  }, [data]);
 
   return (
     <>
@@ -176,6 +193,35 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               </div>
             </div>
           </td>
+
+          {user.role !== "student" ? null : (
+            <>
+              <td className="student-length">
+                <div onClick={openStudentsList} className="td-con">
+                  <div className="table-scroll-text">
+                    {studentData.attendance === 1
+                      ? "i/e"
+                      : studentData.attendance === -1
+                      ? "q/b"
+                      : ""}
+                  </div>
+                  <div className="right-fade"></div>
+                </div>
+              </td>
+              <td className="student-length">
+                <div onClick={openStudentsList} className="td-con">
+                  <div className="table-scroll-text">
+                    {studentData.studentSignature === 1
+                      ? "İştirak edirəm"
+                      : studentData.studentSignature === -1
+                      ? "İştirak etmirəm"
+                      : ""}
+                  </div>
+                  <div className="right-fade"></div>
+                </div>
+              </td>
+            </>
+          )}
 
           <td>
             <UpdateDeleteModal

@@ -14,18 +14,8 @@ export const useValidationSchema = () => {
       .string()
       .min(3, "Mininum 3 hərfdən ibarət olmalıdır.")
       .required("Bu xana tələb olunur."),
-    email: yup
-      .string()
-      .email("Email düzgün deyil.")
-      .required("Bu xana tələb olunur."),
-    password: modalData?._id
-      ? yup
-          .string()
-          .min(6, "Mininum 6 simvoldan ibarət olmalıdır.")
-      : yup
-          .string()
-          .min(6, "Mininum 6 simvoldan ibarət olmalıdır.")
-          .required("Bu xana tələb olunur."),
+    email: yup.string().email("Email düzgün deyil."),
+    password: yup.string().min(6, "Mininum 6 simvoldan ibarət olmalıdır."),
   });
 
   return ValidationSchema;

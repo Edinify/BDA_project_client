@@ -111,7 +111,8 @@ export default function InputField({
         disabled={
           inputName === "group" ||
           user?.role === "teacher" ||
-          user?.role === "mentor"
+          user?.role === "mentor" ||
+          user?.role === "student"
         }
         onWheel={(e) => e.target.blur()}
         onChange={(e) => updateModalState(inputName, e.target.value)}

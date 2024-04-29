@@ -18,7 +18,7 @@
   border-top: none;
   min-width: 200px;
 }
-.details-table tr th:last-child{
+.details-table tr th:last-child {
   min-width: 10px;
 }
 
@@ -315,7 +315,6 @@
   width: 100px !important;
 }
 
-
 /* details-table END*/
 
 /* details-tablet*/
@@ -379,8 +378,6 @@
   background-color: var(--neutrals-200);
   /* box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); */
 }
-
-
 
 @media screen and (max-width: 700px) {
   .details-table {

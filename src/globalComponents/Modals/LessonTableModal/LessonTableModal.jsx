@@ -14,6 +14,7 @@ import Mentor from "./components/SelectCollection/Mentor";
 import StudentsList from "./components/SelectCollection/StudentList/StudentList";
 import Status from "./components/Status/Status";
 import MentorStatus from "./components/SelectCollection/MentorStatus";
+import StudentStatus from "./components/StudentStatus/StudentStatus";
 
 const LessonTableModal = () => {
   const dispatch = useDispatch();
@@ -135,6 +136,7 @@ const LessonTableModal = () => {
             />
             {modalData?._id &&
               user.role !== "teacher" &&
+              user?.role !== "student" &&
               modalData?.topic?.name !== "Praktika" && (
                 <MentorStatus
                   updateModalState={updateModalState}
@@ -147,15 +149,23 @@ const LessonTableModal = () => {
         {modalData?._id ? (
           <div className="modal-buttons">
             {(!(
-              (user.role === "mentor" &&
+              (user?.role === "mentor" &&
                 modalData?.topic?.name !== "Praktika") ||
-              (user.role === "teacher" && modalData?.topic?.name === "Praktika")
+              (user?.role === "teacher" &&
+                modalData?.topic?.name === "Praktika") ||
+              user?.role === "student"
             ) && (
               <Status
                 updateModalState={updateModalState}
                 modalData={modalData}
               />
-            )) || <div></div>}
+            )) ||
+              (user?.role === "student" && (
+                <StudentStatus
+                  updateModalState={updateModalState}
+                  modalData={modalData}
+                />
+              )) || <div></div>}
 
             <SubmitBtn
               formik={formik}
