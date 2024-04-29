@@ -158,12 +158,18 @@
 
 .details-table.lesson-table tr th:nth-last-child(4),
 .details-table.lesson-table tr td:nth-last-child(4) {
-  /* width: 100px; */
+  width: 10px !important;
 }
 
 .details-table.lesson-table tr th:nth-last-child(8),
 .details-table.lesson-table tr td:nth-last-child(8) {
   /* width: 100px; */
+}
+
+
+.details-table.lesson-table .table-scroll-text svg{
+  width: 20px;
+  height: 20px;
 }
 
 /* only-show */

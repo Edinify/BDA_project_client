@@ -35,6 +35,10 @@
   border: 1px;
 }
 
+.student-lesson-modal .student-sign{
+  margin: 10px 0;
+}
+
 .create-update-modal-con .confirm-btn {
   display: flex;
   justify-content: flex-end;

@@ -6,6 +6,8 @@ import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalF
 import moment from "moment";
 import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
 import { useEffect, useState } from "react";
+import { FaCheck } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
 
 const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
@@ -159,11 +161,13 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               <td>
                 <div className="td-con">
                   <div className="table-scroll-text">
-                    {studentData.attendance === 1
-                      ? "i/e"
-                      : studentData.attendance === -1
-                      ? "q/b"
-                      : ""}
+                    {studentData.attendance === 1 ? (
+                      <span style={{ color: "#07bc0c" }}>i/e</span>
+                    ) : studentData.attendance === -1 ? (
+                      <span style={{ color: "#e74c3c" }}>q/b</span>
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div className="right-fade"></div>
                 </div>
@@ -171,11 +175,13 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               <td>
                 <div className="td-con">
                   <div className="table-scroll-text">
-                    {studentData.studentSignature === 1
-                      ? "İştirak edirəm"
-                      : studentData.studentSignature === -1
-                      ? "İştirak etmirəm"
-                      : ""}
+                    {studentData.studentSignature === 1 ? (
+                      <FaCheck />
+                    ) : studentData.studentSignature === -1 ? (
+                      <IoMdClose />
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div className="right-fade"></div>
                 </div>
