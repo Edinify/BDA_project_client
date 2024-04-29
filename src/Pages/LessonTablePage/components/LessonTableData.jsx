@@ -25,10 +25,11 @@ const LessonTableData = ({ getNextLessons }) => {
           "Mövzu",
           "Müəllim",
           "Tyutor",
-          "Tyutor saatı",
-          "Status",
           "Davamiyyət",
           "Tələbə imzası",
+          "Tyutor saatı",
+          "Status",
+
           "",
         ]
       : user?.power === "only-show"

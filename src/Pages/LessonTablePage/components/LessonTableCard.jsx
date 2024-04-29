@@ -154,6 +154,34 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               <div className="right-fade"></div>
             </div>
           </td>
+          {user.role !== "student" ? null : (
+            <>
+              <td>
+                <div className="td-con">
+                  <div className="table-scroll-text">
+                    {studentData.attendance === 1
+                      ? "i/e"
+                      : studentData.attendance === -1
+                      ? "q/b"
+                      : ""}
+                  </div>
+                  <div className="right-fade"></div>
+                </div>
+              </td>
+              <td>
+                <div className="td-con">
+                  <div className="table-scroll-text">
+                    {studentData.studentSignature === 1
+                      ? "İştirak edirəm"
+                      : studentData.studentSignature === -1
+                      ? "İştirak etmirəm"
+                      : ""}
+                  </div>
+                  <div className="right-fade"></div>
+                </div>
+              </td>
+            </>
+          )}
           {user.role === "student" ? null : (
             <td className="student-length">
               <div onClick={openStudentsList} className="td-con">
@@ -193,35 +221,6 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               </div>
             </div>
           </td>
-
-          {user.role !== "student" ? null : (
-            <>
-              <td className="student-length">
-                <div onClick={openStudentsList} className="td-con">
-                  <div className="table-scroll-text">
-                    {studentData.attendance === 1
-                      ? "i/e"
-                      : studentData.attendance === -1
-                      ? "q/b"
-                      : ""}
-                  </div>
-                  <div className="right-fade"></div>
-                </div>
-              </td>
-              <td className="student-length">
-                <div onClick={openStudentsList} className="td-con">
-                  <div className="table-scroll-text">
-                    {studentData.studentSignature === 1
-                      ? "İştirak edirəm"
-                      : studentData.studentSignature === -1
-                      ? "İştirak etmirəm"
-                      : ""}
-                  </div>
-                  <div className="right-fade"></div>
-                </div>
-              </td>
-            </>
-          )}
 
           <td>
             <UpdateDeleteModal

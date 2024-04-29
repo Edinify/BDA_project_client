@@ -346,7 +346,8 @@
 .details-table.teacher-table,
 .details-table.consultation-page,
 .details-table.events-table,
-.details-table.tuition-table
+.details-table.tuition-table,
+.details-table.lesson-table
 /* .details-table.courses-table */ {
   width: auto;
   overflow-x: scroll;
@@ -371,7 +372,9 @@
 .details-table.events-table tr th:last-child,
 .details-table.events-table tr td:last-child,
 .details-table.tuition-table tr th:last-child,
-.details-table.tuition-table tr td:last-child {
+.details-table.tuition-table tr td:last-child,
+.details-table.lesson-table tr th:last-child,
+.details-table.lesson-table tr td:last-child {
   position: sticky;
   z-index: 1;
   right: 0;

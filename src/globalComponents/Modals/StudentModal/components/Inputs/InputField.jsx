@@ -1,5 +1,6 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
+import "moment/locale/az";
 import { useEffect, useState } from "react";
 import { ReactComponent as Eye } from "../../../../../assets/icons/eye.svg";
 import { ReactComponent as EyeSlash } from "../../../../../assets/icons/eye-slash.svg";
@@ -46,7 +47,7 @@ export default function InputField({
       marginBottom: "0",
       inputValue:
         modalData[inputName] && inputName === "birthday"
-          ? moment(modalData[inputName]).format("YYYY-MM-DD")
+          ? moment(modalData[inputName]).locale("az").format("YYYY-MM-DD")
           : "",
     },
     {
