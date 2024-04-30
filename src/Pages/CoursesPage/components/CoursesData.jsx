@@ -9,9 +9,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const CoursesData = ({ userData, getNextCourse }) => {
-  const { courses, hasMore} = useSelector(
-    (state) => state.coursesPagination
-  );
+  const { courses, hasMore } = useSelector((state) => state.coursesPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.coursesModal);
   const [scrollHeight, setScrollHeight] = useState(1);
@@ -24,7 +22,6 @@ const CoursesData = ({ userData, getNextCourse }) => {
     { id: 5, label: "" },
   ];
 
-
   useEffect(() => {
     if (openMoreModal) {
       document.body.style.overflowY = "hidden";
@@ -32,7 +29,6 @@ const CoursesData = ({ userData, getNextCourse }) => {
       document.body.style.overflowY = "overlay";
     }
   }, [openMoreModal]);
-
 
   useEffect(() => {
     const mainHeader = document.querySelector(".main-header");
@@ -58,70 +54,68 @@ const CoursesData = ({ userData, getNextCourse }) => {
   // console.log(courses)
   return (
     <>
-        <>
-          {openMoreModal && (
-            <MoreModal
-              setOpenMoreModal={setOpenMoreModal}
-              type="courses"
-              userData={userData}
-            />
-          )}
+      <>
+        {openMoreModal && (
+          <MoreModal
+            setOpenMoreModal={setOpenMoreModal}
+            type="courses"
+            userData={userData}
+          />
+        )}
 
-          {openConfirmModal && <ConfirmModal type="courses" />}
-          <InfiniteScroll
-            style={{ overflowX: "none" }}
-            dataLength={courses.length}
-            next={getNextCourse}
-            hasMore={hasMore}
-            loader={<SmallLoading />}
-            endMessage={
-              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
-            }
-            scrollThreshold={0.7}
-            height={scrollHeight}
+        {openConfirmModal && <ConfirmModal type="courses" />}
+        <InfiniteScroll
+          style={{ overflowX: "none" }}
+          dataLength={courses.length}
+          next={getNextCourse}
+          hasMore={hasMore}
+          loader={<SmallLoading />}
+          endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
+          scrollThreshold={0.7}
+          height={scrollHeight}
+        >
+          <table
+            className={`details-table  courses-table ${
+              userData.power === "only-show" ? "only-show" : "update"
+            } `}
           >
-            <table
-              className={`details-table  courses-table ${
-                userData.power === "only-show" ? "only-show" : "update"
-              } `}
-            >
-              <thead>
-                <tr>
-                  {tableHead.map((head, i) => (
-                    <th key={i}>{head.label}</th>
-                  ))}
-                </tr>
-              </thead>
-
-              <tbody>
-                {courses?.map((courseName, i) => (
-                  <CourseCard
-                    key={i}
-                    data={courseName}
-                    course={userData}
-                    mode="desktop"
-                    cellNumber={i + 1}
-                    setOpenMoreModal={setOpenMoreModal}
-                  />
+            <thead>
+              <tr>
+                {tableHead.map((head, i) => (
+                  <th key={i}>{head.label}</th>
                 ))}
-              </tbody>
-            </table>
-          </InfiniteScroll>
+              </tr>
+            </thead>
 
-          <div className="details-list-tablet course-list-mobile">
-            <h3 className="details-list-title">Fənn adı</h3>
-            {courses.map((courseName, i) => (
-              <CourseCard
-                key={i}
-                data={courseName}
-                course={userData}
-                mode="mobile"
-                cellNumber={i + 1}
-                setOpenMoreModal={setOpenMoreModal}
-              />
-            ))}
-          </div>
-        </>
+            <tbody>
+              {courses?.map((course, i) => (
+                <CourseCard
+                  key={i}
+                  data={course}
+                  course={userData}
+                  mode="desktop"
+                  cellNumber={i + 1}
+                  setOpenMoreModal={setOpenMoreModal}
+                />
+              ))}
+            </tbody>
+          </table>
+        </InfiniteScroll>
+
+        <div className="details-list-tablet course-list-mobile">
+          <h3 className="details-list-title">Fənn adı</h3>
+          {courses.map((courseName, i) => (
+            <CourseCard
+              key={i}
+              data={courseName}
+              course={userData}
+              mode="mobile"
+              cellNumber={i + 1}
+              setOpenMoreModal={setOpenMoreModal}
+            />
+          ))}
+        </div>
+      </>
     </>
   );
 };

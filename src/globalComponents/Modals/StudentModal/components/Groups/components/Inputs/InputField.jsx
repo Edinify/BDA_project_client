@@ -75,6 +75,14 @@ export default function InputField({ formik, data, inputName, addGroupData }) {
           ? moment(data[inputName]).format("YYYY-MM-DD")
           : "",
     },
+    {
+      inputName: "contractId",
+      label: "Müqavilə nömrəsi",
+      type: "number",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue: data[inputName] || "",
+    },
   ];
 
   useEffect(() => {

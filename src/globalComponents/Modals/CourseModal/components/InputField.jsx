@@ -11,22 +11,40 @@ export default function InputField({
   inputName,
   categoryItem,
 }) {
-
   const dispatch = useDispatch();
-  const labelArr = [
-    { name: "name", label: "Fənn adı" },
-    { name: "category", label: "Səviyyə" },
-  ];
-  const inputValue = inputName === "name" ? modalData[inputName] || "" : categoryItem;
 
-  const nameOnChange = (e) => {
-    dispatch({type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL, payload:{data: {...modalData, name: e.target.value}, openModal: true} })
+  console.log(modalData.name);
+  const inputData = [
+    {
+      inputName: "name",
+      label: "Fənn adı",
+      type: "text",
+      marginTop: "24px",
+      marginBottom: "0px",
+      inputValue: modalData?.name || "",
+    },
+    {
+      inputName: "lessonCount",
+      label: "Dərs sayı",
+      type: "number",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue: modalData?.lessonCount || "",
+    },
+  ];
+
+  const handleChange = (e) => {
+    dispatch({
+      type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL,
+      payload: {
+        data: { ...modalData, [inputName]: e.target.value },
+        openModal: true,
+      },
+    });
     setInputValue(inputName, e.target.value);
   };
 
-  const categoryOnChange = (e) => {
-    setCategoryItem(e.target.value);
-  };
+  console.log(modalData, "modal data in course modal");
   return (
     <>
       <TextField
@@ -34,28 +52,36 @@ export default function InputField({
           "& input": {
             fontSize: "16px",
           },
-          marginTop: inputName === "name" ? "15px" : "20px",
+          marginTop: inputData.find((item) => item.inputName === inputName)
+            .marginTop,
+          marginBottom: inputData.find((item) => item.inputName === inputName)
+            .marginBottom,
         }}
         InputLabelProps={{
           style: { fontSize: "12px", color: "#3F3F3F" },
         }}
         autoComplete="off"
         fullWidth
-        label={labelArr.find((item) => item.name === inputName).label}
+        label={inputData.find((item) => item.inputName === inputName)?.label}
+        type={inputData.find((item) => item.inputName === inputName)?.type}
         id={inputName}
         name={inputName}
         variant="outlined"
-        value={inputValue}
-        onChange={(e) => inputName === "name" ? nameOnChange(e) : categoryOnChange(e)}
-        onBlur={() => inputName === "name" && formik.setFieldTouched(inputName, true)}
+        value={
+          inputData.find((item) => item.inputName === inputName)?.inputValue
+        }
+        onChange={(e) => handleChange(e)}
+        onBlur={() =>
+          inputName === "name" && formik.setFieldTouched(inputName, true)
+        }
       />
-      {inputName === 'name' &&
-         formik.errors[inputName] && formik.touched[inputName] && (
-            <small className="validation-err-message">
-              {formik.errors[inputName]}
-            </small>
-          )
-      }
+      {inputName === "name" &&
+        formik.errors[inputName] &&
+        formik.touched[inputName] && (
+          <small className="validation-err-message">
+            {formik.errors[inputName]}
+          </small>
+        )}
     </>
   );
 }
