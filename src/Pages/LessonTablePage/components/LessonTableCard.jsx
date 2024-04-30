@@ -6,8 +6,8 @@ import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalF
 import moment from "moment";
 import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
 import { useEffect, useState } from "react";
-import { FaCheck } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
+// import { ReactComponent as XIcon } from "../../../assets/icons/student-home/x-icon.svg";
+import { ReactComponent as SuccessIcon } from "../../../assets/icons/student-home/success.svg";
 
 const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
@@ -176,9 +176,36 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
                 <div className="td-con">
                   <div className="table-scroll-text">
                     {studentData.studentSignature === 1 ? (
-                      <FaCheck />
+                      <SuccessIcon />
                     ) : studentData.studentSignature === -1 ? (
-                      <IoMdClose />
+                      // <IoMdClose />
+                      // <XIcon/>
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                        <g
+                          id="SVGRepo_tracerCarrier"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        ></g>
+                        <g id="SVGRepo_iconCarrier">
+                          {" "}
+                          <g id="Menu / Close_LG">
+                            {" "}
+                            <path
+                              id="Vector"
+                              d="M21 21L12 12M12 12L3 3M12 12L21.0001 3M12 12L3 21.0001"
+                              stroke="rgb(231, 76, 60)"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>{" "}
+                          </g>{" "}
+                        </g>
+                      </svg>
                     ) : (
                       ""
                     )}

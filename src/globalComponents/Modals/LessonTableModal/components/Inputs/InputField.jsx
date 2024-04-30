@@ -49,6 +49,7 @@ export default function InputField({
           : "",
       className: "birthday-input",
     },
+    
     {
       inputName: "time",
       label: "Dərs saat",
