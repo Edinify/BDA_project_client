@@ -17,20 +17,21 @@ export const DatePick = ({ deviceType = "" }) => {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectedStartDayDate, setSelectedStartDayDate] = useState(null);
+  const [selectedEndDayDate, setSelectedEndDayDate] = useState(null);
   const { startDate } = useSelector((state) => state.datepicker);
   const { endDate } = useSelector((state) => state.datepicker);
-  const { startDay } = useSelector((state) => state.datepicker);
-  console.log(startDay, "startday");
+  // const { startDay } = useSelector((state) => state.datepicker);
+  // const { endDay } = useSelector((state) => state.datepicker);
   const startDateRef = useRef(null);
   const endDateRef = useRef(null);
-  const startDayRef = useRef(null);
+
+  const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
   const handleStartDateChange = (date) => {
     if (date) {
       if (
         moment(date).isBefore(endWeek) ||
-        moment(date).format("DD MM YYYY") ===
-          moment(endWeek).format("DD MM YYYY")
+        moment(date).format("MM YYYY") === moment(endWeek).format(" MM YYYY")
       ) {
         if (endDate) {
           if (moment(endDate).isAfter(date)) {
@@ -45,18 +46,19 @@ export const DatePick = ({ deviceType = "" }) => {
 
   const handleStartDayDateChange = (date) => {
     if (date) {
-      if (
-        moment(date).isBefore(endWeek) ||
-        moment(date).format("DD") === moment(endWeek).format("DD")
-      ) {
-        if (endDate) {
-          if (moment(endDate).isAfter(date)) {
-            setSelectedStartDayDate(date);
-          }
-        } else {
-          setSelectedStartDayDate(date);
-        }
-      }
+      setSelectedStartDayDate(date);
+      // if (
+      //   moment(date).isBefore(endWeek) ||
+      //   moment(date).format("DD") === moment(endWeek).format("DD")
+      // ) {
+      //   if (endDate) {
+      //     if (moment(endDate).isAfter(date)) {
+      //       setSelectedStartDayDate(date);
+      //     }
+      //   } else {
+      //     setSelectedStartDayDate(date);
+      //   }
+      // }
     }
   };
 
@@ -64,8 +66,7 @@ export const DatePick = ({ deviceType = "" }) => {
     if (date) {
       if (
         moment(date).isBefore(endWeek) ||
-        moment(date).format("DD MM YYYY") ===
-          moment(endWeek).format("DD MM YYYY")
+        moment(date).format("MM YYYY") === moment(endWeek).format(" MM YYYY")
       ) {
         if (startDate) {
           if (moment(startDate).isBefore(date)) {
@@ -75,6 +76,24 @@ export const DatePick = ({ deviceType = "" }) => {
           setSelectedEndDate(date);
         }
       }
+    }
+  };
+
+  const handleEndDayDateChange = (date) => {
+    if (date) {
+      setSelectedEndDayDate(date);
+      // if (
+      //   moment(date).isBefore(endWeek) ||
+      //   moment(date).format("DD") === moment(endWeek).format("DD")
+      // ) {
+      //   if (startDate) {
+      //     if (moment(startDate).isAfter(date)) {
+      //       setSelectedEndDayDate(date);
+      //     }
+      //   } else {
+      //     setSelectedEndDayDate(date);
+      //   }
+      // }
     }
   };
 
@@ -91,71 +110,88 @@ export const DatePick = ({ deviceType = "" }) => {
       type: DATEPICKER_ACTION_TYPE.START_DAY_DATE,
       payload: selectedStartDayDate,
     });
-  }, [selectedStartDate, selectedEndDate, selectedStartDayDate, dispatch]);
+    dispatch({
+      type: DATEPICKER_ACTION_TYPE.END_DAY_DATE,
+      payload: selectedEndDayDate,
+    });
+  }, [
+    selectedStartDate,
+    selectedEndDate,
+    selectedStartDayDate,
+    selectedEndDayDate,
+    dispatch,
+  ]);
 
   return (
     <>
       <div className={`date-container ${deviceType}`}>
-        {/* <div className="date-picker-a from ">
-          <CalendarIcon
-            onClick={() => startDateRef.current.setOpen(true)}
-            style={{ cursor: "pointer" }}
-          />
-
-          <DatePicker
-            ref={startDayRef}
-            locale="az"
-            selected={selectedStartDayDate}
-            onSelect={() => startDayRef.current.setOpen(false)}
-            onChange={handleStartDayDateChange}
-            dateFormat="dd"
-            showMonthYearPicker={false}
-            placeholderText="dd"
-            value={startDay && moment(startDay).format("DD")}
-          />
-          <h4>-dan</h4>
-        </div> */}
-
-        <div className="date-picker-a from ">
-          <CalendarIcon
-            onClick={() => startDateRef.current.setOpen(true)}
-            style={{ cursor: "pointer" }}
-          />
-
-          <DatePicker
-            ref={startDateRef}
-            locale="az"
-            selected={selectedStartDate}
-            onSelect={() => startDateRef.current.setOpen(false)}
-            onChange={handleStartDateChange}
-            // showMonthYearPicker
-            // dateFormat="MM/yyyy"
-            dateFormat="dd/MM/yyyy"
-            placeholderText="dd/mm/yyyy"
-            // placeholderText="mm/yyyy"
-            // value={startDate && moment(startDate).format("MM/ YYYY")}
-            value={startDate && moment(startDate).format("DD/MM/ YYYY")}
-          />
-          <h4>-dan</h4>
+        <div className="startdate-container">
+          <div className="startdate-day">
+            <select
+              value={selectedStartDayDate || ""}
+              onChange={(e) => handleStartDayDateChange(e.target.value)}
+            >
+              {days.map((day) => (
+                <option key={day} value={day}>
+                  {day}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="startdate-month">
+            <CalendarIcon
+              onClick={() => startDateRef.current.setOpen(true)}
+              style={{ cursor: "pointer" }}
+            />
+            <DatePicker
+              ref={startDateRef}
+              locale="az"
+              selected={selectedStartDate}
+              onSelect={() => startDateRef.current.setOpen(false)}
+              onChange={handleStartDateChange}
+              showMonthYearPicker
+              // dateFormat="MM/yyyy"
+              dateFormat="MM/yyyy"
+              placeholderText="mm/yyyy"
+              // placeholderText="mm/yyyy"
+              // value={startDate && moment(startDate).format("MM/ YYYY")}
+              value={startDate && moment(startDate).format("MM/ YYYY")}
+            />
+            <h4>-dan</h4>
+          </div>
         </div>
 
-        <div className="date-picker-a to">
-          <CalendarIcon
-            onClick={() => endDateRef.current.setOpen(true)}
-            style={{ cursor: "pointer" }}
-          />
-
-          <DatePicker
-            ref={endDateRef}
-            locale="az"
-            selected={selectedEndDate}
-            onChange={handleEndDateChange}
-            dateFormat="dd/MM/yyyy"
-            placeholderText="dd/mm/yyyy"
-            value={endDate && moment(endDate).format("DD/ MM/ YYYY")}
-            onSelect={() => endDateRef.current.setOpen(false)}
-          />
-          <h4>-qədər</h4>
+        <div className="startdate-container end">
+          <div className="startdate-day">
+            <select
+              value={selectedEndDayDate || ""}
+              onChange={(e) => handleEndDayDateChange(e.target.value)}
+            >
+              {days.map((day) => (
+                <option key={day} value={day}>
+                  {day}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="startdate-month">
+            <CalendarIcon
+              onClick={() => endDateRef.current.setOpen(true)}
+              style={{ cursor: "pointer" }}
+            />
+            <DatePicker
+              ref={endDateRef}
+              locale="az"
+              selected={selectedEndDate}
+              onChange={handleEndDateChange}
+              showMonthYearPicker
+              dateFormat="MM/yyyy"
+              placeholderText="mm/yyyy"
+              value={endDate && moment(endDate).format("MM/ YYYY")}
+              onSelect={() => endDateRef.current.setOpen(false)}
+            />
+            <h4>-dan</h4>
+          </div>
         </div>
       </div>
     </>

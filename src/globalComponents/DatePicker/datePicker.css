@@ -1,11 +1,46 @@
 .date-container {
   display: flex;
 }
+.date-container .startdate-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid red;
+  background-color: #f4f4f4;
+  padding: 10px 12px;
+  justify-content: space-between;
+  border: 0.4px solid #dddddd;
+  border-radius: 8px;
+}
+.date-container .startdate-container.end{
+  margin-left: 10px;
+}
+.date-container .startdate-container h4 {
+  color: #9a9a9a;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.date-container .startdate-container .startdate-day select {
+  background-color: #f4f4f4;
+}
+
+.react-datepicker__month .react-datepicker__month-text,
+.react-datepicker__month .react-datepicker__quarter-text {
+  font-size: 14px;
+}
+.date-container .startdate-container .startdate-day .react-datepicker-wrapper {
+  width: 40px;
+}
+.date-container .startdate-container .startdate-month {
+  display: flex;
+  align-items: center;
+}
+
 .date-container .date-picker-a {
   display: flex;
-  width: 292px;
+  /* width: 292px; */
   /* height: 51px; */
-  background-color: #f4f4f4;
+  /* background-color: #f4f4f4; */
   align-items: center;
   /* padding: 0 12px; */
   padding: 10px 12px;
@@ -56,14 +91,17 @@
   z-index: 10;
 }
 
-@media screen and (max-width:1400px) {
+@media screen and (max-width: 1400px) {
   .date-container .from {
-  width: 50%;
-}
+    width: 50%;
+  }
+  .date-container .startdate-container{
+    width: 50%;
+  }
 }
 
-@media screen and (max-width:780px) {
-  .date-container.desktop{
+@media screen and (max-width: 780px) {
+  .date-container.desktop {
     display: none;
   }
 }

@@ -4,6 +4,7 @@ const initialState = {
   startDate: "",
   startDay: "",
   endDate: "",
+  endDay: "",
 };
 
 const datePickerReducer = (state = initialState, action) => {
@@ -22,6 +23,11 @@ const datePickerReducer = (state = initialState, action) => {
       return {
         ...state,
         endDate: action.payload,
+      };
+    case DATEPICKER_ACTION_TYPE.END_DAY_DATE:
+      return {
+        ...state,
+        endDay: action.payload,
       };
     default:
       return state;

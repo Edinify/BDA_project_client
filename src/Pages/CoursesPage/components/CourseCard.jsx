@@ -75,6 +75,12 @@ const CourseCard = ({
           </td>
           <td>
             <div className="td-con">
+              <div className="table-scroll-text">{data?.lessonCount}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
               <div className="table-scroll-text">
                 {`${
                   wholePayment?.payment ? `${wholePayment?.payment} AZN` : ""
