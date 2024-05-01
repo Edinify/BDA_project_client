@@ -18,7 +18,21 @@ const LessonTableData = ({ getNextLessons }) => {
   const [scrollHeight, setScrollHeight] = useState(1);
 
   const tableHead =
-    user?.power === "only-show"
+    user?.role === "student"
+      ? [
+          "Dərs günü",
+          "Dərs saatı",
+          "Mövzu",
+          "Müəllim",
+          "Tyutor",
+          "Davamiyyət",
+          "Tələbə imzası",
+          "Tyutor saatı",
+          "Status",
+
+          "",
+        ]
+      : user?.power === "only-show"
       ? ["Dərs günü", "Dərs saatı", "Mövzu", "Müəllim", "Status", "Tələbələr"]
       : [
           "Dərs günü",

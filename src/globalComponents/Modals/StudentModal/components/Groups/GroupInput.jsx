@@ -128,6 +128,20 @@ const GroupInput = ({
           data={data}
           addGroupData={addGroupData}
         />
+        <InputField
+          inputName={"paymentStartDate"}
+          formik={formik}
+          setInputValue={setInputValue}
+          data={data}
+          addGroupData={addGroupData}
+        />
+        <InputField
+          inputName={"contractId"}
+          formik={formik}
+          setInputValue={setInputValue}
+          data={data}
+          addGroupData={addGroupData}
+        />
       </div>
       <PaymentType
         data={data}
@@ -162,13 +176,6 @@ const GroupInput = ({
           addGroupData={addGroupData}
         />
       </div>
-      <InputField
-        inputName={"paymentStartDate"}
-        formik={formik}
-        setInputValue={setInputValue}
-        data={data}
-        addGroupData={addGroupData}
-      />
 
       <p style={{ marginTop: "20px" }}>{index + 1}. Ödənişlər</p>
       {data?.payments?.map((item, index) => (

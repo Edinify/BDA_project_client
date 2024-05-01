@@ -7,7 +7,7 @@ export default function Status({ data, setInputValue, formik, addGroupData }) {
     setInputValue("status", value);
   };
 
-  // console.log(data.status, "data in status component");
+  console.log(data, "data in status component");
   return (
     <div style={{ marginTop: "16px" }}>
       <label className="radio-sector-title"></label>
@@ -18,27 +18,43 @@ export default function Status({ data, setInputValue, formik, addGroupData }) {
           name="row-radio-buttons-group"
           sx={{
             "& .MuiSvgIcon-root": {
-              fontSize: 28,
+              fontSize: 20,
             },
             "& .MuiFormControlLabel-label": {
-              fontSize: 14,
+              fontSize: 12,
             },
           }}
         >
           <FormControlLabel
-            value="wait"
-            control={<Radio checked={data?.status} />}
-            label="Məzun"
+            value="continue"
+            control={<Radio checked={data?.status === "continue"} />}
+            label="Davam edir"
             onClick={() => {
-              changeSector(true);
+              changeSector("continue");
             }}
           />
           <FormControlLabel
-            value="paid"
-            control={<Radio checked={!data?.status} />}
-            label="Davam edir"
+            value="graduate"
+            control={<Radio checked={data?.status === "graduate"} />}
+            label="Məzun"
             onClick={() => {
-              changeSector(false);
+              changeSector("graduate");
+            }}
+          />
+          <FormControlLabel
+            value="freeze"
+            control={<Radio checked={data?.status === "freeze"} />}
+            label="Dondurdu"
+            onClick={() => {
+              changeSector("freeze");
+            }}
+          />
+          <FormControlLabel
+            value="stopped"
+            control={<Radio checked={data?.status === "stopped"} />}
+            label="Dayandırdı"
+            onClick={() => {
+              changeSector("stopped");
             }}
           />
         </RadioGroup>

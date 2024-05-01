@@ -17,6 +17,7 @@ const CourseCard = ({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const updateItem = (modalType) => {
+    console.log(data);
     dispatch({
       type: COURSES_MODAL_ACTION_TYPE.GET_COURSES_MODAL,
       payload: {
