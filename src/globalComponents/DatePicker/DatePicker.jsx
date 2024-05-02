@@ -7,12 +7,12 @@ import "./datePicker.css";
 import { ReactComponent as CalendarIcon } from "../../assets/icons/calendar.svg";
 import { useDispatch } from "react-redux";
 import { DATEPICKER_ACTION_TYPE } from "../../redux/actions-type";
-// import moment from "moment";
-// import { useCustomHook } from "../GlobalFunctions/globalFunctions";
 import "react-datepicker/dist/react-datepicker.css";
 
 export const DatePick = ({ deviceType = "" }) => {
   registerLocale("az", az);
+
+  console.log(az, "aze");
   const dispatch = useDispatch();
   // const { startWeek, endWeek } = useCustomHook();
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
@@ -42,7 +42,7 @@ export const DatePick = ({ deviceType = "" }) => {
   // const handleStartDayDateChange = (date) => {
   //   if (date) {
   //     setSelectedStartDayDate(date);
-     
+
   //   }
   // };
 
@@ -66,7 +66,7 @@ export const DatePick = ({ deviceType = "" }) => {
   // const handleEndDayDateChange = (date) => {
   //   if (date) {
   //     setSelectedEndDayDate(date);
-    
+
   //   }
   // };
 
@@ -79,12 +79,7 @@ export const DatePick = ({ deviceType = "" }) => {
       type: DATEPICKER_ACTION_TYPE.END_DATE,
       payload: selectedEndDate,
     });
-   
-  }, [
-    selectedStartDate,
-    selectedEndDate,
-    dispatch,
-  ]);
+  }, [selectedStartDate, selectedEndDate, dispatch]);
 
   return (
     <>
@@ -114,6 +109,9 @@ export const DatePick = ({ deviceType = "" }) => {
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
+              dateFormat="dd/MM/yyyy"
+              placeholderText="dd/mm/yyyy"
+              locale="az"
             />
 
             {/* <DatePicker
@@ -157,8 +155,11 @@ export const DatePick = ({ deviceType = "" }) => {
               onChange={(date) => setSelectedEndDate(date)}
               peekNextMonth
               showMonthDropdown
+              placeholderText="dd/mm/yyyy"
+              dateFormat="dd/MM/yyyy"
               showYearDropdown
               dropdownMode="select"
+              locale="az"
             />
             {/* <DatePicker
               ref={endDateRef}
