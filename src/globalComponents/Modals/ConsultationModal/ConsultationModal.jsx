@@ -1,7 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
+import {  useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import moment from "moment";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
 import { Box } from "@mui/material";
 import { CONSULTATION_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
@@ -24,9 +23,12 @@ const ConsultationModal = () => {
   const inputNameArr1 = [
     "contactDate",
     "studentPhone",
+   
+  ];
+  const inputNameArr2=[
     "constDate",
     "constTime",
-  ];
+  ]
 
   // formik
   const formik = useFormik({
@@ -93,8 +95,19 @@ const ConsultationModal = () => {
               modalData={modalData}
               updateModalState={updateModalState}
             />
-            <div className="input-couples">
+            <div className="input-couples birthday ">
               {inputNameArr1.map((name, index) => (
+                <InputField
+                  key={index}
+                  inputName={name}
+                  formik={formik}
+                  modalData={modalData}
+                  updateModalState={updateModalState}
+                />
+              ))}
+            </div>
+            <div className="input-couples birthday ">
+              {inputNameArr2.map((name, index) => (
                 <InputField
                   key={index}
                   inputName={name}

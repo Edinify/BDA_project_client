@@ -1,9 +1,9 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
-import { useEffect, useState } from "react";
-import { ReactComponent as Eye } from "../../../../../assets/icons/eye.svg";
-import { ReactComponent as EyeSlash } from "../../../../../assets/icons/eye-slash.svg";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import az from "date-fns/locale/az";
 
 export default function InputField({
   formik,
@@ -11,8 +11,22 @@ export default function InputField({
   inputName,
   updateModalState,
 }) {
-  const dispatch = useDispatch();
   const [shrink, setShrink] = useState(false);
+  registerLocale("az", az);
+
+  const renderDatePicker = (dateName) => (
+    <DatePicker
+      selected={modalData[dateName] ? new Date(modalData[dateName]) : null}
+      onChange={(date) => updateModalState(dateName, date)}
+      peekNextMonth
+      showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
+      dateFormat="dd/MM/yyyy"
+      placeholderText="dd/mm/yyyy"
+      locale="az"
+    />
+  );
   const inputData = [
     {
       inputName: "name",
@@ -26,7 +40,7 @@ export default function InputField({
       inputName: "startDate",
       label: "Başlama tarixi",
       type: "date",
-      marginTop: "24px",
+      // marginTop: "24px",
       marginBottom: "0",
       inputValue:
         modalData[inputName] && inputName === "startDate"
@@ -38,7 +52,7 @@ export default function InputField({
       inputName: "endDate",
       label: "Bitmə tarixi",
       type: "date",
-      marginTop: "24px",
+      // marginTop: "24px",
       marginBottom: "0",
       inputValue:
         modalData[inputName] && inputName === "endDate"
@@ -51,60 +65,64 @@ export default function InputField({
   return (
     <div
       className={
-        inputData.find((item) => item.inputName === inputName)?.className || ''
+        inputData.find((item) => item.inputName === inputName)?.className || ""
       }
     >
-      <TextField
-        sx={{
-          "& input": {
-            fontSize: "12px",
-            paddingRight: inputData.find((item) => item.inputName === inputName)
-              ?.paddingRight,
-          },
-          marginTop: inputData.find((item) => item.inputName === inputName)
-            .marginTop,
-          marginBottom: inputData.find((item) => item.inputName === inputName)
-            ?.marginBottom,
-        }}
-        InputLabelProps={{
-          shrink:
-            inputName === "startDate" || "endDate"
-              ? true
-              : inputData.find((item) => item.inputName === inputName)
-                  .inputValue
-              ? true
-              : shrink,
-          style: {
-            fontSize: "12px",
-            color: "#3F3F3F",
+      {inputName === "startDate" || inputName === "endDate" ? (
+        renderDatePicker(inputName)
+      ) : (
+        <TextField
+          sx={{
+            "& input": {
+              fontSize: "12px",
+              paddingRight: inputData.find(
+                (item) => item.inputName === inputName
+              )?.paddingRight,
+            },
+            marginTop: inputData.find((item) => item.inputName === inputName)
+              .marginTop,
             marginBottom: inputData.find((item) => item.inputName === inputName)
-              .marginBottom,
-          },
-        }}
-        fullWidth
-        id={inputName}
-        name={inputName}
-        type={inputData.find((item) => item.inputName === inputName).type}
-        label={inputData.find((item) => item.inputName === inputName).label}
-        value={
-          inputData.find((item) => item.inputName === inputName)?.inputValue
-        }
-        onWheel={(e) => e.target.blur()}
-        onChange={(e) => updateModalState(inputName, e.target.value)}
-        onBlur={(e) => {
-          formik.setFieldTouched(inputName, true);
-          setShrink(!!e.target.value);
-        }}
-        onFocus={() => setShrink(true)}
-      />
+              ?.marginBottom,
+          }}
+          InputLabelProps={{
+            shrink:
+              inputName === "startDate" || "endDate"
+                ? true
+                : inputData.find((item) => item.inputName === inputName)
+                    .inputValue
+                ? true
+                : shrink,
+            style: {
+              fontSize: "12px",
+              color: "#3F3F3F",
+              marginBottom: inputData.find(
+                (item) => item.inputName === inputName
+              ).marginBottom,
+            },
+          }}
+          fullWidth
+          id={inputName}
+          name={inputName}
+          type={inputData.find((item) => item.inputName === inputName).type}
+          label={inputData.find((item) => item.inputName === inputName).label}
+          value={
+            inputData.find((item) => item.inputName === inputName)?.inputValue
+          }
+          onWheel={(e) => e.target.blur()}
+          onChange={(e) => updateModalState(inputName, e.target.value)}
+          onBlur={(e) => {
+            formik.setFieldTouched(inputName, true);
+            setShrink(!!e.target.value);
+          }}
+          onFocus={() => setShrink(true)}
+        />
+      )}
 
-      {formik.errors[inputName] &&
-          formik.touched[inputName] && (
-            <small className="validation-err-message">
-              {formik.errors[inputName]}
-            </small>
-          )}
-    
+      {formik.errors[inputName] && formik.touched[inputName] && (
+        <small className="validation-err-message">
+          {formik.errors[inputName]}
+        </small>
+      )}
     </div>
   );
 }

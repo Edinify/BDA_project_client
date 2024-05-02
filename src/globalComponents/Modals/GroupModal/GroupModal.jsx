@@ -91,7 +91,7 @@ const GroupModal = () => {
               modalData={modalData}
               updateModalState={updateModalState}
             />
-            <div className="input-couples">
+            <div className="input-couples birthday ">
               {inputNameArr1.map((name, index) => (
                 <InputField
                   key={index}

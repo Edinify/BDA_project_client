@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import moment from "moment";
@@ -11,7 +11,7 @@ import InputField from "./components/Inputs/InputField";
 import Topic from "./components/SelectCollection/Topic";
 import Teacher from "./components/SelectCollection/Teacher";
 import Mentor from "./components/SelectCollection/Mentor";
-import StudentsList from "./components/SelectCollection/StudentList/StudentList";
+// import StudentsList from "./components/SelectCollection/StudentList/StudentList";
 import Status from "./components/Status/Status";
 import MentorStatus from "./components/SelectCollection/MentorStatus";
 import StudentStatus from "./components/StudentStatus/StudentStatus";
@@ -82,7 +82,6 @@ const LessonTableModal = () => {
     updateModalState("group", selectedGroup._id);
   }, []);
 
-  console.log(modalData, "modal dataaaaaaaaaaaaaaaaaa");
 
   return (
     <div className="create-update-modal-con teacher-modal">
@@ -110,7 +109,7 @@ const LessonTableModal = () => {
               modalData={modalData}
               updateModalState={updateModalState}
             />
-            <div className="input-couples">
+            <div className="input-couples birthday ">
               {inputNameArr1.map((name, index) => (
                 <InputField
                   key={index}

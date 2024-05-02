@@ -1,10 +1,11 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { ReactComponent as Eye } from "../../../../../assets/icons/eye.svg";
 import { ReactComponent as EyeSlash } from "../../../../../assets/icons/eye-slash.svg";
-import { TEACHERS_MODAL_ACTION_TYPE } from "../../../../../redux/actions-type";
-import { useDispatch } from "react-redux";
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import az from "date-fns/locale/az";
 
 export default function InputField({
   formik,
@@ -13,9 +14,24 @@ export default function InputField({
   inputName,
   updateModalState
 }) {
-  const dispatch = useDispatch();
   const [shrink, setShrink] = useState(false);
   const [viewPass, setViewPass] = useState(true);
+  registerLocale("az", az);
+
+  const renderDatePicker = (dateName) => (
+    <DatePicker
+      selected={modalData[dateName] ? new Date(modalData[dateName]) : null}
+      onChange={(date) => updateModalState(dateName, date)}
+      peekNextMonth
+      showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
+      dateFormat="dd/MM/yyyy"
+      placeholderText="dd/mm/yyyy"
+      locale="az"
+    />
+  );
+
  
   const inputData = [
     {
@@ -30,7 +46,7 @@ export default function InputField({
       inputName: "birthday",
       label: "Doğum tarixi",
       type: "date",
-      marginTop: "24px",
+      // marginTop: "24px",
       marginBottom: "0",
       inputValue:
         modalData[inputName] && inputName === "birthday"
@@ -58,7 +74,7 @@ export default function InputField({
       inputName: "phone",
       label: "Mobil nömrə",
       type: "tel",
-      marginTop: "24px",
+      // marginTop: "24px",
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
     },
@@ -87,6 +103,9 @@ export default function InputField({
         inputData.find((item) => item.inputName === inputName).className
       }
     >
+      {inputName === "birthday" ? (
+       renderDatePicker(inputName)
+      ) :
       <TextField
         sx={{
           "& input": {
@@ -130,6 +149,9 @@ export default function InputField({
         }}
         onFocus={() => setShrink(true)}
       />
+
+      }
+      
 
       {inputName === "password" && modalData?._id
         ? formik.errors[inputName] &&

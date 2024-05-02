@@ -4,7 +4,7 @@ import { useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import az from "date-fns/locale/az";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useCustomHook } from "../../../../GlobalFunctions/globalFunctions";
 
 export default function InputField({
@@ -19,6 +19,20 @@ export default function InputField({
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [shrink, setShrink] = useState(false);
   const { user } = useSelector((state) => state.user);
+
+  const renderDatePicker = (dateName) => (
+    <DatePicker
+      selected={modalData[dateName] ? new Date(modalData[dateName]) : null}
+      onChange={(date) => updateModalState(dateName, date)}
+      peekNextMonth
+      showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
+      dateFormat="dd/MM/yyyy"
+      placeholderText="dd/mm/yyyy"
+      locale="az"
+    />
+  );
   const inputData = [
     {
       inputName: "group",
@@ -51,12 +65,12 @@ export default function InputField({
           : "",
       className: "birthday-input",
     },
-    
+
     {
       inputName: "time",
       label: "Dərs saat",
       type: "time",
-      marginTop: "24px",
+      // marginTop: "24px",
       marginBottom: "0",
       inputValue: modalData[inputName] || "",
     },
@@ -77,67 +91,59 @@ export default function InputField({
       }
     >
       {inputName === "date" ? (
-        <DatePicker
-          selected={new Date(modalData.date)}
-          onChange={(date) => updateModalState(inputName, date)}
-          peekNextMonth
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-              dateFormat="dd/MM/yyyy"
-              placeholderText="dd/mm/yyyy"
-              locale="az"
-        />
+        renderDatePicker(inputName)
       ) : (
         <TextField
-        sx={{
-          "& input": {
-            fontSize: "12px",
-            paddingRight: inputData.find((item) => item.inputName === inputName)
-              ?.paddingRight,
-          },
-          marginTop: inputData.find((item) => item.inputName === inputName)
-            .marginTop,
-          marginBottom: inputData.find((item) => item.inputName === inputName)
-            ?.marginBottom,
-        }}
-        InputLabelProps={{
-          shrink:
-             inputName === "time"
-              ? true
-              : inputData.find((item) => item.inputName === inputName)
-                  .inputValue
-              ? true
-              : shrink,
-          style: {
-            fontSize: "12px",
-            color: "#3F3F3F",
+          sx={{
+            "& input": {
+              fontSize: "12px",
+              paddingRight: inputData.find(
+                (item) => item.inputName === inputName
+              )?.paddingRight,
+            },
+            marginTop: inputData.find((item) => item.inputName === inputName)
+              .marginTop,
             marginBottom: inputData.find((item) => item.inputName === inputName)
-              .marginBottom,
-          },
-        }}
-        fullWidth
-        id={inputName}
-        name={inputName}
-        type={inputData.find((item) => item.inputName === inputName).type}
-        label={inputData.find((item) => item.inputName === inputName).label}
-        value={
-          inputData.find((item) => item.inputName === inputName)?.inputValue
-        }
-        disabled={
-          inputName === "group" ||
-          user?.role === "teacher" ||
-          user?.role === "mentor" ||
-          user?.role === "student"
-        }
-        onWheel={(e) => e.target.blur()}
-        onChange={(e) => updateModalState(inputName, e.target.value)}
-        onBlur={(e) => {
-          formik.setFieldTouched(inputName, true);
-          setShrink(!e.target.value);
-        }}
-        onFocus={() => setShrink(true)}
-      />
+              ?.marginBottom,
+          }}
+          InputLabelProps={{
+            shrink:
+              inputName === "time"
+                ? true
+                : inputData.find((item) => item.inputName === inputName)
+                    .inputValue
+                ? true
+                : shrink,
+            style: {
+              fontSize: "12px",
+              color: "#3F3F3F",
+              marginBottom: inputData.find(
+                (item) => item.inputName === inputName
+              ).marginBottom,
+            },
+          }}
+          fullWidth
+          id={inputName}
+          name={inputName}
+          type={inputData.find((item) => item.inputName === inputName).type}
+          label={inputData.find((item) => item.inputName === inputName).label}
+          value={
+            inputData.find((item) => item.inputName === inputName)?.inputValue
+          }
+          disabled={
+            inputName === "group" ||
+            user?.role === "teacher" ||
+            user?.role === "mentor" ||
+            user?.role === "student"
+          }
+          onWheel={(e) => e.target.blur()}
+          onChange={(e) => updateModalState(inputName, e.target.value)}
+          onBlur={(e) => {
+            formik.setFieldTouched(inputName, true);
+            setShrink(!e.target.value);
+          }}
+          onFocus={() => setShrink(true)}
+        />
       )}
 
       {formik.errors[inputName] && formik.touched[inputName] && (

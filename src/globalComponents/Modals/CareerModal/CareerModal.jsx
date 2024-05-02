@@ -24,8 +24,11 @@ const CareerModal = () => {
     "previousWorkPosition",
     "currentWorkPlace",
     "currentWorkPosition",
-    "workStartDate",
   ];
+  const inputName2=[
+    "workStartDate",
+
+  ]
 
   // console.log(modalData,"modal data")
   // formik
@@ -60,10 +63,6 @@ const CareerModal = () => {
     });
   };
 
-  console.log(
-    modalData,
-    "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
-  );
 
   return (
     <div className="create-update-modal-con teacher-modal">
@@ -84,8 +83,20 @@ const CareerModal = () => {
             justifyContent: "center",
           }}
         >
-          <div className="input-couples">
+          <div  className="input-couples ">
             {inputName.map((name, index) => (
+              <InputField
+                key={index}
+                inputName={name}
+                formik={formik}
+                modalData={modalData}
+                updateModalState={updateModalState}
+              />
+            ))}
+          </div>
+
+          <div  className="input-couples birthday ">
+            {inputName2.map((name, index) => (
               <InputField
                 key={index}
                 inputName={name}
