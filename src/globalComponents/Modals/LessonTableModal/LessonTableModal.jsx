@@ -26,6 +26,9 @@ const LessonTableModal = () => {
 
   const inputNameArr1 = ["date", "time"];
 
+
+  console.log(modalData,"modal dataaaa")
+
   // formik
   const formik = useFormik({
     initialValues: {

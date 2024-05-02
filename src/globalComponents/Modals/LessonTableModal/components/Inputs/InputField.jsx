@@ -1,8 +1,10 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
 import { useState } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import az from "date-fns/locale/az";
+import {  useSelector } from "react-redux";
 import { useCustomHook } from "../../../../GlobalFunctions/globalFunctions";
 
 export default function InputField({
@@ -11,7 +13,8 @@ export default function InputField({
   inputName,
   updateModalState,
 }) {
-  const dispatch = useDispatch();
+  registerLocale("az", az);
+
   const { weeksArrFullName } = useCustomHook();
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [shrink, setShrink] = useState(false);
@@ -28,7 +31,6 @@ export default function InputField({
     {
       inputName: "day",
       label: "Dərs günü",
-      type: "text",
       type: "text",
       marginTop: "24px",
       marginBottom: "0",
@@ -74,7 +76,20 @@ export default function InputField({
         inputData.find((item) => item.inputName === inputName)?.className || ""
       }
     >
-      <TextField
+      {inputName === "date" ? (
+        <DatePicker
+          selected={new Date(modalData.date)}
+          onChange={(date) => updateModalState(inputName, date)}
+          peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              dateFormat="dd/MM/yyyy"
+              placeholderText="dd/mm/yyyy"
+              locale="az"
+        />
+      ) : (
+        <TextField
         sx={{
           "& input": {
             fontSize: "12px",
@@ -88,7 +103,7 @@ export default function InputField({
         }}
         InputLabelProps={{
           shrink:
-            inputName === "date" || inputName === "time"
+             inputName === "time"
               ? true
               : inputData.find((item) => item.inputName === inputName)
                   .inputValue
@@ -123,6 +138,7 @@ export default function InputField({
         }}
         onFocus={() => setShrink(true)}
       />
+      )}
 
       {formik.errors[inputName] && formik.touched[inputName] && (
         <small className="validation-err-message">
