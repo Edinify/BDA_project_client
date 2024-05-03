@@ -36,6 +36,10 @@
   gap: 10px;
 }
 
+.react-datepicker__header__dropdown--select{
+  display: flex;
+}
+
 
 .date-container .date-picker-a {
   display: flex;
@@ -95,6 +99,15 @@
 }
 .react-datepicker-popper[data-placement^="bottom"] {
   z-index: 10;
+}
+
+.render-datepicker{
+  position: relative;
+}
+.render-datepicker label{
+  position: absolute;
+  top: -20px;
+  background-color: white;
 }
 
 @media screen and (max-width: 1400px) {

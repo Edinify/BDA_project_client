@@ -15,7 +15,9 @@ export default function InputField({
   const [shrink, setShrink] = useState(false);
   registerLocale("az", az);
 
-  const renderDatePicker = (dateName) => (
+  const renderDatePicker = (dateName,label) => (
+    <div className="render-datepicker">
+    <label>{label}</label>
     <DatePicker
       selected={
         leadModalData[dateName] ? new Date(leadModalData[dateName]) : null
@@ -32,6 +34,7 @@ export default function InputField({
       placeholderText="dd/mm/yyyy"
       locale="az"
     />
+    </div>
   );
 
   const inputData = [
@@ -65,7 +68,7 @@ export default function InputField({
       }
     >
       {inputName === "date" ? (
-        renderDatePicker(inputName)
+        renderDatePicker(inputName,"Tarixi")
       ) : (
         <TextField
           sx={{

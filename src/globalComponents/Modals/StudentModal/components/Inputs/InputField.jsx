@@ -17,18 +17,21 @@ export default function InputField({
   const [viewPass, setViewPass] = useState(true);
   registerLocale("az", az);
 
-  const renderDatePicker = (dateName) => (
-    <DatePicker
-      selected={modalData[dateName] ? new Date(modalData[dateName]) : null}
-      onChange={(date) => updateModalState(dateName, date)}
-      peekNextMonth
-      showMonthDropdown
-      showYearDropdown
-      dropdownMode="select"
-      dateFormat="dd/MM/yyyy"
-      placeholderText="dd/mm/yyyy"
-      locale="az"
-    />
+  const renderDatePicker = (dateName, label) => (
+    <div className="render-datepicker">
+      <label>{label}</label>
+      <DatePicker
+        selected={modalData[dateName] ? new Date(modalData[dateName]) : null}
+        onChange={(date) => updateModalState(dateName, date)}
+        peekNextMonth
+        showMonthDropdown
+        showYearDropdown
+        dropdownMode="select"
+        dateFormat="dd/MM/yyyy"
+        placeholderText="dd/mm/yyyy"
+        locale="az"
+      />
+    </div>
   );
 
   const inputData = [
@@ -102,7 +105,7 @@ export default function InputField({
       }
     >
       {inputName === "birthday" ? (
-       renderDatePicker(inputName)
+        renderDatePicker(inputName, "Doğum tarixi")
       ) : (
         <TextField
           sx={{

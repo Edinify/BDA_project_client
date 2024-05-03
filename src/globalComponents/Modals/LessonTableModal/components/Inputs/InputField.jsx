@@ -20,18 +20,21 @@ export default function InputField({
   const [shrink, setShrink] = useState(false);
   const { user } = useSelector((state) => state.user);
 
-  const renderDatePicker = (dateName) => (
-    <DatePicker
-      selected={modalData[dateName] ? new Date(modalData[dateName]) : null}
-      onChange={(date) => updateModalState(dateName, date)}
-      peekNextMonth
-      showMonthDropdown
-      showYearDropdown
-      dropdownMode="select"
-      dateFormat="dd/MM/yyyy"
-      placeholderText="dd/mm/yyyy"
-      locale="az"
-    />
+  const renderDatePicker = (dateName, label) => (
+    <div className="render-datepicker">
+      <label>{label}</label>
+      <DatePicker
+        selected={modalData[dateName] ? new Date(modalData[dateName]) : null}
+        onChange={(date) => updateModalState(dateName, date)}
+        peekNextMonth
+        showMonthDropdown
+        showYearDropdown
+        dropdownMode="select"
+        dateFormat="dd/MM/yyyy"
+        placeholderText="dd/mm/yyyy"
+        locale="az"
+      />
+    </div>
   );
   const inputData = [
     {
@@ -91,7 +94,7 @@ export default function InputField({
       }
     >
       {inputName === "date" ? (
-        renderDatePicker(inputName)
+        renderDatePicker(inputName, "Dərs tarixi")
       ) : (
         <TextField
           sx={{
