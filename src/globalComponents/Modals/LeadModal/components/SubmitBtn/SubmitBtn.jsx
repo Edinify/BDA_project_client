@@ -16,7 +16,6 @@ export default function SubmitBtn({
   formik,
   funcType,
   leadModalData,
-  setShowDeleteModal,
 }) {
   const dispatch = useDispatch();
   const { leadModalLoading } = useSelector((state) => state.leadModal);

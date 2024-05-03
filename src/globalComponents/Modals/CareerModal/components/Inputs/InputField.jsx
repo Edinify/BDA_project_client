@@ -1,7 +1,6 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import az from "date-fns/locale/az";
@@ -12,9 +11,7 @@ export default function InputField({
   inputName,
   updateModalState,
 }) {
-  const dispatch = useDispatch();
   const [shrink, setShrink] = useState(false);
-  const [viewPass, setViewPass] = useState(true);
 
   registerLocale("az", az);
 
