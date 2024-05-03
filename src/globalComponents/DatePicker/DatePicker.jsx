@@ -17,9 +17,6 @@ export const DatePick = ({ deviceType = "" }) => {
   const startDateRef = useRef(null);
   const endDateRef = useRef(null);
 
-
-
-
   useEffect(() => {
     dispatch({
       type: DATEPICKER_ACTION_TYPE.START_DATE,
@@ -35,9 +32,9 @@ export const DatePick = ({ deviceType = "" }) => {
     <>
       <div className={`date-container ${deviceType}`}>
         <div className="startdate-container">
-          <div className="startdate-month">
+          <label className="startdate-month">
             <CalendarIcon
-              onClick={() => startDateRef.current.setOpen(true)}
+              className="calendar-icon"
               style={{ cursor: "pointer" }}
             />
             <DatePicker
@@ -53,13 +50,13 @@ export const DatePick = ({ deviceType = "" }) => {
             />
 
             <h4>-dan</h4>
-          </div>
+          </label>
         </div>
 
         <div className="startdate-container end">
-          <div className="startdate-month">
+          <label className="startdate-month">
             <CalendarIcon
-              onClick={() => endDateRef.current.setOpen(true)}
+              className="calendar-icon"
               style={{ cursor: "pointer" }}
             />
             <DatePicker
@@ -74,7 +71,7 @@ export const DatePick = ({ deviceType = "" }) => {
               locale="az"
             />
             <h4>-dan</h4>
-          </div>
+          </label>
         </div>
       </div>
     </>

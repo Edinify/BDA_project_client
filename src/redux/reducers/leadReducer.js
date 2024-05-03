@@ -16,6 +16,10 @@ export const leadReducer = (state = initialState, action) => {
       };
 
     case LEAD_ACTION_TYPE.UPDATE_LEAD:
+      console.log(action.payload, "updated data in lead reducer");
+      console.log(state.leads.map((lead) =>
+      lead._id === action.payload._id ? action.payload : lead
+    ))
       return {
         ...state,
         leads: state.leads.map((lead) =>

@@ -20,7 +20,10 @@ export default function InputField({
       selected={
         leadModalData[dateName] ? new Date(leadModalData[dateName]) : null
       }
-      onChange={(date) => updateModalState(dateName, date)}
+      onChange={(date) => {
+        updateModalState(dateName, date);
+        setInputValue(dateName, date);
+      }}
       peekNextMonth
       showMonthDropdown
       showYearDropdown
@@ -54,7 +57,6 @@ export default function InputField({
       className: "birthday-input",
     },
   ];
-
 
   return (
     <div

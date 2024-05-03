@@ -3,7 +3,6 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { LEAD_MODAL_ACTION_TYPE } from "../../../../../redux/actions-type";
 import UpdateDeleteModal from "../../../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
-import { useFinanceCustomHook } from "../../../utils";
 import DeleteItemModal from "../../../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
 import { deleteLeadAction } from "../../../../../redux/actions/leadActions";
 

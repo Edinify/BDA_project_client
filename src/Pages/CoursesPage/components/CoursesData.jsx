@@ -16,11 +16,11 @@ const CoursesData = ({ userData, getNextCourse }) => {
 
   const tableHead = [
     { id: 1, label: "Fənn adı" },
-    { id: 1, label: "Dərs sayı" },
-    { id: 2, label: "Tam" },
-    { id: 3, label: "Tədris müddəti" },
-    { id: 4, label: "10 hissəli" },
-    { id: 5, label: "" },
+    { id: 2, label: "Dərs sayı" },
+    { id: 3, label: "Tam" },
+    { id: 4, label: "Tədris müddəti" },
+    { id: 5, label: "10 hissəli" },
+    { id: 6, label: "" },
   ];
   useEffect(() => {
     if (openMoreModal) {

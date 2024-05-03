@@ -42,6 +42,7 @@ const LeadData = () => {
     }
   };
 
+  console.log(leads, "leadsssssssssssssssssssss");
   return (
     <>
       <InfiniteScroll

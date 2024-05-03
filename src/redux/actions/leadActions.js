@@ -112,7 +112,8 @@ export const createLeadAction = (incomesData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/", incomesData);
-    dispatch(getLeadPaginationAction(data.lastPage, "", "", 1));
+
+    dispatch({ type: LEAD_ACTION_TYPE.CREATE_LEAD, payload: data });
     dispatch({
       type: LEAD_MODAL_ACTION_TYPE.LEAD_OPEN_MODAL,
       payload: false,
@@ -138,7 +139,7 @@ export const createLeadAction = (incomesData) => async (dispatch) => {
         );
 
         const { data } = await API.post("/", incomesData);
-        dispatch(getLeadPaginationAction(data.lastPage, "", "", 1));
+
         dispatch({
           type: INCOMES_MODAL_ACTION_TYPE.INCOMES_OPEN_MODAL,
           payload: false,
@@ -214,6 +215,12 @@ export const deleteLeadAction = (id) => async (dispatch) => {
       type: LEAD_ACTION_TYPE.DELETE_LEAD,
       payload: data._id,
     });
+
+    dispatch({
+      type: LEAD_MODAL_ACTION_TYPE.LEAD_MODAL_ACTIVATE_GET,
+      payload: "delete",
+    });
+
     toastSuccess("Lead silindi");
   } catch (error) {
     // console.log(error);

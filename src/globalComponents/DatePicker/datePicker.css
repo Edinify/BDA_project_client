@@ -11,7 +11,7 @@
   border: 0.4px solid #dddddd;
   border-radius: 8px;
 }
-.date-container .startdate-container.end{
+.date-container .startdate-container.end {
   margin-left: 10px;
 }
 .date-container .startdate-container h4 {
@@ -34,6 +34,7 @@
 .date-container .startdate-container .startdate-month {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 .date-container .date-picker-a {
@@ -64,6 +65,11 @@
   width: 20px;
   height: 20px;
 }
+.calendar-icon {
+  width: 20px;
+  height: 20px;
+}
+
 .react-datepicker__input-container {
   border: none;
 }
@@ -95,7 +101,7 @@
   .date-container .from {
     width: 50%;
   }
-  .date-container .startdate-container{
+  .date-container .startdate-container {
     width: 50%;
   }
 }
