@@ -5,5 +5,5 @@ export const ValidationSchema = yup.object().shape({
     .number()
     .typeError("Rəqəm olmalıdır.")
     .required("Bu xana tələb olunur."),
-  // date: yup.string().required("Bu xana tələb olunur."),
+  date: yup.string().required("Bu xana tələb olunur."),
 });
