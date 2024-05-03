@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import {  useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import moment from "moment";
@@ -18,14 +18,9 @@ export const StudentModal = () => {
   const { studentsModalData: modalData } = useSelector(
     (state) => state.studentsModal
   );
-  const inputNameArr1 = [
-    "fin",
-    "seria",
-    "birthday",
-    "phone",
-    "email",
-    "password",
-  ];
+  const inputNameArr1 = ["fin", "seria", "email", "password"];
+
+  const inputNameArr2 = ["birthday", "phone"];
 
   // console.log(modalData,"studentModal")
   // formik
@@ -103,6 +98,19 @@ export const StudentModal = () => {
                 />
               ))}
             </div>
+            <div className="input-couples birthday ">
+              {inputNameArr2.map((name, index) => (
+                <InputField
+                  key={index}
+                  inputName={name}
+                  formik={formik}
+                  setInputValue={setInputValue}
+                  modalData={modalData}
+                  updateModalState={updateModalState}
+                />
+              ))}
+            </div>
+
             <WhereSend
               modalData={modalData}
               updateModalState={updateModalState}

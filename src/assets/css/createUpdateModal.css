@@ -35,7 +35,7 @@
   border: 1px;
 }
 
-.student-lesson-modal .student-sign{
+.student-lesson-modal .student-sign {
   margin: 10px 0;
 }
 
@@ -175,6 +175,46 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 10px;
+}
+
+.input-couples.birthday {
+  align-items: center;
+  margin-top: 24px;
+}
+
+/* lead modal */
+.lead {
+  display: flex;
+  flex-direction: column;
+}
+.lead .birthday-input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid rgba(118, 118, 118, 0.7);
+  border-radius: 4px;
+  margin-top: 24px;
+}
+
+.lead .birthday-input input {
+  background-color: white;
+  color: #3f3f3f;
+}
+
+.lead .birthday-input .react-datepicker-wrapper {
+  width: 100%;
+}
+
+/*  */
+
+.input-couples.birthday .birthday-input {
+  padding: 13px 14px;
+  border: 1px solid rgba(118, 118, 118, 0.7);
+  border-radius: 4px;
+}
+
+.input-couples.birthday .birthday-input input {
+  background-color: white;
+  color: #3f3f3f;
 }
 
 .create-update-modal-form .input-couples-student {

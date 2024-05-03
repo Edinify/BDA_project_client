@@ -20,7 +20,8 @@ export const LeadModal = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const inputNameArr = ["count", "date", ,];
+
+  const inputNameArr = ["count", "date",];
 
   // formik
   const formik = useFormik({
@@ -88,6 +89,7 @@ export const LeadModal = () => {
           }}
         >
           <div className="create-update-modal-form">
+            <div className="lead  ">
             {inputNameArr.map((name, index) => (
               <InputField
                 key={index}
@@ -98,6 +100,8 @@ export const LeadModal = () => {
                 setInputValue={setInputValue}
               />
             ))}
+            </div>
+            
           </div>
         </Box>
 

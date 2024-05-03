@@ -200,7 +200,7 @@ const ConsultationCard = ({
             </div>
           </td>
           <td>
-            <div className="td-con" style={{ width: "150px" }}>
+            <div className="td-con" >
               {/* <div className="cell-number">{cellNumber}.</div> */}
               <div className="table-scroll-text">{whereComingName}</div>
               <div className="right-fade"></div>

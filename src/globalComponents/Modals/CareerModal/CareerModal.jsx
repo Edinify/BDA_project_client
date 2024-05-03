@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import moment from "moment";
@@ -6,10 +6,8 @@ import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
 import { Box } from "@mui/material";
 import { CAREER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
-import Status from "./components/Buttons/Status";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
-import WorkStatus from "./components/Inputs/WorkStatus";
 import WorkStatusList from "./components/WorkStatusList";
 
 const CareerModal = () => {
@@ -24,8 +22,11 @@ const CareerModal = () => {
     "previousWorkPosition",
     "currentWorkPlace",
     "currentWorkPosition",
-    "workStartDate",
   ];
+  const inputName2=[
+    "workStartDate",
+
+  ]
 
   // console.log(modalData,"modal data")
   // formik
@@ -60,10 +61,6 @@ const CareerModal = () => {
     });
   };
 
-  console.log(
-    modalData,
-    "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
-  );
 
   return (
     <div className="create-update-modal-con teacher-modal">
@@ -84,8 +81,20 @@ const CareerModal = () => {
             justifyContent: "center",
           }}
         >
-          <div className="input-couples">
+          <div  className="input-couples ">
             {inputName.map((name, index) => (
+              <InputField
+                key={index}
+                inputName={name}
+                formik={formik}
+                modalData={modalData}
+                updateModalState={updateModalState}
+              />
+            ))}
+          </div>
+
+          <div  className="input-couples birthday ">
+            {inputName2.map((name, index) => (
               <InputField
                 key={index}
                 inputName={name}
