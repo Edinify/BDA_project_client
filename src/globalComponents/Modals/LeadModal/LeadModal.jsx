@@ -89,7 +89,7 @@ export const LeadModal = () => {
           }}
         >
           <div className="create-update-modal-form">
-            <div className="input-couples birthday  ">
+            <div className="lead  ">
             {inputNameArr.map((name, index) => (
               <InputField
                 key={index}

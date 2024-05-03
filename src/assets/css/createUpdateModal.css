@@ -177,30 +177,42 @@
   column-gap: 10px;
 }
 
- .input-couples.birthday {
+.input-couples.birthday {
   align-items: center;
   margin-top: 24px;
 }
 
-.input-couples.lead{
+/* lead modal */
+.lead {
   display: flex;
   flex-direction: column;
-  width: 100%;
 }
-.input-couples.lead div{
+.lead .birthday-input {
   width: 100%;
-}
-.input-couples.lead .birthday-input {
+  padding: 13px 14px;
+  border: 1px solid rgba(118, 118, 118, 0.7);
+  border-radius: 4px;
   margin-top: 24px;
 }
 
- .input-couples.birthday .birthday-input {
+.lead .birthday-input input {
+  background-color: white;
+  color: #3f3f3f;
+}
+
+.lead .birthday-input .react-datepicker-wrapper {
+  width: 100%;
+}
+
+/*  */
+
+.input-couples.birthday .birthday-input {
   padding: 13px 14px;
   border: 1px solid rgba(118, 118, 118, 0.7);
   border-radius: 4px;
 }
 
- .input-couples.birthday .birthday-input input {
+.input-couples.birthday .birthday-input input {
   background-color: white;
   color: #3f3f3f;
 }
