@@ -178,10 +178,19 @@
 }
 
  .input-couples.birthday {
-  /* display: grid; */
-  /* grid-template-columns: 1fr 1fr; */
-  /* column-gap: 10px; */
   align-items: center;
+  margin-top: 24px;
+}
+
+.input-couples.lead{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.input-couples.lead div{
+  width: 100%;
+}
+.input-couples.lead .birthday-input {
   margin-top: 24px;
 }
 
