@@ -65,6 +65,28 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
       </li>
       <li>
         <NavLink
+          className={groupsNav.includes(location.pathname) ? "active" : ""}
+          to="/groups/waiting"
+          onClick={closeSidebar}
+        >
+          <GroupIcon />
+          Qruplar
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/tuition-fee" onClick={closeSidebar}>
+          <ExpensesIcon />
+          Təhsil haqqı
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/career" onClick={closeSidebar}>
+          <CareerIcon />
+          Karyera
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           className={
             consultationNav.includes(location.pathname) ? "active" : ""
           }
@@ -76,44 +98,22 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/workers" onClick={closeSidebar} className="admin">
-          <AdminIcon />
-          Əməkdaşlar
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={groupsNav.includes(location.pathname) ? "active" : ""}
-          to="/groups/waiting"
-          onClick={closeSidebar}
-        >
-          <GroupIcon />
-          Qruplar
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink to="/tuition-fee" onClick={closeSidebar}>
-          <ExpensesIcon />
-          Təhsil haqqı
-        </NavLink>
-      </li>
-      <li>
         <NavLink to="/sales" onClick={closeSidebar}>
           <SalesIcon />
           Satış
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/career" onClick={closeSidebar}>
-          <CareerIcon />
-          Karyera
-        </NavLink>
-      </li>
+
       <li>
         <NavLink to="/event" onClick={closeSidebar}>
           <EventsIcon />
           Tədbirlər
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/workers" onClick={closeSidebar} className="admin">
+          <AdminIcon />
+          Əməkdaşlar
         </NavLink>
       </li>
     </ul>

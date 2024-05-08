@@ -11,7 +11,7 @@ import CareerPage from "../Pages/CareerPage/CareerPage";
 import SyllabusPage from "../Pages/SyllabusPage/SyllabusPage";
 import LessonTablePage from "../Pages/LessonTablePage/LessonTablePage";
 import EventsPage from "../Pages/EventsPage/EventsPage";
-import {Dashboard} from "../Pages/DashboardPage/DashboardPage"
+import { Dashboard } from "../Pages/DashboardPage/DashboardPage";
 
 const WorkersPanelRoute = (user) => {
   // const { user } = useSelector((state) => state.user);
@@ -19,15 +19,6 @@ const WorkersPanelRoute = (user) => {
     (profilesObj, item) => ({ ...profilesObj, [item.profile]: true }),
     {}
   );
-
-
-  console.log(profiles,"profiles")
-
-
-
-
-  // console.log(user, "user");
-  // console.log(profiles, "profiles in worker roter");
 
   return (
     <>
@@ -77,7 +68,9 @@ const WorkersPanelRoute = (user) => {
         <Route path="/lessonTable" element={<LessonTablePage />} />
       )}
       {profiles?.events && <Route path="/events" element={<EventsPage />} />}
-      {profiles?.dashboard &&  <Route path="/dashboard" element={<Dashboard />} />}
+      {profiles?.dashboard && (
+        <Route path="/dashboard" element={<Dashboard />} />
+      )}
     </>
   );
 };

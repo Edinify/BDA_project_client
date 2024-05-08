@@ -155,11 +155,18 @@ export function useCustomHook() {
     { key: "startDate", title: "Dərs baş. tarixi" },
   ];
   const generalProfileList = [
-    { id: 1, name: "Qruplar", key: "groups", icon: <GroupIcon /> },
-    { id: 2, name: "Əməkdaşlar", key: "workers", icon: <AdminIcon /> },
+    {
+      id: 1,
+      name: "İdarəetmə paneli",
+      key: "dashboard",
+      icon: <DashboardIcon />,
+    },
+    { id: 2, name: "Cədvəl", key: "lessonTable", icon: <TableIcon /> },
     { id: 3, name: "Tələbələr", key: "students", icon: <StudentsIcon /> },
-    { id: 6, name: "Təlimçilər", key: "teachers", icon: <TeachersIcon /> },
-    { id: 7, name: "Fənlər", key: "courses", icon: <CoursesIcon /> },
+    { id: 4, name: "Təlimçilər", key: "teachers", icon: <TeachersIcon /> },
+    { id: 5, name: "Fənlər", key: "courses", icon: <CoursesIcon /> },
+    { id: 6, name: "Sillabus", key: "syllabus", icon: <SyllabusIcon /> },
+    { id: 7, name: "Qruplar", key: "groups", icon: <GroupIcon /> },
     { id: 8, name: "Təhsil haqqı", key: "tuitionFee", icon: <ExpensesIcon /> },
     { id: 9, name: "Karyera", key: "career", icon: <CareerIcon /> },
     {
@@ -168,15 +175,8 @@ export function useCustomHook() {
       key: "consultation",
       icon: <MainPanelIcon />,
     },
-    { id: 11, name: "Sillabus", key: "syllabus", icon: <SyllabusIcon /> },
-    { id: 12, name: "Cədvəl", key: "lessonTable", icon: <TableIcon /> },
-    { id: 13, name: "Tədbirlər", key: "events", icon: <EventIcon /> },
-    {
-      id: 14,
-      name: "İdarəetmə paneli",
-      key: "dashboard",
-      icon: <DashboardIcon />,
-    },
+    { id: 11, name: "Tədbirlər", key: "events", icon: <EventIcon /> },
+    { id: 12, name: "Əməkdaşlar", key: "workers", icon: <AdminIcon /> },
   ];
   const generalProfilePowerList = [
     { name: "Tam-səlahiyyətli", key: "all" },
