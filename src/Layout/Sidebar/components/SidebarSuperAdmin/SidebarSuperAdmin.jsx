@@ -16,6 +16,7 @@ import { ReactComponent as GroupIcon } from "../../../../assets/icons/sidebar/gr
 import { ReactComponent as CareerIcon } from "../../../../assets/icons/sidebar/work-case-filled-svgrepo-com (1).svg";
 import { ReactComponent as EventsIcon } from "../../../../assets/icons/sidebar/events.svg";
 import { ReactComponent as SyllabusIcon } from "../../../../assets/icons/sidebar/syllabus-svgrepo-com.svg";
+import {ReactComponent as DiplomaIcon} from "../../../../assets/icons/sidebar/diploma.svg"
 
 const SidebarSuperAdmin = ({ closeSidebar }) => {
   const location = useLocation();
@@ -114,6 +115,12 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         <NavLink to="/event" onClick={closeSidebar}>
           <EventsIcon />
           Tədbirlər
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/diploma" onClick={closeSidebar}>
+          <DiplomaIcon />
+          Diploma cədvəli
         </NavLink>
       </li>
     </ul>
