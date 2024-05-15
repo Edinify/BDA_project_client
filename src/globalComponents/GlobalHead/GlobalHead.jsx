@@ -14,6 +14,7 @@ import CareerPageHead from "./CareerPageHead/CareerPageHead";
 import GroupsPageHead from "./GroupsPageHead/GroupsPageHead";
 import TuitionPageHead from "./TuitionPageHead/TuitionPageHead";
 import ExcelExportBtn from "../ExcelExportBtn/ExcelExportBtn";
+import DiplomaTableHead from "./DiplomaTableHead/DiplomaTableHead";
 
 const GlobalHead = ({
   searchData,
@@ -119,6 +120,11 @@ const GlobalHead = ({
                   openModal={openModal}
                   filter={filter}
                 />
+              )}
+              {statusType==="diploma" && (
+                <DiplomaTableHead
+                filter={filter}
+              />
               )}
             </div>
             {addBtn && showAddBtn && (
