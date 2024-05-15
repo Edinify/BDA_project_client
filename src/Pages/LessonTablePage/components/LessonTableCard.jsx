@@ -110,6 +110,10 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
     }
   }, [data]);
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
       {showDeleteModal && (
@@ -119,7 +123,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
         />
       )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con">
               <div className="table-scroll-text profiles">{lessonDay}</div>

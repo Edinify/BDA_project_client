@@ -108,10 +108,13 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
     setTotalRest((data?.totalAmount || 0) - (totalConfirmedPayment || 0));
   });
 
+  const doubleClick = () => {
+    openConfirmModal();
+  };
   return (
     <>
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>

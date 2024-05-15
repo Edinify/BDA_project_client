@@ -27,6 +27,10 @@ const LeadCard = ({ data, mode, cellNumber }) => {
   const deleteItem = () => {
     dispatch(deleteLeadAction(data._id));
   };
+
+  const doubleClick = () => {
+    updateItem("");
+  };
   return (
     <>
       {showDeleteModal && (
@@ -36,7 +40,7 @@ const LeadCard = ({ data, mode, cellNumber }) => {
         />
       )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con">
               <div className="table-scroll-text">{cellNumber}.</div>

@@ -82,6 +82,10 @@ const StudentCard = ({
     });
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
       {showDeleteModal && (
@@ -91,7 +95,7 @@ const StudentCard = ({
         />
       )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>
