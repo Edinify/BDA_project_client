@@ -1,7 +1,8 @@
 import { DIPLOMA_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState = {
-  diplomaData: [],
+  diplomaData: [
+  ],
   currentLength: 0,
   hasMore: true,
   loading: false,

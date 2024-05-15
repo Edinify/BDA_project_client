@@ -120,7 +120,7 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
       <li>
         <NavLink to="/diploma" onClick={closeSidebar}>
           <DiplomaIcon />
-          Diploma cədvəli
+          Diplom cədvəli
         </NavLink>
       </li>
     </ul>

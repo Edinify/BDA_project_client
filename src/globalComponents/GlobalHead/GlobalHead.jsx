@@ -35,7 +35,7 @@ const GlobalHead = ({
 
   useEffect(() => {
     if (user.role === "super-admin") {
-      console.log(2);
+      // console.log(2);
       setShowAddBtn(true);
     } else if (user.role === "worker") {
       const checkPower =
@@ -143,6 +143,8 @@ const GlobalHead = ({
           {statusType === "teacher" && (
             <StatusDropdown statusType="teacher" deviceType="mobile" />
           )}
+
+         
 
           {statusType === "syllabus" && <CoursesDropdown deviceType="mobile" />}
           {statusType === "lesson-table" && (

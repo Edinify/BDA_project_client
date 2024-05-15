@@ -12,12 +12,15 @@ const DiplomaPage = () => {
   );
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const { diplomaSearchValues } = useSelector((state) => state.searchValues);
-  
 
   const diplomaFilter = () => {
     dispatch({ type: DIPLOMA_ALL_ACTIONS_TYPE.RESET_DIPLOMA_PAGINATION });
     dispatch(
-      getDiplomaPaginationAction(0, diplomaSearchValues, selectedGroup._id ? selectedGroup._id  :"")
+      getDiplomaPaginationAction(
+        0,
+        diplomaSearchValues,
+        selectedGroup._id ? selectedGroup._id : ""
+      )
     );
   };
 
@@ -28,12 +31,16 @@ const DiplomaPage = () => {
         getDiplomaPaginationAction(
           currentLength || 0,
           diplomaSearchValues,
-          selectedGroup._id ? selectedGroup._id  :""
+          selectedGroup._id ? selectedGroup._id : ""
         )
       );
     } else {
       dispatch(
-        getDiplomaPaginationAction(currentLength || 0, "", selectedGroup._id ? selectedGroup._id  :"")
+        getDiplomaPaginationAction(
+          currentLength || 0,
+          "",
+          selectedGroup._id ? selectedGroup._id : ""
+        )
       );
     }
   };
@@ -43,11 +50,13 @@ const DiplomaPage = () => {
 
     dispatch({ type: DIPLOMA_ALL_ACTIONS_TYPE.RESET_DIPLOMA_PAGINATION });
     dispatch(
-      getDiplomaPaginationAction(0, diplomaSearchValues, selectedGroup._id ? selectedGroup._id  :"")
+      getDiplomaPaginationAction(
+        0,
+        diplomaSearchValues,
+        selectedGroup._id ? selectedGroup._id : ""
+      )
     );
   };
-
-
 
   return (
     <div className="details-page diploma-page ">

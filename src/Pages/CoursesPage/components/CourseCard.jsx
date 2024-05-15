@@ -5,14 +5,7 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
 import { useState } from "react";
 
-const CourseCard = ({
-  data,
-  mode,
-  course,
-  cellNumber,
-  setOpenConfirmModal,
-  setOpenMoreModal,
-}) => {
+const CourseCard = ({ data, mode, course, cellNumber, setOpenMoreModal }) => {
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -45,6 +38,10 @@ const CourseCard = ({
     });
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   const wholePayment = data.payments.find(
     (payment) => payment.paymentType === "Tam"
   );
@@ -64,8 +61,8 @@ const CourseCard = ({
         />
       )}
       {mode === "desktop" ? (
-        <tr className="class-table">
-          <td>
+        <tr className="class-table" onDoubleClick={doubleClick}>
+          <td >
             <div className="td-con">
               <div className="table-scroll-text">
                 {cellNumber}. {data.name}

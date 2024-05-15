@@ -51,6 +51,8 @@ export const Header = () => {
         return "Dərs cədvəli";
       case "/student-panel":
         return "Dərs cədvəli";
+        case "/diploma":
+          return "Diplom Cədvəli"
       default:
         return "";
     }

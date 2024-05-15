@@ -3,7 +3,7 @@ import { Login } from "../Pages/LoginPage/LoginPage";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userAction } from "../redux/actions/userAction";
-import { profileGetImage } from "../redux/actions/profileImageAction";
+// import { profileGetImage } from "../redux/actions/profileImageAction";
 import { Header } from "../Layout/Header/Header";
 import LoginRoute from "./LoginRoute";
 
