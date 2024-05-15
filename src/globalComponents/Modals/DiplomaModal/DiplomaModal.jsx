@@ -10,15 +10,16 @@ import Degrees from "./components/Buttons/Degrees";
 
 const DiplomaModal = () => {
   const dispatch = useDispatch();
-  const { diplomaModalData: modalData } = useSelector(
+  const { diplomaModalData: modalData, diplomaModalLoading } = useSelector(
     (state) => state.diplomaModal
   );
 
+  console.log(diplomaModalLoading, "diplomaModalLoading");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [statusOpen, setStatusOpen] = useState(false);
 
-  const [selectedDegree,setSelectedDegree] = useState("")
-  const [degreeOpen,setDegreeOpen] = useState(false)
+  const [selectedDegree, setSelectedDegree] = useState("");
+  const [degreeOpen, setDegreeOpen] = useState(false);
 
   const statusList = [
     { status: "Müdafiə olunmayıb", label: "noneDefensed" },
@@ -28,22 +29,20 @@ const DiplomaModal = () => {
     { status: "Diplom verilib", label: "awarded" },
   ];
 
-  const diplomaDegrees=[
-    {name:"Sertifikat",key:"certificate"},
-    {name:"Adi diplom", key:"simple"},
-    {name:"Şərəf diplomu",key:"honor"},
-    {name:"Yoxdur",key:"none"}
-    
-  ]
+  const diplomaDegrees = [
+    { name: "Sertifikat", key: "certificate" },
+    { name: "Adi diplom", key: "simple" },
+    { name: "Şərəf diplomu", key: "honor" },
+    { name: "Yoxdur", key: "none" },
+  ];
 
   const statusDropdown = () => {
     setStatusOpen(!statusOpen);
   };
 
-
-  const degreeDropdown=()=>{
-    setDegreeOpen(!degreeOpen)
-  }
+  const degreeDropdown = () => {
+    setDegreeOpen(!degreeOpen);
+  };
 
   useEffect(() => {
     if (modalData.diplomaStatus) {
@@ -53,11 +52,12 @@ const DiplomaModal = () => {
       setSelectedStatus(targetStatus);
     }
 
-    if(modalData.diplomaDegree){
-      const targetDegree= diplomaDegrees.find(item=>item.key===modalData.diplomaDegree)
-      setSelectedDegree(targetDegree)
+    if (modalData.diplomaDegree) {
+      const targetDegree = diplomaDegrees.find(
+        (item) => item.key === modalData.diplomaDegree
+      );
+      setSelectedDegree(targetDegree);
     }
-
   }, [modalData.diplomaStatus]);
 
   const statusAddData = (item) => {
@@ -67,14 +67,13 @@ const DiplomaModal = () => {
     setSelectedStatus(item);
   };
 
+  const degreeAddData = (item) => {
+    updateModalState("diplomaDegree", item.key);
+    setDegreeOpen(false);
+    setSelectedDegree(item);
+  };
 
-  const degreeAddData=(item)=>{
-    updateModalState("diplomaDegree",item.key)
-    setDegreeOpen(false)
-    setSelectedDegree(item)
-  }
-
-  const inputArr = ["fullName", "date", "seria","group"];
+  const inputArr = ["fullName", "diplomaDate", "seria", "group"];
 
   const updateModalState = (keyName, value) => {
     dispatch({
@@ -133,13 +132,12 @@ const DiplomaModal = () => {
               statusList={statusList}
             />
             <Degrees
-            selectedDegree={selectedDegree}
-            degreeDropdown={degreeDropdown}
-            degreeOpen={degreeOpen}
-            setDegreeOpen={setDegreeOpen}
-            degreeAddData={degreeAddData}
-            diplomaDegrees={diplomaDegrees}
-
+              selectedDegree={selectedDegree}
+              degreeDropdown={degreeDropdown}
+              degreeOpen={degreeOpen}
+              setDegreeOpen={setDegreeOpen}
+              degreeAddData={degreeAddData}
+              diplomaDegrees={diplomaDegrees}
             />
             <SubmitBtn
               // formik={formik}

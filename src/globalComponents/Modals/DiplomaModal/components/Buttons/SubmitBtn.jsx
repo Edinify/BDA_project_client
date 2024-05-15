@@ -3,16 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateDiplomaAction } from "../../../../../redux/actions/diplomaActions";
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 
-const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
+const SubmitBtn = ({ modalData }) => {
   const dispatch = useDispatch();
   const { diplomaModalLoading } = useSelector((state) => state.diplomaModal);
 
   const diplomaUpdate = () => {
     if (modalData?._id) {
-      dispatch(updateDiplomaAction(modalData?._id, modalData));
+      dispatch(updateDiplomaAction(modalData));
     }
   };
 
+  console.log(diplomaModalLoading, "diploma modal loading");
   return (
     <div className="create-update-modal-btn demo-btn ">
       <button disabled={diplomaModalLoading} onClick={diplomaUpdate}>

@@ -36,9 +36,9 @@ const DiplomaData = ({ getNextDiplomas }) => {
   const tableHead = [
     "Tələbənin adı",
     "Qrup nömrəsi",
-    "Dərəcə",
-    "Tarix",
     "Seriya",
+    "Tarix",
+    "Dərəcə",
     "Status",
     "",
   ];

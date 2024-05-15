@@ -1,5 +1,8 @@
 import axios from "axios";
-import { DIPLOMA_ALL_ACTIONS_TYPE } from "../actions-type";
+import {
+  DIPLOMA_ALL_ACTIONS_TYPE,
+  DIPLOMA_MODAL_ACTION_TYPE,
+} from "../actions-type";
 import { apiRoot } from "../../apiRoot";
 import { toast } from "react-toastify";
 
@@ -38,6 +41,11 @@ REGISTERAPI.interceptors.request.use((req) => {
   return req;
 });
 
+const diplomaModalLoading = (loadingValue) => ({
+  type: DIPLOMA_MODAL_ACTION_TYPE.DIPLOMA_MODAL_LOADING,
+  payload: loadingValue,
+});
+
 const toastSuccess = (message) => {
   toast.success(message, {
     position: "top-right",
@@ -66,7 +74,6 @@ const toastError = (message) => {
 
 export const getDiplomaPaginationAction =
   (length, searchQuery, groupId) => async (dispatch) => {
-    console.log("salam by getDiplomasAciton");
     try {
       const { data } = await API.get(
         `/?length=${length || 0}&searchQuery=${searchQuery || ""}&groupId=${
@@ -84,11 +91,15 @@ export const getDiplomaPaginationAction =
     }
   };
 
-export const updateDiplomaAction = (_id, newData) => async (dispatch) => {
-  console.log(newData,"data")
+export const updateDiplomaAction = (newData) => async (dispatch) => {
+  dispatch(diplomaModalLoading(true));
   try {
-    const { data } = await API.patch(`/${_id}`, newData);
+    const { data } = await API.patch(`/`, newData);
     dispatch({ type: DIPLOMA_ALL_ACTIONS_TYPE.UPDATE_DIPLOMA, payload: data });
+    dispatch({
+      type: DIPLOMA_MODAL_ACTION_TYPE.DIPLOMA_OPEN_MODAL,
+      payload: false,
+    });
   } catch (error) {
     console.log(error);
   }

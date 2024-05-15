@@ -32,7 +32,7 @@ const DiplomaCard = ({ data, mode }) => {
 
   return (
     <>
-      <tr onDoubleClick={doubleClick} >
+      <tr onDoubleClick={doubleClick}>
         <td>
           <div className="td-con" style={{ width: "200px" }}>
             {/* <div className="cell-number">{cellNumber}.</div> */}
@@ -48,16 +48,15 @@ const DiplomaCard = ({ data, mode }) => {
         </td>
         <td>
           <div className="td-con" style={{ width: "150px" }}>
-            <div className="table-scroll-text">{diplomaDegree}</div>
+            <div className="table-scroll-text">{data?.seria}</div>
             <div className="right-fade"></div>
           </div>
         </td>
-
         <td>
           <div className="td-con" style={{ width: "200px" }}>
             <div className="table-scroll-text phone">
-              {data?.date
-                ? moment(data?.date).locale("az").format("DD MMMM YYYY")
+              {data?.diplomaDate
+                ? moment(data?.diplomaDate).locale("az").format("DD MMMM YYYY")
                 : ""}
             </div>
             <div className="right-fade"></div>
@@ -65,11 +64,10 @@ const DiplomaCard = ({ data, mode }) => {
         </td>
         <td>
           <div className="td-con" style={{ width: "150px" }}>
-            <div className="table-scroll-text">{data?.seria}</div>
+            <div className="table-scroll-text">{diplomaDegree}</div>
             <div className="right-fade"></div>
           </div>
         </td>
-
         <td>
           <div className="td-con" style={{ width: "150px" }}>
             <div className="table-scroll-text">{status}</div>
