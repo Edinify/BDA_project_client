@@ -39,7 +39,7 @@ REGISTERAPI.interceptors.request.use((req) => {
 });
 
 const toastSuccess = (message) => {
-  toast .success(message, {
+  toast.success(message, {
     position: "top-right",
     autoClose: 2000,
     hideProgressBar: false,
@@ -66,12 +66,15 @@ const toastError = (message) => {
 
 export const getDiplomaPaginationAction =
   (length, searchQuery, groupId) => async (dispatch) => {
+    console.log("salam by getDiplomasAciton");
     try {
       const { data } = await API.get(
-        `/?length=${length}&searchQuery=${searchQuery}&groupId=${groupId}`
+        `/?length=${length || 0}&searchQuery=${searchQuery || ""}&groupId=${
+          groupId || ""
+        }`
       );
 
-      console.log(data,"dataa")
+      console.log(data, "dataa diplomasss");
       dispatch({
         type: DIPLOMA_ALL_ACTIONS_TYPE.GET_DIPLOMA_PAGINATION,
         payload: data,
@@ -81,14 +84,11 @@ export const getDiplomaPaginationAction =
     }
   };
 
-
-  export const updateDiplomaAction=(id,newData)=>async(dispatch)=>{
-    try {
-        const {data} = await API.patch(`/${id}`,newData);
-        dispatch({type:DIPLOMA_ALL_ACTIONS_TYPE.UPDATE_DIPLOMA,payload:data}) 
-    } catch (error) {
-        console.log(error)
-    }
+export const updateDiplomaAction = (id, newData) => async (dispatch) => {
+  try {
+    const { data } = await API.patch(`/${id}`, newData);
+    dispatch({ type: DIPLOMA_ALL_ACTIONS_TYPE.UPDATE_DIPLOMA, payload: data });
+  } catch (error) {
+    console.log(error);
   }
-
-
+};

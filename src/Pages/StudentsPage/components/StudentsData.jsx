@@ -57,7 +57,7 @@ const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
     };
   }, []);
 
-  console.log(scrollHeight);
+  console.log(students);
 
   return (
     <>
