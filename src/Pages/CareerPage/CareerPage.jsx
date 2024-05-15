@@ -84,7 +84,7 @@ const CareerPage = () => {
     return () => {
       dispatch({ type: CAREER_ALL_ACTIONS_TYPE.RESET_CAREER_PAGINATION });
     };
-  }, [dispatch]);
+  }, [dispatch,careerSearchValues]);
 
   return (
     <div className="details-page career-page ">

@@ -124,7 +124,7 @@ const reducers = combineReducers({
   pageNumber: paginationPageNumberReducer,
   mainpageType: mainPageTypeReducer,
   downloadExcel: downloadExcelReducer,
-  diplomaData:diplomaPaginationReducer,
+  diplomaPagination:diplomaPaginationReducer,
   diplomaModal:diplomaModalReducer
 });
 // test

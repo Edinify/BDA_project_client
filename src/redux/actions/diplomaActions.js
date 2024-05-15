@@ -70,6 +70,8 @@ export const getDiplomaPaginationAction =
       const { data } = await API.get(
         `/?length=${length}&searchQuery=${searchQuery}&groupId=${groupId}`
       );
+
+      console.log(data,"dataa")
       dispatch({
         type: DIPLOMA_ALL_ACTIONS_TYPE.GET_DIPLOMA_PAGINATION,
         payload: data,

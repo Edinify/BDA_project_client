@@ -17,9 +17,7 @@ const DiplomaCard = ({ data, mode }) => {
     });
   };
 
-  const deleteItem = () => {
-    console.log("delete item");
-  };
+ 
   return (
     <>
       <tr>
@@ -70,7 +68,6 @@ const DiplomaCard = ({ data, mode }) => {
         <td>
           <UpdateDeleteModal
             updateItem={updateItem}
-            deleteItem={deleteItem}
             // openMoreModal={openMoreModal}
             profil={"diploma"}
             data={data}
