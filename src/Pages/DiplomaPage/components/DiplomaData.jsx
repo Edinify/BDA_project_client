@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const DiplomaData = ({ getNextDiplomas }) => {
-  const { diplomaData, hasMore } = useSelector(
+  const { diplomasData, hasMore } = useSelector(
     (state) => state.diplomaPagination
   );
 
@@ -33,8 +33,6 @@ const DiplomaData = ({ getNextDiplomas }) => {
     };
   }, []);
 
-  console.log(diplomaData, "diplomaaa");
-
   const tableHead = [
     "Tələbənin adı",
     "Qrup nömrəsi",
@@ -47,7 +45,7 @@ const DiplomaData = ({ getNextDiplomas }) => {
   return (
     <div className="diploma-table-container">
       <InfiniteScroll
-        dataLength={diplomaData?.length}
+        dataLength={diplomasData?.length}
         next={getNextDiplomas}
         hasMore={hasMore}
         loader={<SmallLoading />}
@@ -65,7 +63,7 @@ const DiplomaData = ({ getNextDiplomas }) => {
           </thead>
 
           <tbody>
-            {diplomaData?.map((career, i) => (
+            {diplomasData?.map((career, i) => (
               <DiplomaCard
                 key={i}
                 data={career}

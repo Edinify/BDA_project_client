@@ -3,9 +3,18 @@ import React from "react";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { useDispatch } from "react-redux";
 import { DIPLOMA_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
+import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 
 const DiplomaCard = ({ data, mode }) => {
   const dispatch = useDispatch();
+  const { diplomaStatus, diplomaDegrees } = useCustomHook();
+
+  const diplomaDegree = diplomaDegrees.find(
+    (diploma) => diploma.key === data.diplomaDegree
+  ).name;
+  const status = diplomaStatus.find(
+    (diploma) => diploma.key === data.diplomaStatus
+  ).name;
 
   const updateItem = () => {
     dispatch({
@@ -17,7 +26,6 @@ const DiplomaCard = ({ data, mode }) => {
     });
   };
 
- 
   return (
     <>
       <tr>
@@ -36,7 +44,7 @@ const DiplomaCard = ({ data, mode }) => {
         </td>
         <td>
           <div className="td-con" style={{ width: "150px" }}>
-            <div className="table-scroll-text">{data?.degree}</div>
+            <div className="table-scroll-text">{diplomaDegree}</div>
             <div className="right-fade"></div>
           </div>
         </td>
@@ -60,7 +68,7 @@ const DiplomaCard = ({ data, mode }) => {
 
         <td>
           <div className="td-con" style={{ width: "150px" }}>
-            <div className="table-scroll-text">{data?.status}</div>
+            <div className="table-scroll-text">{status}</div>
             <div className="right-fade"></div>
           </div>
         </td>

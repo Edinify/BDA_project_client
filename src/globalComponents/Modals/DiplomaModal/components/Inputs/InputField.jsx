@@ -14,6 +14,9 @@ export default function InputField({
 
   registerLocale("az", az);
 
+
+  console.log(modalData,"modal")
+
   const renderDatePicker = (dateName,label) => (
     <div className="render-datepicker">
       <label>{label}</label>
@@ -50,6 +53,28 @@ export default function InputField({
       marginBottom: "0px",
       inputValue: modalData[inputName] || "",
     },
+
+    {
+      inputName: "group",
+      label: "group",
+      type: "text",
+      marginTop: "24px",
+      marginBottom: "0px",
+      inputValue: modalData[inputName] ? modalData[inputName].name : "",
+    },
+
+    {
+      inputName: "date",
+      label: "Tarix",
+      type: "date",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue:
+        modalData[inputName] && inputName === "date"
+          ? moment(modalData[inputName]).format("YYYY-MM-DD")
+          : "",
+          className: "birthday-input",
+    },
    
   ];
 
@@ -60,55 +85,59 @@ export default function InputField({
         inputData.find((item) => item.inputName === inputName).className
       }
     >
-      {inputName === "workStartDate" ? (
-        renderDatePicker(inputName,"İşə başlama tarixi")
-      ) : (
+      {
+        inputName==="date" ? renderDatePicker(inputName,"Tarix")
+        :
         <TextField
-          sx={{
-            "& input": {
-              fontSize: "12px",
-              paddingRight: inputData.find(
-                (item) => item.inputName === inputName
-              )?.paddingRight,
-            },
-            marginTop: inputData.find((item) => item.inputName === inputName)
-              .marginTop,
-            marginBottom: inputData.find((item) => item.inputName === inputName)
-              ?.marginBottom,
-          }}
-          InputLabelProps={{
-            shrink:
-              inputName === "workStartDate"
-                ? true
-                : inputData.find((item) => item.inputName === inputName)
-                    .inputValue
-                ? true
-                : shrink,
-            style: {
-              fontSize: "12px",
-              color: "#3F3F3F",
-              marginBottom: inputData.find(
-                (item) => item.inputName === inputName
-              ).marginBottom,
-            },
-          }}
-          fullWidth
-          id={inputName}
-          name={inputName}
-          type={inputData.find((item) => item.inputName === inputName).type}
-          label={inputData.find((item) => item.inputName === inputName).label}
-          value={
-            inputData.find((item) => item.inputName === inputName)?.inputValue
-          }
-          onWheel={(e) => e.target.blur()}
-          onChange={(e) => updateModalState(inputName, e.target.value)}
-          onBlur={(e) => {
-            setShrink(!!e.target.value);
-          }}
-          onFocus={() => setShrink(true)}
-          disabled={inputName === "student"}
-        />
-      )}
+        sx={{
+          "& input": {
+            fontSize: "12px",
+            paddingRight: inputData.find(
+              (item) => item.inputName === inputName
+            )?.paddingRight,
+          },
+          marginTop: inputData.find((item) => item.inputName === inputName)
+            .marginTop,
+          marginBottom: inputData.find((item) => item.inputName === inputName)
+            ?.marginBottom,
+        }}
+        InputLabelProps={{
+          shrink:
+            inputName === "date"
+              ? true
+              : inputData.find((item) => item.inputName === inputName)
+                  .inputValue
+              ? true
+              : shrink,
+          style: {
+            fontSize: "12px",
+            color: "#3F3F3F",
+            marginBottom: inputData.find(
+              (item) => item.inputName === inputName
+            ).marginBottom,
+          },
+        }}
+        fullWidth
+        id={inputName}
+        name={inputName}
+        type={inputData.find((item) => item.inputName === inputName).type}
+        label={inputData.find((item) => item.inputName === inputName).label}
+        value={
+          inputData.find((item) => item.inputName === inputName)?.inputValue
+        }
+        onWheel={(e) => e.target.blur()}
+        onChange={(e) => updateModalState(inputName, e.target.value)}
+        onBlur={(e) => {
+          setShrink(!!e.target.value);
+        }}
+        onFocus={() => setShrink(true)}
+        disabled={inputName === "fullName" || inputName==="seria" || inputName==="group" }
+      />
+
+      }
+      
+       
+    
     </div>
   );
 }

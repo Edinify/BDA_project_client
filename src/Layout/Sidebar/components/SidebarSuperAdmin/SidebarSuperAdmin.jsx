@@ -16,7 +16,7 @@ import { ReactComponent as GroupIcon } from "../../../../assets/icons/sidebar/gr
 import { ReactComponent as CareerIcon } from "../../../../assets/icons/sidebar/work-case-filled-svgrepo-com (1).svg";
 import { ReactComponent as EventsIcon } from "../../../../assets/icons/sidebar/events.svg";
 import { ReactComponent as SyllabusIcon } from "../../../../assets/icons/sidebar/syllabus-svgrepo-com.svg";
-import {ReactComponent as DiplomaIcon} from "../../../../assets/icons/sidebar/diploma.svg"
+import { ReactComponent as DiplomaIcon } from "../../../../assets/icons/sidebar/diploma.svg";
 
 const SidebarSuperAdmin = ({ closeSidebar }) => {
   const location = useLocation();
@@ -66,6 +66,28 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
       </li>
       <li>
         <NavLink
+          className={groupsNav.includes(location.pathname) ? "active" : ""}
+          to="/groups/waiting"
+          onClick={closeSidebar}
+        >
+          <GroupIcon />
+          Qruplar
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/tuition-fee" onClick={closeSidebar}>
+          <ExpensesIcon />
+          Təhsil haqqı
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/career" onClick={closeSidebar}>
+          <CareerIcon />
+          Karyera
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           className={
             consultationNav.includes(location.pathname) ? "active" : ""
           }
@@ -77,44 +99,22 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/workers" onClick={closeSidebar} className="admin">
-          <AdminIcon />
-          Əməkdaşlar
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={groupsNav.includes(location.pathname) ? "active" : ""}
-          to="/groups/waiting"
-          onClick={closeSidebar}
-        >
-          <GroupIcon />
-          Qruplar
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink to="/tuition-fee" onClick={closeSidebar}>
-          <ExpensesIcon />
-          Təhsil haqqı
-        </NavLink>
-      </li>
-      <li>
         <NavLink to="/sales" onClick={closeSidebar}>
           <SalesIcon />
           Satış
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/career" onClick={closeSidebar}>
-          <CareerIcon />
-          Karyera
-        </NavLink>
-      </li>
+
       <li>
         <NavLink to="/event" onClick={closeSidebar}>
           <EventsIcon />
           Tədbirlər
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/workers" onClick={closeSidebar} className="admin">
+          <AdminIcon />
+          Əməkdaşlar
         </NavLink>
       </li>
       <li>

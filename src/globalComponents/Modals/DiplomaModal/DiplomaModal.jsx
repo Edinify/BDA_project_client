@@ -1,23 +1,80 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
 import { DIPLOMA_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import InputField from "./components/Inputs/InputField";
+import SubmitBtn from "./components/Buttons/SubmitBtn";
+import Status from "./components/Buttons/Status";
+import Degrees from "./components/Buttons/Degrees";
 
 const DiplomaModal = () => {
   const dispatch = useDispatch();
-  const { diplomaModalData: modalData } = useSelector((state) => state.diplomaModal);
+  const { diplomaModalData: modalData } = useSelector(
+    (state) => state.diplomaModal
+  );
 
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [statusOpen, setStatusOpen] = useState(false);
 
+  const [selectedDegree,setSelectedDegree] = useState("")
+  const [degreeOpen,setDegreeOpen] = useState(false)
 
+  const statusList = [
+    { status: "Müdafiə olunmayıb", label: "noneDefensed" },
+    { status: "Müdafiə olunub", label: "defensed" },
+    { status: "Dizayn olunub", label: "designed" },
+    { status: "Diplom hazırdır", label: "done" },
+    { status: "Diplom verilib", label: "awarded" },
+  ];
 
-
-  const inputArr=[
-    "fullName",
-    "date",
-    "seria",
+  const diplomaDegrees=[
+    {name:"Sertifikat",key:"certificate"},
+    {name:"Adi diplom", key:"simple"},
+    {name:"Şərəf diplomu",key:"honor"},
+    {name:"Yoxdur",key:"none"}
+    
   ]
+
+  const statusDropdown = () => {
+    setStatusOpen(!statusOpen);
+  };
+
+
+  const degreeDropdown=()=>{
+    setDegreeOpen(!degreeOpen)
+  }
+
+  useEffect(() => {
+    if (modalData.diplomaStatus) {
+      const targetStatus = statusList.find(
+        (item) => item.label === modalData.diplomaStatus
+      );
+      setSelectedStatus(targetStatus);
+    }
+
+    if(modalData.diplomaDegree){
+      const targetDegree= diplomaDegrees.find(item=>item.key===modalData.diplomaDegree)
+      setSelectedDegree(targetDegree)
+    }
+
+  }, [modalData.diplomaStatus]);
+
+  const statusAddData = (item) => {
+    updateModalState("diplomaStatus", item.label);
+
+    setStatusOpen(false);
+    setSelectedStatus(item);
+  };
+
+
+  const degreeAddData=(item)=>{
+    updateModalState("diplomaDegree",item.key)
+    setDegreeOpen(false)
+    setSelectedDegree(item)
+  }
+
+  const inputArr = ["fullName", "date", "seria","group"];
 
   const updateModalState = (keyName, value) => {
     dispatch({
@@ -55,7 +112,7 @@ const DiplomaModal = () => {
             justifyContent: "center",
           }}
         >
-          {/* <div className="input-couples ">
+          <div className="input-couples birthday diploma ">
             {inputArr.map((name, index) => (
               <InputField
                 key={index}
@@ -64,7 +121,33 @@ const DiplomaModal = () => {
                 updateModalState={updateModalState}
               />
             ))}
-          </div> */}
+          </div>
+
+          <div className="create-update-modal-btn-con demo ">
+            <Status
+              selectedStatus={selectedStatus}
+              statusDropdown={statusDropdown}
+              statusOpen={statusOpen}
+              setStatusOpen={setStatusOpen}
+              statusAddData={statusAddData}
+              statusList={statusList}
+            />
+            <Degrees
+            selectedDegree={selectedDegree}
+            degreeDropdown={degreeDropdown}
+            degreeOpen={degreeOpen}
+            setDegreeOpen={setDegreeOpen}
+            degreeAddData={degreeAddData}
+            diplomaDegrees={diplomaDegrees}
+
+            />
+            <SubmitBtn
+              // formik={formik}
+              modalData={modalData}
+              closeModal={closeModal}
+              funcType="update"
+            />
+          </div>
         </Box>
       </div>
     </div>

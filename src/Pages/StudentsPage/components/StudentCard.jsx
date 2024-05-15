@@ -48,7 +48,7 @@ const StudentCard = ({
     Array.isArray(data?.groups) && data?.groups.length > 0
       ? data.groups
           .map((group) => {
-            return `${group.group.name}`;
+            return `${group?.group?.name}`;
           })
           .join(",")
       : "";

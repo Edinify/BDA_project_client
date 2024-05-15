@@ -15,12 +15,14 @@ import SuperAdminPanelRoute from "./SuperAdminPanelRoute";
 import WorkerPanelRoute from "./WorkerPanelRoute";
 import TeacherPanelRoute from "./TeacherPanelRoute";
 import StudentPanelRoute from "./StudentPanelRoute";
+import { useCustomHook } from "../globalComponents/GlobalFunctions/globalFunctions";
 
 export const Routing = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const [notFound, setNotFound] = useState(false);
+  const { generalProfileList } = useCustomHook();
 
   //
   const { auth } = useSelector((state) => state.auth);
@@ -56,9 +58,21 @@ export const Routing = () => {
           navigate("/student-panel");
         }
       } else if (user.role === "worker" && !notFound) {
-        let profile = user?.profiles[0]?.profile;
+        let profile;
+        for (let profileItem of generalProfileList) {
+          const checkProfile = user?.profiles.find(
+            (item) => item.profile === profileItem.key
+          );
+          if (checkProfile) {
+            profile = profileItem.key;
+            break;
+          }
+        }
         if (location.pathname.startsWith("/login")) {
           switch (profile) {
+            case "dashboard":
+              navigate("/dashboard");
+              break;
             case "tuitionFee":
               navigate("/tuitionFee");
               break;
