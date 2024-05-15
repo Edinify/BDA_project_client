@@ -70,9 +70,7 @@ const CareerData = ({ getNextCareers }) => {
 
   return (
     <>
-      {openMoreModal && (
-        <MoreModal setOpenMoreModal={setOpenMoreModal} type="career" />
-      )}
+      
       <div className="career-table-container">
         <InfiniteScroll
           dataLength={careerData?.length}

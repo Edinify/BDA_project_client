@@ -62,6 +62,8 @@ import { tableTypeReducer } from "./reducers/tableTypeReducer";
 import { paginationPageNumberReducer } from "./reducers/paginationPageNumber";
 import { mainPageTypeReducer } from "./reducers/mainpageTypeReducer";
 import { downloadExcelReducer } from "./reducers/downloadExcelReducer";
+import { diplomaPaginationReducer } from "./reducers/diplomaPaginationReducer";
+import { diplomaModalReducer } from "./reducers/diplomaModalReducer";
 
 const initialState = {};
 const reducers = combineReducers({
@@ -122,6 +124,8 @@ const reducers = combineReducers({
   pageNumber: paginationPageNumberReducer,
   mainpageType: mainPageTypeReducer,
   downloadExcel: downloadExcelReducer,
+  diplomaData:diplomaPaginationReducer,
+  diplomaModal:diplomaModalReducer
 });
 // test
 

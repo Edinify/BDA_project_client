@@ -15,7 +15,10 @@ export default function InputField({
 
   registerLocale("az", az);
 
-  const renderDatePicker = (dateName) => (
+  const renderDatePicker = (dateName,label) => (
+    <div className="render-datepicker">
+      <label>{label}</label>
+   
     <DatePicker
       selected={modalData[dateName] ? new Date(modalData[dateName]) : null}
       onChange={(date) => updateModalState(dateName, date)}
@@ -27,6 +30,7 @@ export default function InputField({
       placeholderText="dd/mm/yyyy"
       locale="az"
     />
+     </div>
   );
   const inputData = [
     {
@@ -108,7 +112,7 @@ export default function InputField({
       }
     >
       {inputName === "workStartDate" ? (
-        renderDatePicker(inputName)
+        renderDatePicker(inputName,"İşə başlama tarixi")
       ) : (
         <TextField
           sx={{
