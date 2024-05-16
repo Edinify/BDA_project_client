@@ -226,6 +226,7 @@
 .details-table.consultation-page thead,
 .details-table.syllabus-table thead,
 .details-table.tuition-table thead,
+.details-table.diploma-table thead,
 .details-table.lesson-table thead {
   position: sticky;
   background-color: white;
@@ -353,7 +354,8 @@
 .details-table.consultation-page,
 .details-table.events-table,
 .details-table.tuition-table,
-.details-table.lesson-table
+.details-table.lesson-table,
+.details-table.diploma-table
 /* .details-table.courses-table */ {
   width: auto;
   overflow-x: scroll;

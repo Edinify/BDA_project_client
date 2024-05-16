@@ -14,6 +14,8 @@ import { ReactComponent as AdminIcon } from "../../assets/icons/sidebar/users-01
 import { ReactComponent as GroupIcon } from "../../assets/icons/sidebar/group-svgrepo-com.svg";
 import { ReactComponent as CareerIcon } from "../../assets/icons/sidebar/work-case-filled-svgrepo-com (1).svg";
 import { ReactComponent as SyllabusIcon } from "../../assets/icons/sidebar/syllabus-svgrepo-com.svg";
+import { ReactComponent as DiplomaIcon } from "../../../src/assets/icons/sidebar/diploma.svg";
+
 import {
   WEEKS_BETWEEN_SELECTED_DATES_ACTION_TYPE,
   MAIN_PAGE_TYPE_ACTION_TYPE,
@@ -177,7 +179,9 @@ export function useCustomHook() {
     },
     { id: 11, name: "Tədbirlər", key: "events", icon: <EventIcon /> },
     { id: 12, name: "Əməkdaşlar", key: "workers", icon: <AdminIcon /> },
+    { id: 12, name: "Diploma Cədvəli", key: "diploma", icon: <DiplomaIcon /> },
   ];
+
   const generalProfilePowerList = [
     { name: "Tam-səlahiyyətli", key: "all" },
     { name: "Yarım-səlahiyyətli", key: "update" },
@@ -189,6 +193,23 @@ export function useCustomHook() {
     { name: "Tələbədir", key: "student" },
     { name: "İşsizdir", key: "unemployed" },
   ];
+
+
+  const diplomaDegrees=[
+    {name:"Sertifikat",key:"certificate"},
+    {name:"Adi diplom", key:"simple"},
+    {name:"Şərəf diplomu",key:"honor"},
+    {name:"Yoxdur",key:"none"}
+    
+  ]
+
+  const diplomaStatus=[
+    {name:"Müdafiə olunmayıb",key:"noneDefensed"},
+    {name:"Müdafiə olunub",key:"defensed"},
+    {name:"Dizayn olunub",key:"designed"},
+    {name:"Diplom hazırdır",key:"done"},
+    {name:"Diplom verilib",key:"awarded"}
+  ]
 
   const getWeeksBetweenDates = (start, end) => {
     let weeksList = [];
@@ -300,5 +321,7 @@ export function useCustomHook() {
     createLessonModal,
     clearLessonModal,
     changeDropdownNameErr,
+    diplomaDegrees,
+    diplomaStatus
   };
 }

@@ -48,7 +48,7 @@ const StudentCard = ({
     Array.isArray(data?.groups) && data?.groups.length > 0
       ? data.groups
           .map((group) => {
-            return `${group.group.name}`;
+            return `${group?.group?.name}`;
           })
           .join(",")
       : "";
@@ -82,6 +82,10 @@ const StudentCard = ({
     });
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
       {showDeleteModal && (
@@ -91,7 +95,7 @@ const StudentCard = ({
         />
       )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>

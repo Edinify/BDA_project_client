@@ -25,7 +25,6 @@ function Paids({ tuitionFeeModalData }) {
     });
   };
 
-
   const deletePayment = (index) => {
     const newPayments = tuitionFeeModalData.paids.filter(
       (item, i) => i !== index
@@ -50,7 +49,8 @@ function Paids({ tuitionFeeModalData }) {
             // borderBottom: "0.1px solid ",
             borderRadius: "8px",
             marginBottom: "20px",
-            backgroundColor:"var(--neutrals-200)",
+            backgroundColor: "var(--neutrals-200)",
+            paddingRight: "10px",
           }}
           className="paids-container"
         >

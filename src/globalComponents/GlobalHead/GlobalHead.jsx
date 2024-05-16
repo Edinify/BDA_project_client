@@ -14,6 +14,7 @@ import CareerPageHead from "./CareerPageHead/CareerPageHead";
 import GroupsPageHead from "./GroupsPageHead/GroupsPageHead";
 import TuitionPageHead from "./TuitionPageHead/TuitionPageHead";
 import ExcelExportBtn from "../ExcelExportBtn/ExcelExportBtn";
+import DiplomaTableHead from "./DiplomaTableHead/DiplomaTableHead";
 
 const GlobalHead = ({
   searchData,
@@ -34,7 +35,7 @@ const GlobalHead = ({
 
   useEffect(() => {
     if (user.role === "super-admin") {
-      console.log(2);
+      // console.log(2);
       setShowAddBtn(true);
     } else if (user.role === "worker") {
       const checkPower =
@@ -120,6 +121,11 @@ const GlobalHead = ({
                   filter={filter}
                 />
               )}
+              {statusType==="diploma" && (
+                <DiplomaTableHead
+                filter={filter}
+              />
+              )}
             </div>
             {addBtn && showAddBtn && (
               <div className="lesson-table-add-btn">
@@ -137,6 +143,8 @@ const GlobalHead = ({
           {statusType === "teacher" && (
             <StatusDropdown statusType="teacher" deviceType="mobile" />
           )}
+
+         
 
           {statusType === "syllabus" && <CoursesDropdown deviceType="mobile" />}
           {statusType === "lesson-table" && (

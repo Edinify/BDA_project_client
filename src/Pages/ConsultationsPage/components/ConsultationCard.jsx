@@ -92,6 +92,10 @@ const ConsultationCard = ({
     });
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   // console.log(constStatusList, "consttttttttttt");
   return (
     <>
@@ -102,7 +106,7 @@ const ConsultationCard = ({
         />
       )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con" style={{ width: "150px" }}>
               {/* <div className="cell-number">{cellNumber}.</div> */}

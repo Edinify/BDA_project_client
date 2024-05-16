@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CourseCard from "./CourseCard";
-import { Pagination } from "antd";
-import Loading from "../../../globalComponents/Loading/Loading";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -13,6 +11,9 @@ const CoursesData = ({ userData, getNextCourse }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.coursesModal);
   const [scrollHeight, setScrollHeight] = useState(1);
+  const dispatch = useDispatch()
+
+
 
   const tableHead = [
     { id: 1, label: "Fənn adı" },
@@ -87,7 +88,7 @@ const CoursesData = ({ userData, getNextCourse }) => {
               </tr>
             </thead>
 
-            <tbody>
+            <tbody  >
               {courses?.map((course, i) => (
                 <CourseCard
                   key={i}

@@ -3,7 +3,7 @@ import { Login } from "../Pages/LoginPage/LoginPage";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userAction } from "../redux/actions/userAction";
-import { profileGetImage } from "../redux/actions/profileImageAction";
+// import { profileGetImage } from "../redux/actions/profileImageAction";
 import { Header } from "../Layout/Header/Header";
 import LoginRoute from "./LoginRoute";
 
@@ -31,8 +31,8 @@ export const Routing = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const token = localStorage.getItem("auth");
 
-  console.log(user, "userrrrrrr");
-  console.log(userData, "userrrr dataaaaaaaaa");
+  // console.log(user, "userrrrrrr");
+  // console.log(userData, "userrrr dataaaaaaaaa");
 
   useEffect(() => {
     if (token) {

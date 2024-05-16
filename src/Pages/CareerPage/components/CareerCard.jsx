@@ -72,10 +72,14 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
     setOpenMoreModal(true);
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>

@@ -41,6 +41,10 @@ const WorkerCard = ({
     setOpenMoreModal(true);
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
       {showDeleteModal && (
@@ -50,7 +54,7 @@ const WorkerCard = ({
         />
       )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>

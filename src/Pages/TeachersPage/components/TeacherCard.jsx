@@ -54,6 +54,10 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
     });
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
       {showDeleteModal && (
@@ -63,7 +67,7 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
         />
       )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>

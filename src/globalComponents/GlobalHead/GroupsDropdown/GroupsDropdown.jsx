@@ -30,8 +30,6 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
       type: DROPDOWN_GROUP_ACTIONS_TYPE.SELECT_GROUP,
       payload: group,
     });
-    dispatch({ type: LESSON_TABLE_ALL_ACTIONS_TYPE.RESET_LESSON_TABLE });
-    dispatch(getLessonTablePaginationAction(0, "", group._id, "", ""));
   };
 
   useEffect(() => {

@@ -32,6 +32,10 @@ const SyllabusCard = ({ data, mode, syllabus }) => {
       },
     });
   };
+
+  const doubleClick = () => {
+    updateItem("");
+  };
   return (
     <>
       {showDeleteModal && (
@@ -41,7 +45,7 @@ const SyllabusCard = ({ data, mode, syllabus }) => {
         />
       )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>{data.orderNumber}</td>
           <td>
             <div className="td-con">

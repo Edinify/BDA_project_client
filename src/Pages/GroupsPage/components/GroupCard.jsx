@@ -78,6 +78,10 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
     });
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
       {showDeleteModal && (
@@ -87,7 +91,7 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
         />
       )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con" style={{ width: "150px" }}>
               <div className="cell-number">{cellNumber}.</div>

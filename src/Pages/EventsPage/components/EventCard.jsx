@@ -59,6 +59,10 @@ const EventCard = ({
     });
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
       {showDeleteModal && (
@@ -68,7 +72,7 @@ const EventCard = ({
         />
       )}
       {mode === "desktop" ? (
-        <tr className="class-table">
+        <tr onDoubleClick={doubleClick}  className="class-table">
           <td>
             <div
               className="td-con"

@@ -197,7 +197,7 @@ const UpdateDeleteModal = ({
             </h4>
           )}
 
-          {deleteBtn && profil !== "careers" && profil !== "tuitionFee" && (
+          {deleteBtn && profil !== "careers" && profil !== "tuitionFee" && profil!=="diploma" &&  (
             <h4
               className={`delete-func ${dataType === "branches" ? "only" : ""}`}
               onClick={handleShowDeleteModal}

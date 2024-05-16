@@ -108,10 +108,13 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
     setTotalRest((data?.totalAmount || 0) - (totalConfirmedPayment || 0));
   });
 
+  const doubleClick = () => {
+    openConfirmModal();
+  };
   return (
     <>
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>
@@ -128,7 +131,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
           <td>
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {data.group.name} - {data?.group?.course?.name}
+                {data?.group?.name} - {data?.group?.course?.name}
               </div>
               <div className="right-fade"></div>
             </div>
