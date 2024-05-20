@@ -150,7 +150,6 @@ const StudentsPage = () => {
     };
   }, [dispatch]);
 
-  // console.log(lastPage, "last page in student");
   return (
     <div className="details-page students-page">
       <GlobalHead

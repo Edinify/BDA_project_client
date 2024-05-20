@@ -32,10 +32,13 @@ const ExcelExportBtn = ({ pageName }) => {
         break;
       case "syllabus":
         dispatch(downloadSyllabusExcelAction(selectedCourse?._id));
+        break;
       case "tuition-fee":
         dispatch(downloadTuitionFeeExcelAction());
+        break;
       case "career":
         dispatch(downloadCareersExcelAction());
+        break;
       default:
         return;
     }

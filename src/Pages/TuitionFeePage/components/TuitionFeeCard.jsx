@@ -8,7 +8,7 @@ import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalF
 
 const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   const dispatch = useDispatch();
-  const { discountReasonList } = useCustomHook();
+  const { discountReasonList, studentStatus } = useCustomHook();
   const { tuitionFeeData, lastPage } = useSelector(
     (state) => state.tuitionFeePagination
   );
@@ -105,7 +105,12 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
 
     setCurrentPayment(currPayment > 0 ? currPayment : 0);
     // console.log(data.totalAmount);
-    setTotalRest((data?.totalAmount || 0) - (totalConfirmedPayment || 0));
+    setTotalRest(
+      +(
+        (data?.totalAmount || 0).toFixed(2) -
+        (totalConfirmedPayment || 0).toFixed(2)
+      ).toFixed(2)
+    );
   });
 
   const doubleClick = () => {
@@ -114,7 +119,7 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   return (
     <>
       {mode === "desktop" ? (
-        <tr onDoubleClick={doubleClick} >
+        <tr onDoubleClick={doubleClick}>
           <td>
             <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>
@@ -147,7 +152,9 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
           <td>
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {data?.totalAmount ? data?.totalAmount + " AZN" : ""}
+                {data?.totalAmount
+                  ? +data?.totalAmount?.toFixed(2) + " AZN"
+                  : ""}
               </div>
               <div className="right-fade"></div>
             </div>
@@ -186,14 +193,15 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
           >
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                <p>{currentPayment > 0 ? currentPayment : 0} AZN</p>
+                <p>{currentPayment > 0 ? +currentPayment.toFixed(2) : 0} AZN</p>
               </div>
             </div>
           </td>
           <td>
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {data?.status ? "Davam edir" : "Məzun"}
+                {studentStatus.find((item) => item.key === data?.status)
+                  ?.value || ""}
               </div>
               <div className="right-fade"></div>
             </div>
