@@ -129,26 +129,28 @@ const TuitionFeeConfirmModal = () => {
       0
     );
 
-    const currPayment = totalBeforePayment - totalConfirmedPayment;
+    const currPayment = +(totalBeforePayment - totalConfirmedPayment).toFixed(
+      2
+    );
 
     setCurrentPayment(currPayment > 0 ? currPayment : 0);
 
     setPayments(calcedPayments);
 
-    setPaidAmount(totalConfirmedPayment);
+    setPaidAmount(totalConfirmedPayment.toFixed(2));
   }, [tuitionFeeModalData.paids]);
 
   const confirmInformationData = [
     {
       id: 1,
       title: "Yekun məbləğ:",
-      value: `${tuitionFeeModalData?.totalAmount}AZN`,
+      value: `${tuitionFeeModalData?.totalAmount.toFixed(2)}AZN`,
     },
     { id: 2, title: "Ödənilən məbləğ:", value: `${paidAmount}AZN` },
     {
       id: 3,
       title: "Qalıq:",
-      value: `${tuitionFeeModalData?.totalAmount - paidAmount}AZN`,
+      value: `${(tuitionFeeModalData?.totalAmount - paidAmount).toFixed(2)}AZN`,
     },
     { id: 4, title: "Cari ödəniş:", value: `${currentPayment}AZN` },
   ];
@@ -191,15 +193,16 @@ const TuitionFeeConfirmModal = () => {
                   </h2>
                 </td>
                 <td>
-                  <h2>{item.paid ? "ödənildi" : "ödənilməyib"}</h2>
+                  <h2>{item?.paid ? "ödənildi" : "ödənilməyib"}</h2>
                 </td>
                 <td>
                   <h2>
-                    {(item.rest > item.payment && item.payment) || item.rest}
+                    {(item.rest > item.payment && item.payment) ||
+                      item.rest.toFixed(2)}
                   </h2>
                 </td>
                 <td>
-                  <h2>{item.payment} AZN</h2>
+                  <h2>{item.payment.toFixed(2)} AZN</h2>
                 </td>
               </tr>
             ))}

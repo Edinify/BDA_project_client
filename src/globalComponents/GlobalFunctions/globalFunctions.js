@@ -194,22 +194,27 @@ export function useCustomHook() {
     { name: "İşsizdir", key: "unemployed" },
   ];
 
+  const diplomaDegrees = [
+    { name: "Sertifikat", key: "certificate" },
+    { name: "Adi diplom", key: "simple" },
+    { name: "Şərəf diplomu", key: "honor" },
+    { name: "Yoxdur", key: "none" },
+  ];
 
-  const diplomaDegrees=[
-    {name:"Sertifikat",key:"certificate"},
-    {name:"Adi diplom", key:"simple"},
-    {name:"Şərəf diplomu",key:"honor"},
-    {name:"Yoxdur",key:"none"}
-    
-  ]
+  const diplomaStatus = [
+    { name: "Müdafiə olunmayıb", key: "noneDefensed" },
+    { name: "Müdafiə olunub", key: "defensed" },
+    { name: "Dizayn olunub", key: "designed" },
+    { name: "Diplom hazırdır", key: "done" },
+    { name: "Diplom verilib", key: "awarded" },
+  ];
 
-  const diplomaStatus=[
-    {name:"Müdafiə olunmayıb",key:"noneDefensed"},
-    {name:"Müdafiə olunub",key:"defensed"},
-    {name:"Dizayn olunub",key:"designed"},
-    {name:"Diplom hazırdır",key:"done"},
-    {name:"Diplom verilib",key:"awarded"}
-  ]
+  const studentStatus = [
+    { key: "graduate", value: "Məzun" },
+    { key: "continue", value: "Davam edir" },
+    { key: "stopped", value: "Dayandırdı" },
+    { key: "freeze", value: "Dondurdu" },
+  ];
 
   const getWeeksBetweenDates = (start, end) => {
     let weeksList = [];
@@ -322,6 +327,7 @@ export function useCustomHook() {
     clearLessonModal,
     changeDropdownNameErr,
     diplomaDegrees,
-    diplomaStatus
+    diplomaStatus,
+    studentStatus,
   };
 }

@@ -27,7 +27,7 @@ const TuitionFeeData = ({ getNextTuitionFees }) => {
     "Yekun qalıq",
     "Endirim",
     "Ödəniş növü",
-    "Ümumi ödəniləcək məbləğ",
+    "Cari ödəniləcək məbləğ",
     "Status",
     "",
   ];
