@@ -1,8 +1,6 @@
 import axios from "axios";
 import {
-  ALL_COURSES_ACTION,
   COURSES_ALL_ACTIONS_TYPE,
-  COURSES_MODAL_ACTION_TYPE,
   EVENTS_ALL_ACTIONS_TYPE,
   EVENTS_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -261,7 +259,7 @@ export const confirmEventChangesAction =
               AccessToken: token.data.accesstoken,
             })
           );
-          const { data } = await API.patch(`/${_id}`, eventData);
+          await API.patch(`/${_id}`, eventData);
           // dispatch({
           //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
           //   payload: data,
@@ -311,7 +309,7 @@ export const cancelCourseChangesAction =
               AccessToken: token.data.accesstoken,
             })
           );
-          const { data } = await API.patch(`/${_id}`, eventData);
+           await API.patch(`/${_id}`, eventData);
           // dispatch({
           //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
           //   payload: data,

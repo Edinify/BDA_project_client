@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "./moreModal.css";
 import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as EditIcon } from "../../assets/icons/more-modal/edit-02.svg";

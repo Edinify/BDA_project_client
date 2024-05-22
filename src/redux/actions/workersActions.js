@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-  CHANGE_PASSPWORD_ACTION_TYPE,
   WORKER_ALL_ACTIONS_TYPE,
   WORKER_MODAL_ACTION_TYPE,
 } from "../actions-type";

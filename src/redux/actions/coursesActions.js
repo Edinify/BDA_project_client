@@ -277,11 +277,8 @@ export const confirmCourseChangesAction =
               AccessToken: token.data.accesstoken,
             })
           );
-          const { data } = await API.patch(`/${_id}`, courseData);
-          // dispatch({
-          //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
-          //   payload: data,
-          // });
+           await API.patch(`/${_id}`, courseData);
+          
           dispatch({
             type: COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
           });
@@ -327,11 +324,8 @@ export const cancelCourseChangesAction =
               AccessToken: token.data.accesstoken,
             })
           );
-          const { data } = await API.patch(`/${_id}`, courseData);
-          // dispatch({
-          //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
-          //   payload: data,
-          // });
+          await API.patch(`/${_id}`, courseData);
+          
           dispatch({
             type: COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
           });

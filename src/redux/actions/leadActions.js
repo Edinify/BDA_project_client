@@ -91,7 +91,7 @@ export const getLeadPaginationAction =
             })
           );
 
-          const { data } = await API.get(
+           await API.get(
             `/?length=${length}&startDate=${startDate || ""}&endDate=${
               endDate || ""
             }&monthCount=${monthCount || ""}`
@@ -138,7 +138,7 @@ export const createLeadAction = (incomesData) => async (dispatch) => {
           })
         );
 
-        const { data } = await API.post("/", incomesData);
+        await API.post("/", incomesData);
 
         dispatch({
           type: INCOMES_MODAL_ACTION_TYPE.INCOMES_OPEN_MODAL,

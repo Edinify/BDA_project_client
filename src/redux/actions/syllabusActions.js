@@ -72,10 +72,7 @@ const setLoadingSyllabusAction = (loadingValue) => ({
   type: SYLLABUS_ALL_ACTIONS_TYPE.SYLLABUS_LOADING,
   payload: loadingValue,
 });
-const pageLoading = (loadingValue) => ({
-  type: SYLLABUS_ALL_ACTIONS_TYPE.SYLLABUS_LOADING,
-  payload: loadingValue,
-});
+
 const modalLoading = (loadingValue) => ({
   type: SYLLABUS_MODAL_ACTION_TYPE.SYLLABUS_MODAL_LOADING,
   payload: loadingValue,

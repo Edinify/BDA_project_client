@@ -1,11 +1,6 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import StudentCells from "./cells/StudentCells";
 import TeacherCells from "./cells/TeacherCells";
 import TimeCells from "./cells/TimeCells";
 import { useCustomHook } from "../../GlobalFunctions/globalFunctions";
-import moment from "moment";
 import "moment/locale/az";
 
 export const TableColumns = ({ time }) => {

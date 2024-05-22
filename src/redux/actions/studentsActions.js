@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-  CHANGE_PASSPWORD_ACTION_TYPE,
   DOWNLOAD_EXCEL_ACTION_TYPE,
   STUDENTS_ALL_ACTIONS_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
@@ -339,7 +338,7 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
           })
         );
 
-        const { data } = await REGISTERAPI.post("/student/sign", studentData);
+         await REGISTERAPI.post("/student/sign", studentData);
 
         dispatch({
           type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
