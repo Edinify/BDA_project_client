@@ -1,13 +1,11 @@
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import * as yup from "yup";
 
-const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
+// const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
 // const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 export const useValidationSchema = () => {
-  const { studentsModalData: modalData } = useSelector(
-    (state) => state.studentsModal
-  );
+ 
 
   const ValidationSchema = yup.object().shape({
     fullName: yup

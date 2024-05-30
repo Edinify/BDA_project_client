@@ -13,7 +13,7 @@ const StudentMoreModal = ({ studentsModalData }) => {
           })
           .join(", ")
       : "boş";
-  const { whereComingList,whereSendList, discountReasonList, paymentTypeList } =
+  const { whereComingList,whereSendList, discountReasonList } =
     useCustomHook();
   const dataList1 = [
     { title: "Ad soyad", value: studentsModalData?.fullName },
@@ -42,49 +42,7 @@ const StudentMoreModal = ({ studentsModalData }) => {
     },
     { title: "İxtisaslar", value: courses },
   ];
-  const dataList2 = [
-    // { title: "Təhsil dərəcəsi", value: studentsModalData?.degree },
-    // {
-    //   title: "Müqavilə başlama tarixi",
-    //   value: studentsModalData?.contractStartDate
-    //     ? moment(studentsModalData?.contractStartDate)
-    //         .locale("az")
-    //         .format("DD MMMM YYYY")
-    //     : "",
-    // },
-    // {
-    //   title: "Müqavilə bitmə tarixi",
-    //   value: studentsModalData?.contractEndDate
-    //     ? moment(studentsModalData?.contractEndDate)
-    //         .locale("az")
-    //         .format("DD MMMM YYYY")
-    //     : "",
-    // },
-    // { title: "Ödəniş", value: studentsModalData?.amount },
-    // { title: "Yekun məbləğ", value: studentsModalData?.totalAmount },
-    // {
-    //   title: "Endirim növü",
-    //   value: discountReasonList.find(
-    //     (item) => item.key === studentsModalData?.discountReason
-    //   ).name,
-    // },
-    // { title: "Endirim %", value: studentsModalData?.discount },
-    // {
-    //   title: "Ödəniş növü",
-    //   value: paymentTypeList.find(
-    //     (item) => item.key === studentsModalData?.paymentType
-    //   ).name,
-    // },
-    // { title: "Qrup", value: "" },
-    // {
-    //   title: "Qoşulma tarixi",
-    //   value: studentsModalData?.createdAt
-    //     ? moment(studentsModalData?.createdAt)
-    //         .locale("az")
-    //         .format("DD MMMM YYYY")
-    //     : "",
-    // },
-  ];
+ 
 
   return (
     <>

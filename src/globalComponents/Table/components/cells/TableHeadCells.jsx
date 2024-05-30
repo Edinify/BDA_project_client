@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import moment from "moment";
 import 'moment/locale/az';
  
  export const TableHeadCells = ({ week }) => {
@@ -10,26 +9,26 @@ import 'moment/locale/az';
     const startWeek = new Date();
     startWeek.setDate(startWeek.getDate() - (startWeek.getDay() === 0 ? 7 : startWeek.getDay()) + 1)
 
-    const [weekday, setWeekday] = useState(() => {
-      switch(week) {
-        case "B.e": 
-          return startWeek.setDate(startWeek.getDate() + 0)
-        case "Ç.a": 
-          return startWeek.setDate(startWeek.getDate() + 1)
-        case "Ç.": 
-          return startWeek.setDate(startWeek.getDate() + 2)
-        case "C.a": 
-          return startWeek.setDate(startWeek.getDate() + 3)
-        case "C.": 
-          return startWeek.setDate(startWeek.getDate() + 4)
-        case "Ş.": 
-          return startWeek.setDate(startWeek.getDate() + 5)
-        case "B.": 
-          return startWeek.setDate(startWeek.getDate() + 6)
-        default: 
-          return ''
-      }
-    })
+    // const [weekday, setWeekday] = useState(() => {
+    //   switch(week) {
+    //     case "B.e": 
+    //       return startWeek.setDate(startWeek.getDate() + 0)
+    //     case "Ç.a": 
+    //       return startWeek.setDate(startWeek.getDate() + 1)
+    //     case "Ç.": 
+    //       return startWeek.setDate(startWeek.getDate() + 2)
+    //     case "C.a": 
+    //       return startWeek.setDate(startWeek.getDate() + 3)
+    //     case "C.": 
+    //       return startWeek.setDate(startWeek.getDate() + 4)
+    //     case "Ş.": 
+    //       return startWeek.setDate(startWeek.getDate() + 5)
+    //     case "B.": 
+    //       return startWeek.setDate(startWeek.getDate() + 6)
+    //     default: 
+    //       return ''
+    //   }
+    // })
 
     useEffect(() => {
       if(weeksBetweenSelectedDates.length > 0 && pageNumber > 0) {

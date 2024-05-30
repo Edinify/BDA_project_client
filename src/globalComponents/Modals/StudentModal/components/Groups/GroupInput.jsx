@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ReactComponent as MinusIcon } from "../../../../../assets/icons/minus-cirlce.svg";
 import PaymentType from "../Groups/components/PaymentType";
 import Payments from "./components/Payments/Payments";
 import InputField from "./components/Inputs/InputField";
 import DiscountReason from "./components/DiscountReason/DiscountReason";
 import Status from "./components/Status/Status";
-import { date } from "yup";
 
 const GroupInput = ({
   data,

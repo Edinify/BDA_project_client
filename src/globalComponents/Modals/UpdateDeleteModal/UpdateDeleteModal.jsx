@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import "./updateDeleteModal.css";
 import { useDispatch, useSelector } from "react-redux";
 import { FUNC_COMPONENT_ACTION_TYPE } from "../../../redux/actions-type";
 import { ReactComponent as MoreIcon } from "../../../assets/icons/more.svg";
-import DeleteItemModal from "../DeleteItemModal/DeleteItemModal";
 import { downloadContractAction } from "../../../redux/actions/studentsActions";
 import { MdOutlineFileDownload } from "react-icons/md";
 

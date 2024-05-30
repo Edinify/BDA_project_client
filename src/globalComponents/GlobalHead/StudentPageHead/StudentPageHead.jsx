@@ -3,23 +3,68 @@ import { CoursesDropdown } from "../CoursesDropdown/CoursesDropdown";
 import { GroupsDropdown } from "../GroupsDropdown/GroupsDropdown";
 import { ReactComponent as HalfCircleICon } from "../../../assets/icons/filter/half-circle-svgrepo-com.svg";
 import ExcelExportBtn from "../../../globalComponents/ExcelExportBtn/ExcelExportBtn";
+import StudentStatusDropdown from "../StudentStatusDropdown/StudentStatusDropdown";
+import { ReactComponent as PlusIcon } from "../../../assets/icons/Plus.svg";
+import Search from "../Search/Search";
 
-const StudentPageHead = ({ filter, count }) => {
+const StudentPageHead = ({
+  openModal,
+  search,
+  filter,
+  searchData,
+  dataSearchValues,
+  DATA_SEARCH_VALUE,
+  count,
+}) => {
   return (
-    <div className="student-filter-header">
-      <CoursesDropdown deviceType="desktop" />
-      <GroupsDropdown deviceType="desktop" />
-      <div className="lesson-table-btn-container student ">
-        <button className="add-detail" onClick={() => filter()}>
-          Tətbiq et
+    <div className="student-header-filter-container">
+      <div className="teahcer-page-add-btn">
+        <button className="add-detail" onClick={openModal}>
+          <PlusIcon />
+          Əlavə et
         </button>
       </div>
-      <div className="circle-icon">
-        <p className="filter-count">{count || 0}</p>
-        <HalfCircleICon />
+      <div className="student-header-filter">
+        {search && (
+          <Search
+            searchData={searchData}
+            dataSearchValues={dataSearchValues}
+            className="search-input-con desktop"
+            DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+          />
+        )}
+        <CoursesDropdown deviceType="desktop" />
+        <GroupsDropdown deviceType="desktop" />
+        <StudentStatusDropdown deviceType="desktop" />
+
+        <div className="lesson-table-btn-container teacher ">
+          <button className="add-detail" onClick={() => filter()}>
+            Tətbiq et
+          </button>
+        </div>
+        <div className="circle-icon">
+          <p className="filter-count">{count || 0}</p>
+          <HalfCircleICon />
+        </div>
+
+        <ExcelExportBtn pageName="student" />
       </div>
-      <ExcelExportBtn pageName="student" />
     </div>
+    // <div className="student-filter-header">
+    //   <CoursesDropdown deviceType="desktop" />
+    //   <GroupsDropdown deviceType="desktop" />
+    //   <StudentStatusDropdown deviceType="desktop" />
+    //   <div className="lesson-table-btn-container student ">
+    //     <button className="add-detail" onClick={() => filter()}>
+    //       Tətbiq et
+    //     </button>
+    //   </div>
+    //   <div className="circle-icon">
+    //     <p className="filter-count">{count || 0}</p>
+    //     <HalfCircleICon />
+    //   </div>
+    //   <ExcelExportBtn pageName="student" />
+    // </div>
   );
 };
 

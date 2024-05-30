@@ -17,6 +17,7 @@ const StudentsPage = () => {
   const { studentStatus, courseId } = useSelector(
     (state) => state.studentStatus
   );
+  const { status } = useSelector((state) => state.studentGroupStatus);
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [studentPageNum, setStudentPageNum] = useState(1);
 
@@ -39,7 +40,8 @@ const StudentsPage = () => {
             : "all"
           : "all",
         courseId,
-        selectedGroup._id
+        selectedGroup._id,
+        status
       )
     );
   };
@@ -53,7 +55,8 @@ const StudentsPage = () => {
           studentSearchValues,
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     } else {
@@ -63,7 +66,8 @@ const StudentsPage = () => {
           "",
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     }
@@ -79,7 +83,8 @@ const StudentsPage = () => {
           studentSearchValues,
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     } else {
@@ -89,7 +94,8 @@ const StudentsPage = () => {
           "",
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     }
@@ -116,7 +122,8 @@ const StudentsPage = () => {
             : "all"
           : "all",
         courseId,
-        selectedGroup._id
+        selectedGroup._id,
+        status
       )
     );
     setStudentPageNum(1);
@@ -137,10 +144,10 @@ const StudentsPage = () => {
   useEffect(() => {
     if (studentSearchValues) {
       dispatch(
-        getStudentsPaginationAction(0, studentSearchValues, "all", "", "")
+        getStudentsPaginationAction(0, studentSearchValues, "all", "", "", "")
       );
     } else {
-      dispatch(getStudentsPaginationAction(0, "", "", "", ""));
+      dispatch(getStudentsPaginationAction(0, "", "", "", "", ""));
     }
 
     return () => {

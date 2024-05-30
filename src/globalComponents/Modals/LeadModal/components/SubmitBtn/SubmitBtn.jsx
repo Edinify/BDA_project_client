@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ReactComponent as DeleteIcon } from "../../../../../assets/icons/Delete button.svg";
-import {
-  createIncomesAction,
-  updateIncomesAction,
-} from "../../../../../redux/actions/incomeActions";
+
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
-import { useFinanceCustomHook } from "../../../../../Pages/FinancePage/utils";
 import {
   createLeadAction,
   updateLeadAction,

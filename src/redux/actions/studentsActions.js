@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-  CHANGE_PASSPWORD_ACTION_TYPE,
   DOWNLOAD_EXCEL_ACTION_TYPE,
   STUDENTS_ALL_ACTIONS_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
@@ -257,14 +256,21 @@ export const getstudentsByCourseIdAction = (payload) => async (dispatch) => {
 };
 
 export const getStudentsPaginationAction =
-  (length, searchQuery, status = "all", courseId = "", groupId = "") =>
+  (
+    length,
+    searchQuery,
+    status = "all",
+    courseId = "",
+    groupId = "",
+    studentGroupStatus = ""
+  ) =>
   async (dispatch) => {
     dispatch(setLoadingStudentsAction(true));
 
     // console.log(searchQuery, "ssssssssssssssssssssss");
     try {
       const { data } = await API.get(
-        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}`
+        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}&studentGroupStatus=${studentGroupStatus}`
       );
 
       dispatch({
@@ -339,7 +345,7 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
           })
         );
 
-        const { data } = await REGISTERAPI.post("/student/sign", studentData);
+         await REGISTERAPI.post("/student/sign", studentData);
 
         dispatch({
           type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const StudentStatus = ({ updateModalState, modalData }) => {
@@ -29,7 +28,7 @@ const StudentStatus = ({ updateModalState, modalData }) => {
               key={i}
               className={
                 modalData?.students?.find(
-                  (item) => item.student._id == user._id
+                  (item) => item.student._id === user._id
                 )?.studentSignature === item.status
                   ? "active"
                   : ""

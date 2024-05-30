@@ -31,7 +31,7 @@ const PaymentType = ({ formik, data, addPaymentType }) => {
               label="Ödəniş növü"
               autoComplete="off"
               disabled={
-                data?.payments?.find((item) => item.status != "wait")
+                data?.payments?.find((item) => item.status !== "wait")
                   ? true
                   : false
               }

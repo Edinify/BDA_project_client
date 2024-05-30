@@ -1,8 +1,7 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
 import { useState } from "react";
-import { ReactComponent as Eye } from "../../../../../assets/icons/eye.svg";
-import { ReactComponent as EyeSlash } from "../../../../../assets/icons/eye-slash.svg";
+
 
 export default function InputField({
   formik,

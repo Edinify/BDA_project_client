@@ -1,8 +1,6 @@
 import { TextField } from "@mui/material";
 import moment from "moment";
 import { useState } from "react";
-import { EVENTS_MODAL_ACTION_TYPE } from "../../../../redux/actions-type";
-import { useDispatch } from "react-redux";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import az from "date-fns/locale/az";
@@ -18,7 +16,6 @@ export default function DateField({
 
   registerLocale("az", az);
 
-  const dispatch = useDispatch();
   const inputData = [
     {
       inputName: "date",
