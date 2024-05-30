@@ -64,6 +64,7 @@ import { mainPageTypeReducer } from "./reducers/mainpageTypeReducer";
 import { downloadExcelReducer } from "./reducers/downloadExcelReducer";
 import { diplomaPaginationReducer } from "./reducers/diplomaPaginationReducer";
 import { diplomaModalReducer } from "./reducers/diplomaModalReducer";
+import { studentGroupStatusReducer } from "./reducers/studentGroupStatusReducer";
 
 const initialState = {};
 const reducers = combineReducers({
@@ -114,6 +115,7 @@ const reducers = combineReducers({
   leadModal: leadModalReducer,
   financeDateFilter: financeFilterReducer,
   studentStatus: studentStatusReducer,
+  studentGroupStatus: studentGroupStatusReducer,
   teacherStatus: teacherStatusReducer,
   dropdownGroup: dropdownGroupReducer,
   dropdownTeacher: dropdownTeacherReducer,
@@ -124,8 +126,8 @@ const reducers = combineReducers({
   pageNumber: paginationPageNumberReducer,
   mainpageType: mainPageTypeReducer,
   downloadExcel: downloadExcelReducer,
-  diplomaPagination:diplomaPaginationReducer,
-  diplomaModal:diplomaModalReducer
+  diplomaPagination: diplomaPaginationReducer,
+  diplomaModal: diplomaModalReducer,
 });
 // test
 

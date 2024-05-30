@@ -16,21 +16,21 @@ export default function InputField({
   const [viewPass, setViewPass] = useState(true);
   registerLocale("az", az);
 
-  const renderDatePicker = (dateName,label) => (
+  const renderDatePicker = (dateName, label) => (
     <div className="render-datepicker">
-      <label >{label}</label>
-    
-    <DatePicker
-      selected={modalData[dateName] ? new Date(modalData[dateName]) : null}
-      onChange={(date) => updateModalState(dateName, date)}
-      peekNextMonth
-      showMonthDropdown
-      showYearDropdown
-      dropdownMode="select"
-      dateFormat="dd/MM/yyyy"
-      placeholderText="dd/mm/yyyy"
-      locale="az"
-    />
+      <label>{label}</label>
+
+      <DatePicker
+        selected={modalData[dateName] ? new Date(modalData[dateName]) : null}
+        onChange={(date) => updateModalState(dateName, date)}
+        peekNextMonth
+        showMonthDropdown
+        showYearDropdown
+        dropdownMode="select"
+        dateFormat="dd/MM/yyyy"
+        placeholderText="dd/mm/yyyy"
+        locale="az"
+      />
     </div>
   );
 
@@ -39,11 +39,13 @@ export default function InputField({
       inputName: "studentName",
       label: "Tələbə",
       type: "text",
+      inputValue: modalData?.studentName || "",
     },
     {
       inputName: "addInfo",
       label: "Əlavə məlumat",
       type: "text",
+      inputValue: modalData?.addInfo || "",
     },
     {
       inputName: "constDate",
@@ -55,6 +57,7 @@ export default function InputField({
       inputName: "constTime",
       label: "Konsultasiya saatı",
       type: "time",
+      inputValue: modalData?.constTime || "",
     },
     {
       inputName: "contactDate",
@@ -66,6 +69,7 @@ export default function InputField({
       inputName: "studentPhone",
       label: "Mobil nömrə",
       type: "tel",
+      inputValue: modalData?.studentPhone || "",
     },
   ];
 
@@ -76,7 +80,10 @@ export default function InputField({
       }
     >
       {inputName === "constDate" || inputName === "contactDate" ? (
-        renderDatePicker(inputName,inputName==="contactDate" ?"Əlaqə tarixi" : "Konsultasiya tarixi")
+        renderDatePicker(
+          inputName,
+          inputName === "contactDate" ? "Əlaqə tarixi" : "Konsultasiya tarixi"
+        )
       ) : (
         <TextField
           sx={{

@@ -63,7 +63,8 @@ const GlobalHead = ({
               {location.pathname === "/teachers" ||
               location.pathname === "/teachers/mentors" ||
               location.pathname === "/tuition-fee" ||
-              location.pathname === "/tuitionFee"
+              location.pathname === "/tuitionFee" ||
+              location.pathname === "/students"
                 ? null
                 : search && (
                     <>
@@ -98,7 +99,15 @@ const GlobalHead = ({
                 </>
               )}
               {statusType === "student" && (
-                <StudentPageHead filter={filter} count={count} />
+                <StudentPageHead
+                searchData={searchData}
+                DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+                dataSearchValues={dataSearchValues}
+                filter={filter}
+                openModal={openModal}
+                search={search}
+                count={count}
+                />
               )}
               {statusType === "career" && <CareerPageHead filter={filter} />}
               {statusType === "groups" && (
@@ -121,17 +130,14 @@ const GlobalHead = ({
                   filter={filter}
                 />
               )}
-              {statusType==="diploma" && (
-                <DiplomaTableHead
-                filter={filter}
-              />
-              )}
+              {statusType === "diploma" && <DiplomaTableHead filter={filter} />}
             </div>
             {addBtn && showAddBtn && (
               <div className="lesson-table-add-btn">
                 {statusType === "lesson-table" && null}
                 {statusType === "teacher" && null}
-                {statusType !== "lesson-table" && statusType !== "teacher" && (
+                {statusType ==="student" && null}
+                {statusType !== "lesson-table" && statusType !== "teacher" &&  statusType!=="student" &&  (
                   <button className="add-detail" onClick={openModal}>
                     <PlusIcon />
                     Əlavə et
@@ -143,8 +149,6 @@ const GlobalHead = ({
           {statusType === "teacher" && (
             <StatusDropdown statusType="teacher" deviceType="mobile" />
           )}
-
-         
 
           {statusType === "syllabus" && <CoursesDropdown deviceType="mobile" />}
           {statusType === "lesson-table" && (

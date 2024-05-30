@@ -46,7 +46,7 @@ const GroupInput = ({
       [key]: value,
     };
 
-    // console.log(groupData);
+    console.log(groupData);
     updateModalState("groups", groupData);
   };
 

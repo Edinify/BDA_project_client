@@ -256,14 +256,21 @@ export const getstudentsByCourseIdAction = (payload) => async (dispatch) => {
 };
 
 export const getStudentsPaginationAction =
-  (length, searchQuery, status = "all", courseId = "", groupId = "") =>
+  (
+    length,
+    searchQuery,
+    status = "all",
+    courseId = "",
+    groupId = "",
+    studentGroupStatus = ""
+  ) =>
   async (dispatch) => {
     dispatch(setLoadingStudentsAction(true));
 
     // console.log(searchQuery, "ssssssssssssssssssssss");
     try {
       const { data } = await API.get(
-        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}`
+        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}&studentGroupStatus=${studentGroupStatus}`
       );
 
       dispatch({

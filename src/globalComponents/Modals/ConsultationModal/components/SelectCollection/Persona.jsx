@@ -5,11 +5,12 @@ import DropdownIcon from "../../../components/DropdownIcon/DropdownIcon";
 
 const Persona = ({ formik, modalData, updateModalState }) => {
   const { personaList: dataList } = useCustomHook();
-  const inputValue = dataList.find((item) => item.key === modalData.persona)?.name || ""
+  const inputValue =
+    dataList.find((item) => item.key === modalData.persona)?.name || "";
   const [openDropdown, setOpenDropdown] = useState(false);
   const addData = (item) => {
-    updateModalState("persona", item)
-    setOpenDropdown(false)
+    updateModalState("persona", item);
+    setOpenDropdown(false);
   };
   return (
     <>
@@ -23,7 +24,7 @@ const Persona = ({ formik, modalData, updateModalState }) => {
                   marginRight: "32px",
                 },
                 marginTop: "24px",
-                // marginBottom: "24px",
+                marginBottom: "24px",
               }}
               InputLabelProps={{
                 style: { fontSize: "12px", color: "#3F3F3F" },
@@ -35,7 +36,7 @@ const Persona = ({ formik, modalData, updateModalState }) => {
               value={inputValue}
               onBlur={() => formik.setFieldTouched("persona", true)}
             />
-           <DropdownIcon
+            <DropdownIcon
               setOpenDropdown={setOpenDropdown}
               openDropdown={openDropdown}
             />
