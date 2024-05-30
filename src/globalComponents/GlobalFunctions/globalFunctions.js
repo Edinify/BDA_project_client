@@ -82,6 +82,7 @@ export function useCustomHook() {
     { name: "Resale", key: "resale" },
   ];
   const whereSendList = [
+    { name: "Satış", key: "sale" },
     { name: "Technest İnside", key: "technestInside" },
     { name: "Dövlət Məşğulluq Agentliyi", key: "DMA" },
     { name: "Azərbaycan Respublikası Mədəniyyət Nazirliyi", key: "ARMN" },
@@ -214,6 +215,7 @@ export function useCustomHook() {
     { key: "continue", value: "Davam edir" },
     { key: "stopped", value: "Dayandırdı" },
     { key: "freeze", value: "Dondurdu" },
+    { key: "wait", value: "Gözləmədə" },
   ];
 
   const getWeeksBetweenDates = (start, end) => {
