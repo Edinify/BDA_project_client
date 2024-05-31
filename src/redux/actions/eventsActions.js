@@ -72,11 +72,7 @@ export const getEventsPaginationAction =
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}`
       );
-<<<<<<< HEAD
-      // console.log(data)
-=======
       console.log(data);
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
       dispatch({
         type: EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_PAGINATION,
         payload: data,
@@ -233,11 +229,6 @@ export const deleteEventAction = (id) => async (dispatch) => {
           return dispatch(logoutAction());
         }
       }
-<<<<<<< HEAD
-      // // console.log(error);
-      toastError(error?.response?.data.message);
-=======
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     }
     // console.log(error);
     toastError(error?.response?.data.message);
