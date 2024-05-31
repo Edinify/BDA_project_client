@@ -30,9 +30,6 @@ const CoursesData = ({ userData, getNextCourse }) => {
       document.body.style.overflowY = "overlay";
     }
   }, [openMoreModal]);
-<<<<<<< HEAD
-  // // console.log(courses)
-=======
 
   useEffect(() => {
     const mainHeader = document.querySelector(".main-header");
@@ -56,7 +53,6 @@ const CoursesData = ({ userData, getNextCourse }) => {
     };
   }, []);
   // console.log(courses)
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
   return (
     <>
       <>

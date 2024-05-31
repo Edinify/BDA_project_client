@@ -159,11 +159,7 @@ export const getWorkersPaginationAction =
         payload: data,
       });
     } catch (error) {
-<<<<<<< HEAD
-      // console.log(error)
-=======
       console.log(error);
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -294,52 +290,9 @@ export const updateWorkerAction = (_id, workerData) => async (dispatch) => {
   }
 };
 
-<<<<<<< HEAD
-export const deleteWorkerAction =
-  ({ _id, pageNumber, searchQuery }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getWorkersPaginationAction(pageNumber, searchQuery));
-      dispatch({ type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER, payload: _id });
-      toastSuccess("İşçi silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(getWorkersPaginationAction(pageNumber, searchQuery));
-          dispatch({
-            type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER,
-            payload: _id,
-          });
-          toastSuccess("İşçi silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
-        }
-      }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan əməkdaş silinə bilməz");
-      }
-      // // console.log(error);
-      toastError(error?.response?.data.message);
-    }
-  };
-=======
 export const deleteWorkerAction = (id) => async (dispatch) => {
   try {
     const { data } = await API.delete(`/${id}`);
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
 
     dispatch({
       type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER,
@@ -361,36 +314,6 @@ export const deleteWorkerAction = (id) => async (dispatch) => {
         );
         const { data } = await API.delete(`/${id}`);
 
-<<<<<<< HEAD
-      if (error?.response?.data?.key === "old-password-incorrect.") {
-        toastError("köhnə şifrə yalnışdır");
-        return;
-      }
-      // // console.log(error);
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-
-          const response = await API.patch(`worker/own/password`, {
-            newPassword,
-            oldPassword,
-          });
-
-          dispatch(logoutAction());
-        } catch (error) {
-          // // console.log(error);
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
-=======
         dispatch({
           type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER,
           payload: data._id,
@@ -399,7 +322,6 @@ export const deleteWorkerAction = (id) => async (dispatch) => {
       } catch (error) {
         if (error?.response?.status === 401) {
           return dispatch(logoutAction());
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
         }
       }
     }

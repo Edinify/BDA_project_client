@@ -103,12 +103,8 @@ export default function InputField({
     },
   ];
 
-<<<<<<< HEAD
-  // // console.log(modalData,'lllllllllll')
-=======
 
   console.log(inputData,"dataaaaaaaadsfs")
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
   return (
     <div
       className={

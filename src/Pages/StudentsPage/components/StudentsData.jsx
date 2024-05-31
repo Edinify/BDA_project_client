@@ -35,9 +35,6 @@ const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
     }
   }, [openMoreModal]);
 
-<<<<<<< HEAD
-  // // console.log(hasMore,"has more")
-=======
   useEffect(() => {
     const mainHeader = document.querySelector(".main-header");
     const detailsHeader = document.querySelector(".details-header");
@@ -61,7 +58,6 @@ const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
   }, []);
 
   console.log(students);
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
 
   return (
     <>

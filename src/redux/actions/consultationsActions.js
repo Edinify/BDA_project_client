@@ -140,11 +140,7 @@ export const getConsultationPaginationAction =
   (length, searchQuery, status = "appointed") =>
   async (dispatch) => {
     dispatch(pageLoading(true));
-<<<<<<< HEAD
-    // console.log(true)
-=======
     console.log(true);
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     try {
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}`
@@ -319,14 +315,6 @@ export const deleteConsultationAction = (id) => async (dispatch) => {
           return dispatch(logoutAction());
         }
       }
-<<<<<<< HEAD
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan konsultasiya silinə bilməz");
-      }
-      // // console.log(error);
-      toastError(error?.response?.data.message);
-=======
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     }
     if (error?.response?.data?.key === "has-current-week-lessons") {
       toastError("Cari həftədə  dərsi olan konsultasiya silinə bilməz");

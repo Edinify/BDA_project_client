@@ -192,11 +192,7 @@ export const getTeachersByCourseId = (courseId) => async (dispatch) => {
 export const getTeachersPaginationAction =
   (length, searchQuery, status = "all", role, courseId) =>
   async (dispatch) => {
-<<<<<<< HEAD
-    // console.log(length)
-=======
     console.log(length);
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     dispatch(setLoadingStudentsAction(true));
     try {
       const { data } = await API.get(
@@ -209,11 +205,7 @@ export const getTeachersPaginationAction =
         payload: data,
       });
     } catch (error) {
-<<<<<<< HEAD
-      // console.log(error)
-=======
       console.log(error);
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -387,14 +379,6 @@ export const deleteTeacherAction = (id) => async (dispatch) => {
           return dispatch(logoutAction());
         }
       }
-<<<<<<< HEAD
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan təlimçi silinə bilməz");
-      }
-      // // console.log(error);
-      toastError(error?.response?.data.message);
-=======
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     }
     if (error?.response?.data?.key === "has-current-week-lessons") {
       toastError("Cari həftədə  dərsi olan təlimçi silinə bilməz");

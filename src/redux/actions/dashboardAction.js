@@ -255,11 +255,7 @@ export const getDashboardCourseStatisticAction =
           endDate || ""
         }&monthCount=${monthCount || ""}`
       );
-<<<<<<< HEAD
-      // console.log(data,"filter date")
-=======
       console.log(data, "filter date");
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
       dispatch({
         type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_COURSE_STATISTIC,
         payload: data,
@@ -307,11 +303,7 @@ export const getDashboardAdvertisingAction =
           endDate || ""
         }&monthCount=${monthCount || ""}`
       );
-<<<<<<< HEAD
-      // console.log(data,"where")
-=======
       console.log(data, "where");
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
       dispatch({
         type: DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_ADVERTISING,
         payload: data,

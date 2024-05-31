@@ -34,13 +34,6 @@ const MoreModal = ({ setOpenMoreModal, type, userData }) => {
   const { careerModalData } = useSelector((state) => state.careerModal);
   const { user } = useSelector((state) => state.user);
 
-<<<<<<< HEAD
-  // // console.log(userData?.power === "only-show", "user Dataaaa");
-  // // console.log(user.role === "super-admin");
-  // // console.log(type, "user data more modal");
-
-=======
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
   const openUpdateModal = () => {
     if (type === "teacher") {
       dispatch({

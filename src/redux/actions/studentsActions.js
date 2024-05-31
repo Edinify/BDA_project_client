@@ -457,14 +457,6 @@ export const deleteStudentAction = (id) => async (dispatch) => {
           return dispatch(logoutAction());
         }
       }
-<<<<<<< HEAD
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan tələbə silinə bilməz");
-      }
-      // // console.log(error);
-      toastError(error?.response?.data.message);
-=======
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     }
     if (error?.response?.data?.key === "has-current-week-lessons") {
       toastError("Cari həftədə  dərsi olan tələbə silinə bilməz");

@@ -207,44 +207,6 @@ export const updateLeadAction = (_id, leadData) => async (dispatch) => {
   }
 };
 
-<<<<<<< HEAD
-export const deleteLeadAction =
-  (_id, page, startDate, endDate, monthCount) => async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getLeadPaginationAction(page, startDate, endDate, monthCount));
-      dispatch({
-        type: LEAD_MODAL_ACTION_TYPE.LEAD_MODAL_ACTIVATE_GET,
-        payload: "delete",
-      });
-      toastSuccess("Məhsul silindi");
-    } catch (error) {
-      // // console.log(error);
-      toastError("Xəta baş verdi.");
-      const originalRequest = error.config;
-      if (error.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-
-          await API.delete(`/${_id}`);
-          dispatch({ type: INCOME_ACTION_TYPE.DELETE_INCOME, payload: _id });
-          dispatch(
-            getLeadPaginationAction(page, startDate, endDate, monthCount)
-          );
-          toastSuccess("Məhsul silindi");
-        } catch (error) {
-          // // console.log(error);
-          if (error?.response?.status === 401) {
-            dispatch(logoutAction());
-          }
-=======
 export const deleteLeadAction = (id) => async (dispatch) => {
   try {
     const { data } = await API.delete(`/${id}`);
@@ -286,7 +248,6 @@ export const deleteLeadAction = (id) => async (dispatch) => {
         // console.log(error);
         if (error?.response?.status === 401) {
           dispatch(logoutAction());
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
         }
       }
     }

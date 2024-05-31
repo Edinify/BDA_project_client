@@ -168,11 +168,7 @@ export const getSyllabusPaginationAction =
         payload: data,
       });
     } catch (error) {
-<<<<<<< HEAD
-      // console.log(error)
-=======
       console.log(error);
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -349,14 +345,6 @@ export const deleteSyllabusAction = (id) => async (dispatch) => {
           return dispatch(logoutAction());
         }
       }
-<<<<<<< HEAD
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan sillabus silinə bilməz");
-      }
-      // // console.log(error);
-      toastError(error?.response?.data.message);
-=======
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     }
     if (error?.response?.data?.key === "has-current-week-lessons") {
       toastError("Cari həftədə  dərsi olan sillabus silinə bilməz");

@@ -217,10 +217,6 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
       `/with-course?groupsCount=${payload.groupsCount}&searchQuery=${payload.searchQuery}`,
       { params: { courseIds: payload.courseIds } }
     );
-<<<<<<< HEAD
-    // // // console.log(data);
-=======
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     if (payload.groupsCount > 0) {
       dispatch({
         type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL,
@@ -341,11 +337,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
     });
     toastSuccess("Yeni əməkdaş yaradıldı");
   } catch (error) {
-<<<<<<< HEAD
-    // console.log(error)
-=======
     console.log(error);
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     const originalRequest = error.config;
     // // console.log(error);
     if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -426,48 +418,6 @@ export const updateGroupAction = (_id, groupData) => async (dispatch) => {
   }
 };
 
-<<<<<<< HEAD
-export const deleteGroupAction =
-  ({ _id, pageNumber, searchQuery, status }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(
-        getGroupsPaginationAction(pageNumber, searchQuery, status, "", "")
-      );
-      dispatch({ type: GROUP_ALL_ACTIONS_TYPE.DELETE_GROUP, payload: _id });
-      toastSuccess("Qrup silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        // // console.log(error);
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(
-            getGroupsPaginationAction(pageNumber, searchQuery, status, "", "")
-          );
-          dispatch({
-            type: GROUP_ALL_ACTIONS_TYPE.DELETE_GROUP,
-            payload: _id,
-          });
-          toastSuccess("Qrup silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
-        }
-      }
-      // // console.log(error);
-      toastError(error?.response?.data.message);
-=======
 export const deleteGroupAction = (id) => async (dispatch) => {
   try {
     const { data } = await API.delete(`/${id}`);
@@ -499,7 +449,6 @@ export const deleteGroupAction = (id) => async (dispatch) => {
           return dispatch(logoutAction());
         }
       }
->>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     }
 
     toastError(error?.response?.data.message);
