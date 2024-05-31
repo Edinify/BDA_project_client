@@ -58,7 +58,11 @@ const Topic = ({ formik, modalData, updateModalState }) => {
               onBlur={() => formik.setFieldTouched("topic", true)}
             />
 
-            {!(user?.role === "teacher" || user?.role === "mentor") && (
+            {!(
+              user?.role === "teacher" ||
+              user?.role === "mentor" ||
+              user?.role === "student"
+            ) && (
               <DropdownIcon
                 setOpenDropdown={setOpenDropdown}
                 openDropdown={openDropdown}

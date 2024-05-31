@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-  CHANGE_PASSPWORD_ACTION_TYPE,
   WORKER_ALL_ACTIONS_TYPE,
   WORKER_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -160,7 +159,11 @@ export const getWorkersPaginationAction =
         payload: data,
       });
     } catch (error) {
+<<<<<<< HEAD
       // console.log(error)
+=======
+      console.log(error);
+>>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -197,7 +200,7 @@ export const createWorkerAction = (workerData) => async (dispatch) => {
   try {
     const { data } = await API.post("/create", workerData);
     dispatch({
-      type:  WORKER_ALL_ACTIONS_TYPE.CREATE_WORKER,
+      type: WORKER_ALL_ACTIONS_TYPE.CREATE_WORKER,
       payload: data,
     });
     dispatch({
@@ -291,6 +294,7 @@ export const updateWorkerAction = (_id, workerData) => async (dispatch) => {
   }
 };
 
+<<<<<<< HEAD
 export const deleteWorkerAction =
   ({ _id, pageNumber, searchQuery }) =>
   async (dispatch) => {
@@ -331,22 +335,33 @@ export const deleteWorkerAction =
       toastError(error?.response?.data.message);
     }
   };
+=======
+export const deleteWorkerAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+>>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
 
-export const changeWorkerPasswordAction = (oldPassword, newPassword) => {
-  return async (dispatch) => {
-    try {
-      const response = await API.patch(`/own/password`, {
-        newPassword,
-        oldPassword,
-      });
+    dispatch({
+      type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER,
+      payload: data._id,
+    });
 
-      dispatch(logoutAction());
-    } catch (error) {
-      dispatch({
-        type: CHANGE_PASSPWORD_ACTION_TYPE.START_LOADING,
-        payload: false,
-      });
+    toastSuccess("İşçi silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
 
+<<<<<<< HEAD
       if (error?.response?.data?.key === "old-password-incorrect.") {
         toastError("köhnə şifrə yalnışdır");
         return;
@@ -375,8 +390,25 @@ export const changeWorkerPasswordAction = (oldPassword, newPassword) => {
           if (error?.response?.status === 401) {
             return dispatch(logoutAction());
           }
+=======
+        dispatch({
+          type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER,
+          payload: data._id,
+        });
+        toastSuccess("İşçi silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+>>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
         }
       }
     }
-  };
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan əməkdaş silinə bilməz");
+    }
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
 };
+
+

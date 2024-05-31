@@ -230,6 +230,7 @@ export const updateLessonTableAction =
     }
   };
 
+<<<<<<< HEAD
 export const deleteLessonTableAction =
   ({ _id, pageNumber, searchQuery }) =>
   async (dispatch) => {
@@ -274,8 +275,49 @@ export const deleteLessonTableAction =
       }
       // // console.log(error);
       toastError(error?.response?.data.message);
+=======
+export const deleteLessonTableAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({
+      type: LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE,
+      payload: data,
+    });
+    toastSuccess("Dərs silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: LESSON_TABLE_ALL_ACTIONS_TYPE.DELETE_LESSON_TABLE,
+          payload: data,
+        });
+        toastSuccess("Dərs silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+        }
+      }
+>>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     }
-  };
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan dərs silinə bilməz");
+    }
+
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmLessonTableChangesAction =
   (_id, lessonTableData) => async (dispatch) => {

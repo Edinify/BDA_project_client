@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {  useState } from "react";
 import { TextField } from "@mui/material";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { ReactComponent as CheckIcon } from "../../../../../../assets/icons/Checkbox.svg";
 import LessonInput from "./LessonInput";
-import { useCustomHook } from "../../../../../GlobalFunctions/globalFunctions";
 
 const LessonDateList = ({ formik, updateModalState, modalData }) => {
   const [selectedDay, setSelectedDay] = useState(null);

@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import DropdownIcon from "../../../components/DropdownIcon/DropdownIcon";
-import { useDispatch, useSelector } from "react-redux";
-import { getActiveTeachersAction } from "../../../../../redux/actions/teachersActions";
+import { useSelector } from "react-redux";
 
 const Mentor = ({ formik, modalData, updateModalState }) => {
-  const dispatch = useDispatch();
   const { mentors } = useSelector((state) => state.dropdownGroup.selectedGroup);
   const { user } = useSelector((state) => state.user);
 
   const inputValue =
-    mentors.find((mentor) => mentor._id == modalData.mentor)?.fullName || "";
+    mentors.find((mentor) => mentor._id === modalData.mentor)?.fullName || "";
 
   const [openDropdown, setOpenDropdown] = useState(false);
   const addData = (item) => {
@@ -47,7 +45,11 @@ const Mentor = ({ formik, modalData, updateModalState }) => {
               onBlur={() => formik.setFieldTouched("teacher", true)}
             />
 
-            {!(user?.role === "teacher" || user?.role === "mentor") && (
+            {!(
+              user?.role === "teacher" ||
+              user?.role === "mentor" ||
+              user?.role === "student"
+            ) && (
               <DropdownIcon
                 setOpenDropdown={setOpenDropdown}
                 openDropdown={openDropdown}

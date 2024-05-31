@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../../../../globalComponents/Loading/Loading";
+// import Loading from "../../../../../globalComponents/Loading/Loading";
 import LeadCard from "./LeadCard";
 import { getLeadPaginationAction } from "../../../../../redux/actions/leadActions";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -11,7 +11,7 @@ const LeadData = () => {
   const { financeMonthsFilter, financeChooseDate } = useSelector(
     (state) => state.financeDateFilter
   );
-  const { leads, hasMore, loading } = useSelector((state) => state.leads);
+  const { leads, hasMore } = useSelector((state) => state.leads);
 
   const dataHead = [
     { id: 1, label: "#" },
@@ -42,6 +42,7 @@ const LeadData = () => {
     }
   };
 
+  console.log(leads, "leadsssssssssssssssssssss");
   return (
     <>
       <InfiniteScroll

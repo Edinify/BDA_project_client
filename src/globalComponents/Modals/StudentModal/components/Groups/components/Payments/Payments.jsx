@@ -1,6 +1,5 @@
 import React from "react";
 import Payment from "./Payment";
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 const Payments = ({ formik, setInputValue, data, addPayments, index }) => {
   // // console.log(data, "data in paymentsss");

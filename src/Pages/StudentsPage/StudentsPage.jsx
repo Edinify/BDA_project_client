@@ -10,13 +10,14 @@ import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const StudentsPage = () => {
   const dispatch = useDispatch();
-  const { lastPage, students, totalLength } = useSelector(
+  const { lastPage, students, totalLength, loading } = useSelector(
     (state) => state.studentsPagination
   );
   const { studentSearchValues } = useSelector((state) => state.searchValues);
   const { studentStatus, courseId } = useSelector(
     (state) => state.studentStatus
   );
+  const { status } = useSelector((state) => state.studentGroupStatus);
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [studentPageNum, setStudentPageNum] = useState(1);
 
@@ -39,7 +40,8 @@ const StudentsPage = () => {
             : "all"
           : "all",
         courseId,
-        selectedGroup._id
+        selectedGroup._id,
+        status
       )
     );
   };
@@ -53,7 +55,8 @@ const StudentsPage = () => {
           studentSearchValues,
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     } else {
@@ -63,13 +66,16 @@ const StudentsPage = () => {
           "",
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     }
   };
 
   const getNextStudents = () => {
+    if (loading) return;
+
     if (studentSearchValues) {
       dispatch(
         getStudentsPaginationAction(
@@ -77,7 +83,8 @@ const StudentsPage = () => {
           studentSearchValues,
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     } else {
@@ -87,7 +94,8 @@ const StudentsPage = () => {
           "",
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     }
@@ -114,7 +122,8 @@ const StudentsPage = () => {
             : "all"
           : "all",
         courseId,
-        selectedGroup._id
+        selectedGroup._id,
+        status
       )
     );
     setStudentPageNum(1);
@@ -135,10 +144,10 @@ const StudentsPage = () => {
   useEffect(() => {
     if (studentSearchValues) {
       dispatch(
-        getStudentsPaginationAction(0, studentSearchValues, "all", "", "")
+        getStudentsPaginationAction(0, studentSearchValues, "all", "", "", "")
       );
     } else {
-      dispatch(getStudentsPaginationAction(0, "", "", "", ""));
+      dispatch(getStudentsPaginationAction(0, "", "", "", "", ""));
     }
 
     return () => {
@@ -148,7 +157,6 @@ const StudentsPage = () => {
     };
   }, [dispatch]);
 
-  // console.log(lastPage, "last page in student");
   return (
     <div className="details-page students-page">
       <GlobalHead

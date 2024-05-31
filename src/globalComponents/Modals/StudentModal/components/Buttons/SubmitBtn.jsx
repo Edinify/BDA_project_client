@@ -6,7 +6,6 @@ import {
 } from "../../../../../redux/actions/studentsActions";
 import {
   SEARCH_VALUES_ACTION_TYPES,
-  STUDENTS_MODAL_ACTION_TYPE,
 } from "../../../../../redux/actions-type";
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 
@@ -50,6 +49,7 @@ const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
   useEffect(() => {
     setIsDisabled(() => {
       if (funcType === "update") {
+        console.log(formik.errors, "formik errors");
         if (Object.keys(formik.errors).length === 0 && modalData?.fullName) {
           return false;
         } else {

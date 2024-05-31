@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useCustomHook } from "../../GlobalFunctions/globalFunctions";
 import { TableColumns } from "./TableColumns";
 

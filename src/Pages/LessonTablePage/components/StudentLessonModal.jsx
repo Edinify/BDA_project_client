@@ -29,14 +29,24 @@ const StudentLessonModal = ({ targetLesson, setTargetLesson }) => {
     }
   };
 
+  const signBackgroundColor = (item) => {
+    if (item.studentSignature === 1) {
+      return "#D4FFBF";
+    } else if (item.studentSignature === -1) {
+      return "#FFCED1";
+    } else {
+      return "";
+    }
+  };
+
   const handleStatusChange = (newItem) => {
     const newStudentsList = targetLesson.students.map((item) =>
-      item._id == newItem._id ? newItem : item
+      item._id === newItem._id ? newItem : item
     );
     setTargetLesson((prev) => ({ ...prev, students: newStudentsList }));
   };
 
-  console.log(user?.role,targetLesson?.topic?.name);
+  console.log(targetLesson, "target lesson");
   return (
     <div className="create-update-modal-con">
       <div className="student-lesson-modal">
@@ -57,7 +67,7 @@ const StudentLessonModal = ({ targetLesson, setTargetLesson }) => {
               style={{ backgroundColor: getBackgroundColor(item) }}
               onClick={() =>
                 setToggleIcon(
-                  togggleIcon == item.student._id ? "" : item.student._id
+                  togggleIcon === item.student._id ? "" : item.student._id
                 )
               }
               className={`student-list ${
@@ -93,7 +103,7 @@ const StudentLessonModal = ({ targetLesson, setTargetLesson }) => {
                   </svg>
                 </div>
               </div>
-              {togggleIcon == item.student._id && (
+              {togggleIcon === item.student._id && (
                 <div
                   className={`status ${
                     togggleIcon === item.student._id ? "active" : ""
@@ -118,6 +128,23 @@ const StudentLessonModal = ({ targetLesson, setTargetLesson }) => {
             </div>
           ))}
         </div>
+        <div className="student-sign">
+          <p className="content-type">Tələbə imzaları</p>
+          <div className="students-list">
+            {targetLesson?.students?.map((item) => (
+              <div
+                style={{ backgroundColor: signBackgroundColor(item) }}
+                className={`student-list ${
+                  selectedStudentId === item.student._id ? "selected" : ""
+                }`}
+                key={item.student._id}
+              >
+                <div className="student-name">{item.student.fullName}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {!(
           (user?.role === "mentor" &&
             targetLesson?.topic?.name !== "Praktika") ||

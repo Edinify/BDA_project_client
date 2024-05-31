@@ -3,7 +3,7 @@ import { CONSULTATION_ALL_ACTIONS_TYPE } from "../actions-type";
 const initialState = {
   consultationData: [],
   consultationDataByMore: [],
-  totalLength:0,
+  totalLength: 0,
   hasMore: true,
   loading: false,
   loadingAll: false,
@@ -19,21 +19,27 @@ export const consultationPaginationReducer = (state = initialState, action) => {
     case CONSULTATION_ALL_ACTIONS_TYPE.GET_MORE_CONSULTATION_ALL:
       return {
         ...state,
-        consultationDataByMore: [...state.consultationDataByMore, ...action.payload?.consultationData],
+        consultationDataByMore: [
+          ...state.consultationDataByMore,
+          ...action.payload?.consultationData,
+        ],
       };
     case CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_PAGINATION:
       return {
         ...state,
-        consultationData: [...state.consultationData, ...action.payload.consultations],
+        consultationData: [
+          ...state.consultationData,
+          ...action.payload.consultations,
+        ],
         totalLength: action.payload.totalLength,
-        hasMore: !(action.payload.consultations.length < 10),
+        hasMore: !(action.payload.consultations.length < 20),
       };
     case CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION:
       return {
         ...state,
         consultationData: [],
         totalLength: 0,
-        hasMore:true
+        hasMore: true,
       };
     case CONSULTATION_ALL_ACTIONS_TYPE.CONSULTATION_LOADING:
       return {
@@ -48,7 +54,7 @@ export const consultationPaginationReducer = (state = initialState, action) => {
     case CONSULTATION_ALL_ACTIONS_TYPE.CREATE_CONSULTATION:
       return {
         ...state,
-        consultationData:  [action.payload, ...state.consultationData],
+        consultationData: [action.payload, ...state.consultationData],
         totalLength: state.totalLength + 1,
       };
     case CONSULTATION_ALL_ACTIONS_TYPE.UPDATE_CONSULTATION:
@@ -64,6 +70,7 @@ export const consultationPaginationReducer = (state = initialState, action) => {
         consultationData: state.consultationData.filter(
           (student) => student._id !== action.payload
         ),
+        totalLength: state.totalLength - 1,
       };
     case CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_LAST_PAGE:
       return {

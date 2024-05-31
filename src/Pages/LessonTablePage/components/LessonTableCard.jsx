@@ -4,16 +4,21 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { deleteLessonTableAction } from "../../../redux/actions/lessonTableActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
+import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
+import { useEffect, useState } from "react";
+// import { ReactComponent as XIcon } from "../../../assets/icons/student-home/x-icon.svg";
+import { ReactComponent as SuccessIcon } from "../../../assets/icons/student-home/success.svg";
 
 const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
   const dispatch = useDispatch();
-  const { lessonTableData, lastPage } = useSelector(
-    (state) => state.lessonTablePagination
-  );
-  const { lessonTableSearchValues } = useSelector(
-    (state) => state.searchValues
-  );
+  const { user } = useSelector((state) => state.user);
+  const [studentData, setStudentData] = useState({
+    attendance: 0,
+    studentSignature: 0,
+  });
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const lessonDay = data?.date
     ? `${moment(data.date).locale("az").format("DD.MM.YYYY")}, ${
         weeksArrFullName[
@@ -31,7 +36,6 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
     });
   };
 
-  console.log(data, "leson data");
   const listData = [
     {
       key: "Dərs günü",
@@ -72,17 +76,14 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
           topic: data?.topic,
           mentorHour: data?.mentorHour,
           status: data?.status,
+          students: data?.students,
         },
         openModal: modalType !== "more" ? true : false,
       },
     });
   };
   const deleteItem = () => {
-    const pageNumber =
-      lastPage > 1 ? (lessonTableData.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data._id;
-    const searchQuery = lessonTableSearchValues;
-    dispatch(deleteLessonTableAction({ _id, pageNumber, searchQuery }));
+    dispatch(deleteLessonTableAction(data._id));
   };
 
   const openConfirmModal = () => {
@@ -96,10 +97,33 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
     });
   };
 
+  useEffect(() => {
+    if (user?.role === "student") {
+      const studentItem = data.students?.find(
+        (item) => item.student._id == user?._id
+      );
+
+      setStudentData({
+        attendance: studentItem.attendance,
+        studentSignature: studentItem.studentSignature,
+      });
+    }
+  }, [data]);
+
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con">
               <div className="table-scroll-text profiles">{lessonDay}</div>
@@ -136,22 +160,85 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               <div className="right-fade"></div>
             </div>
           </td>
-          <td className="student-length">
-            <div onClick={openStudentsList} className="td-con">
-              <div className="table-scroll-text">
-                {data.students.length} ...
+          {user.role !== "student" ? null : (
+            <>
+              <td>
+                <div className="td-con">
+                  <div className="table-scroll-text">
+                    {studentData.attendance === 1 ? (
+                      <span style={{ color: "#07bc0c" }}>i/e</span>
+                    ) : studentData.attendance === -1 ? (
+                      <span style={{ color: "#e74c3c" }}>q/b</span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="right-fade"></div>
+                </div>
+              </td>
+              <td>
+                <div className="td-con">
+                  <div className="table-scroll-text">
+                    {studentData.studentSignature === 1 ? (
+                      <SuccessIcon />
+                    ) : studentData.studentSignature === -1 ? (
+                      // <IoMdClose />
+                      // <XIcon/>
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                        <g
+                          id="SVGRepo_tracerCarrier"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        ></g>
+                        <g id="SVGRepo_iconCarrier">
+                          {" "}
+                          <g id="Menu / Close_LG">
+                            {" "}
+                            <path
+                              id="Vector"
+                              d="M21 21L12 12M12 12L3 3M12 12L21.0001 3M12 12L3 21.0001"
+                              stroke="rgb(231, 76, 60)"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>{" "}
+                          </g>{" "}
+                        </g>
+                      </svg>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="right-fade"></div>
+                </div>
+              </td>
+            </>
+          )}
+          {user.role === "student" ? null : (
+            <td className="student-length">
+              <div onClick={openStudentsList} className="td-con">
+                <div className="table-scroll-text">
+                  {data.students.length} ...
+                </div>
+                <div className="right-fade"></div>
               </div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
+            </td>
+          )}
           <td>
             <div className="td-con">
               <div className="table-scroll-text">
-                {data?.topic?.name === "Praktika"
-                  ? ""
-                  : data.mentorHour
-                  ? <span style={{color:"#07bc0c"}} >Keçirilib</span>
-                  : <span style={{color:"#e74c3c"}} >Keçirilməyib</span>}
+                {data?.topic?.name === "Praktika" ? (
+                  ""
+                ) : data.mentorHour ? (
+                  <span style={{ color: "#07bc0c" }}>Keçirilib</span>
+                ) : (
+                  <span style={{ color: "#e74c3c" }}>Keçirilməyib</span>
+                )}
               </div>
             </div>
           </td>
@@ -179,6 +266,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               data={data}
               openConfirmModal={openConfirmModal}
               profil={"lessonTable"}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </td>
         </tr>
@@ -206,6 +294,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               data={data}
               openConfirmModal={openConfirmModal}
               profil={"lessonTable"}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </div>
         </div>

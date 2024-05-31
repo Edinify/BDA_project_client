@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   CAREER_ALL_ACTIONS_TYPE,
   CAREER_MODAL_ACTION_TYPE,
+  DOWNLOAD_EXCEL_ACTION_TYPE,
 } from "../actions-type";
 import { toast } from "react-toastify";
 import { logoutAction } from "./auth";
@@ -74,6 +75,10 @@ const pageLoading = (loadingValue) => ({
 const modalLoading = (loadingValue) => ({
   type: CAREER_MODAL_ACTION_TYPE.CAREER_MODAL_LOADING,
   payload: loadingValue,
+});
+const downloadExcelLoading = (value) => ({
+  type: DOWNLOAD_EXCEL_ACTION_TYPE.LOADING,
+  payload: value,
 });
 
 export const getCareerPaginationAction =
@@ -173,5 +178,29 @@ export const updateCareerAction = (newData) => async (dispatch) => {
     }
   } finally {
     dispatch(modalLoading(false));
+  }
+};
+
+export const downloadCareersExcelAction = () => async (dispatch) => {
+  dispatch(downloadExcelLoading(true));
+  try {
+    const response = await API.get(`/excel`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "careers.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+
+    dispatch(downloadExcelLoading(false));
+  } catch (error) {
+    dispatch(downloadExcelLoading(false));
+    toastError("Xəta baş verdi!");
+    console.log(error.message);
   }
 };

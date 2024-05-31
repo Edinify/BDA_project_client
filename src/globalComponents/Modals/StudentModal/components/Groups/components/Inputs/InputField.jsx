@@ -4,11 +4,8 @@ import { useEffect, useState } from "react";
 
 export default function InputField({ formik, data, inputName, addGroupData }) {
   const [shrink, setShrink] = useState(false);
-  const [totalAmountValue, setTotalAmountValue] = useState(() => {
-    const amount = data.amount || 0;
-    const discount = data?.discount || 0;
-    return amount - (amount * discount) / 100;
-  });
+  const [totalAmountValue, setTotalAmountValue] = useState("");
+
   const inputData = [
     {
       inputName: "degree",
@@ -75,17 +72,28 @@ export default function InputField({ formik, data, inputName, addGroupData }) {
           ? moment(data[inputName]).format("YYYY-MM-DD")
           : "",
     },
+    {
+      inputName: "contractId",
+      label: "Müqavilə nömrəsi",
+      type: "number",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue: data[inputName] || "",
+    },
   ];
 
   useEffect(() => {
     setTotalAmountValue(() => {
       const amount = data.amount || 0;
       const discount = data.discount || 0;
-      const result = amount - (amount * discount) / 100;
-      addGroupData("totalAmount", result);
+      const result = +(amount - (amount * discount) / 100).toFixed(2);
       return result;
     });
   }, [data.amount, data.discount]);
+
+  useEffect(() => {
+    addGroupData("totalAmount", totalAmountValue);
+  }, [totalAmountValue]);
 
   return (
     <div>

@@ -9,12 +9,13 @@ import {
   changeAdminPasswordAction,
   changeStudentPasswordAction,
   changeTeacherPasswordAction,
+  changeWorkerPasswordAction,
 } from "../../../redux/actions/changePasswordAction";
 import { CHANGE_PASSPWORD_ACTION_TYPE } from "../../../redux/actions-type";
 import { useFormik } from "formik";
 import { ValidationSchema } from "./ValidationSchema";
 import Loading from "../../Loading/Loading";
-import { changeWorkerPasswordAction } from "../../../redux/actions/workersActions";
+
 
 export const ChangePasswordModal = ({ setOpenModal }) => {
   const dispatch = useDispatch();
@@ -85,6 +86,14 @@ export const ChangePasswordModal = ({ setOpenModal }) => {
       } else if (user.role === "worker") {
         dispatch(
           changeWorkerPasswordAction(title.oldPassword, title.newPassword)
+        );
+        dispatch({
+          type: CHANGE_PASSPWORD_ACTION_TYPE.START_LOADING,
+          payload: true,
+        });
+      } else if (user.role === "student") {
+        dispatch(
+          changeStudentPasswordAction(title.oldPassword, title.newPassword)
         );
         dispatch({
           type: CHANGE_PASSPWORD_ACTION_TYPE.START_LOADING,

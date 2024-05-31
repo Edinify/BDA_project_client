@@ -109,7 +109,7 @@ const NavbarProfile = () => {
   return (
     <>
       <div className="main-nav-icons">
-        {userData?.role === "student" && (
+        {/* {userData?.role === "student" && (
           <div
             className="student-amount"
             onClick={() => {
@@ -127,7 +127,7 @@ const NavbarProfile = () => {
               </div>
             )}
           </div>
-        )}
+        )} */}
         <div className="notification-con">
           {/* {userData?.role === "super-admin" && (
             <div className="help-icon" onClick={() => setHowToUse(true)}>

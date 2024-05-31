@@ -1,7 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import moment from "moment";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
 import { Box } from "@mui/material";
 import { CONSULTATION_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
@@ -21,12 +20,8 @@ const ConsultationModal = () => {
   const { consultationModalData: modalData } = useSelector(
     (state) => state.consultationModal
   );
-  const inputNameArr1 = [
-    "contactDate",
-    "studentPhone",
-    "constDate",
-    "constTime",
-  ];
+  const inputNameArr1 = ["contactDate", "studentPhone"];
+  const inputNameArr2 = ["constDate", "constTime"];
 
   // formik
   const formik = useFormik({
@@ -65,6 +60,7 @@ const ConsultationModal = () => {
     });
   };
 
+  console.log(modalData, "consultation modal data");
   return (
     <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal">
@@ -93,8 +89,19 @@ const ConsultationModal = () => {
               modalData={modalData}
               updateModalState={updateModalState}
             />
-            <div className="input-couples">
+            <div className="input-couples birthday ">
               {inputNameArr1.map((name, index) => (
+                <InputField
+                  key={index}
+                  inputName={name}
+                  formik={formik}
+                  modalData={modalData}
+                  updateModalState={updateModalState}
+                />
+              ))}
+            </div>
+            <div className="input-couples birthday ">
+              {inputNameArr2.map((name, index) => (
                 <InputField
                   key={index}
                   inputName={name}
@@ -126,11 +133,6 @@ const ConsultationModal = () => {
             />
             {modalData?._id && (
               <>
-                <CancelReason
-                  modalData={modalData}
-                  updateModalState={updateModalState}
-                  formik={formik}
-                />
                 <Persona
                   modalData={modalData}
                   updateModalState={updateModalState}
@@ -147,6 +149,13 @@ const ConsultationModal = () => {
                   updateModalState={updateModalState}
                   formik={formik}
                 />
+                {modalData.status === "cancelled" && (
+                  <CancelReason
+                    modalData={modalData}
+                    updateModalState={updateModalState}
+                    formik={formik}
+                  />
+                )}
               </>
             )}
           </div>

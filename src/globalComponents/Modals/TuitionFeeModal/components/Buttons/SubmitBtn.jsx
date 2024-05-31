@@ -4,7 +4,7 @@ import {
   updateStudentsAction,
   createStudentsAction,
 } from "../../../../../redux/actions/studentsActions";
-import { SEARCH_VALUES_ACTION_TYPES, STUDENTS_MODAL_ACTION_TYPE} from "../../../../../redux/actions-type";
+import { SEARCH_VALUES_ACTION_TYPES} from "../../../../../redux/actions-type";
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 
 const SubmitBtn = ({ formik, modalData, funcType }) => {

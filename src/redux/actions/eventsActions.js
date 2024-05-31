@@ -1,8 +1,6 @@
 import axios from "axios";
 import {
-  ALL_COURSES_ACTION,
   COURSES_ALL_ACTIONS_TYPE,
-  COURSES_MODAL_ACTION_TYPE,
   EVENTS_ALL_ACTIONS_TYPE,
   EVENTS_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -74,7 +72,11 @@ export const getEventsPaginationAction =
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${searchQuery}`
       );
+<<<<<<< HEAD
       // console.log(data)
+=======
+      console.log(data);
+>>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
       dispatch({
         type: EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_PAGINATION,
         payload: data,
@@ -200,43 +202,47 @@ export const updateEventAction = (_id, eventData) => async (dispatch) => {
   }
 };
 
-export const deleteEventAction =
-  ({ _id, pageNumber, searchQuery }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getEventsPaginationAction(pageNumber, searchQuery));
-      dispatch({ type: EVENTS_ALL_ACTIONS_TYPE.DELETE_EVENT, payload: _id });
-      toastSuccess("Tədbir silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(getEventsPaginationAction(pageNumber, searchQuery));
-          dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE,
-            payload: _id,
-          });
-          toastSuccess("Fənn silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+export const deleteEventAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({ type: EVENTS_ALL_ACTIONS_TYPE.DELETE_EVENT, payload: data._id });
+
+    toastSuccess("Tədbir silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: EVENTS_ALL_ACTIONS_TYPE.DELETE_EVENT,
+          payload: data._id,
+        });
+        toastSuccess("Fənn silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
+<<<<<<< HEAD
       // // console.log(error);
       toastError(error?.response?.data.message);
+=======
+>>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     }
-  };
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmEventChangesAction =
   (_id, eventData) => async (dispatch) => {
@@ -262,7 +268,7 @@ export const confirmEventChangesAction =
               AccessToken: token.data.accesstoken,
             })
           );
-          const { data } = await API.patch(`/${_id}`, eventData);
+          await API.patch(`/${_id}`, eventData);
           // dispatch({
           //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
           //   payload: data,
@@ -312,7 +318,7 @@ export const cancelCourseChangesAction =
               AccessToken: token.data.accesstoken,
             })
           );
-          const { data } = await API.patch(`/${_id}`, eventData);
+           await API.patch(`/${_id}`, eventData);
           // dispatch({
           //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
           //   payload: data,

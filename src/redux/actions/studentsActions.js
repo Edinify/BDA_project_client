@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  DOWNLOAD_EXCEL_ACTION_TYPE,
   STUDENTS_ALL_ACTIONS_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -13,7 +14,7 @@ const refreshApi = axios.create({
 });
 
 const API = axios.create({
-  baseURL: `${apiRoot}/student`,
+  baseURL: `${apiRoot}/user/student`,
   withCredentials: true,
 });
 const REGISTERAPI = axios.create({
@@ -53,6 +54,12 @@ const studentModalLoading = (loadingValue) => ({
   type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_MODAL_LOADING,
   payload: loadingValue,
 });
+
+const downloadExcelLoading = (value) => ({
+  type: DOWNLOAD_EXCEL_ACTION_TYPE.LOADING,
+  payload: value,
+});
+
 const toastSuccess = (message) => {
   toast.success(message, {
     position: "top-right",
@@ -249,14 +256,21 @@ export const getstudentsByCourseIdAction = (payload) => async (dispatch) => {
 };
 
 export const getStudentsPaginationAction =
-  (length, searchQuery, status = "all", courseId = "", groupId = "") =>
+  (
+    length,
+    searchQuery,
+    status = "all",
+    courseId = "",
+    groupId = "",
+    studentGroupStatus = ""
+  ) =>
   async (dispatch) => {
     dispatch(setLoadingStudentsAction(true));
 
     // // console.log(searchQuery, "ssssssssssssssssssssss");
     try {
       const { data } = await API.get(
-        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}`
+        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}&studentGroupStatus=${studentGroupStatus}`
       );
 
       dispatch({
@@ -331,7 +345,7 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
           })
         );
 
-        const { data } = await REGISTERAPI.post("/student/sign", studentData);
+         await REGISTERAPI.post("/student/sign", studentData);
 
         dispatch({
           type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,
@@ -409,52 +423,56 @@ export const updateStudentsAction = (_id, studentData) => async (dispatch) => {
   }
 };
 
-export const deleteStudentAction =
-  ({ _id, pageNumber, searchQuery, status }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getStudentsPaginationAction(pageNumber, searchQuery, status));
-      dispatch({
-        type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT,
-        payload: _id,
-      });
-      toastSuccess("Tələbə silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
+export const deleteStudentAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+    console.log(data);
+    dispatch({
+      type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT,
+      payload: data._id,
+    });
+    toastSuccess("Tələbə silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
 
-          await API.delete(`/${_id}`);
-          dispatch(
-            getStudentsPaginationAction(pageNumber, searchQuery, status)
-          );
-          dispatch({
-            type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT,
-            payload: _id,
-          });
-          toastSuccess("Tələbə silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: STUDENTS_ALL_ACTIONS_TYPE.DELETE_STUDENT,
+          payload: data._id,
+        });
+        toastSuccess("Tələbə silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
+<<<<<<< HEAD
       if (error?.response?.data?.key === "has-current-week-lessons") {
         toastError("Cari həftədə  dərsi olan tələbə silinə bilməz");
       }
       // // console.log(error);
       toastError(error?.response?.data.message);
+=======
+>>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     }
-  };
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan tələbə silinə bilməz");
+    }
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmStudentChangesAction =
   (_id, studentData) => async (dispatch) => {
@@ -589,4 +607,28 @@ export const downloadContractAction = async ({
     a.click();
     window.URL.revokeObjectURL(url);
   } catch (error) {}
+};
+
+export const downloadExcelAction = () => async (dispatch) => {
+  dispatch(downloadExcelLoading(true));
+  try {
+    const response = await API.get(`/excel`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "students.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+
+    dispatch(downloadExcelLoading(false));
+  } catch (error) {
+    console.log(error);
+  } finally {
+    dispatch(setLoadingStudentsAction(false));
+  }
 };

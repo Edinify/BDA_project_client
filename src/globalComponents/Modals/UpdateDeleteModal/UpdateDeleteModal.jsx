@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import "./updateDeleteModal.css";
 import { useDispatch, useSelector } from "react-redux";
 import { FUNC_COMPONENT_ACTION_TYPE } from "../../../redux/actions-type";
 import { ReactComponent as MoreIcon } from "../../../assets/icons/more.svg";
-import DeleteItemModal from "../DeleteItemModal/DeleteItemModal";
 import { downloadContractAction } from "../../../redux/actions/studentsActions";
 import { MdOutlineFileDownload } from "react-icons/md";
 
@@ -31,7 +30,6 @@ const UpdateDeleteModal = ({
     setShowDeleteModal(true);
   };
 
-  console.log(funcComp, "comp");
   const modalRef = useRef(null);
 
   const handleClickOutside = () => {
@@ -121,8 +119,9 @@ const UpdateDeleteModal = ({
       setUpdateBtn(true);
     } else if (user?.role === "mentor") {
       setUpdateBtn(true);
+    } else if (user?.role === "student") {
+      setUpdateBtn(true);
     }
-    console.log(data, "newwwwwwwwwwwwwwwwwwwwwwwwww");
   }, []);
 
   // // console.log("update delete modal");
@@ -198,7 +197,7 @@ const UpdateDeleteModal = ({
             </h4>
           )}
 
-          {deleteBtn && profil !== "careers" && profil !== "tuitionFee" && (
+          {deleteBtn && profil !== "careers" && profil !== "tuitionFee" && profil!=="diploma" &&  (
             <h4
               className={`delete-func ${dataType === "branches" ? "only" : ""}`}
               onClick={handleShowDeleteModal}

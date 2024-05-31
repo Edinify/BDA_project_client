@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  DOWNLOAD_EXCEL_ACTION_TYPE,
   SYLLABUS_ALL_ACTIONS_TYPE,
   SYLLABUS_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -71,13 +72,15 @@ const setLoadingSyllabusAction = (loadingValue) => ({
   type: SYLLABUS_ALL_ACTIONS_TYPE.SYLLABUS_LOADING,
   payload: loadingValue,
 });
-const pageLoading = (loadingValue) => ({
-  type: SYLLABUS_ALL_ACTIONS_TYPE.SYLLABUS_LOADING,
-  payload: loadingValue,
-});
+
 const modalLoading = (loadingValue) => ({
   type: SYLLABUS_MODAL_ACTION_TYPE.SYLLABUS_MODAL_LOADING,
   payload: loadingValue,
+});
+
+const downloadExcelLoading = (value) => ({
+  type: DOWNLOAD_EXCEL_ACTION_TYPE.LOADING,
+  payload: value,
 });
 
 export const getAllSyllabusAction = (courseId) => async (dispatch) => {
@@ -156,14 +159,20 @@ export const getSyllabusPaginationAction =
     dispatch(setLoadingSyllabusAction(true));
     try {
       const { data } = await API.get(
-        `/pagination?length=${length}&searchQuery=${searchQuery}&courseId=${courseId || ""}`
+        `/pagination?length=${length}&searchQuery=${searchQuery}&courseId=${
+          courseId || ""
+        }`
       );
       dispatch({
         type: SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_PAGINATION,
         payload: data,
       });
     } catch (error) {
+<<<<<<< HEAD
       // console.log(error)
+=======
+      console.log(error);
+>>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -307,51 +316,55 @@ export const updateSyllabusAction = (_id, syllabusData) => async (dispatch) => {
   }
 };
 
-export const deleteSyllabusAction =
-  ({ _id, pageNumber, searchQuery, courseId }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getSyllabusPaginationAction(pageNumber, searchQuery, courseId));
-      dispatch({
-        type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
-        payload: _id,
-      });
-      toastSuccess("İşçi silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(
-            getSyllabusPaginationAction(pageNumber, searchQuery, courseId)
-          );
-          dispatch({
-            type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
-            payload: _id,
-          });
-          toastSuccess("İşçi silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+export const deleteSyllabusAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({
+      type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
+      payload: data._id,
+    });
+    toastSuccess("Syllabus silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: SYLLABUS_ALL_ACTIONS_TYPE.DELETE_SYLLABUS,
+          payload: data._id,
+        });
+        toastSuccess("Syllabus silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
+<<<<<<< HEAD
       if (error?.response?.data?.key === "has-current-week-lessons") {
         toastError("Cari həftədə  dərsi olan sillabus silinə bilməz");
       }
       // // console.log(error);
       toastError(error?.response?.data.message);
+=======
+>>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     }
-  };
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan sillabus silinə bilməz");
+    }
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmSyllabusChangesAction =
   (_id, syllabusData) => async (dispatch) => {
@@ -456,3 +469,37 @@ export const cancelSyllabusChangesAction =
       dispatch(modalLoading(false));
     }
   };
+
+export const downloadSyllabusExcelAction = (courseId) => async (dispatch) => {
+  dispatch(downloadExcelLoading(true));
+  try {
+    console.log(courseId);
+    if (!courseId) {
+      throw new Error("not-found-courseId");
+    }
+
+    console.log("test2");
+    const response = await API.get(`/excel?courseId=${courseId}`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "syllabus.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+
+    dispatch(downloadExcelLoading(false));
+  } catch (error) {
+    dispatch(downloadExcelLoading(false));
+    if (error.message === "not-found-courseId") {
+      toastError("İxtisas seçməlisiniz");
+    } else {
+      toastError("Xəta baş verdi!");
+    }
+    console.log(error.message);
+  }
+};

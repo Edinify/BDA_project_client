@@ -13,6 +13,8 @@ import StudentPageHead from "./StudentPageHead/StudentPageHead";
 import CareerPageHead from "./CareerPageHead/CareerPageHead";
 import GroupsPageHead from "./GroupsPageHead/GroupsPageHead";
 import TuitionPageHead from "./TuitionPageHead/TuitionPageHead";
+import ExcelExportBtn from "../ExcelExportBtn/ExcelExportBtn";
+import DiplomaTableHead from "./DiplomaTableHead/DiplomaTableHead";
 
 const GlobalHead = ({
   searchData,
@@ -29,9 +31,7 @@ const GlobalHead = ({
   const { user } = useSelector((state) => state.user);
   const [showAddBtn, setShowAddBtn] = useState(false);
   const location = useLocation();
-  const {openSidebar} = useSelector(state=>state.openSidebar);
-
-
+  const { openSidebar } = useSelector((state) => state.openSidebar);
 
   useEffect(() => {
     if (user.role === "super-admin") {
@@ -46,7 +46,7 @@ const GlobalHead = ({
   }, []);
 
   return (
-    <div className={`details-header ${openSidebar ? "open" :""} `}>
+    <div className={`details-header ${openSidebar ? "open" : ""} `}>
       <div className="container">
         <div className="details-header-container">
           <div
@@ -63,15 +63,21 @@ const GlobalHead = ({
               {location.pathname === "/teachers" ||
               location.pathname === "/teachers/mentors" ||
               location.pathname === "/tuition-fee" ||
-              location.pathname === "/tuitionFee"
+              location.pathname === "/tuitionFee" ||
+              location.pathname === "/students"
                 ? null
                 : search && (
-                    <Search
-                      searchData={searchData}
-                      dataSearchValues={dataSearchValues}
-                      className="search-input-con desktop"
-                      DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
-                    />
+                    <>
+                      <Search
+                        searchData={searchData}
+                        dataSearchValues={dataSearchValues}
+                        className="search-input-con desktop"
+                        DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+                      />
+                      {statusType === "course" && (
+                        <ExcelExportBtn pageName={"course"} />
+                      )}
+                    </>
                   )}
 
               {statusType === "teacher" && (
@@ -87,13 +93,26 @@ const GlobalHead = ({
               )}
 
               {statusType === "syllabus" && (
-                <CoursesDropdown deviceType="desktop" />
+                <>
+                  <CoursesDropdown deviceType="desktop" />
+                  <ExcelExportBtn pageName={"syllabus"} />
+                </>
               )}
               {statusType === "student" && (
-                <StudentPageHead filter={filter} count={count} />
+                <StudentPageHead
+                searchData={searchData}
+                DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+                dataSearchValues={dataSearchValues}
+                filter={filter}
+                openModal={openModal}
+                search={search}
+                count={count}
+                />
               )}
               {statusType === "career" && <CareerPageHead filter={filter} />}
-              {statusType === "groups" && <GroupsPageHead filter={filter} count={count} />}
+              {statusType === "groups" && (
+                <GroupsPageHead filter={filter} count={count} />
+              )}
 
               {statusType === "tutionFee" && (
                 <TuitionPageHead
@@ -111,12 +130,14 @@ const GlobalHead = ({
                   filter={filter}
                 />
               )}
+              {statusType === "diploma" && <DiplomaTableHead filter={filter} />}
             </div>
             {addBtn && showAddBtn && (
               <div className="lesson-table-add-btn">
                 {statusType === "lesson-table" && null}
                 {statusType === "teacher" && null}
-                {statusType !== "lesson-table" && statusType !== "teacher" && (
+                {statusType ==="student" && null}
+                {statusType !== "lesson-table" && statusType !== "teacher" &&  statusType!=="student" &&  (
                   <button className="add-detail" onClick={openModal}>
                     <PlusIcon />
                     Əlavə et

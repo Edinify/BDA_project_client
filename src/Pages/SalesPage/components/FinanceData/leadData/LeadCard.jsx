@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { LEAD_MODAL_ACTION_TYPE } from "../../../../../redux/actions-type";
 import UpdateDeleteModal from "../../../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
-import { useFinanceCustomHook } from "../../../utils";
+import DeleteItemModal from "../../../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
+import { deleteLeadAction } from "../../../../../redux/actions/leadActions";
 
 const LeadCard = ({ data, mode, cellNumber }) => {
   const dispatch = useDispatch();
-  const { deleteIncome } = useFinanceCustomHook();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const updateItem = () => {
     const { _id, count, date } = data;
@@ -24,13 +25,23 @@ const LeadCard = ({ data, mode, cellNumber }) => {
     });
   };
   const deleteItem = () => {
-    deleteIncome(data._id);
+    dispatch(deleteLeadAction(data._id));
+  };
+
+  const doubleClick = () => {
+    updateItem("");
   };
   return (
     <>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {mode === "desktop" ? (
-        <tr>
-          <td >
+        <tr onDoubleClick={doubleClick} >
+          <td>
             <div className="td-con">
               <div className="table-scroll-text">{cellNumber}.</div>
               <div className="right-fade"></div>
@@ -57,6 +68,7 @@ const LeadCard = ({ data, mode, cellNumber }) => {
               deleteItem={deleteItem}
               data={data}
               profil={"sales"}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </td>
         </tr>
@@ -83,6 +95,7 @@ const LeadCard = ({ data, mode, cellNumber }) => {
               deleteItem={deleteItem}
               data={data}
               profil={"sales"}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </div>
         </div>

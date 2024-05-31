@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import LessonTableCard from "./LessonTableCard";
 import StudentLessonModal from "./StudentLessonModal";
@@ -15,9 +15,24 @@ const LessonTableData = ({ getNextLessons }) => {
   const { openConfirmModal } = useSelector((state) => state.lessonTableModal);
   const [targetLesson, setTargetLesson] = useState({});
   const [updatedResultData, setUpdatedResultData] = useState("");
+  const [scrollHeight, setScrollHeight] = useState(1);
 
   const tableHead =
-    user?.power === "only-show"
+    user?.role === "student"
+      ? [
+          "Dərs günü",
+          "Dərs saatı",
+          "Mövzu",
+          "Müəllim",
+          "Tyutor",
+          "Davamiyyət",
+          "Tələbə imzası",
+          "Tyutor saatı",
+          "Status",
+
+          "",
+        ]
+      : user?.power === "only-show"
       ? ["Dərs günü", "Dərs saatı", "Mövzu", "Müəllim", "Status", "Tələbələr"]
       : [
           "Dərs günü",
@@ -31,7 +46,27 @@ const LessonTableData = ({ getNextLessons }) => {
           "",
         ];
 
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
 
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
@@ -51,8 +86,8 @@ const LessonTableData = ({ getNextLessons }) => {
         hasMore={hasMore}
         loader={<SmallLoading />}
         endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
-        height={450}
-        scrollThreshold={0.9}
+        height={scrollHeight}
+        scrollThreshold={0.7}
       >
         <table
           className={`details-table  lesson-table ${
@@ -80,6 +115,17 @@ const LessonTableData = ({ getNextLessons }) => {
           </tbody>
         </table>
       </InfiniteScroll>
+
+      <div className="details-list-tablet">
+        {lessonTableData?.map((teacher, i) => (
+          <LessonTableCard
+            key={i}
+            data={teacher}
+            mode="tablet"
+            cellNumber={i + 1}
+          />
+        ))}
+      </div>
     </>
   );
 };

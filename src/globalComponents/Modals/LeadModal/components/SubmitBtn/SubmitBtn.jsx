@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ReactComponent as DeleteIcon } from "../../../../../assets/icons/Delete button.svg";
-import {
-  createIncomesAction,
-  updateIncomesAction,
-} from "../../../../../redux/actions/incomeActions";
+
 import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
-import { useFinanceCustomHook } from "../../../../../Pages/FinancePage/utils";
 import {
   createLeadAction,
   updateLeadAction,
@@ -16,7 +11,6 @@ export default function SubmitBtn({
   formik,
   funcType,
   leadModalData,
-  setShowDeleteModal,
 }) {
   const dispatch = useDispatch();
   const { leadModalLoading } = useSelector((state) => state.leadModal);
@@ -27,6 +21,8 @@ export default function SubmitBtn({
       return true;
     }
   });
+
+
 
   const incomesCreate = () => {
     if (leadModalData?._id) {

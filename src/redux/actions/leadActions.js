@@ -91,7 +91,7 @@ export const getLeadPaginationAction =
             })
           );
 
-          const { data } = await API.get(
+           await API.get(
             `/?length=${length}&startDate=${startDate || ""}&endDate=${
               endDate || ""
             }&monthCount=${monthCount || ""}`
@@ -112,7 +112,8 @@ export const createLeadAction = (incomesData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/", incomesData);
-    dispatch(getLeadPaginationAction(data.lastPage, "", "", 1));
+
+    dispatch({ type: LEAD_ACTION_TYPE.CREATE_LEAD, payload: data });
     dispatch({
       type: LEAD_MODAL_ACTION_TYPE.LEAD_OPEN_MODAL,
       payload: false,
@@ -137,8 +138,8 @@ export const createLeadAction = (incomesData) => async (dispatch) => {
           })
         );
 
-        const { data } = await API.post("/", incomesData);
-        dispatch(getLeadPaginationAction(data.lastPage, "", "", 1));
+        await API.post("/", incomesData);
+
         dispatch({
           type: INCOMES_MODAL_ACTION_TYPE.INCOMES_OPEN_MODAL,
           payload: false,
@@ -206,6 +207,7 @@ export const updateLeadAction = (_id, leadData) => async (dispatch) => {
   }
 };
 
+<<<<<<< HEAD
 export const deleteLeadAction =
   (_id, page, startDate, endDate, monthCount) => async (dispatch) => {
     try {
@@ -242,10 +244,54 @@ export const deleteLeadAction =
           if (error?.response?.status === 401) {
             dispatch(logoutAction());
           }
+=======
+export const deleteLeadAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({
+      type: LEAD_ACTION_TYPE.DELETE_LEAD,
+      payload: data._id,
+    });
+
+    dispatch({
+      type: LEAD_MODAL_ACTION_TYPE.LEAD_MODAL_ACTIVATE_GET,
+      payload: "delete",
+    });
+
+    toastSuccess("Lead silindi");
+  } catch (error) {
+    // console.log(error);
+    toastError("Xəta baş verdi.");
+    const originalRequest = error.config;
+    if (error.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: LEAD_ACTION_TYPE.DELETE_LEAD,
+          payload: data._id,
+        });
+        toastSuccess("Məhsul silindi");
+      } catch (error) {
+        // console.log(error);
+        if (error?.response?.status === 401) {
+          dispatch(logoutAction());
+>>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
         }
       }
-      if (error?.response?.status === 403) {
-        dispatch(logoutAction());
-      }
     }
-  };
+    if (error?.response?.status === 403) {
+      dispatch(logoutAction());
+    }
+  }
+};

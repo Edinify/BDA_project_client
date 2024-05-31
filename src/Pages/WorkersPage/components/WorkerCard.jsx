@@ -1,11 +1,11 @@
-// import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WORKER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteWorkerAction } from "../../../redux/actions/workersActions";
-import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
 import moment from "moment";
 import WorkerProfileDropdown from "./WorkerProfileDropdown";
+import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
+import { useState } from "react";
 const WorkerCard = ({
   data,
   mode,
@@ -15,8 +15,7 @@ const WorkerCard = ({
   setOpenMoreModal,
 }) => {
   const dispatch = useDispatch();
-  const { workers, lastPage } = useSelector((state) => state.workersPagination);
-  const { workersSearchValues } = useSelector((state) => state.searchValues);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const updateItem = (modalType) => {
     dispatch({
@@ -29,11 +28,7 @@ const WorkerCard = ({
   };
 
   const deleteItem = () => {
-    const pageNumber =
-      lastPage > 1 ? (workers.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data._id;
-    const searchQuery = workersSearchValues;
-    dispatch(deleteWorkerAction({ _id, pageNumber, searchQuery }));
+    dispatch(deleteWorkerAction(data._id));
   };
 
   const openConfirmModal = () => {
@@ -46,10 +41,20 @@ const WorkerCard = ({
     setOpenMoreModal(true);
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>
@@ -97,7 +102,7 @@ const WorkerCard = ({
             </div>
           </td>
 
-          <td  >
+          <td>
             <UpdateDeleteModal
               updateItem={updateItem}
               deleteItem={deleteItem}
@@ -105,6 +110,7 @@ const WorkerCard = ({
               openConfirmModal={openConfirmModal}
               state={worker}
               openMoreModal={openMoreModal}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </td>
         </tr>
@@ -140,6 +146,7 @@ const WorkerCard = ({
               openConfirmModal={openConfirmModal}
               state={worker}
               openMoreModal={openMoreModal}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </div>
         </div>

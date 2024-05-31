@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {  useState } from "react";
 import { TextField } from "@mui/material";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { ReactComponent as CheckIcon } from "../../../../../../assets/icons/Checkbox.svg";
@@ -8,7 +7,6 @@ import { useCustomHook } from "../../../../../GlobalFunctions/globalFunctions";
 import DropdownIcon from "../../../../components/DropdownIcon/DropdownIcon";
 
 const ProfileList = ({ formik, updateModalState, modalData }) => {
-  const dispatch = useDispatch();
   const { generalProfileList } = useCustomHook();
   const [openDropdown, setOpenDropdown] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);

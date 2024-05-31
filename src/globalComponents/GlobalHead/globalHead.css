@@ -154,7 +154,9 @@
 
 /* teacher-page */
 
-.details-page.teachers-page .teacher-header-filter {
+.details-page.teachers-page .teacher-header-filter,
+.details-page.students-page .student-header-filter
+ {
   width: 100%;
   display: flex;
   margin-top: 8px;
@@ -166,7 +168,9 @@
   margin-left: 10px;
 }
 
-.details-page .teacher-header-filter-container {
+.details-page .teacher-header-filter-container ,
+.details-page .student-header-filter-container
+{
   width: 100%;
 }
 

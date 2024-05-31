@@ -5,13 +5,17 @@ const initialState = {
   confirmedLessonsData: null,
   cancelledLessonsData: null,
   unviewedLessonsData: 0,
+  allGroupsCount: 0,
+  waitingGroupsCount: 0,
+  currentGroupsCount: 0,
+  endedGroupsCount: 0,
   eventsData: 0,
   dashboardFinanceData: {},
   courseStatistic: {},
   advertising: [],
   leadboard: {},
   dashboardStudentsAmount: {},
-  dashboardweek:[]
+  dashboardweek: [],
 };
 
 export const dashboardReducer = (state = initialState, action) => {
@@ -35,6 +39,14 @@ export const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         unviewedLessonsData: action.payload,
+      };
+    case DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_GROUPS_COUNT:
+      return {
+        ...state,
+        allGroupsCount: action.payload.allGroupsCount,
+        waitingGroupsCount: action.payload.waitingGroupsCount,
+        currentGroupsCount: action.payload.currentGroupsCount,
+        endedGroupsCount: action.payload.endedGroupsCount,
       };
     case DASHBOARD_ACTIONS_TYPE.GET_DASHBOARD_EVENTS:
       return {

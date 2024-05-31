@@ -13,6 +13,7 @@ import LessonTablePage from "../Pages/LessonTablePage/LessonTablePage";
 import FinancePage from "../Pages/SalesPage/FinancePage";
 import EventsPage from "../Pages/EventsPage/EventsPage";
 import { Dashboard } from "../Pages/DashboardPage/DashboardPage";
+import DiplomaPage from "../Pages/DiplomaPage/DiplomaPage";
 
 const SuperAdminPanelRoute = () => {
   return (
@@ -33,7 +34,8 @@ const SuperAdminPanelRoute = () => {
       <Route path="/sales" element={<FinancePage />} />
       <Route path="/event" element={<EventsPage />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/" element={<LessonTablePage />} />
+      <Route path="/lesson" element={<LessonTablePage />} />
+      <Route path="/diploma" element={<DiplomaPage/>} />
     </>
   );
 };

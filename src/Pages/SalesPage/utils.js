@@ -19,8 +19,6 @@ export const useFinanceCustomHook = () => {
 
   const { courseId } = useSelector((state) => state.salesData);
 
-  const { leads } = useSelector((state) => state.leads);
-
   const getAllDefaultData = () => {
     dispatch({ type: LEAD_ACTION_TYPE.RESET_LEAD });
     dispatch(getSalesChartAction("", "", 1));
@@ -43,7 +41,7 @@ export const useFinanceCustomHook = () => {
   };
 
   const getFinanceDataAfterUpdate = () => {
-    dispatch({ type: LEAD_ACTION_TYPE.RESET_LEAD });
+    // dispatch({ type: LEAD_ACTION_TYPE.RESET_LEAD });
 
     if (financeChooseDate.startDate && financeChooseDate.endDate) {
       const start = moment(financeChooseDate.startDate).format("YYYY-MM");

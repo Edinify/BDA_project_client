@@ -61,6 +61,10 @@ import { weeksBetweenSelectedDatesReducer } from "./reducers/weeksBetweenSelecte
 import { tableTypeReducer } from "./reducers/tableTypeReducer";
 import { paginationPageNumberReducer } from "./reducers/paginationPageNumber";
 import { mainPageTypeReducer } from "./reducers/mainpageTypeReducer";
+import { downloadExcelReducer } from "./reducers/downloadExcelReducer";
+import { diplomaPaginationReducer } from "./reducers/diplomaPaginationReducer";
+import { diplomaModalReducer } from "./reducers/diplomaModalReducer";
+import { studentGroupStatusReducer } from "./reducers/studentGroupStatusReducer";
 
 const initialState = {};
 const reducers = combineReducers({
@@ -111,15 +115,19 @@ const reducers = combineReducers({
   leadModal: leadModalReducer,
   financeDateFilter: financeFilterReducer,
   studentStatus: studentStatusReducer,
+  studentGroupStatus: studentGroupStatusReducer,
   teacherStatus: teacherStatusReducer,
   dropdownGroup: dropdownGroupReducer,
-  dropdownTeacher:dropdownTeacherReducer,
+  dropdownTeacher: dropdownTeacherReducer,
   mentors: mentorsReducer,
-  paymentStatus:paymentStatusReducer,
-  weeksBetweenSelectedDates:weeksBetweenSelectedDatesReducer,
-  tableType:tableTypeReducer,
-  pageNumber:paginationPageNumberReducer,
-  mainpageType:mainPageTypeReducer
+  paymentStatus: paymentStatusReducer,
+  weeksBetweenSelectedDates: weeksBetweenSelectedDatesReducer,
+  tableType: tableTypeReducer,
+  pageNumber: paginationPageNumberReducer,
+  mainpageType: mainPageTypeReducer,
+  downloadExcel: downloadExcelReducer,
+  diplomaPagination: diplomaPaginationReducer,
+  diplomaModal: diplomaModalReducer,
 });
 // test
 

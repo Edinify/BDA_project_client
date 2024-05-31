@@ -73,6 +73,7 @@ export const Dashboard = () => {
           <LessonStatistics type="mobile" />
           <WhereHeard  type="mobile"  />
           <LeaderBoard type="mobile" />
+          <Table/>
 
         </div>
       </div>

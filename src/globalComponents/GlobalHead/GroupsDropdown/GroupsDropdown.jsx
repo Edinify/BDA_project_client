@@ -9,6 +9,7 @@ import {
 import {
   getGroupsAction,
   getGroupsWithMentorAction,
+  getGroupsWithStudentAction,
   getGroupsWithTeacherAction,
 } from "../../../redux/actions/groupsActions";
 import { getLessonTablePaginationAction } from "../../../redux/actions/lessonTableActions";
@@ -29,8 +30,6 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
       type: DROPDOWN_GROUP_ACTIONS_TYPE.SELECT_GROUP,
       payload: group,
     });
-    dispatch({ type: LESSON_TABLE_ALL_ACTIONS_TYPE.RESET_LESSON_TABLE });
-    dispatch(getLessonTablePaginationAction(0, "", group._id, "", ""));
   };
 
   useEffect(() => {
@@ -38,6 +37,9 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
       dispatch(getGroupsWithTeacherAction(user._id));
     } else if (user?.role === "mentor") {
       dispatch(getGroupsWithMentorAction(user._id));
+    } else if (user?.role === "student") {
+      console.log('salam salam salam', user)
+      dispatch(getGroupsWithStudentAction(user._id));
     } else {
       dispatch(getGroupsAction());
     }

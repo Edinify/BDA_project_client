@@ -10,7 +10,7 @@ export const Header = () => {
   const openSidebarFunc = () => {
     dispatch({ type: SIDEBAR_ACTION_TYPE.SIDEBAR_OPEN_MODAL, payload: true });
   };
-  const {openSidebar} = useSelector(state=>state.openSidebar);
+  const { openSidebar } = useSelector((state) => state.openSidebar);
 
   const getPageTitle = (pathname) => {
     switch (pathname) {
@@ -41,12 +41,18 @@ export const Header = () => {
       case "/sales":
         return "Satış";
       case "/":
-      case "/lessonTable":
+      case "/lesson":
         return "Dərs cədvəli";
       case "/event":
         return "Tədbirlər";
       case "/dashboard":
         return "İdarəetmə paneli";
+      case "/teacher-panel":
+        return "Dərs cədvəli";
+      case "/student-panel":
+        return "Dərs cədvəli";
+        case "/diploma":
+          return "Diplom Cədvəli"
       default:
         return "";
     }
@@ -55,7 +61,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className={`main-header ${openSidebar ? "open" :""} `  } >
+      <header className={`main-header ${openSidebar ? "open" : ""} `}>
         <div className="container">
           <div className="header-content">
             <div className="header-content-container">

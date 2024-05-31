@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLessonTablePaginationAction } from "../../redux/actions/lessonTableActions";
 import {
@@ -8,6 +7,7 @@ import {
 import LessonTableData from "./components/LessonTableData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const LessonTablePage = () => {
   const dispatch = useDispatch();
@@ -108,6 +108,15 @@ const LessonTablePage = () => {
       )
     );
   };
+
+  useEffect(() => {
+    if (selectedGroup) {
+      dispatch({ type: LESSON_TABLE_ALL_ACTIONS_TYPE.RESET_LESSON_TABLE });
+      dispatch(
+        getLessonTablePaginationAction(0, "", selectedGroup._id, "", "")
+      );
+    }
+  }, [selectedGroup]);
 
   return (
     <div className="details-page lesson-page ">

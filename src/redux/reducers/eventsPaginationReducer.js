@@ -1,9 +1,9 @@
 import { EVENTS_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState = {
-  data:[],
+  data: [],
   events: [],
-  totalLength:0,
+  totalLength: 0,
   hasMore: true,
   loading: false,
 };
@@ -23,17 +23,16 @@ export const eventsPaginationReducer = (state = initialState, action) => {
         loading: action.payload,
       };
     case EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_PAGINATION:
-       return {
+      return {
         ...state,
         events: [...state.events, ...action.payload.events],
         totalLength: action.payload.totalLength,
         hasMore: !(action.payload.events.length < 10),
-        
       };
     case EVENTS_ALL_ACTIONS_TYPE.CREATE_EVENT:
       return {
         ...state,
-        events:  [action.payload, ...state.events],
+        events: [action.payload, ...state.events],
         totalLength: state.totalLength + 1,
       };
     case EVENTS_ALL_ACTIONS_TYPE.RESET_EVENTS_PAGINATION:
@@ -54,6 +53,7 @@ export const eventsPaginationReducer = (state = initialState, action) => {
       return {
         ...state,
         events: state.events.filter((event) => event._id !== action.payload),
+        totalLength: state.totalLength - 1,
       };
     case EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_LAST_PAGE:
       return {

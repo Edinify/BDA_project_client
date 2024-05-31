@@ -17,18 +17,11 @@ const StudentCard = ({
   student,
 }) => {
   const dispatch = useDispatch();
-  const { students, lastPage } = useSelector(
-    (state) => state.studentsPagination
-  );
-  const { studentSearchValues } = useSelector((state) => state.searchValues);
-  const { studentStatus } = useSelector((state) => state.studentStatus);
 
   const { whereComingList, whereSendList } = useCustomHook();
-
   const whereComingName = whereComingList.find(
     (item) => item.key === data?.whereComing
   )?.name;
-
   const whereSendName = whereSendList.find(
     (item) => item.key === data?.whereSend
   )?.name;
@@ -55,7 +48,7 @@ const StudentCard = ({
     Array.isArray(data?.groups) && data?.groups.length > 0
       ? data.groups
           .map((group) => {
-            return `${group.group.name}`;
+            return `${group?.group?.name}`;
           })
           .join(",")
       : "";
@@ -70,12 +63,7 @@ const StudentCard = ({
     });
   };
   const deleteItem = () => {
-    const pageNumber =
-      lastPage > 1 ? (students.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data._id;
-    const searchQuery = studentSearchValues;
-    const status = studentStatus ? studentStatus : "all";
-    dispatch(deleteStudentAction({ _id, pageNumber, searchQuery, status }));
+    dispatch(deleteStudentAction(data._id));
   };
 
   const openMoreModal = () => {
@@ -94,6 +82,10 @@ const StudentCard = ({
     });
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
       {showDeleteModal && (
@@ -103,7 +95,7 @@ const StudentCard = ({
         />
       )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>
@@ -173,7 +165,9 @@ const StudentCard = ({
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data?.qbCount || 0}</div>
+              <div className="table-scroll-text">
+                Lab:{data?.practicsQbCount || 0} / Əsas:{data.mainQbCount || 0}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>

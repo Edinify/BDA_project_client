@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ReactComponent as MinusIcon } from "../../../../../assets/icons/minus-cirlce.svg";
 import PaymentType from "../Groups/components/PaymentType";
 import Payments from "./components/Payments/Payments";
 import InputField from "./components/Inputs/InputField";
 import DiscountReason from "./components/DiscountReason/DiscountReason";
 import Status from "./components/Status/Status";
-import { date } from "yup";
 
 const GroupInput = ({
   data,
@@ -47,7 +46,11 @@ const GroupInput = ({
       [key]: value,
     };
 
+<<<<<<< HEAD
     // // console.log(groupData);
+=======
+    console.log(groupData);
+>>>>>>> 8dc53d552426155c8db801468c7369092d6b664a
     updateModalState("groups", groupData);
   };
 
@@ -128,6 +131,20 @@ const GroupInput = ({
           data={data}
           addGroupData={addGroupData}
         />
+        <InputField
+          inputName={"paymentStartDate"}
+          formik={formik}
+          setInputValue={setInputValue}
+          data={data}
+          addGroupData={addGroupData}
+        />
+        <InputField
+          inputName={"contractId"}
+          formik={formik}
+          setInputValue={setInputValue}
+          data={data}
+          addGroupData={addGroupData}
+        />
       </div>
       <PaymentType
         data={data}
@@ -162,13 +179,6 @@ const GroupInput = ({
           addGroupData={addGroupData}
         />
       </div>
-      <InputField
-        inputName={"paymentStartDate"}
-        formik={formik}
-        setInputValue={setInputValue}
-        data={data}
-        addGroupData={addGroupData}
-      />
 
       <p style={{ marginTop: "20px" }}>{index + 1}. Ödənişlər</p>
       {data?.payments?.map((item, index) => (

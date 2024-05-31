@@ -5,9 +5,9 @@ const initialState = {
   totalLength: 0,
   hasMore: true,
   teacherLessonStatistics: {},
-  teacherConfirmedLessons: '',
-  teacherCancelledLessons: '',
-  teacherUnviewedLessons: '',
+  teacherConfirmedLessons: "",
+  teacherCancelledLessons: "",
+  teacherUnviewedLessons: "",
   teacherLeaderboardOrder: {},
   loading: false,
 };
@@ -20,12 +20,12 @@ export const teacherPaginationReducer = (state = initialState, action) => {
         teachers: action.payload,
         // loading: false,
       };
-      case TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHERS:
-        return{
-          ...state,
-          teachers:action.payload,
-          loading:false
-        }
+    case TEACHER_ALL_ACTIONS_TYPE.GET_ACTIVE_TEACHERS:
+      return {
+        ...state,
+        teachers: action.payload,
+        loading: false,
+      };
     case TEACHER_ALL_ACTIONS_TYPE.TEACHER_LOADING:
       return {
         ...state,
@@ -36,7 +36,7 @@ export const teacherPaginationReducer = (state = initialState, action) => {
         ...state,
         teachers: [...state.teachers, ...action.payload.teachers],
         totalLength: action.payload.totalLength,
-        hasMore: !(action.payload.teachers.length < 10),
+        hasMore: !(action.payload.teachers.length < 20),
       };
     case TEACHER_ALL_ACTIONS_TYPE.RESET_TEACHER_PAGINATION:
       return {
@@ -48,7 +48,7 @@ export const teacherPaginationReducer = (state = initialState, action) => {
     case TEACHER_ALL_ACTIONS_TYPE.CREATE_TEACHER:
       return {
         ...state,
-        teachers:  [action.payload, ...state.teachers],
+        teachers: [action.payload, ...state.teachers],
         totalLength: state.totalLength + 1,
       };
     case TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER:
@@ -64,6 +64,7 @@ export const teacherPaginationReducer = (state = initialState, action) => {
         teachers: state.teachers.filter(
           (teacher) => teacher._id !== action.payload
         ),
+        totalLength: state.totalLength - 1,
       };
     case TEACHER_ALL_ACTIONS_TYPE.GET_TEACHER_LAST_PAGE:
       return {

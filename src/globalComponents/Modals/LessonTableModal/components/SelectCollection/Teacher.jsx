@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import DropdownIcon from "../../../components/DropdownIcon/DropdownIcon";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Teacher = ({ formik, modalData, updateModalState }) => {
-  const dispatch = useDispatch();
   const { teachers } = useSelector(
     (state) => state.dropdownGroup.selectedGroup
   );
@@ -44,7 +43,11 @@ const Teacher = ({ formik, modalData, updateModalState }) => {
               onBlur={() => formik.setFieldTouched("teacher", true)}
             />
 
-            {!(user?.role === "teacher" || user?.role === "mentor") && (
+            {!(
+              user?.role === "teacher" ||
+              user?.role === "mentor" ||
+              user?.role === "student"
+            ) && (
               <DropdownIcon
                 setOpenDropdown={setOpenDropdown}
                 openDropdown={openDropdown}

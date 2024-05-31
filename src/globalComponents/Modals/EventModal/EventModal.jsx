@@ -40,6 +40,16 @@ export const EventModal = () => {
     });
   };
 
+  const updateModalState = (keyName, value) => {
+    dispatch({
+      type: EVENTS_MODAL_ACTION_TYPE.GET_EVENTS_MODAL,
+      payload: {
+        data: { ...modalData, [keyName]: value },
+        openModal: true,
+      },
+    });
+  };
+
   useEffect(() => {
     formik.setValues({ ...formik.values, ...modalData });
   }, []);
@@ -66,6 +76,7 @@ export const EventModal = () => {
               modalData={modalData}
               formik={formik}
               inputName={"eventName"}
+              
             />{" "}
             <InputField
               setInputValue={setInputValue}
@@ -85,18 +96,20 @@ export const EventModal = () => {
               formik={formik}
               inputName={"place"}
             />
-            <div className="input-couples">
+            <div className="lead">
               <DateField
                 formik={formik}
                 modalData={modalData}
                 inputName={"date"}
                 setInputValue={setInputValue}
+                updateModalState={updateModalState}
               />
               <DateField
                 formik={formik}
                 modalData={modalData}
                 inputName={"time"}
                 setInputValue={setInputValue}
+                updateModalState={updateModalState}
               />
             </div>
             <InputField

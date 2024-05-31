@@ -10,6 +10,7 @@ const WorkersData = ({ userData, getNextTeachers }) => {
   const { workers, hasMore } = useSelector((state) => state.workersPagination);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [openMoreModal, setOpenMoreModal] = useState(false);
+  const [scrollHeight, setScrollHeight] = useState(1);
 
   const tableHead = [
     "Ad soyad",
@@ -21,6 +22,28 @@ const WorkersData = ({ userData, getNextTeachers }) => {
     "Profillər",
     "",
   ];
+
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
+
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
@@ -46,7 +69,7 @@ const WorkersData = ({ userData, getNextTeachers }) => {
         hasMore={hasMore}
         loader={<SmallLoading />}
         endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
-        height={550}
+        height={scrollHeight}
         scrollThreshold={0.7}
       >
         <table

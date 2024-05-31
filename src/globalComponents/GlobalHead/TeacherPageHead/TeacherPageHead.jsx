@@ -2,9 +2,9 @@ import React from "react";
 import Search from "../Search/Search";
 import { StatusDropdown } from "../StatusDropdown/StatusDropdown";
 import { CoursesDropdown } from "../CoursesDropdown/CoursesDropdown";
-import { GroupsDropdown } from "../GroupsDropdown/GroupsDropdown";
 import { ReactComponent as PlusIcon } from "../../../assets/icons/Plus.svg";
 import { ReactComponent as HalfCircleICon } from "../../../assets/icons/filter/half-circle-svgrepo-com.svg";
+import ExcelExportBtn from "../../ExcelExportBtn/ExcelExportBtn";
 
 const TeacherPageHead = ({
   openModal,
@@ -42,9 +42,11 @@ const TeacherPageHead = ({
           </button>
         </div>
         <div className="circle-icon">
-          <p className="filter-count">{count}</p>
+          <p className="filter-count">{count || 0}</p>
           <HalfCircleICon />
         </div>
+
+        <ExcelExportBtn pageName="teacher" />
       </div>
     </div>
   );

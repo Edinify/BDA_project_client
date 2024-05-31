@@ -1,7 +1,6 @@
 import React from "react";
 import moment from "moment";
 import "moment/locale/az";
-import { useCustomHook } from "../../../GlobalFunctions/globalFunctions";
 
 const EventMoreModal = ({ eventsModalData }) => {
   // // console.log(eventsModalData, "event modal data");

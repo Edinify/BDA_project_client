@@ -12,6 +12,7 @@ const EventsData = ({ userData, getNextTeachers }) => {
   const { data, events, hasMore } = useSelector(
     (state) => state.eventsPagination
   );
+  const [scrollHeight, setScrollHeight] = useState(1);
   const [openMoreModal, setOpenMoreModal] = useState(false);
   const { openConfirmModal } = useSelector((state) => state.coursesModal);
   const tableHead = [
@@ -37,7 +38,27 @@ const EventsData = ({ userData, getNextTeachers }) => {
     }
   }, [openMoreModal]);
 
-  // console.log(data);
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
+
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <>
       {openMoreModal && (
@@ -55,8 +76,8 @@ const EventsData = ({ userData, getNextTeachers }) => {
         hasMore={hasMore}
         loader={<SmallLoading />}
         endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
-        height={550}
-        scrollThreshold={0.9}
+        height={scrollHeight}
+        scrollThreshold={0.7}
       >
         <table
           className={`details-table events-table   ${

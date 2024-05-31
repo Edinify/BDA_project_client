@@ -30,7 +30,7 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
         ...state,
         syllabusData: [...state.syllabusData, ...action.payload.syllabusData],
         totalLength: action.payload.totalLength,
-        hasMore: !(action.payload.syllabusData.length < 10),
+        hasMore: !(action.payload.syllabusData.length < 20),
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.CREATE_SYLLABUS:
       // console.log(action.payload);
@@ -59,8 +59,9 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
       return {
         ...state,
         syllabusData: state.syllabusData.filter(
-          (teacher) => teacher._id !== action.payload
+          (syllabus) => syllabus._id !== action.payload
         ),
+        totalLength: state.totalLength - 1,
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_LAST_PAGE:
       return {
