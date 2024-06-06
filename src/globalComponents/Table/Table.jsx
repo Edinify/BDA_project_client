@@ -6,14 +6,14 @@ import React from "react";
 export const Table = () => {
   return (
     <div className="table-container">
-      <div className="container">
+      {/* <div className="container"> */}
       <div className="scrolling">
         <table>
           <TableHead />
           <TableBody />
         </table>
       </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 };
