@@ -5,6 +5,8 @@ import Payments from "./components/Payments/Payments";
 import InputField from "./components/Inputs/InputField";
 import DiscountReason from "./components/DiscountReason/DiscountReason";
 import Status from "./components/Status/Status";
+import { useDispatch } from "react-redux";
+import { STUDENTS_MODAL_ACTION_TYPE } from "../../../../../redux/actions-type";
 
 const GroupInput = ({
   data,
@@ -20,7 +22,16 @@ const GroupInput = ({
     (item) => item.group._id === data.group._id
   );
 
-  // console.log(data, "dataaaaaaa");
+  console.log(groupData, "dataaaaaaa");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: STUDENTS_MODAL_ACTION_TYPE.GET_STUDENTS_MODAL,
+      payload: { data: {} },
+    });
+  }, [dispatch]);
 
   const addPaymentType = (item) => {
     groupData[foundIndex] = {
@@ -46,7 +57,7 @@ const GroupInput = ({
       [key]: value,
     };
 
-    console.log(groupData);
+    // console.log(groupData,"dataaaaaa");
     updateModalState("groups", groupData);
   };
 

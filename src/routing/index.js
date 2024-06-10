@@ -32,7 +32,7 @@ export const Routing = () => {
   const token = localStorage.getItem("auth");
 
 
-  console.log(userData,"user dataaaa")
+  // console.log(userData,"user dataaaa")
 
   // console.log(user, "userrrrrrr");
   // console.log(userData, "userrrr dataaaaaaaaa");

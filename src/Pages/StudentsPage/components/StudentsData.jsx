@@ -57,7 +57,6 @@ const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
     };
   }, []);
 
-  console.log(students);
 
   return (
     <>
