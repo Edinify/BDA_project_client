@@ -57,7 +57,7 @@ const StudentCard = ({
     dispatch({
       type: STUDENTS_MODAL_ACTION_TYPE.GET_STUDENTS_MODAL,
       payload: {
-        data: data,
+        data: JSON.parse(JSON.stringify(data)),
         openModal: modalType !== "more" ? true : false,
       },
     });
@@ -95,7 +95,7 @@ const StudentCard = ({
         />
       )}
       {mode === "desktop" ? (
-        <tr onDoubleClick={doubleClick} >
+        <tr onDoubleClick={doubleClick}>
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>

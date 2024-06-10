@@ -80,6 +80,14 @@ export default function InputField({ formik, data, inputName, addGroupData }) {
       marginBottom: "0",
       inputValue: data[inputName] || "",
     },
+    {
+      inputName: "paymentPart",
+      label: "Ödəniş hissəsi",
+      type: "number",
+      marginTop: "24px",
+      marginBottom: "0",
+      inputValue: data[inputName] || "",
+    },
   ];
 
   useEffect(() => {
@@ -132,7 +140,7 @@ export default function InputField({ formik, data, inputName, addGroupData }) {
         value={
           inputData.find((item) => item.inputName === inputName)?.inputValue
         }
-        disabled={inputName === "totalAmount" || inputName === "amount"}
+        disabled={inputName === "totalAmount"}
         onWheel={(e) => e.target.blur()}
         onChange={(e) => {
           addGroupData(inputName, e.target.value);
