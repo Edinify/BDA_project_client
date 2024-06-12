@@ -12,10 +12,8 @@ import "react-datepicker/dist/react-datepicker.css";
 export const DatePick = ({ deviceType = "" }) => {
   registerLocale("az", az);
   const dispatch = useDispatch();
-  const [selectedStartDate, setSelectedStartDate] = useState(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState(new Date());
-  const startDateRef = useRef(null);
-  const endDateRef = useRef(null);
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
 
   useEffect(() => {
     dispatch({
