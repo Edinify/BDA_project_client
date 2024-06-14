@@ -1,30 +1,53 @@
-.payment-result-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 16px;
-}
-
-.payment-result-container.lesson-status{
-  width: 60%;
-  margin: 10px 0;
-}
-
-.payment-result-container .payment-res-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.payment-amount{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
 }
 
-.payment-result-container .payment-res-content .circle-icon {
-  position: relative;
-  margin-top: 5px;
+
+.payment-amount .content-box{
+    padding: 6px;
+    background-color: #fff;
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 30%;
 }
 
-.payment-result-container .payment-res-content .circle-icon .filter-count {
-  position: absolute;
-  left: 20px;
+
+.payment-amount .content-box .left{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 6px;
+    margin-right: 12px;
 }
 
+
+.payment-amount .content-box .right{
+    width: 100%;
+}
+
+
+.payment-amount .content-box .right .top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.payment-amount .content-box .right .top .title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--neutrals-600);
+}
+
+.payment-amount .content-box .right   .amount{
+    color: var(--neutrals-900);
+    font-size: 20px;
+    font-weight: 700;
+}
 
