@@ -22,7 +22,9 @@ const PaymentResult = () => {
   );
 
 
-  console.log(willPayPayment,"data")
+
+
+
 
 
   useEffect(() => {
@@ -32,14 +34,14 @@ const PaymentResult = () => {
   }, [dispatch]);
 
   const applyLatedFilter = (startDate, endDate) => {
-    dispatch(getLatedPayment("", startDate, endDate, true));
+    dispatch(getLatedPayment("", startDate, endDate, ""));
     setOpenCalendar(false);
     setOpenDropdownEntered(false);
     setOpenDropdownLated(false);
     setOpenDropdownEnter(false);
   };
   const applyPaidFilter = (startDate, endDate) => {
-    dispatch(getPaidPayment("", startDate, endDate, true));
+    dispatch(getPaidPayment("", startDate, endDate, ""));
     setOpenCalendar(false);
     setOpenDropdownEntered(false);
     setOpenDropdownLated(false);
@@ -55,17 +57,17 @@ const PaymentResult = () => {
   };
 
   const applyMonthsLatedFilter = (option) => {
-    dispatch(getLatedPayment(option.key, "", "", true));
+    dispatch(getLatedPayment(option.key, "", "", ""));
   };
 
   const applyMonthsPaidFilter = (option) => {
-    dispatch(getPaidPayment(option.key, "", "", true));
+    dispatch(getPaidPayment(option.key, "", "", ""));
   };
 
 
-  // const applyMonthsWillPayFilter=(option)=>{
-  //   dispatch(getWillPayPayment(option.key,"","",true))
-  // }
+  const applyMonthsWillPayFilter=(option)=>{
+    dispatch(getWillPayPayment(option.key,"","",true))
+  }
 
   const applyFilter = (startDate, endDate) => {
     if (openDropdownLated) {
@@ -98,7 +100,7 @@ const PaymentResult = () => {
                   openDropdown={openDropdownLated}
                   setOpenDropdown={setOpenDropdownLated}
                   applyMonthsFilter={applyMonthsLatedFilter}
-                  typeName=""
+                  typeName="lated"
                 />
               }
             </div>
@@ -138,7 +140,7 @@ const PaymentResult = () => {
             <div className="top">
               <h2 className="title">Daxil olacaq</h2>
 
-              {/* <PaymentDropdown
+              <PaymentDropdown
                 optionType={"date"}
                 calendar={true}
                 setOpenCalendar={setOpenCalendar}
@@ -147,7 +149,7 @@ const PaymentResult = () => {
                 setOpenDropdown={setOpenDropdownEnter}
                 typeName=""
                 applyMonthsFilter={applyMonthsWillPayFilter}
-              /> */}
+              />
             </div>
             <p className="amount">{willPayPayment ? willPayPayment : 0}</p>
           </div>
