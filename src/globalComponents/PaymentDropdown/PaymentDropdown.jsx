@@ -20,15 +20,20 @@ const PaymentDropdown = ({
   typeName,
 }) => {
   const dispatch = useDispatch();
-  const [selectedOption, setSelectedOption] = useState(
-    typeName === "lated"
-      ? { key: "lated", name: "Hamısı" }
-      : typeName === "pay"
-      ? { key: "pay", name: "Hamısı" }
-      : { key: 1, name: "Cari ay" }
-  );
+  const [selectedOption, setSelectedOption] = useState(() => {
+    switch (typeName) {
+      case "lated":
+        return { key: "lated", name: "Hamısı" };
+      case "pay":
+        return { key: "pay", name: "Hamısı" };
+      case "currentDay":
+        return { key: "currentDay", name: "Cari gün" };
+      default:
+        return { key: 1, name: "Cari ay" };
+    }
+  });
   
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(selectedOption);
 
   const optionList = {
     date: {
@@ -39,7 +44,7 @@ const PaymentDropdown = ({
         { key: 6, name: "Son 6 ay" },
         { key: 12, name: "İllik" },
         { key: "", name: "Tarix seç" },
-      ]
+      ].filter(Boolean),
     },
   };
 
@@ -49,29 +54,29 @@ const PaymentDropdown = ({
       setSelectedOption(option);
     } else if (option.name === "Cari gün") {
       setSelectedOption({ key: "currentDay", name: "Cari gün" });
-      setSelected({ name: "Cari gün" });
+      setSelected({ key: "currentDay", name: "Cari gün" });
       setOpenDropdown(false);
       dispatch(getPaidPayment("", "", "", true));
     } else if (option.name === "Hamısı") {
       if (typeName === "lated") {
         setSelectedOption({ key: "lated", name: "Hamısı" });
-        setSelected({ name: "Hamısı" });
+        setSelected({ key: "lated", name: "Hamısı" });
         setOpenDropdown(false);
         dispatch(getLatedPayment("", "", "", true));
       } else if (typeName === "pay") {
         setSelectedOption({ key: "pay", name: "Hamısı" });
-        setSelected({ name: "Hamısı" });
+        setSelected({ key: "pay", name: "Hamısı" });
         setOpenDropdown(false);
         dispatch(getWillPayPayment("", "", "", true));
       }
     } else {
       setSelectedOption(option);
+      setSelected(option);
       setOpenDropdown(false);
       applyMonthsFilter(option);
     }
   };
   
-
   const changeOpenDropdown = () => {
     setOpenDropdown(!openDropdown);
     setOpenCalendar(false);
@@ -99,15 +104,13 @@ const PaymentDropdown = ({
           className={`calendar ${openDropdown ? "active" : ""}`}
           onClick={() => changeOpenDropdown()}
         >
-          <p className="calendar-selected-name">{selected?.name}</p>
+          <p className="calendar-selected-name">{selected.name}</p>
           <CalendarIcon />
         </div>
       ) : (
         <div onClick={() => changeOpenDropdown()} className="dropdown-head">
           <p>
-            {selectedOption
-              ? selectedOption.name
-              : optionList[optionType].title}
+            {selectedOption.name}
           </p>
           <div className={`dropdown-icon ${openDropdown ? "up" : "down"}`}>
             <DropdownArrowIcon />
