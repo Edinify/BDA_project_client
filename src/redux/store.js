@@ -65,6 +65,7 @@ import { downloadExcelReducer } from "./reducers/downloadExcelReducer";
 import { diplomaPaginationReducer } from "./reducers/diplomaPaginationReducer";
 import { diplomaModalReducer } from "./reducers/diplomaModalReducer";
 import { studentGroupStatusReducer } from "./reducers/studentGroupStatusReducer";
+import { tuitionFeePaymentReducer } from "./reducers/tuitionFeePaymentReducer";
 
 const initialState = {};
 const reducers = combineReducers({
@@ -128,6 +129,7 @@ const reducers = combineReducers({
   downloadExcel: downloadExcelReducer,
   diplomaPagination: diplomaPaginationReducer,
   diplomaModal: diplomaModalReducer,
+  tuitionFeePayment:tuitionFeePaymentReducer
 });
 // test
 
