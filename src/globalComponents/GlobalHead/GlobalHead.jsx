@@ -35,7 +35,6 @@ const GlobalHead = ({
 
   useEffect(() => {
     if (user.role === "super-admin") {
-      // console.log(2);
       setShowAddBtn(true);
     } else if (user.role === "worker") {
       const checkPower =
@@ -100,13 +99,13 @@ const GlobalHead = ({
               )}
               {statusType === "student" && (
                 <StudentPageHead
-                searchData={searchData}
-                DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
-                dataSearchValues={dataSearchValues}
-                filter={filter}
-                openModal={openModal}
-                search={search}
-                count={count}
+                  searchData={searchData}
+                  DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+                  dataSearchValues={dataSearchValues}
+                  filter={filter}
+                  openModal={openModal}
+                  search={search}
+                  count={count}
                 />
               )}
               {statusType === "career" && <CareerPageHead filter={filter} />}
@@ -136,13 +135,15 @@ const GlobalHead = ({
               <div className="lesson-table-add-btn">
                 {statusType === "lesson-table" && null}
                 {statusType === "teacher" && null}
-                {statusType ==="student" && null}
-                {statusType !== "lesson-table" && statusType !== "teacher" &&  statusType!=="student" &&  (
-                  <button className="add-detail" onClick={openModal}>
-                    <PlusIcon />
-                    Əlavə et
-                  </button>
-                )}
+                {statusType === "student" && null}
+                {statusType !== "lesson-table" &&
+                  statusType !== "teacher" &&
+                  statusType !== "student" && (
+                    <button className="add-detail" onClick={openModal}>
+                      <PlusIcon />
+                      Əlavə et
+                    </button>
+                  )}
               </div>
             )}
           </div>

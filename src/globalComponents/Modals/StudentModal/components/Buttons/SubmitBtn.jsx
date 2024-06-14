@@ -49,7 +49,6 @@ const SubmitBtn = ({ formik, modalData, funcType, closeModal }) => {
   useEffect(() => {
     setIsDisabled(() => {
       if (funcType === "update") {
-        console.log(formik.errors, "formik errors");
         if (Object.keys(formik.errors).length === 0 && modalData?.fullName) {
           return false;
         } else {

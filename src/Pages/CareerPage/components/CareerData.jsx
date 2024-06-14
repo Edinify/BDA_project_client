@@ -68,9 +68,9 @@ const CareerData = ({ getNextCareers }) => {
     };
   }, []);
 
+  console.log(careerData, "career dataaa");
   return (
     <>
-      
       <div className="career-table-container">
         <InfiniteScroll
           dataLength={careerData?.length}

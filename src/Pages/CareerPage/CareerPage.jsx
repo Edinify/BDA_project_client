@@ -4,6 +4,7 @@ import { getCareerPaginationAction } from "../../redux/actions/careerActions";
 import {
   CAREER_ALL_ACTIONS_TYPE,
   CAREER_MODAL_ACTION_TYPE,
+  STUDENT_GROUP_STATUS_FILTER_ACTION_TYPE,
 } from "../../redux/actions-type";
 import CareerData from "./components/CareerData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
@@ -13,7 +14,7 @@ const CareerPage = () => {
   const { currentLength, loading } = useSelector(
     (state) => state.careerPagination
   );
-
+  const { status } = useSelector((state) => state.studentGroupStatus);
   const { careerSearchValues } = useSelector((state) => state.searchValues);
   const { courseId } = useSelector((state) => state.studentStatus);
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
@@ -26,7 +27,8 @@ const CareerPage = () => {
         0,
         careerSearchValues,
         courseId,
-        selectedGroup._id
+        selectedGroup._id,
+        status
       )
     );
   };
@@ -40,7 +42,8 @@ const CareerPage = () => {
           currentLength || 0,
           careerSearchValues,
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     } else {
@@ -49,7 +52,8 @@ const CareerPage = () => {
           currentLength || 0,
           "",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     }
@@ -70,21 +74,28 @@ const CareerPage = () => {
         0,
         careerSearchValues,
         courseId,
-        selectedGroup._id
+        selectedGroup._id,
+        status
       )
     );
   };
 
   useEffect(() => {
     if (careerSearchValues) {
-      dispatch(getCareerPaginationAction(0, careerSearchValues, "", ""));
+      dispatch(
+        getCareerPaginationAction(0, careerSearchValues, "", "", status)
+      );
     } else {
-      dispatch(getCareerPaginationAction(0, "", "", ""));
+      dispatch(getCareerPaginationAction(0, "", "", "", status));
     }
     return () => {
       dispatch({ type: CAREER_ALL_ACTIONS_TYPE.RESET_CAREER_PAGINATION });
+      dispatch({
+        type: STUDENT_GROUP_STATUS_FILTER_ACTION_TYPE.GET_STUDENT_STATUS,
+        payload: "",
+      });
     };
-  }, [dispatch,careerSearchValues]);
+  }, [dispatch, careerSearchValues]);
 
   return (
     <div className="details-page career-page ">

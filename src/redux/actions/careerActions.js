@@ -82,13 +82,13 @@ const downloadExcelLoading = (value) => ({
 });
 
 export const getCareerPaginationAction =
-  (length, searchQuery, courseId = "", groupId = "") =>
+  (length, searchQuery, courseId = "", groupId = "", status) =>
   async (dispatch) => {
     dispatch(pageLoading(true));
 
     try {
       const { data } = await API.get(
-        `/?length=${length}&searchQuery=${searchQuery}&courseId=${courseId}&groupId=${groupId}`
+        `/?length=${length}&searchQuery=${searchQuery}&courseId=${courseId}&groupId=${groupId}&studentGroupStatus=${status||""}`
       );
 
       dispatch({
