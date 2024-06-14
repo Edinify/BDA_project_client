@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { ReactComponent as DropdownArrowIcon } from "../../assets/icons/dashboard/arrow-down.svg";
 import { ReactComponent as CalendarIcon } from "../../assets/icons/dashboard/calendar.svg";
+import {
+  getLatedPayment,
+  getPaidPayment,
+} from "../../redux/actions/tuitionFeePaymentActions";
+import { useDispatch } from "react-redux";
 
 const PaymentDropdown = ({
   optionType,
@@ -13,6 +18,7 @@ const PaymentDropdown = ({
   monthCount = "",
   typeName,
 }) => {
+  const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState(
     optionType === "date"
       ? monthCount === 3
@@ -20,6 +26,7 @@ const PaymentDropdown = ({
         : { key: 1, name: "Cari ay" }
       : { key: "lessonCount", name: "Dərslər" }
   );
+  const [selected, setSelected] = useState(null);
 
   const optionList = {
     date: {
@@ -30,9 +37,11 @@ const PaymentDropdown = ({
         { key: 6, name: "Son 6 ay" },
         { key: 12, name: "İllik" },
         { key: "", name: "Tarix seç" },
-      ]
+      ],
     },
   };
+
+  console.log(selected,"selected")
 
   const selectOption = (option) => {
     if (option.name === "Tarix seç") {
@@ -40,7 +49,14 @@ const PaymentDropdown = ({
       setSelectedOption(option);
     } else if (option.name === "Cari gün") {
       setSelectedOption({ key: "currentDay", name: "Cari gün" });
+      setSelected({name:"Cari gün"});
       setOpenDropdown(false);
+      dispatch(getPaidPayment("", "", "", true));
+    } else if (option.name === "Hamısı") {
+      setSelectedOption({ key: "lated", name: "Hamısı" });
+      setSelected({name:"Hamısı"});
+      setOpenDropdown(false);
+      dispatch(getLatedPayment("", "", "", true));
     } else {
       setSelectedOption(option);
       setOpenDropdown(false);
@@ -75,6 +91,7 @@ const PaymentDropdown = ({
           className={`calendar ${openDropdown ? "active" : ""}`}
           onClick={() => changeOpenDropdown()}
         >
+          <p className="calendar-selected-name">{selected?.name}</p>
           <CalendarIcon />
         </div>
       ) : (
@@ -95,16 +112,29 @@ const PaymentDropdown = ({
           {typeName === "currentDay" && (
             <li
               className={selectedOption.key === "currentDay" ? "active" : ""}
-              onClick={() => selectOption({ key: "currentDay", name: "Cari gün" })}
+              onClick={() =>
+                selectOption({ key: "currentDay", name: "Cari gün" })
+              }
             >
               Cari gün
+            </li>
+          )}
+          {typeName === "lated" && (
+            <li
+              className={selectedOption.key === "lated" ? "active" : ""}
+              onClick={() => selectOption({ key: "lated", name: "Hamısı" })}
+            >
+              Hamısı
             </li>
           )}
           {optionList[optionType].data.map((option, index) => (
             <li
               className={selectedOption.key === option.key ? "active" : ""}
               key={index}
-              onClick={() => selectOption(option)}
+              onClick={() => {
+                setSelected(option);
+                selectOption(option);
+              }}
             >
               {option.name}
             </li>
