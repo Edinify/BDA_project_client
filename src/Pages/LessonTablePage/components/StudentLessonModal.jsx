@@ -1,30 +1,23 @@
 import React, { useState } from "react";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
 import "./studentLesson.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateLessonTableAction } from "../../../redux/actions/lessonTableActions";
 import { LESSON_TABLE_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 
-const StudentLessonModal = ({ students, setStudents }) => {
+const StudentLessonModal = ({ targetLesson, setTargetLesson }) => {
   const [selectedStudentId, setSelectedStudentId] = useState(null);
   const [togggleIcon, setToggleIcon] = useState("");
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  const handleStudentClick = (studentId) => {
-    setSelectedStudentId(studentId);
-  };
 
   const updateLessonStudents = () => {
     dispatch(
-      updateLessonTableAction(students.lessonId, {
-        students: students.data.map((item) => ({
-          ...item,
-          student: item.student._id,
-        })),
+      updateLessonTableAction(targetLesson._id, {
+        students: targetLesson.students,
       })
     );
   };
-
 
   const getBackgroundColor = (item) => {
     if (item.attendance === 1) {
@@ -36,19 +29,28 @@ const StudentLessonModal = ({ students, setStudents }) => {
     }
   };
 
-  const handleStatusChange = (newItem) => {
-    const newStudentsList = students.data.map((item) =>
-      item._id == newItem._id ? newItem : item
-    );
-    setStudents({ ...students, data: newStudentsList });
+  const signBackgroundColor = (item) => {
+    if (item.studentSignature === 1) {
+      return "#D4FFBF";
+    } else if (item.studentSignature === -1) {
+      return "#FFCED1";
+    } else {
+      return "";
+    }
   };
 
-  // console.log(students, "students kljjlkjkk");
+  const handleStatusChange = (newItem) => {
+    const newStudentsList = targetLesson.students.map((item) =>
+      item._id === newItem._id ? newItem : item
+    );
+    setTargetLesson((prev) => ({ ...prev, students: newStudentsList }));
+  };
+
   return (
     <div className="create-update-modal-con">
       <div className="student-lesson-modal">
         <div className="create-update-modal-head">
-          <p className="content-type" >Tələbələr</p>
+          <p className="content-type">Tələbələr</p>
           <CloseBtn
             onClick={() =>
               dispatch({
@@ -59,21 +61,20 @@ const StudentLessonModal = ({ students, setStudents }) => {
           />
         </div>
         <div className="students-list">
-          {students.data?.map((item) => (
+          {targetLesson?.students?.map((item) => (
             <div
-              style={{backgroundColor:getBackgroundColor(item)}}
+              style={{ backgroundColor: getBackgroundColor(item) }}
               onClick={() =>
                 setToggleIcon(
-                  togggleIcon == item.student._id ? "" : item.student._id
+                  togggleIcon === item.student._id ? "" : item.student._id
                 )
               }
-              // onClick={() => handleStudentClick(student.id)}
               className={`student-list ${
                 selectedStudentId === item.student._id ? "selected" : ""
               }`}
               key={item.student._id}
             >
-              <div className="student-name" >{item.student.fullName}</div>
+              <div className="student-name">{item.student.fullName}</div>
 
               <div
                 onClick={() => {
@@ -101,12 +102,12 @@ const StudentLessonModal = ({ students, setStudents }) => {
                   </svg>
                 </div>
               </div>
-              {togggleIcon == item.student._id && (
+              {togggleIcon === item.student._id && (
                 <div
-                className={`status ${
-                  togggleIcon === item.student._id ? "active" : ""
-                }`}
-              >
+                  className={`status ${
+                    togggleIcon === item.student._id ? "active" : ""
+                  }`}
+                >
                   <p
                     onClick={() =>
                       handleStatusChange({ ...item, attendance: 1 })
@@ -126,9 +127,32 @@ const StudentLessonModal = ({ students, setStudents }) => {
             </div>
           ))}
         </div>
-        <div className="confirm-btn">
-          <button onClick={updateLessonStudents}>Təsdiqlə</button>
+        <div className="student-sign">
+          <p className="content-type">Tələbə imzaları</p>
+          <div className="students-list">
+            {targetLesson?.students?.map((item) => (
+              <div
+                style={{ backgroundColor: signBackgroundColor(item) }}
+                className={`student-list ${
+                  selectedStudentId === item.student._id ? "selected" : ""
+                }`}
+                key={item.student._id}
+              >
+                <div className="student-name">{item.student.fullName}</div>
+              </div>
+            ))}
+          </div>
         </div>
+
+        {!(
+          (user?.role === "mentor" &&
+            targetLesson?.topic?.name !== "Praktika") ||
+          (user?.role === "teacher" && targetLesson?.topic?.name === "Praktika")
+        ) && (
+          <div className="confirm-btn">
+            <button onClick={updateLessonStudents}>Təsdiqlə</button>
+          </div>
+        )}
       </div>
     </div>
   );

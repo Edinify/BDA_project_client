@@ -3,28 +3,23 @@ import { LEAD_ACTION_TYPE } from "../actions-type";
 const initialState = {
   leads: [],
   loading: false,
-  totalPages: 1,
-  lastPage: 1,
+  hasMore: true,
 };
 
 export const leadReducer = (state = initialState, action) => {
   switch (action.type) {
-    // case INCOME_ACTION_TYPE.GET_INCOME:
-    //   return {
-    //     ...state,
-    //     leads: action.payload.leads,
-    //     totalPages: action.payload.totalPages,
-    // loading:false
-    //   };
     case LEAD_ACTION_TYPE.GET_LEAD_PAGINATION:
       return {
         ...state,
-        leads: action.payload.leads,
-        totalPages: action.payload.totalPages,
+        leads: [...state.leads, ...action.payload.leads],
+        hasMore: !(action.payload.leads.length < 10),
       };
 
     case LEAD_ACTION_TYPE.UPDATE_LEAD:
-      // console.log(action.payload, "payloooooad");
+      console.log(action.payload, "updated data in lead reducer");
+      console.log(state.leads.map((lead) =>
+      lead._id === action.payload._id ? action.payload : lead
+    ))
       return {
         ...state,
         leads: state.leads.map((lead) =>
@@ -34,12 +29,14 @@ export const leadReducer = (state = initialState, action) => {
     case LEAD_ACTION_TYPE.CREATE_LEAD:
       return {
         ...state,
-        leads: [...state?.leads, action.payload],
+        leads: [action.payload, ...state.leads],
       };
+    case LEAD_ACTION_TYPE.RESET_LEAD:
+      return initialState;
     case LEAD_ACTION_TYPE.DELETE_LEAD:
       return {
         ...state,
-        leads: state.leads.filter((lead) => lead._id !== action.payload._id),
+        leads: state.leads.filter((lead) => lead._id !== action.payload),
       };
     case LEAD_ACTION_TYPE.LEAD_LOADING:
       return {

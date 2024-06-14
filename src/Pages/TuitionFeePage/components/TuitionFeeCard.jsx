@@ -5,12 +5,10 @@ import { TUITION_FEE_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { deleteStudentAction } from "../../../redux/actions/studentsActions";
 import moment from "moment";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
-import { FormControl, InputLabel, MenuItem } from "@mui/material";
-import { Select } from "antd";
 
 const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   const dispatch = useDispatch();
-  const { discountReasonList } = useCustomHook();
+  const { discountReasonList, studentStatus } = useCustomHook();
   const { tuitionFeeData, lastPage } = useSelector(
     (state) => state.tuitionFeePagination
   );
@@ -19,15 +17,18 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
   const [totalRest, setTotalRest] = useState();
 
   const listData = [
-    { key: "Qrup", value: `${data.group.name} - ${data.group.course.name}` },
-    { key: "Məbləğ", value: data.amount },
-    { key: "Yekun Məbləğ", value: data.totalAmount },
-    { key: "Ödəniş növü:", value: `${data.paymentType} hissəli` },
-    { key: "Endirim %", value: data.discount },
+    {
+      key: "Qrup",
+      value: `${data?.group?.name} - ${data?.group?.course?.name}`,
+    },
+    { key: "Məbləğ", value: data?.amount },
+    { key: "Yekun Məbləğ", value: data?.totalAmount },
+    { key: "Ödəniş növü:", value: `${data?.paymentType} hissəli` },
+    { key: "Endirim %", value: data?.discount },
     {
       key: "Endirim növü",
       value:
-        discountReasonList.find((item) => item.key === data?.discountReason)
+        discountReasonList?.find((item) => item.key === data?.discountReason)
           ?.name || "",
     },
     {
@@ -104,24 +105,38 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
 
     setCurrentPayment(currPayment > 0 ? currPayment : 0);
     // console.log(data.totalAmount);
-    setTotalRest((data?.totalAmount || 0) - (totalConfirmedPayment || 0));
+    setTotalRest(
+      +(
+        (data?.totalAmount || 0).toFixed(2) -
+        (totalConfirmedPayment || 0).toFixed(2)
+      ).toFixed(2)
+    );
   });
 
+  const doubleClick = () => {
+    openConfirmModal();
+  };
   return (
     <>
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick}>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>
-              <div className="table-scroll-text no-wrap">{data.fullName}</div>
+              <div className="table-scroll-text no-wrap">{data?.fullName}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text no-wrap">{data?.phone}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {data.group.name} - {data.group.course.name}
+                {data?.group?.name} - {data?.group?.course?.name}
               </div>
               <div className="right-fade"></div>
             </div>
@@ -137,7 +152,9 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
           <td>
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                {data?.totalAmount ? data?.totalAmount + " AZN" : ""}
+                {data?.totalAmount
+                  ? +data?.totalAmount?.toFixed(2) + " AZN"
+                  : ""}
               </div>
               <div className="right-fade"></div>
             </div>
@@ -176,8 +193,17 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
           >
             <div className="td-con">
               <div className="table-scroll-text no-wrap">
-                <p>{currentPayment > 0 ? currentPayment : 0} AZN</p>
+                <p>{currentPayment > 0 ? +currentPayment.toFixed(2) : 0} AZN</p>
               </div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text no-wrap">
+                {studentStatus.find((item) => item.key === data?.status)
+                  ?.value || ""}
+              </div>
+              <div className="right-fade"></div>
             </div>
           </td>
           <td>
@@ -194,9 +220,10 @@ const TuitionFeeCard = ({ mode, setOpenMoreModal, data, cellNumber }) => {
       ) : (
         <div className="content-box">
           <div className="left">
-            <h3>{data.fullName}</h3>
+            <h3>{data?.fullName}</h3>
+            <h3>test</h3>
             <ul>
-              {listData.map((item, index) => (
+              {listData?.map((item, index) => (
                 <li key={index}>
                   <span className="type">{item.key}</span>
                   <p>{item.value}</p>

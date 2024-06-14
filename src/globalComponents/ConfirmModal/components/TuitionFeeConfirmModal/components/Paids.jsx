@@ -12,7 +12,7 @@ function Paids({ tuitionFeeModalData }) {
 
   const togglePaymentStatus = (index) => {
     const newPayments = tuitionFeeModalData.paids.map((item, i) =>
-      i == index ? { ...item, confirmed: !item?.confirmed } : item
+      i === index ? { ...item, confirmed: !item?.confirmed } : item
     );
 
     dispatch({
@@ -27,7 +27,7 @@ function Paids({ tuitionFeeModalData }) {
 
   const deletePayment = (index) => {
     const newPayments = tuitionFeeModalData.paids.filter(
-      (item, i) => i != index
+      (item, i) => i !== index
     );
 
     dispatch({
@@ -46,10 +46,11 @@ function Paids({ tuitionFeeModalData }) {
         <Card
           key={i}
           sx={{
-            boxShadow: "none",
-            borderBottom: "0.1px solid ",
-            borderRadius: 0,
+            // borderBottom: "0.1px solid ",
+            borderRadius: "8px",
             marginBottom: "20px",
+            backgroundColor: "var(--neutrals-200)",
+            paddingRight: "10px",
           }}
           className="paids-container"
         >

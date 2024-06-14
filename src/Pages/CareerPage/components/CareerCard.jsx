@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CAREER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
@@ -11,7 +10,18 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   const { careerData, lastPage } = useSelector(
     (state) => state.careerPagination
   );
-  const { whereComingList: dataList, whereSendList } = useCustomHook();
+  const { careerSearchValues } = useSelector((state) => state.searchValues);
+
+
+  const {
+    whereComingList: dataList,
+    whereSendList,
+    studentStatus,
+  } = useCustomHook();
+
+  const status = studentStatus.find(
+    (status) => status.key === data.status
+  ).value;
 
   const whereComingName =
     dataList.find((item) => item.key === data.whereComing)?.name || "";
@@ -25,12 +35,11 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             return workStatus.name;
           })
           .join(",")
-      : "boş";
+      : "";
 
-  const { careerSearchValues } = useSelector((state) => state.searchValues);
   const listData = [
-    { key: "Qrup", value: data.group.name },
-    { key: "İxtisas", value: data.group.course.name },
+    { key: "Qrup", value: data?.group?.name },
+    { key: "İxtisas", value: data?.group?.course?.name },
     // { key: "Tələbənin adı", value: data.fullName },
     { key: "Portfolio linki", value: data?.portfolioLink || "" },
     { key: "CV linki", value: data?.cvLink || "" },
@@ -72,26 +81,29 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
     setOpenMoreModal(true);
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
 
   return (
     <>
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick}>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="cell-number">{cellNumber}.</div>
               <div className="table-scroll-text phone">{data.fullName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
-              <div className="cell-number">{cellNumber}.</div>
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text">{data?.group?.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td className="email">
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text">
                 {data?.group?.course?.name}
               </div>
@@ -99,7 +111,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text phone">
                 {data.portfolioLink}
               </div>
@@ -131,7 +143,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text phone">
                 {data?.birthday
                   ? moment(data?.birthday).locale("az").format("DD MMMM YYYY")
@@ -141,7 +153,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text phone">
                 {data?.group
                   ? moment(data?.group?.startDate)
@@ -153,7 +165,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text phone">
                 {data?.group
                   ? moment(data?.group?.endDate)
@@ -165,19 +177,19 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text phone">{whereComingName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text phone">{whereSendName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text phone">
                 {data?.previousWorkPlace}
               </div>
@@ -185,7 +197,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text phone">
                 {data?.previousWorkPosition}
               </div>
@@ -193,7 +205,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text phone">
                 {data?.currentWorkPlace}
               </div>
@@ -201,7 +213,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text phone">
                 {data?.currentWorkPosition}
               </div>
@@ -209,7 +221,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text phone">
                 {data?.workStartDate
                   ? moment(data?.workStartDate)
@@ -231,8 +243,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
                 : {}
             }
           >
-            
-            <div className="td-con">
+            <div className="td-con" style={{ width: "120px" }}>
               <div className="table-scroll-text no-wrap">
                 {workStatus}
                 {/* {dataList.find((item) => item.key === data.workStatus)?.name ||
@@ -240,12 +251,20 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               </div>
             </div>
           </td>
-          <td  
-           style={data.status ? {backgroundColor:"#d4ffbf"}:{backgroundColor:"#d2c3fe"} }
-            >
+          <td
+            style={
+              data.status === "graduate"
+                ? { backgroundColor: "#d4ffbf" }
+                : data.status === "continue"
+                ? { backgroundColor: "#d2c3fe" }
+                : data.status === "freeze"
+                ? { backgroundColor: "var(--tertiary-300)" }
+                : { backgroundColor: "var(--error-200)" }
+            }
+          >
             <div className="td-con student-status ">
               <div className="table-scroll-text phone">
-                {data?.status ? "Məzun" :" Davam edir"}
+                {data?.status ? status : ""}
               </div>
               {/* <div className="right-fade"></div> */}
             </div>

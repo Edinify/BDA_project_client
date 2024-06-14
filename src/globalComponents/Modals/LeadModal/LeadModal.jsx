@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { useFormik } from "formik";
 import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
 import {
-  INCOMES_MODAL_ACTION_TYPE,
   LEAD_MODAL_ACTION_TYPE,
 } from "../../../redux/actions-type";
 import InputField from "./components/InputField/InputField";
@@ -20,7 +19,8 @@ export const LeadModal = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const inputNameArr = ["count", "date", ,];
+
+  const inputNameArr = ["count", "date",];
 
   // formik
   const formik = useFormik({
@@ -88,6 +88,7 @@ export const LeadModal = () => {
           }}
         >
           <div className="create-update-modal-form">
+            <div className="lead  ">
             {inputNameArr.map((name, index) => (
               <InputField
                 key={index}
@@ -98,6 +99,8 @@ export const LeadModal = () => {
                 setInputValue={setInputValue}
               />
             ))}
+            </div>
+            
           </div>
         </Box>
 

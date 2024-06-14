@@ -23,7 +23,7 @@ const Status = ({ modalData, setInputValue }) => {
   // console.log(modalData, "modal data in status");
   return (
     <>
-      <div className="modal-select">
+      <div className="modal-select events ">
         <ul>
           {confirmedStatusList.map((item, i) => (
             <li

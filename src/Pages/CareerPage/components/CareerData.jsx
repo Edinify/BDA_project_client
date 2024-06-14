@@ -4,13 +4,16 @@ import CareerCard from "./CareerCard";
 import { Pagination } from "antd";
 import Loading from "../../../globalComponents/Loading/Loading";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const CareerData = ({ pageNum, getPageNumber }) => {
-  const dispatch = useDispatch();
-  const { careerData, totalPages, loading } = useSelector(
+const CareerData = ({ getNextCareers }) => {
+  const { careerData, hasMore } = useSelector(
     (state) => state.careerPagination
   );
   const [openMoreModal, setOpenMoreModal] = useState(false);
+  const [scrollHeight, setScrollHeight] = useState(1);
+
   const tableHead = [
     "Tələbənin adı",
     "Qrup",
@@ -43,64 +46,76 @@ const CareerData = ({ pageNum, getPageNumber }) => {
     }
   }, [openMoreModal]);
 
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
 
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  console.log(careerData, "career dataaa");
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          {openMoreModal && (
-            <MoreModal setOpenMoreModal={setOpenMoreModal} type="career" />
-          )}
-          <div className="career-table-container">
-            <table className="details-table career-table">
-              <thead>
-                <tr>
-                  {tableHead.map((head, i) => (
-                    <th key={i}>{head}</th>
-                  ))}
-                </tr>
-              </thead>
-
-              <tbody>
-                {careerData?.map((career, i) => (
-                  <CareerCard
-                    key={i}
-                    data={career}
-                    mode="desktop"
-                    cellNumber={i + 1 + (pageNum - 1) * 10}
-                    setOpenMoreModal={setOpenMoreModal}
-                  />
+      <div className="career-table-container">
+        <InfiniteScroll
+          dataLength={careerData?.length}
+          next={getNextCareers}
+          hasMore={hasMore}
+          loader={<SmallLoading />}
+          endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
+          height={scrollHeight}
+          scrollThreshold={0.7}
+        >
+          <table className="details-table career-table">
+            <thead>
+              <tr>
+                {tableHead.map((head, i) => (
+                  <th key={i}>{head}</th>
                 ))}
-              </tbody>
-            </table>
-          </div>
+              </tr>
+            </thead>
 
-          <div className="details-list-tablet">
-            {careerData?.map((teacher, i) => (
-              <CareerCard
-                key={i}
-                data={teacher}
-                mode="tablet"
-                cellNumber={i + 1 + (pageNum - 1) * 10}
-                setOpenMoreModal={setOpenMoreModal}
-              />
-            ))}
-          </div>
+            <tbody>
+              {careerData?.map((career, i) => (
+                <CareerCard
+                  key={i}
+                  data={career}
+                  mode="desktop"
+                  cellNumber={i + 1}
+                  setOpenMoreModal={setOpenMoreModal}
+                />
+              ))}
+            </tbody>
+          </table>
+        </InfiniteScroll>
+      </div>
 
-          {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={pageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )}
-        </>
-      )}
+      <div className="details-list-tablet">
+        {careerData?.map((teacher, i) => (
+          <CareerCard
+            key={i}
+            data={teacher}
+            mode="tablet"
+            cellNumber={i + 1}
+            setOpenMoreModal={setOpenMoreModal}
+          />
+        ))}
+      </div>
     </>
   );
 };

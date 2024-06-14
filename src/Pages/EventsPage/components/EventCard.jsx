@@ -3,6 +3,9 @@ import { EVENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteEventAction } from "../../../redux/actions/eventsActions";
 import moment from "moment";
+import EventsProductDropdown from "./EventsProductDropdown";
+import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
+import { useState } from "react";
 
 const EventCard = ({
   data,
@@ -13,8 +16,7 @@ const EventCard = ({
   setOpenMoreModal,
 }) => {
   const dispatch = useDispatch();
-  const { events, lastPage } = useSelector((state) => state.eventsPagination);
-  const { eventsSearchValues } = useSelector((state) => state.searchValues);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const purposes = [
     { key: "new-qrup", value: "Yeni qrup" },
@@ -38,11 +40,7 @@ const EventCard = ({
     });
   };
   const deleteItem = () => {
-    const pageNumber =
-      lastPage > 1 ? (events.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data._id;
-    const searchQuery = eventsSearchValues;
-    dispatch(deleteEventAction({ _id, pageNumber, searchQuery }));
+    dispatch(deleteEventAction(data._id));
   };
 
   const openMoreModal = () => {
@@ -60,20 +58,45 @@ const EventCard = ({
       },
     });
   };
-  // console.log(userData, "blablablabla 999999999999999");
+
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {mode === "desktop" ? (
-        <tr className="class-table">
+        <tr onDoubleClick={doubleClick}  className="class-table">
           <td>
-            <div className="td-con">
+            <div
+              className="td-con"
+              style={{ width: "200px", whiteSpace: "nowrap" }}
+            >
               <div className="cell-number">{cellNumber}.</div>
               <div className="table-scroll-text">{data?.eventName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div
+              className="td-con"
+              style={{ width: "200px", whiteSpace: "nowrap" }}
+            >
+              <div className="table-scroll-text">{data?.place}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div
+              className="td-con"
+              style={{ width: "200px", whiteSpace: "nowrap" }}
+            >
               <div className="table-scroll-text">{eventDate}</div>
               <div className="right-fade"></div>
             </div>
@@ -85,23 +108,67 @@ const EventCard = ({
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div
+              className="td-con"
+              style={{ width: "200px", whiteSpace: "nowrap" }}
+            >
               <div className="table-scroll-text">{data?.visitor}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div
+              className="td-con"
+              style={{ width: "200px", whiteSpace: "nowrap" }}
+            >
               <div className="table-scroll-text">{data?.speaker}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div
+              className="td-con"
+              style={{ width: "200px", whiteSpace: "nowrap" }}
+            >
+              <div className="table-scroll-text">{data?.targetAudience}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div
+              className="td-con"
+              style={{ width: "200px", whiteSpace: "nowrap" }}
+            >
+              <div className="table-scroll-text">{data?.purpose}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div
+              className="td-con"
+              style={{ width: "120px", whiteSpace: "nowrap" }}
+            >
+              <div className="table-scroll-text">{data?.budget}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+
+          <td>
+            <div
+              className="td-con"
+              style={{ width: "100px", whiteSpace: "nowrap" }}
+            >
               <div className="table-scroll-text">{data?.participantsCount}</div>
               <div className="right-fade"></div>
             </div>
           </td>
+          <td>
+            <div className="td-con">
+              <EventsProductDropdown data={data} />
+              {/* <div className="right-fade"></div> */}
+            </div>
+          </td>
+
           <td
             style={
               data.status
@@ -124,6 +191,7 @@ const EventCard = ({
                 openConfirmModal={openConfirmModal}
                 openMoreModal={openMoreModal}
                 profil={"events"}
+                setShowDeleteModal={setShowDeleteModal}
               />
             </td>
           ) : null}
@@ -179,6 +247,7 @@ const EventCard = ({
                 openConfirmModal={openConfirmModal}
                 openMoreModal={openMoreModal}
                 profil={"events"}
+                setShowDeleteModal={setShowDeleteModal}
               />
             </div>
           )}

@@ -2,9 +2,14 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as ArrowIcon } from "../../../assets/icons/arrow-down-dropdown.svg";
 import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg";
-import { DROPDOWN_GROUP_ACTIONS_TYPE } from "../../../redux/actions-type";
+import {
+  DROPDOWN_GROUP_ACTIONS_TYPE,
+  LESSON_TABLE_ALL_ACTIONS_TYPE,
+} from "../../../redux/actions-type";
 import {
   getGroupsAction,
+  getGroupsWithMentorAction,
+  getGroupsWithStudentAction,
   getGroupsWithTeacherAction,
 } from "../../../redux/actions/groupsActions";
 import { getLessonTablePaginationAction } from "../../../redux/actions/lessonTableActions";
@@ -25,12 +30,16 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
       type: DROPDOWN_GROUP_ACTIONS_TYPE.SELECT_GROUP,
       payload: group,
     });
-    dispatch(getLessonTablePaginationAction(1, "", group._id, "", ""));
   };
 
   useEffect(() => {
     if (user?.role === "teacher") {
       dispatch(getGroupsWithTeacherAction(user._id));
+    } else if (user?.role === "mentor") {
+      dispatch(getGroupsWithMentorAction(user._id));
+    } else if (user?.role === "student") {
+      console.log('salam salam salam', user)
+      dispatch(getGroupsWithStudentAction(user._id));
     } else {
       dispatch(getGroupsAction());
     }
@@ -42,7 +51,15 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
         type: DROPDOWN_GROUP_ACTIONS_TYPE.CLEAR_GROUP,
       });
     };
-  }, [location]);
+  }, [dispatch]);
+
+  const handleSelectAll = () => {
+    setDropdownOpen(false);
+    dispatch({
+      type: DROPDOWN_GROUP_ACTIONS_TYPE.SELECT_GROUP,
+      payload: "",
+    });
+  };
 
   return (
     <div
@@ -62,6 +79,9 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
 
       <div className="dropdown-body">
         <ul>
+          {location.pathname === "/career" && (
+            <li onClick={handleSelectAll}>Hamısı</li>
+          )}
           {dataList.map((item) => (
             <li key={item._id} onClick={() => getCourse(item)}>
               {selectedGroup === item._id && <CheckIcon />}

@@ -31,7 +31,7 @@ const PaymentType = ({ formik, data, addPaymentType }) => {
               label="Ödəniş növü"
               autoComplete="off"
               disabled={
-                data?.payments?.find((item) => item.status != "wait")
+                data?.payments?.find((item) => item.status !== "wait")
                   ? true
                   : false
               }
@@ -53,7 +53,9 @@ const PaymentType = ({ formik, data, addPaymentType }) => {
             {data.group?.course?.payments?.map((item) => (
               <li key={item.paymentType} onClick={() => addData(item)}>
                 <h4>
-                  {item.paymentType}, ödəniş: {item.payment}
+                  {item.paymentType}, ödəniş: {item.payment}{" "}
+                  {`(${item.part} hissəli
+                  )`}
                 </h4>
               </li>
             ))}

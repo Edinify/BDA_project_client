@@ -4,19 +4,21 @@ import { getStudentsPaginationAction } from "../../redux/actions/studentsActions
 import {
   STUDENTS_ALL_ACTIONS_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
+  STUDENT_GROUP_STATUS_FILTER_ACTION_TYPE,
 } from "../../redux/actions-type";
 import StudentsData from "./components/StudentsData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 
 const StudentsPage = () => {
   const dispatch = useDispatch();
-  const { lastPage, students } = useSelector(
+  const { lastPage, students, totalLength, loading } = useSelector(
     (state) => state.studentsPagination
   );
   const { studentSearchValues } = useSelector((state) => state.searchValues);
   const { studentStatus, courseId } = useSelector(
     (state) => state.studentStatus
   );
+  const { status } = useSelector((state) => state.studentGroupStatus);
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [studentPageNum, setStudentPageNum] = useState(1);
 
@@ -27,10 +29,11 @@ const StudentsPage = () => {
       : JSON.parse(localStorage.getItem("userData"));
 
   const studentFilter = () => {
-    // console.log("sds");
+    dispatch({ type: STUDENTS_ALL_ACTIONS_TYPE.RESET_STUDENT_PAGINATION });
+
     dispatch(
       getStudentsPaginationAction(
-        1,
+        0,
         studentSearchValues,
         studentStatus
           ? studentStatus !== "all"
@@ -38,7 +41,8 @@ const StudentsPage = () => {
             : "all"
           : "all",
         courseId,
-        selectedGroup._id
+        selectedGroup._id,
+        status
       )
     );
   };
@@ -52,7 +56,8 @@ const StudentsPage = () => {
           studentSearchValues,
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     } else {
@@ -62,13 +67,16 @@ const StudentsPage = () => {
           "",
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     }
   };
 
   const getNextStudents = () => {
+    if (loading) return;
+
     if (studentSearchValues) {
       dispatch(
         getStudentsPaginationAction(
@@ -76,7 +84,8 @@ const StudentsPage = () => {
           studentSearchValues,
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     } else {
@@ -86,7 +95,8 @@ const StudentsPage = () => {
           "",
           studentStatus ? studentStatus : "all",
           courseId,
-          selectedGroup._id
+          selectedGroup._id,
+          status
         )
       );
     }
@@ -100,7 +110,9 @@ const StudentsPage = () => {
   };
   const searchData = (e) => {
     e.preventDefault();
-    console.log(e);
+
+    dispatch({ type: STUDENTS_ALL_ACTIONS_TYPE.RESET_STUDENT_PAGINATION });
+
     dispatch(
       getStudentsPaginationAction(
         0,
@@ -111,7 +123,8 @@ const StudentsPage = () => {
             : "all"
           : "all",
         courseId,
-        selectedGroup._id
+        selectedGroup._id,
+        status
       )
     );
     setStudentPageNum(1);
@@ -132,20 +145,23 @@ const StudentsPage = () => {
   useEffect(() => {
     if (studentSearchValues) {
       dispatch(
-        getStudentsPaginationAction(0, studentSearchValues, "all", "", "")
+        getStudentsPaginationAction(0, studentSearchValues, "all", "", "", "")
       );
     } else {
-      dispatch(getStudentsPaginationAction(0, "", "", "", ""));
+      dispatch(getStudentsPaginationAction(0, "", "", "", "", ""));
     }
 
     return () => {
       dispatch({
         type: STUDENTS_ALL_ACTIONS_TYPE.RESET_STUDENT_PAGINATION,
       });
+      dispatch({
+        type: STUDENT_GROUP_STATUS_FILTER_ACTION_TYPE.GET_STUDENT_STATUS,
+        payload: "",
+      });
     };
   }, [dispatch]);
 
-  // console.log(lastPage, "last page in student");
   return (
     <div className="details-page students-page">
       <GlobalHead
@@ -155,7 +171,8 @@ const StudentsPage = () => {
         DATA_SEARCH_VALUE={"STUDENTS_SEARCH_VALUE"}
         dataSearchValues={studentSearchValues}
         statusType="student"
-        profile={"students"}
+        profile="students"
+        count={totalLength}
       />
 
       <StudentsData

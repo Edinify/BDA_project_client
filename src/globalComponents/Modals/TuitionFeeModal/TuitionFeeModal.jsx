@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import moment from "moment";
@@ -8,7 +8,7 @@ import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema
 import { TUITION_FEE_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import Status from "./components/Buttons/Status";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
-import RegionDropdown from "./components/InputDropdowns/RegionDropdown";
+// import RegionDropdown from "./components/InputDropdowns/RegionDropdown";
 import InputField from "./components/Inputs/InputField";
 import Select from "./components/InputDropdowns/Select";
 
@@ -17,7 +17,7 @@ export const TuitionFeeModal = () => {
   const { tuitionFeeModalData: modalData } = useSelector(
     (state) => state.tuitionFeeModal
   );
-  const [selectedStudentName, setSelectedStudentName] = useState(null);
+  // const [selectedStudentName, setSelectedStudentName] = useState(null);
 
   const groupNumberList = [
     { name: "no1", key: "no1" },

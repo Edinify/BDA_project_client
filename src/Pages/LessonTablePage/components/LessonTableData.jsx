@@ -1,105 +1,131 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import LessonTableCard from "./LessonTableCard";
-import { Pagination } from "antd";
-import Loading from "../../../globalComponents/Loading/Loading";
-import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import StudentLessonModal from "./StudentLessonModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const LessonTableData = ({ pageNum, getPageNumber, userData }) => {
-  const { lessonTableData, totalPages, loading } = useSelector(
+const LessonTableData = ({ getNextLessons }) => {
+  const { lessonTableData, hasMore } = useSelector(
     (state) => state.lessonTablePagination
   );
   const { openStudentModal } = useSelector((state) => state.lessonTableModal);
-
+  const { user } = useSelector((state) => state.user);
   const { openConfirmModal } = useSelector((state) => state.lessonTableModal);
-  const [students, setStudents] = useState({ data: [], lessonId: "" });
+  const [targetLesson, setTargetLesson] = useState({});
   const [updatedResultData, setUpdatedResultData] = useState("");
+  const [scrollHeight, setScrollHeight] = useState(1);
 
   const tableHead =
-    userData?.power === "only-show"
+    user?.role === "student"
+      ? [
+          "Dərs günü",
+          "Dərs saatı",
+          "Mövzu",
+          "Müəllim",
+          "Tyutor",
+          "Davamiyyət",
+          "Tələbə imzası",
+          "Tyutor saatı",
+          "Status",
+
+          "",
+        ]
+      : user?.power === "only-show"
       ? ["Dərs günü", "Dərs saatı", "Mövzu", "Müəllim", "Status", "Tələbələr"]
       : [
           "Dərs günü",
           "Dərs saatı",
           "Mövzu",
           "Müəllim",
-          "Mentor",
+          "Tyutor",
           "Tələbələr",
+          "Tyutor saatı",
           "Status",
           "",
         ];
 
+  useEffect(() => {
+    const mainHeader = document.querySelector(".main-header");
+    const detailsHeader = document.querySelector(".details-header");
+
+    const handleResize = () => {
+      setScrollHeight(
+        window.innerHeight -
+          mainHeader.offsetHeight -
+          detailsHeader.offsetHeight
+      );
+    };
+
+    setScrollHeight(
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
+    );
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          {openStudentModal && (
-            <StudentLessonModal
-              students={students}
-              setStudents={setStudents}
-              setUpdatedResultData={setUpdatedResultData}
-              updatedResultData={updatedResultData}
-            />
-          )}
+      {openStudentModal && (
+        <StudentLessonModal
+          targetLesson={targetLesson}
+          setTargetLesson={setTargetLesson}
+          setUpdatedResultData={setUpdatedResultData}
+          updatedResultData={updatedResultData}
+        />
+      )}
 
-          {openConfirmModal && <ConfirmModal type="lesson-table" />}
-
-          <table
-            className={`details-table  lesson-table ${
-              userData?.power === "only-show" ? "only-show" : "update"
-            } `}
-          >
-            <thead>
-              <tr>
-                {tableHead.map((head, i) => (
-                  <th key={i}>{head}</th>
-                ))}
-              </tr>
-            </thead>
-
-            <tbody>
-              {lessonTableData?.map((lesson, i) => (
-                <LessonTableCard
-                  key={i}
-                  data={lesson}
-                  lesson={userData}
-                  mode="desktop"
-                  cellNumber={i + 1 + (pageNum - 1) * 10}
-                  setStudents={setStudents}
-                />
+      {openConfirmModal && <ConfirmModal type="lesson-table" />}
+      <InfiniteScroll
+        dataLength={lessonTableData.length}
+        next={getNextLessons}
+        hasMore={hasMore}
+        loader={<SmallLoading />}
+        endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
+        height={scrollHeight}
+        scrollThreshold={0.7}
+      >
+        <table
+          className={`details-table  lesson-table ${
+            user?.power === "only-show" ? "only-show" : "update"
+          } `}
+        >
+          <thead>
+            <tr>
+              {tableHead.map((head, i) => (
+                <th key={i}>{head}</th>
               ))}
-            </tbody>
-          </table>
+            </tr>
+          </thead>
 
-          <div className="details-list-tablet">
-            {lessonTableData?.map((teacher, i) => (
+          <tbody>
+            {lessonTableData?.map((lesson, i) => (
               <LessonTableCard
-                key={i}
-                data={teacher}
-                lesson={userData}
-                mode="tablet"
-                cellNumber={i + 1 + (pageNum - 1) * 10}
-                setStudents={setStudents}
+                key={lesson._id}
+                data={lesson}
+                mode="desktop"
+                cellNumber={i + 1}
+                setTargetLesson={setTargetLesson}
               />
             ))}
-          </div>
+          </tbody>
+        </table>
+      </InfiniteScroll>
 
-          {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={pageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumber}
-              />
-            </div>
-          )}
-        </>
-      )}
+      <div className="details-list-tablet">
+        {lessonTableData?.map((teacher, i) => (
+          <LessonTableCard
+            key={i}
+            data={teacher}
+            mode="tablet"
+            cellNumber={i + 1}
+          />
+        ))}
+      </div>
     </>
   );
 };

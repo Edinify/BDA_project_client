@@ -76,6 +76,7 @@ const pageLoading = (loadingValue) => ({
   type: GROUP_ALL_ACTIONS_TYPE.GROUP_LOADING,
   payload: loadingValue,
 });
+
 const modalLoading = (loadingValue) => ({
   type: GROUP_MODAL_ACTION_TYPE.GROUP_MODAL_LOADING,
   payload: loadingValue,
@@ -145,6 +146,70 @@ export const getGroupsWithTeacherAction = (teacherId) => async (dispatch) => {
   }
 };
 
+export const getGroupsWithMentorAction = (mentorId) => async (dispatch) => {
+  try {
+    const { data } = await API.get(`/with-mentor?mentorId=${mentorId}`);
+    dispatch({ type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS, payload: data });
+  } catch (error) {
+    // console.log(error);
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.get("/all");
+        dispatch({
+          type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS,
+          payload: data,
+        });
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+        }
+        // console.log(error);
+      }
+    }
+  }
+};
+
+export const getGroupsWithStudentAction = (studentId) => async (dispatch) => {
+  try {
+    const { data } = await API.get(`/with-student?studentId=${studentId}`);
+    dispatch({ type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS, payload: data });
+  } catch (error) {
+    // console.log(error);
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.get("/all");
+        dispatch({
+          type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS,
+          payload: data,
+        });
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
+        }
+        // console.log(error);
+      }
+    }
+  }
+};
+
 export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
   dispatch(pageLoading(true));
   try {
@@ -152,7 +217,6 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
       `/with-course?groupsCount=${payload.groupsCount}&searchQuery=${payload.searchQuery}`,
       { params: { courseIds: payload.courseIds } }
     );
-    // // console.log(data);
     if (payload.groupsCount > 0) {
       dispatch({
         type: GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL,
@@ -205,27 +269,24 @@ export const getGroupsByCourseIdAction = (payload) => async (dispatch) => {
 };
 
 export const getGroupsPaginationAction =
-  (pageNumber, searchQuery, status, courseId, teacherId) =>
-  async (dispatch) => {
+  (length, searchQuery, status, courseId, teacherId) => async (dispatch) => {
     dispatch(pageLoading(true));
     // console.log(status, "statussss");
     try {
       const { data } = await API.get(
-        `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&teacherId=${teacherId}`
+        `/pagination?length=${length}&searchQuery=${
+          searchQuery || ""
+        }&status=${status}&courseId=${courseId || ""}&teacherId=${
+          teacherId || ""
+        }`
       );
-      dispatch({
-        type: GROUP_ALL_ACTIONS_TYPE.GET_GROUP_LAST_PAGE,
-        payload: pageNumber,
-      });
-
       dispatch({
         type: GROUP_ALL_ACTIONS_TYPE.GET_GROUP_PAGINATION,
         payload: data,
       });
     } catch (error) {
-      
       const originalRequest = error.config;
-      // console.log(error);
+      console.log(error);
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
         try {
@@ -237,14 +298,8 @@ export const getGroupsPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/pagination?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}`
+            `/pagination?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&teacherId=${teacherId}`
           );
-
-          dispatch({
-            type: GROUP_ALL_ACTIONS_TYPE.GET_GROUP_LAST_PAGE,
-            payload: pageNumber,
-          });
-
           dispatch({
             type: GROUP_ALL_ACTIONS_TYPE.GET_GROUP_PAGINATION,
             payload: data,
@@ -272,13 +327,17 @@ export const createGroupAction = (groupData) => async (dispatch) => {
 
   try {
     const { data } = await API.post("/", groupData);
-    dispatch(getGroupsPaginationAction(data.lastPage, "", status, "", ""));
+    dispatch({
+      type: GROUP_ALL_ACTIONS_TYPE.CREATE_GROUP,
+      payload: data,
+    });
     dispatch({
       type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
       payload: false,
     });
     toastSuccess("Yeni əməkdaş yaradıldı");
   } catch (error) {
+    console.log(error);
     const originalRequest = error.config;
     // console.log(error);
     if (error?.response?.status === 403 && !originalRequest._retry) {
@@ -292,9 +351,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
           })
         );
         const { data } = await API.post("/", groupData);
-        dispatch(
-          getGroupsPaginationAction(data.lastPage, "", status, "", "")
-        );
+        dispatch(getGroupsPaginationAction(data.lastPage, "", status, "", ""));
         dispatch({
           type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
           payload: false,
@@ -361,54 +418,42 @@ export const updateGroupAction = (_id, groupData) => async (dispatch) => {
   }
 };
 
-export const deleteGroupAction =
-  ({ _id, pageNumber, searchQuery, status }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(
-        getGroupsPaginationAction(pageNumber, searchQuery, status, "", "")
-      );
-      dispatch({ type: GROUP_ALL_ACTIONS_TYPE.DELETE_GROUP, payload: _id });
-      toastSuccess("Qrup silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        // console.log(error);
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(
-            getGroupsPaginationAction(
-              pageNumber,
-              searchQuery,
-              status,
-              "",
-              ""
-            )
-          );
-          dispatch({
-            type: GROUP_ALL_ACTIONS_TYPE.DELETE_GROUP,
-            payload: _id,
-          });
-          toastSuccess("Qrup silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+export const deleteGroupAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({ type: GROUP_ALL_ACTIONS_TYPE.DELETE_GROUP, payload: data._id });
+    toastSuccess("Qrup silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: GROUP_ALL_ACTIONS_TYPE.DELETE_GROUP,
+          payload: data._id,
+        });
+        toastSuccess("Qrup silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      // console.log(error);
-      toastError(error?.response?.data.message);
     }
-  };
+
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmGroupChangesAction =
   (_id, groupData) => async (dispatch) => {

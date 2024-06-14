@@ -1,8 +1,5 @@
-import React, { useState } from "react";
 import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { ReactComponent as MinusIcon } from "../../../../../../assets/icons/minus-cirlce.svg";
-import { ReactComponent as CheckIcon } from "../../../../../../assets/icons/Checkbox.svg";
-import { useCustomHook } from "../../../../../GlobalFunctions/globalFunctions";
 
 const LessonInput = ({
   data,

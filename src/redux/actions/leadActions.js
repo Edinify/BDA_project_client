@@ -64,19 +64,15 @@ const modalLoading = (loadingValue) => ({
 });
 
 export const getLeadPaginationAction =
-  (page = 1, startDate = "", endDate = "", monthCount = "") =>
+  (length, startDate = "", endDate = "", monthCount = "") =>
   async (dispatch) => {
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
-        `/pagination?page=${page}&startDate=${startDate}&endDate=${endDate}&monthCount=${monthCount}
+        `/pagination?length=${length}&startDate=${startDate}&endDate=${endDate}&monthCount=${monthCount}
         `
       );
 
-      dispatch({
-        type: LEAD_ACTION_TYPE.GET_LEAD_LAST_PAGE,
-        payload: page,
-      });
       dispatch({
         type: LEAD_ACTION_TYPE.GET_LEAD_PAGINATION,
         payload: data,
@@ -95,20 +91,11 @@ export const getLeadPaginationAction =
             })
           );
 
-          const { data } = await API.get(
-            `/?page=${page}&startDate=${startDate || ""}&endDate=${
+           await API.get(
+            `/?length=${length}&startDate=${startDate || ""}&endDate=${
               endDate || ""
             }&monthCount=${monthCount || ""}`
           );
-
-          dispatch({
-            type: INCOME_ACTION_TYPE.GET_INCOME_LAST_PAGE,
-            payload: page,
-          });
-          dispatch({
-            type: INCOME_ACTION_TYPE.GET_INCOME_PAGINATION,
-            payload: data,
-          });
         } catch (error) {
           // console.log(error);
           if (error?.response?.status === 401) {
@@ -125,7 +112,8 @@ export const createLeadAction = (incomesData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/", incomesData);
-    dispatch(getLeadPaginationAction(data.lastPage, "", "", 1));
+
+    dispatch({ type: LEAD_ACTION_TYPE.CREATE_LEAD, payload: data });
     dispatch({
       type: LEAD_MODAL_ACTION_TYPE.LEAD_OPEN_MODAL,
       payload: false,
@@ -150,8 +138,8 @@ export const createLeadAction = (incomesData) => async (dispatch) => {
           })
         );
 
-        const { data } = await API.post("/", incomesData);
-        dispatch(getLeadPaginationAction(data.lastPage, "", "", 1));
+        await API.post("/", incomesData);
+
         dispatch({
           type: INCOMES_MODAL_ACTION_TYPE.INCOMES_OPEN_MODAL,
           payload: false,
@@ -219,46 +207,52 @@ export const updateLeadAction = (_id, leadData) => async (dispatch) => {
   }
 };
 
-export const deleteLeadAction =
-  (_id, page, startDate, endDate, monthCount) => async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getLeadPaginationAction(page, startDate, endDate, monthCount));
-      dispatch({
-        type: LEAD_MODAL_ACTION_TYPE.LEAD_MODAL_ACTIVATE_GET,
-        payload: "delete",
-      });
-      toastSuccess("Məhsul silindi");
-    } catch (error) {
-      // console.log(error);
-      toastError("Xəta baş verdi.");
-      const originalRequest = error.config;
-      if (error.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
+export const deleteLeadAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
 
-          await API.delete(`/${_id}`);
-          dispatch({ type: INCOME_ACTION_TYPE.DELETE_INCOME, payload: _id });
-          dispatch(
-            getLeadPaginationAction(page, startDate, endDate, monthCount)
-          );
-          toastSuccess("Məhsul silindi");
-        } catch (error) {
-          // console.log(error);
-          if (error?.response?.status === 401) {
-            dispatch(logoutAction());
-          }
+    dispatch({
+      type: LEAD_ACTION_TYPE.DELETE_LEAD,
+      payload: data._id,
+    });
+
+    dispatch({
+      type: LEAD_MODAL_ACTION_TYPE.LEAD_MODAL_ACTIVATE_GET,
+      payload: "delete",
+    });
+
+    toastSuccess("Lead silindi");
+  } catch (error) {
+    // console.log(error);
+    toastError("Xəta baş verdi.");
+    const originalRequest = error.config;
+    if (error.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: LEAD_ACTION_TYPE.DELETE_LEAD,
+          payload: data._id,
+        });
+        toastSuccess("Məhsul silindi");
+      } catch (error) {
+        // console.log(error);
+        if (error?.response?.status === 401) {
+          dispatch(logoutAction());
         }
       }
-      if (error?.response?.status === 403) {
-        dispatch(logoutAction());
-      }
     }
-  };
+    if (error?.response?.status === 403) {
+      dispatch(logoutAction());
+    }
+  }
+};

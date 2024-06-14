@@ -3,6 +3,7 @@ import {
   ALL_COURSES_ACTION,
   COURSES_ALL_ACTIONS_TYPE,
   COURSES_MODAL_ACTION_TYPE,
+  DOWNLOAD_EXCEL_ACTION_TYPE,
 } from "../actions-type";
 import { toast } from "react-toastify";
 import { logoutAction } from "./auth";
@@ -52,7 +53,7 @@ const toastError = (message) => {
     theme: "colored",
   });
 };
-const pageLoading = (loadingValue) => ({
+const setLoadingCoursesAction = (loadingValue) => ({
   type: COURSES_ALL_ACTIONS_TYPE.COURSE_LOADING,
   payload: loadingValue,
 });
@@ -60,6 +61,11 @@ const modalLoading = (loadingValue) => ({
   type: COURSES_MODAL_ACTION_TYPE.COURSE_MODAL_LOADING,
   payload: loadingValue,
 });
+const downloadExcelLoading = (value) => ({
+  type: DOWNLOAD_EXCEL_ACTION_TYPE.LOADING,
+  payload: value,
+});
+
 const courseModalOpen = (value) => ({
   type: COURSES_MODAL_ACTION_TYPE.COURSE_OPEN_MODAL,
   payload: value,
@@ -75,21 +81,19 @@ export const getAllCoursesAction = () => async (dispatch) => {
 };
 
 export const getCoursesPaginationAction =
-  (pageNumber, searchQuery) => async (dispatch) => {
-    dispatch(pageLoading(true));
+  (length, searchQuery) => async (dispatch) => {
+    dispatch(setLoadingCoursesAction(true));
+
     try {
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}`
+        `/pagination/?length=${length || 0}&searchQuery=${searchQuery}`
       );
-      dispatch({
-        type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_LAST_PAGE,
-        payload: pageNumber,
-      });
       dispatch({
         type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION,
         payload: data,
       });
     } catch (error) {
+      console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -102,12 +106,8 @@ export const getCoursesPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}`
+            `/pagination/?length=${length}&searchQuery=${searchQuery}`
           );
-          dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_LAST_PAGE,
-            payload: pageNumber,
-          });
           dispatch({
             type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION,
             payload: data,
@@ -123,16 +123,19 @@ export const getCoursesPaginationAction =
         dispatch(logoutAction());
       }
     } finally {
-      dispatch(pageLoading(false));
+      dispatch(setLoadingCoursesAction(false));
     }
   };
 export const createCoursesAction = (courseData) => async (dispatch) => {
-  dispatch(modalLoading(true));
+  dispatch(setLoadingCoursesAction(true));
   // console.log(courseData);
   try {
     const { data } = await API.post("/", courseData);
-    // console.log(data);
-    dispatch(getCoursesPaginationAction(data.lastPage, ""));
+    console.log(data);
+    dispatch({
+      type: COURSES_ALL_ACTIONS_TYPE.CREATE_COURSE,
+      payload: data,
+    });
     dispatch(courseModalOpen(false));
     toastSuccess("Yeni fənn yaradıldı");
   } catch (error) {
@@ -211,43 +214,44 @@ export const updateCoursesAction = (_id, courseData) => async (dispatch) => {
   }
 };
 
-export const deleteCoursesAction =
-  ({ _id, pageNumber, searchQuery }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getCoursesPaginationAction(pageNumber, searchQuery));
-      dispatch({ type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE, payload: _id });
-      toastSuccess("Fənn silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(getCoursesPaginationAction(pageNumber, searchQuery));
-          dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE,
-            payload: _id,
-          });
-          toastSuccess("Fənn silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+export const deleteCoursesAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({
+      type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE,
+      payload: data._id,
+    });
+    toastSuccess("Fənn silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE,
+          payload: data._id,
+        });
+        toastSuccess("Fənn silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      // console.log(error);
-      toastError(error?.response?.data.message);
     }
-  };
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmCourseChangesAction =
   (_id, courseData) => async (dispatch) => {
@@ -273,11 +277,8 @@ export const confirmCourseChangesAction =
               AccessToken: token.data.accesstoken,
             })
           );
-          const { data } = await API.patch(`/${_id}`, courseData);
-          // dispatch({
-          //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
-          //   payload: data,
-          // });
+           await API.patch(`/${_id}`, courseData);
+          
           dispatch({
             type: COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
           });
@@ -323,11 +324,8 @@ export const cancelCourseChangesAction =
               AccessToken: token.data.accesstoken,
             })
           );
-          const { data } = await API.patch(`/${_id}`, courseData);
-          // dispatch({
-          //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
-          //   payload: data,
-          // });
+          await API.patch(`/${_id}`, courseData);
+          
           dispatch({
             type: COURSES_MODAL_ACTION_TYPE.CLOSE_COURSE_CONFIRM_MODAL,
           });
@@ -348,3 +346,27 @@ export const cancelCourseChangesAction =
       dispatch(modalLoading(false));
     }
   };
+
+export const downloadCoursesExcelAction = () => async (dispatch) => {
+  dispatch(downloadExcelLoading(true));
+  try {
+    const response = await API.get(`/excel`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "courses.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+
+    dispatch(downloadExcelLoading(false));
+  } catch (error) {
+    dispatch(downloadExcelLoading(false));
+    toastError("Xəta baş verdi!");
+    console.log(error);
+  }
+};

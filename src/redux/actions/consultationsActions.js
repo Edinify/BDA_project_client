@@ -132,22 +132,20 @@ export const getActiveConsultationAction = (payload) => async (dispatch) => {
     }
   } finally {
     dispatch(pageLoading(false));
-    dispatch(setLoadingConsultationAction(false));
+    // dispatch(setLoadingConsultationAction(false));
   }
 };
 
 export const getConsultationPaginationAction =
-  (pageNumber, searchQuery, status = "appointed") =>
+  (length, searchQuery, status = "appointed") =>
   async (dispatch) => {
     dispatch(pageLoading(true));
+    console.log(true);
     try {
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}`
+        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}`
       );
-      dispatch({
-        type: CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_LAST_PAGE,
-        payload: pageNumber,
-      });
+
       dispatch({
         type: CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_PAGINATION,
         payload: data,
@@ -167,12 +165,8 @@ export const getConsultationPaginationAction =
           );
 
           const { data } = await API.get(
-            `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}&status=${status}`
+            `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}`
           );
-          dispatch({
-            type: CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_LAST_PAGE,
-            payload: pageNumber,
-          });
           dispatch({
             type: CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_PAGINATION,
             payload: data,
@@ -194,7 +188,10 @@ export const createConsultationAction =
     dispatch(modalLoading(true));
     try {
       const { data } = await API.post("/", consultationData);
-      dispatch(getConsultationPaginationAction(data.lastPage, "", "appointed"));
+      dispatch({
+        type: CONSULTATION_ALL_ACTIONS_TYPE.CREATE_CONSULTATION,
+        payload: data,
+      });
       dispatch({
         type: CONSULTATION_MODAL_ACTION_TYPE.CONSULTATION_OPEN_MODAL,
         payload: false,
@@ -284,54 +281,48 @@ export const updateConsultationAction =
     }
   };
 
-export const deleteConsultationAction =
-  ({ _id, pageNumber, searchQuery, status }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(
-        getConsultationPaginationAction(pageNumber, searchQuery, status)
-      );
-      dispatch({
-        type: CONSULTATION_ALL_ACTIONS_TYPE.DELETE_CONSULTATION,
-        payload: _id,
-      });
-      toastSuccess("konsultasiya silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
+export const deleteConsultationAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
 
-          await API.delete(`/${_id}`);
-          dispatch(
-            getConsultationPaginationAction(pageNumber, searchQuery, status)
-          );
-          dispatch({
-            type: CONSULTATION_ALL_ACTIONS_TYPE.DELETE_CONSULTATION,
-            payload: _id,
-          });
-          toastSuccess("konsultasiya silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+    dispatch({
+      type: CONSULTATION_ALL_ACTIONS_TYPE.DELETE_CONSULTATION,
+      payload: data._id,
+    });
+    toastSuccess("konsultasiya silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: CONSULTATION_ALL_ACTIONS_TYPE.DELETE_CONSULTATION,
+          payload: data._id,
+        });
+        toastSuccess("konsultasiya silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan konsultasiya silinə bilməz");
-      }
-      // console.log(error);
-      toastError(error?.response?.data.message);
     }
-  };
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan konsultasiya silinə bilməz");
+    }
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmConsultationChangesAction =
   (_id, consultationData) => async (dispatch) => {

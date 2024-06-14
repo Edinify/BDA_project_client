@@ -1,12 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useCustomHook } from "../../GlobalFunctions/globalFunctions";
 import { TableColumns } from "./TableColumns";
 
 const TableBody = () => {
   const { lessonHours } = useCustomHook();
 
-  console.log(lessonHours, "lllllllllllllllllllllll");
+  // console.log(lessonHours, "lllllllllllllllllllllll");
 
   return (
     <tbody>

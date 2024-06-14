@@ -13,10 +13,10 @@ const TeacherCells = ({ time, groups, index }) => {
             const { name, lessonDate } = data;
 
             const date = lessonDate.find(
-              (lesson) => lesson.day == index && lesson.time === time.time
+              (lesson) => lesson.day === index && lesson.time === time.time
             );
 
-            console.log(date, "dateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+            // console.log(date, "dateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
             return (
               <li

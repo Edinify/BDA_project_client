@@ -14,6 +14,8 @@ import { ReactComponent as AdminIcon } from "../../assets/icons/sidebar/users-01
 import { ReactComponent as GroupIcon } from "../../assets/icons/sidebar/group-svgrepo-com.svg";
 import { ReactComponent as CareerIcon } from "../../assets/icons/sidebar/work-case-filled-svgrepo-com (1).svg";
 import { ReactComponent as SyllabusIcon } from "../../assets/icons/sidebar/syllabus-svgrepo-com.svg";
+import { ReactComponent as DiplomaIcon } from "../../../src/assets/icons/sidebar/diploma.svg";
+
 import {
   WEEKS_BETWEEN_SELECTED_DATES_ACTION_TYPE,
   MAIN_PAGE_TYPE_ACTION_TYPE,
@@ -53,6 +55,11 @@ export function useCustomHook() {
     { name: "Keçirilib", key: "confirmed" },
     { name: "Ləğv edilib", key: "cancelled" },
   ];
+
+  const mentorHourList = [
+    { name: "Keçirilib", key: "confirmed" },
+    { name: "Keçirilməyib", key: "cancelled" },
+  ];
   const fineTypeList = [
     { name: "Şifahi xəbərdarlıq", key: "verbalWarning" },
     { name: "Yazılı xəbərdarlıq", key: "writtenWarning" },
@@ -75,6 +82,7 @@ export function useCustomHook() {
     { name: "Resale", key: "resale" },
   ];
   const whereSendList = [
+    { name: "Satış", key: "sale" },
     { name: "Technest İnside", key: "technestInside" },
     { name: "Dövlət Məşğulluq Agentliyi", key: "DMA" },
     { name: "Azərbaycan Respublikası Mədəniyyət Nazirliyi", key: "ARMN" },
@@ -88,10 +96,10 @@ export function useCustomHook() {
   const personaList = [
     { name: "Həvəsli", key: "enthusiastic" },
     { name: "Narazı", key: "dissatisfied" },
-    { name: "Müahidəçi", key: "contractor" },
+    { name: "Müşahidəçi", key: "contractor" },
     { name: "Demaqoq", key: "demagog" },
     { name: "Ekstravert", key: "extrovert" },
-    { name: "İntravert", key: "introvert" },
+    { name: "İntrovert", key: "introvert" },
     { name: "Ailəcanlı", key: "familyFriendly" },
   ];
   const discountReasonList = [
@@ -150,11 +158,18 @@ export function useCustomHook() {
     { key: "startDate", title: "Dərs baş. tarixi" },
   ];
   const generalProfileList = [
-    { id: 1, name: "Qruplar", key: "groups", icon: <GroupIcon /> },
-    { id: 2, name: "Əməkdaşlar", key: "workers", icon: <AdminIcon /> },
+    {
+      id: 1,
+      name: "İdarəetmə paneli",
+      key: "dashboard",
+      icon: <DashboardIcon />,
+    },
+    { id: 2, name: "Cədvəl", key: "lessonTable", icon: <TableIcon /> },
     { id: 3, name: "Tələbələr", key: "students", icon: <StudentsIcon /> },
-    { id: 6, name: "Təlimçilər", key: "teachers", icon: <TeachersIcon /> },
-    { id: 7, name: "Fənlər", key: "courses", icon: <CoursesIcon /> },
+    { id: 4, name: "Təlimçilər", key: "teachers", icon: <TeachersIcon /> },
+    { id: 5, name: "Fənlər", key: "courses", icon: <CoursesIcon /> },
+    { id: 6, name: "Sillabus", key: "syllabus", icon: <SyllabusIcon /> },
+    { id: 7, name: "Qruplar", key: "groups", icon: <GroupIcon /> },
     { id: 8, name: "Təhsil haqqı", key: "tuitionFee", icon: <ExpensesIcon /> },
     { id: 9, name: "Karyera", key: "career", icon: <CareerIcon /> },
     {
@@ -163,16 +178,11 @@ export function useCustomHook() {
       key: "consultation",
       icon: <MainPanelIcon />,
     },
-    { id: 11, name: "Sillabus", key: "syllabus", icon: <SyllabusIcon /> },
-    { id: 12, name: "Cədvəl", key: "lessonTable", icon: <TableIcon /> },
-    { id: 13, name: "Tədbirlər", key: "events", icon: <EventIcon /> },
-    {
-      id: 14,
-      name: "İdarəetmə paneli",
-      key: "dashboard",
-      icon: <DashboardIcon />,
-    },
+    { id: 11, name: "Tədbirlər", key: "events", icon: <EventIcon /> },
+    { id: 12, name: "Əməkdaşlar", key: "workers", icon: <AdminIcon /> },
+    { id: 12, name: "Diploma Cədvəli", key: "diploma", icon: <DiplomaIcon /> },
   ];
+
   const generalProfilePowerList = [
     { name: "Tam-səlahiyyətli", key: "all" },
     { name: "Yarım-səlahiyyətli", key: "update" },
@@ -183,6 +193,29 @@ export function useCustomHook() {
     { name: "İşləyir", key: "employed" },
     { name: "Tələbədir", key: "student" },
     { name: "İşsizdir", key: "unemployed" },
+  ];
+
+  const diplomaDegrees = [
+    { name: "Sertifikat", key: "certificate" },
+    { name: "Adi diplom", key: "simple" },
+    { name: "Şərəf diplomu", key: "honor" },
+    { name: "Yoxdur", key: "none" },
+  ];
+
+  const diplomaStatus = [
+    { name: "Müdafiə olunmayıb", key: "noneDefensed" },
+    { name: "Müdafiə olunub", key: "defensed" },
+    { name: "Dizayn olunub", key: "designed" },
+    { name: "Diplom hazırdır", key: "done" },
+    { name: "Diplom verilib", key: "awarded" },
+  ];
+
+  const studentStatus = [
+    { key: "graduate", value: "Məzun" },
+    { key: "continue", value: "Davam edir" },
+    { key: "stopped", value: "Dayandırdı" },
+    { key: "freeze", value: "Dondurdu" },
+    { key: "wait", value: "Gözləmədə" },
   ];
 
   const getWeeksBetweenDates = (start, end) => {
@@ -295,5 +328,8 @@ export function useCustomHook() {
     createLessonModal,
     clearLessonModal,
     changeDropdownNameErr,
+    diplomaDegrees,
+    diplomaStatus,
+    studentStatus,
   };
 }

@@ -1,38 +1,30 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import IncomesCard from "./LeadCard";
-import { Pagination } from "antd";
-import Loading from "../../../../../globalComponents/Loading/Loading";
-import { getIncomePaginationAction } from "../../../../../redux/actions/incomeActions";
+// import Loading from "../../../../../globalComponents/Loading/Loading";
 import LeadCard from "./LeadCard";
 import { getLeadPaginationAction } from "../../../../../redux/actions/leadActions";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SmallLoading from "../../../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
 const LeadData = () => {
   const dispatch = useDispatch();
-  const {
-    financeMonthsFilter,
-    financeChooseDate,
-    financeIncomeCategory,
-    financeIncomeSorting,
-  } = useSelector((state) => state.financeDateFilter);
-  const {
-    leads,
-    totalPages,
-    loading,
-    lastPage: incomesPageNum,
-  } = useSelector((state) => state.leads);
+  const { financeMonthsFilter, financeChooseDate } = useSelector(
+    (state) => state.financeDateFilter
+  );
+  const { leads, hasMore } = useSelector((state) => state.leads);
 
   const dataHead = [
-    { id: 1, label: "Lead sayı" },
-    { id: 2, label: "tarix" },
-    { id: 6, label: "" },
+    { id: 1, label: "#" },
+    { id: 2, label: "Lead sayı" },
+    { id: 3, label: "tarix" },
+    { id: 4, label: "" },
   ];
 
-  const getPageNumberIncomes = (pageNumber) => {
+  const getNextLeads = () => {
     if (financeChooseDate.startDate && financeChooseDate.endDate) {
       dispatch(
         getLeadPaginationAction(
-          pageNumber,
+          leads.length,
           financeChooseDate.startDate,
           financeChooseDate.endDate,
           "" //month
@@ -41,7 +33,7 @@ const LeadData = () => {
     } else {
       dispatch(
         getLeadPaginationAction(
-          pageNumber,
+          leads.length,
           "",
           "",
           financeMonthsFilter ? financeMonthsFilter : 1 //month
@@ -50,55 +42,39 @@ const LeadData = () => {
     }
   };
 
+  console.log(leads, "leadsssssssssssssssssssss");
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <table className="details-table incomes-table">
-            <thead>
-              <tr>
-                {dataHead.map((head, i) => (
-                  <th key={i}>{head.label}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {leads?.map((lead, i) => (
-                <LeadCard
-                  key={i}
-                  data={lead}
-                  mode="desktop"
-                  cellNumber={i + 1 + (incomesPageNum - 1) * 10}
-                />
+      <InfiniteScroll
+        dataLength={leads.length}
+        next={getNextLeads}
+        hasMore={hasMore}
+        loader={<SmallLoading />}
+        endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
+        height={400}
+        scrollThreshold={1}
+      >
+        <table className="details-table incomes-table">
+          <thead>
+            <tr>
+              {dataHead.map((head, i) => (
+                <th key={i}>{head.label}</th>
               ))}
-            </tbody>
-          </table>
-
-          <div className="details-list-tablet incomes-page  ">
+            </tr>
+          </thead>
+          <tbody>
             {leads?.map((lead, i) => (
-              <LeadCard
-                key={i}
-                data={lead}
-                mode="tablet"
-                cellNumber={i + 1 + (incomesPageNum - 1) * 10}
-              />
+              <LeadCard key={i} data={lead} mode="desktop" cellNumber={i + 1} />
             ))}
-          </div>
+          </tbody>
+        </table>
+      </InfiniteScroll>
 
-          {totalPages > 1 && (
-            <div className="pages-pagination">
-              <Pagination
-                current={incomesPageNum}
-                defaultCurrent={1}
-                total={totalPages * 10}
-                onChange={getPageNumberIncomes}
-              />
-            </div>
-          )}
-        </>
-      )}
+      <div className="details-list-tablet incomes-page  ">
+        {leads?.map((lead, i) => (
+          <LeadCard key={i} data={lead} mode="tablet" cellNumber={i + 1} />
+        ))}
+      </div>
     </>
   );
 };

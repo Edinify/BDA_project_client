@@ -17,6 +17,7 @@ import LessonTableModal from "./globalComponents/Modals/LessonTableModal/LessonT
 import LessonModal from "./globalComponents/Modals/LessonModal/LessonModal";
 import { userAction } from "./redux/actions/userAction";
 import { EventModal } from "./globalComponents/Modals/EventModal/EventModal";
+import DiplomaModal from "./globalComponents/Modals/DiplomaModal/DiplomaModal";
 
 //
 function App() {
@@ -36,6 +37,7 @@ function App() {
   const { syllabusOpenModal } = useSelector((state) => state.syllabusModal);
   const { careerOpenModal } = useSelector((state) => state.careerModal);
   const { leadOpenModal } = useSelector((state) => state.leadModal);
+  const {diplomaOpenModal} = useSelector(state=>state.diplomaModal)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -63,6 +65,14 @@ function App() {
   }, [teachersOpenModal]);
 
   useEffect(() => {
+    if (diplomaOpenModal) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "overlay";
+    }
+  }, [diplomaOpenModal]);
+
+  useEffect(() => {
     dispatch(userAction());
   }, []);
 
@@ -82,6 +92,8 @@ function App() {
       {lessonTableOpenModal && <LessonTableModal />}
       {groupOpenModal && <GroupModal />}
       {leadOpenModal && <LeadModal />}
+      {diplomaOpenModal && <DiplomaModal/>}
+
       {/* <LessonModal /> */}
       <ToastContainer />
     </div>

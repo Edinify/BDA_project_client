@@ -17,6 +17,12 @@ export const studentStatusReducer = (state = initialState, action) => {
         ...state,
         courseId: action.payload,
       };
+      case STUDENT_STATUS_FILTER_ACTION_TYPE.CLEAR_STUDENT_COURSEID: 
+      return { 
+        ...state
+        ,
+        courseId:""
+      }
     default:
       return state;
   }

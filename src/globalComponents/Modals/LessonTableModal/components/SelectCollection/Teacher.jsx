@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import DropdownIcon from "../../../components/DropdownIcon/DropdownIcon";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Teacher = ({ formik, modalData, updateModalState }) => {
-  const dispatch = useDispatch();
   const { teachers } = useSelector(
     (state) => state.dropdownGroup.selectedGroup
   );
-
+  const { user } = useSelector((state) => state.user);
   const inputValue =
-    teachers.find((teacher) => teacher._id == modalData.teacher)?.fullName ||
+    teachers?.find((teacher) => teacher._id === modalData.teacher)?.fullName ||
     "";
 
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -43,10 +42,17 @@ const Teacher = ({ formik, modalData, updateModalState }) => {
               value={inputValue}
               onBlur={() => formik.setFieldTouched("teacher", true)}
             />
-            <DropdownIcon
-              setOpenDropdown={setOpenDropdown}
-              openDropdown={openDropdown}
-            />
+
+            {!(
+              user?.role === "teacher" ||
+              user?.role === "mentor" ||
+              user?.role === "student"
+            ) && (
+              <DropdownIcon
+                setOpenDropdown={setOpenDropdown}
+                openDropdown={openDropdown}
+              />
+            )}
           </div>
 
           <ul
@@ -54,7 +60,7 @@ const Teacher = ({ formik, modalData, updateModalState }) => {
               openDropdown ? "active" : ""
             }`}
           >
-            {teachers.map((item) => (
+            {teachers?.map((item) => (
               <li key={item._id} onClick={() => addData(item)}>
                 <h4>{item.fullName}</h4>
               </li>

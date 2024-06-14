@@ -1,6 +1,6 @@
-.table-container {
+/* .table-container {
   margin: 0 0 80px 0;
-}
+} */
 .table-container table {
   border-collapse: separate;
   table-layout: fixed;
@@ -10,16 +10,18 @@
 .table-container tbody tr {
   height: 98px;
   font-size: 16px;
+  background-color: white;
 }
 
 .table-container thead tr {
   height: 59px;
   font-size: 16px;
   color: var(--neutrals-900);
+  background-color: white;
 }
-.table-container tbody tr:nth-child(odd) {
+/* .table-container tbody tr:nth-child(odd) {
   background-color: var(--neutrals-200);
-}
+} */
 .table-container thead tr th {
   font-size: 16px;
   font-weight: 600;
@@ -153,7 +155,7 @@
 }
 
 .table-container tbody tr:nth-child(odd) td:nth-of-type(1) {
-  background-color: var(--neutrals-200);
+  /* background-color: var(--neutrals-200); */
 }
 .table-container tbody tr:nth-child(even) td:nth-of-type(1) {
   background-color: white;
@@ -218,12 +220,12 @@
   .table-container thead tr th {
     width: 150px;
   }
-  thead th:first-child,
+  /* thead th:first-child,
   tbody td:first-child {
     position: sticky;
     left: 0;
     z-index: 1;
-  }
+  } */
   .table-container .scrolling {
     overflow-x: auto;
     border-radius: 12px;
@@ -231,5 +233,15 @@
   }
   .table-container .scrolling::-webkit-scrollbar {
     display: none;
+  }
+}
+
+
+@media screen and (max-width:880px) {
+  .table-container{
+    margin-top: 10px;
+  }
+  .table-container .container{
+    padding:  0 12px;
   }
 }

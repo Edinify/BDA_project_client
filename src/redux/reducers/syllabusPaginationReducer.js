@@ -2,8 +2,8 @@ import { SYLLABUS_ALL_ACTIONS_TYPE } from "../actions-type";
 
 const initialState = {
   syllabusData: [],
-  totalPages: 1,
-  lastPage: "",
+  totalLength: 0,
+  hasMore: true,
   loading: false,
 };
 
@@ -13,7 +13,6 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
       return {
         ...state,
         syllabusData: action.payload,
-        // loading: false,
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.GET_ACTIVE_SYLLABUS:
       return {
@@ -29,14 +28,25 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
     case SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_PAGINATION:
       return {
         ...state,
-        syllabusData: action.payload.syllabus,
-        totalPages: action.payload.totalPages,
+        syllabusData: [...state.syllabusData, ...action.payload.syllabusData],
+        totalLength: action.payload.totalLength,
+        hasMore: !(action.payload.syllabusData.length < 20),
       };
-
     case SYLLABUS_ALL_ACTIONS_TYPE.CREATE_SYLLABUS:
+      console.log(action.payload);
       return {
         ...state,
-        syllabusData: [...state.syllabusData, action.payload],
+        syllabusData: [action.payload, ...state.syllabusData].sort(
+          (a, b) => a.orderNumber - b.orderNumber
+        ),
+        totalLength: state.totalLength + 1,
+      };
+    case SYLLABUS_ALL_ACTIONS_TYPE.RESET_SYLLABUS_PAGINATION:
+      return {
+        ...state,
+        syllabusData: [],
+        totalLength: 0,
+        hasMore: true,
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.UPDATE_SYLLABUS:
       return {
@@ -49,8 +59,9 @@ export const syllabusPaginationReducer = (state = initialState, action) => {
       return {
         ...state,
         syllabusData: state.syllabusData.filter(
-          (teacher) => teacher._id !== action.payload
+          (syllabus) => syllabus._id !== action.payload
         ),
+        totalLength: state.totalLength - 1,
       };
     case SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_LAST_PAGE:
       return {

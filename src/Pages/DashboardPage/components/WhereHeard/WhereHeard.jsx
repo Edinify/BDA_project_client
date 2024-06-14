@@ -4,7 +4,7 @@ import DateDropdown from "../../../../globalComponents/DateDropdown/DateDropdown
 import DateRangeModal from "../../../../globalComponents/Modals/DateRangeModal/DateRangeModal";
 import { getDashboardAdvertisingAction } from "../../../../redux/actions/dashboardAction";
 
-const WhereHeard = ({ dashboardKeys }) => {
+const WhereHeard = ({ type}) => {
   const dispatch = useDispatch();
   const { advertising } = useSelector((state) => state.dashboardData);
   const [openCalendar, setOpenCalendar] = useState(false);
@@ -20,7 +20,9 @@ const WhereHeard = ({ dashboardKeys }) => {
     dispatch(getDashboardAdvertisingAction("", "", option.key));
   };
 
-  // console.log(advertising, "bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+
+  console.log(advertising,"advertisinggg")
+
 
   return (
     <>
@@ -28,15 +30,26 @@ const WhereHeard = ({ dashboardKeys }) => {
         <div className="content-box">
           <div className="top">
             <h2 className="title">Bizi haradan eşidiblər?</h2>
-            {/* <DateDropdown
-              optionType={"date"}
-              calendar={true}
-              setOpenCalendar={setOpenCalendar}
-              openCalendar={openCalendar}
-              openDropdown={openDateDropdown}
-              setOpenDropdown={setOpenDateDropdown}
-              applyMonthsFilter={applyMonthsFilter}
-            /> */}
+            {type !== "mobile" ? (
+              <DateDropdown
+                optionType={"date"}
+                calendar={true}
+                setOpenCalendar={setOpenCalendar}
+                openCalendar={openCalendar}
+                openDropdown={openDateDropdown}
+                setOpenDropdown={setOpenDateDropdown}
+                applyMonthsFilter={applyMonthsFilter}
+              />
+            ) : (
+              <DateDropdown
+                optionType={"date"}
+                setOpenCalendar={setOpenCalendar}
+                openCalendar={openCalendar}
+                openDropdown={openDateDropdown}
+                setOpenDropdown={setOpenDateDropdown}
+                applyMonthsFilter={applyMonthsFilter}
+              />
+            )}
           </div>
 
           <div className="bottom">

@@ -1,17 +1,15 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { TEACHERS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteTeacherAction } from "../../../redux/actions/teachersActions";
+import moment from "moment";
+import "moment/locale/az";
+import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
 const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
   const dispatch = useDispatch();
-  const { teachers, lastPage } = useSelector(
-    (state) => state.teachersPagination
-  );
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  // // console.log(teacher,"teacher")
-  const { teachersSearchValues } = useSelector((state) => state.searchValues);
-  const { teacherStatus } = useSelector((state) => state.teacherStatus);
   let courses =
     Array.isArray(data.courses) && data.courses.length > 0
       ? data.courses
@@ -19,12 +17,12 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
             return `${course.name}`;
           })
           .join(", ")
-      : "boş";
+      : "";
 
   const listData = [
     { key: "Fənn", value: courses },
     { key: "Email", value: data.email },
-    { key: "Telefon nömrəsi", value: data.phone },
+    { key: "Mobil nömrə", value: data.phone },
     { key: "Email", value: data.email },
   ];
 
@@ -38,12 +36,7 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
     });
   };
   const deleteItem = () => {
-    const pageNumber =
-      lastPage > 1 ? (teachers.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data?._id;
-    const searchQuery = teachersSearchValues;
-    const status = teacherStatus ? teacherStatus : "all";
-    dispatch(deleteTeacherAction({ _id, pageNumber, searchQuery, status }));
+    dispatch(deleteTeacherAction(data._id));
   };
   const openMoreModal = () => {
     updateItem("more");
@@ -61,32 +54,82 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
     });
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>
               <div className="table-scroll-text">{data?.fullName}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
-              <div className="table-scroll-text">{courses}</div>
+            <div className="td-con" style={{ width: "120px" }}>
+              <div className="table-scroll-text">{data?.fin}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "120px" }}>
+              <div className="table-scroll-text">{data?.seria}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text">
+                {data?.birthday
+                  ? moment(data.birthday).locale("az").format("DD MMMM YYYY ")
+                  : "" || ""}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td className="email">
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text">{data?.email}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text phone">{data?.phone}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text">{courses}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text phone">
+                {data?.createdAt
+                  ? moment(data.createdAt).locale("az").format("DD MMMM YYYY")
+                  : ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text phone">
+                {data?.status ? "Aktiv" : "Deaktiv"}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -100,6 +143,7 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
               openConfirmModal={openConfirmModal}
               openMoreModal={openMoreModal}
               profil={"teachers"}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </td>
         </tr>
@@ -130,6 +174,7 @@ const TeacherCard = ({ data, mode, cellNumber, setOpenMoreModal, teacher }) => {
                 openConfirmModal={openConfirmModal}
                 openMoreModal={openMoreModal}
                 profil={"teachers"}
+                setShowDeleteModal={setShowDeleteModal}
               />
             </div>
           )}

@@ -1,6 +1,16 @@
 .details-header {
   background-color: var(--neutrals-200);
   padding-bottom: 16px;
+  position: sticky;
+  top: 86px;
+  z-index: 100;
+}
+.details-header.open{
+  z-index: 10;
+}
+
+.details-page.lesson-page .details-header {
+  top: 0;
 }
 .details-header-container {
   width: 100%;
@@ -136,14 +146,17 @@
 
 /* student -page */
 
-.details-page.students-page .student-filter-header {
+.details-page.students-page .student-filter-header,
+.details-page.career-page .career-filter-header {
   width: 100%;
   display: flex;
 }
 
 /* teacher-page */
 
-.details-page.teachers-page .teacher-header-filter {
+.details-page.teachers-page .teacher-header-filter,
+.details-page.students-page .student-header-filter
+ {
   width: 100%;
   display: flex;
   margin-top: 8px;
@@ -155,7 +168,9 @@
   margin-left: 10px;
 }
 
-.details-page .teacher-header-filter-container {
+.details-page .teacher-header-filter-container ,
+.details-page .student-header-filter-container
+{
   width: 100%;
 }
 
@@ -167,7 +182,7 @@
 }
 .details-header .circle-icon .filter-count {
   position: absolute;
-  right: 8px;
+  left: 45%;
   font-size: 14px;
   color: var(--secondary-900);
   font-weight: bold;
@@ -204,9 +219,18 @@
 .details-page .lesson-page-header-container {
   width: 100%;
 }
-.details-page .lesson-page-header-container .lesson-page-add-btn {
+
+.details-page .lesson-page-header-container .lesson-page-header-top{
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+}
+.details-page .lesson-page-header-container .lesson-page-header-top .lesson-status-header{
+  width: 60%;
+}
+.details-page .lesson-page-header-container .lesson-page-header-top  .lesson-page-add-btn{
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .details-page .lesson-page-header-container .lesson-page-filter-container {
@@ -215,12 +239,6 @@
   justify-content: space-between;
   margin-top: 8px;
 }
-/* .details-page .lesson-page-header-container .lesson-page-filter-container.teacher{
-  justify-content: flex-start;
-}
-.details-page .lesson-page-header-container .lesson-page-filter-container.teacher .lesson-page-apply-btn{
-  margin-left: 8px;
-} */
 
 @media screen and (max-width: 1400px) {
   .lesson-page .details-header-content .details-header-content-left {

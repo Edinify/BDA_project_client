@@ -39,7 +39,6 @@ export const CourseModal = () => {
     });
   };
 
-
   return (
     <div className="create-update-modal-con">
       <div className="create-update-modal">
@@ -62,6 +61,12 @@ export const CourseModal = () => {
               modalData={modalData}
               formik={formik}
               inputName={"name"}
+            />
+            <InputField
+              setInputValue={setInputValue}
+              modalData={modalData}
+              formik={formik}
+              inputName={"lessonCount"}
             />
             <Payments modalData={modalData} formik={formik} />
           </div>

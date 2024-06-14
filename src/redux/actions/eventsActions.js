@@ -1,8 +1,6 @@
 import axios from "axios";
 import {
-  ALL_COURSES_ACTION,
   COURSES_ALL_ACTIONS_TYPE,
-  COURSES_MODAL_ACTION_TYPE,
   EVENTS_ALL_ACTIONS_TYPE,
   EVENTS_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -68,16 +66,13 @@ const eventModalOpen = (value) => ({
 });
 
 export const getEventsPaginationAction =
-  (pageNumber, searchQuery) => async (dispatch) => {
+  (length, searchQuery) => async (dispatch) => {
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
-        `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}`
+        `/pagination/?length=${length}&searchQuery=${searchQuery}`
       );
-      dispatch({
-        type: EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_LAST_PAGE,
-        payload: pageNumber,
-      });
+      console.log(data);
       dispatch({
         type: EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_PAGINATION,
         payload: data,
@@ -95,14 +90,10 @@ export const getEventsPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/pagination/?page=${pageNumber}&searchQuery=${searchQuery}`
+            `/pagination/?length=${length}&searchQuery=${searchQuery}`
           );
           dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_LAST_PAGE,
-            payload: pageNumber,
-          });
-          dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.GET_COURSES_PAGINATION,
+            type: EVENTS_ALL_ACTIONS_TYPE.GET_EVENTS_PAGINATION,
             payload: data,
           });
         } catch (error) {
@@ -125,8 +116,10 @@ export const createEventAction = (eventData) => async (dispatch) => {
 
   try {
     const { data } = await API.post("/", eventData);
-
-    dispatch(getEventsPaginationAction(data.lastPage, ""));
+    dispatch({
+      type: EVENTS_ALL_ACTIONS_TYPE.CREATE_EVENT,
+      payload: data,
+    });
     dispatch(eventModalOpen(false));
     toastSuccess("Yeni tədbir yaradıldı");
   } catch (error) {
@@ -205,43 +198,42 @@ export const updateEventAction = (_id, eventData) => async (dispatch) => {
   }
 };
 
-export const deleteEventAction =
-  ({ _id, pageNumber, searchQuery }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getEventsPaginationAction(pageNumber, searchQuery));
-      dispatch({ type: EVENTS_ALL_ACTIONS_TYPE.DELETE_EVENT, payload: _id });
-      toastSuccess("Tədbir silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(getEventsPaginationAction(pageNumber, searchQuery));
-          dispatch({
-            type: COURSES_ALL_ACTIONS_TYPE.DELETE_COURSE,
-            payload: _id,
-          });
-          toastSuccess("Fənn silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+export const deleteEventAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({ type: EVENTS_ALL_ACTIONS_TYPE.DELETE_EVENT, payload: data._id });
+
+    toastSuccess("Tədbir silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: EVENTS_ALL_ACTIONS_TYPE.DELETE_EVENT,
+          payload: data._id,
+        });
+        toastSuccess("Fənn silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      // console.log(error);
-      toastError(error?.response?.data.message);
     }
-  };
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
 
 export const confirmEventChangesAction =
   (_id, eventData) => async (dispatch) => {
@@ -267,7 +259,7 @@ export const confirmEventChangesAction =
               AccessToken: token.data.accesstoken,
             })
           );
-          const { data } = await API.patch(`/${_id}`, eventData);
+          await API.patch(`/${_id}`, eventData);
           // dispatch({
           //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
           //   payload: data,
@@ -317,7 +309,7 @@ export const cancelCourseChangesAction =
               AccessToken: token.data.accesstoken,
             })
           );
-          const { data } = await API.patch(`/${_id}`, eventData);
+           await API.patch(`/${_id}`, eventData);
           // dispatch({
           //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
           //   payload: data,

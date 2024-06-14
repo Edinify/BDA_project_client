@@ -4,10 +4,9 @@ import { toast } from "react-toastify";
 import { logoutAction } from "./auth";
 import { apiRoot } from "../../apiRoot";
 
-
 const API = axios.create({
   baseURL: `${apiRoot}/user`,
-  withCredentials:true
+  withCredentials: true,
 });
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("auth")) {
@@ -21,7 +20,7 @@ API.interceptors.request.use((req) => {
 
 const refreshApi = axios.create({
   baseURL: `${apiRoot}/user/auth/refresh_token`,
-  withCredentials:true
+  withCredentials: true,
 });
 
 const toastError = (message) => {
@@ -38,13 +37,10 @@ const toastError = (message) => {
   });
 };
 
-export const changeAdminPasswordAction = (
-  oldPassword,
-  newPassword,
-) => {
+export const changeAdminPasswordAction = (oldPassword, newPassword) => {
   return async (dispatch) => {
     try {
-      const response = await API.patch(`admin/me/password`, {
+       await API.patch(`admin/own/password`, {
         newPassword,
         oldPassword,
       });
@@ -73,11 +69,11 @@ export const changeAdminPasswordAction = (
             })
           );
 
-          const response = await API.patch(`admin/me/password`, {
+           await API.patch(`admin/me/password`, {
             newPassword,
             oldPassword,
           });
-    
+
           dispatch(logoutAction());
         } catch (error) {
           // console.log(error);
@@ -92,7 +88,7 @@ export const changeAdminPasswordAction = (
 export const changeTeacherPasswordAction = (oldPassword, newPassword) => {
   return async (dispatch) => {
     try {
-      const response = await API.patch(`teacher/me/password`, {
+       await API.patch(`teacher/own/password`, {
         newPassword,
         oldPassword,
       });
@@ -121,11 +117,11 @@ export const changeTeacherPasswordAction = (oldPassword, newPassword) => {
             })
           );
 
-          const response = await API.patch(`teacher/me/password`, {
+           await API.patch(`teacher/me/password`, {
             newPassword,
             oldPassword,
           });
-    
+
           dispatch(logoutAction());
         } catch (error) {
           // console.log(error);
@@ -138,13 +134,11 @@ export const changeTeacherPasswordAction = (oldPassword, newPassword) => {
   };
 };
 
-export const changeStudentPasswordAction = (
-  oldPassword,
-  newPassword,
-) => {
+export const changeStudentPasswordAction = (oldPassword, newPassword) => {
   return async (dispatch) => {
+    console.log(oldPassword, newPassword, 'gggggggggggggggggg')
     try {
-      const response = await API.patch(`student/me/password`, {
+       await API.patch(`student/own/password`, {
         newPassword,
         oldPassword,
       });
@@ -173,11 +167,60 @@ export const changeStudentPasswordAction = (
             })
           );
 
-          const response = await API.patch(`student/me/password`, {
+           await API.patch(`student/me/password`, {
             newPassword,
             oldPassword,
           });
-    
+
+          dispatch(logoutAction());
+        } catch (error) {
+          // console.log(error);
+          if (error?.response?.status === 401) {
+            return dispatch(logoutAction());
+          }
+        }
+      }
+    }
+  };
+};
+
+export const changeWorkerPasswordAction = (oldPassword, newPassword) => {
+  return async (dispatch) => {
+    try {
+       await API.patch(`worker/own/password`, {
+        newPassword,
+        oldPassword,
+      });
+
+      dispatch(logoutAction());
+    } catch (error) {
+      dispatch({
+        type: CHANGE_PASSPWORD_ACTION_TYPE.START_LOADING,
+        payload: false,
+      });
+
+      if (error?.response?.data?.key === "old-password-incorrect.") {
+        toastError("köhnə şifrə yalnışdır");
+        return;
+      }
+      // console.log(error);
+      const originalRequest = error.config;
+      if (error?.response?.status === 403 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshApi.get("/");
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              AccessToken: token.data.accesstoken,
+            })
+          );
+
+           await API.patch(`worker/own/password`, {
+            newPassword,
+            oldPassword,
+          });
+
           dispatch(logoutAction());
         } catch (error) {
           // console.log(error);

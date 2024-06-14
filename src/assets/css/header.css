@@ -1,8 +1,15 @@
 .main-header {
   background: var(--neutrals-200);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 .main-header .header-content {
   display: flex;
+}
+.main-header.open{
+  z-index: 1;
+  position: relative;
 }
 
 .main-header .header-content .header-content-container {
@@ -155,15 +162,14 @@
   /* margin-right: 16px; */
   display: flex;
 }
-.main-nav-icons .student-amount .student-lesson-icon{
+.main-nav-icons .student-amount .student-lesson-icon {
   display: flex;
   width: 40px;
   height: 40px;
   align-items: center;
   justify-content: center;
-
 }
-.main-nav-icons .student-amount .change-student-lesson-icon{
+.main-nav-icons .student-amount .change-student-lesson-icon {
   border-radius: 20px;
   padding: 8px;
   background-color: rgba(70, 42, 255, 0.1);
@@ -218,7 +224,6 @@
     display: block;
     margin-right: 8px;
   }
-
 
   .main-header .header-content .header-content-container .header-context h2 {
     font-size: 18px;

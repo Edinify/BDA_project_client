@@ -3,10 +3,10 @@ import { GROUP_ALL_ACTIONS_TYPE } from "../actions-type";
 const initialState = {
   groupData: [],
   groupsByMore: [],
-  totalPages: 1,
-  lastPage: "",
+  totalLength: 0,
+  hasMore: true,
   loading: false,
-  loadingAll: false
+  loadingAll: false,
 };
 
 export const groupsPaginationReducer = (state = initialState, action) => {
@@ -25,31 +25,37 @@ export const groupsPaginationReducer = (state = initialState, action) => {
     case GROUP_ALL_ACTIONS_TYPE.GET_GROUP_PAGINATION:
       return {
         ...state,
-        groupData: action.payload.groups,
-        totalPages: action.payload.totalPages
+        groupData: [...state.groupData, ...action.payload.groupData],
+        totalLength: action.payload.totalLength,
+        hasMore: !(action.payload.groupData.length < 20),
       };
-      case GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL_ADD:
-        return {
-          ...state,
-          groupsByMore: action.payload?.groups,
-        };
-      case GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL:
-        return {
-          ...state,
-          groupsByMore: [
-            ...state.groupsByMore,
-            ...action.payload?.groups,
-          ],
-        };
-        case GROUP_ALL_ACTIONS_TYPE.GROUP_LOADING_ALL:
-          return {
-            ...state,
-            loadingAll: action.payload,
-          };
+    case GROUP_ALL_ACTIONS_TYPE.RESET_GROUP_PAGINATION:
+      return {
+        ...state,
+        groupData: [],
+        totalLength: 0,
+        hasMore: true,
+      };
+    case GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL_ADD:
+      return {
+        ...state,
+        groupsByMore: action.payload?.groups,
+      };
+    case GROUP_ALL_ACTIONS_TYPE.GET_MORE_GROUP_ALL:
+      return {
+        ...state,
+        groupsByMore: [...state.groupsByMore, ...action.payload?.groups],
+      };
+    case GROUP_ALL_ACTIONS_TYPE.GROUP_LOADING_ALL:
+      return {
+        ...state,
+        loadingAll: action.payload,
+      };
     case GROUP_ALL_ACTIONS_TYPE.CREATE_GROUP:
       return {
         ...state,
-        groupData: [...state.groupData, action.payload],
+        groupData: [action.payload, ...state.groupData],
+        totalLength: state.totalLength + 1,
       };
     case GROUP_ALL_ACTIONS_TYPE.UPDATE_GROUP:
       return {
@@ -62,8 +68,9 @@ export const groupsPaginationReducer = (state = initialState, action) => {
       return {
         ...state,
         groupData: state.groupData.filter(
-          (teacher) => teacher._id !== action.payload
+          (group) => group._id !== action.payload
         ),
+        totalLength: state.totalLength - 1,
       };
     case GROUP_ALL_ACTIONS_TYPE.GET_GROUP_LAST_PAGE:
       return {

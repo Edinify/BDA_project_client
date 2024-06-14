@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { ReactComponent as MinusIcon } from "../../../../../../assets/icons/minus-cirlce.svg";
 
 const CoursesInput = ({

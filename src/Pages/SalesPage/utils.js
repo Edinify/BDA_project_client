@@ -1,21 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteIncomesAction,
-  getIncomePaginationAction,
-} from "../../redux/actions/incomeActions";
-import {
-  deleteExpensesAction,
-  getExpensesPaginationAction,
-} from "../../redux/actions/expensesAction";
-import {
-  getFinanceChartAction,
-  getFinanceDataAction,
-} from "../../redux/actions/financeAction";
+
 import moment from "moment";
 import {
-  EXPENSES_MODAL_ACTION_TYPE,
   FINANCE_FILTER_ACTION_TYPE,
-  INCOMES_MODAL_ACTION_TYPE,
+  LEAD_ACTION_TYPE,
 } from "../../redux/actions-type";
 import { getSalesChartAction } from "../../redux/actions/salesAction";
 import {
@@ -31,27 +19,30 @@ export const useFinanceCustomHook = () => {
 
   const { courseId } = useSelector((state) => state.salesData);
 
-  const { leads, lastPage: leadPageNum } = useSelector((state) => state.leads);
-
   const getAllDefaultData = () => {
+    dispatch({ type: LEAD_ACTION_TYPE.RESET_LEAD });
     dispatch(getSalesChartAction("", "", 1));
-    dispatch(getLeadPaginationAction(1, "", "", 1));
+    dispatch(getLeadPaginationAction(0, "", "", 1));
   };
 
   const getAllDataByMonth = (monthCount) => {
+    dispatch({ type: LEAD_ACTION_TYPE.RESET_LEAD });
     dispatch(getSalesChartAction("", "", monthCount));
-    dispatch(getLeadPaginationAction(1, "", "", monthCount));
+    dispatch(getLeadPaginationAction(0, "", "", monthCount));
   };
 
   const getAllDataByDateRange = (startDate, endDate) => {
     const start = moment(startDate).format("YYYY-MM");
     const end = moment(endDate).format("YYYY-MM");
 
+    dispatch({ type: LEAD_ACTION_TYPE.RESET_LEAD });
     dispatch(getSalesChartAction(start, end, ""));
-    dispatch(getLeadPaginationAction(1, start, end, ""));
+    dispatch(getLeadPaginationAction(0, start, end, ""));
   };
 
   const getFinanceDataAfterUpdate = () => {
+    // dispatch({ type: LEAD_ACTION_TYPE.RESET_LEAD });
+
     if (financeChooseDate.startDate && financeChooseDate.endDate) {
       const start = moment(financeChooseDate.startDate).format("YYYY-MM");
       const end = moment(financeChooseDate.endDate).format("YYYY-MM");
@@ -77,31 +68,30 @@ export const useFinanceCustomHook = () => {
   };
 
   const deleteIncome = (_id) => {
-    const pageNum =
-      (leadPageNum > 1 && (leads.length > 1 ? leadPageNum : leadPageNum - 1)) ||
-      1;
-
-    if (financeChooseDate.startDate && financeChooseDate.endDate) {
-      dispatch(
-        deleteLeadAction(
-          _id,
-          pageNum,
-          financeChooseDate.startDate,
-          financeChooseDate.endDate,
-          "" //month,
-        )
-      );
-    } else {
-      dispatch(
-        deleteLeadAction(
-          _id,
-          pageNum,
-          "",
-          "",
-          financeMonthsFilter ? financeMonthsFilter : 1 //month,
-        )
-      );
-    }
+    // const pageNum =
+    //   (leadPageNum > 1 && (leads.length > 1 ? leadPageNum : leadPageNum - 1)) ||
+    //   1;
+    // if (financeChooseDate.startDate && financeChooseDate.endDate) {
+    //   dispatch(
+    //     deleteLeadAction(
+    //       _id,
+    //       pageNum,
+    //       financeChooseDate.startDate,
+    //       financeChooseDate.endDate,
+    //       "" //month,
+    //     )
+    //   );
+    // } else {
+    //   dispatch(
+    //     deleteLeadAction(
+    //       _id,
+    //       pageNum,
+    //       "",
+    //       "",
+    //       financeMonthsFilter ? financeMonthsFilter : 1 //month,
+    //     )
+    //   );
+    // }
   };
 
   return {

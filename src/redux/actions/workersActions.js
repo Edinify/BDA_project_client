@@ -71,6 +71,10 @@ const pageLoading = (loadingValue) => ({
   type: WORKER_ALL_ACTIONS_TYPE.WORKER_LOADING,
   payload: loadingValue,
 });
+const setLoadingCoursesAction = (loadingValue) => ({
+  type: WORKER_ALL_ACTIONS_TYPE.WORKER_LOADING,
+  payload: loadingValue,
+});
 const modalLoading = (loadingValue) => ({
   type: WORKER_MODAL_ACTION_TYPE.WORKER_MODAL_LOADING,
   payload: loadingValue,
@@ -144,22 +148,18 @@ export const getWorkersActiveAction = () => async (dispatch) => {
 };
 
 export const getWorkersPaginationAction =
-  (pageNumber, searchQuery) => async (dispatch) => {
-    dispatch(pageLoading(true));
+  (length, searchQuery) => async (dispatch) => {
+    dispatch(setLoadingCoursesAction(true));
     try {
       const { data } = await API.get(
-        `/?page=${pageNumber}&searchQuery=${searchQuery}`
+        `/?length=${length}&searchQuery=${searchQuery}`
       );
-      dispatch({
-        type: WORKER_ALL_ACTIONS_TYPE.GET_WORKER_LAST_PAGE,
-        payload: pageNumber,
-      });
-
       dispatch({
         type: WORKER_ALL_ACTIONS_TYPE.GET_WORKER_PAGINATION,
         payload: data,
       });
     } catch (error) {
+      console.log(error);
       const originalRequest = error.config;
       if (error?.response?.status === 403 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -172,14 +172,8 @@ export const getWorkersPaginationAction =
             })
           );
           const { data } = await API.get(
-            `/?page=${pageNumber}&searchQuery=${searchQuery}`
+            `/?length=${length}&searchQuery=${searchQuery}`
           );
-
-          dispatch({
-            type: WORKER_ALL_ACTIONS_TYPE.GET_WORKER_LAST_PAGE,
-            payload: pageNumber,
-          });
-
           dispatch({
             type: WORKER_ALL_ACTIONS_TYPE.GET_WORKER_PAGINATION,
             payload: data,
@@ -201,8 +195,10 @@ export const createWorkerAction = (workerData) => async (dispatch) => {
   dispatch(modalLoading(true));
   try {
     const { data } = await API.post("/create", workerData);
-    // console.log(data);
-    dispatch(getWorkersPaginationAction(data.lastPage, ""));
+    dispatch({
+      type: WORKER_ALL_ACTIONS_TYPE.CREATE_WORKER,
+      payload: data,
+    });
     dispatch({
       type: WORKER_MODAL_ACTION_TYPE.WORKER_OPEN_MODAL,
       payload: false,
@@ -294,43 +290,47 @@ export const updateWorkerAction = (_id, workerData) => async (dispatch) => {
   }
 };
 
-export const deleteWorkerAction =
-  ({ _id, pageNumber, searchQuery }) =>
-  async (dispatch) => {
-    try {
-      await API.delete(`/${_id}`);
-      dispatch(getWorkersPaginationAction(pageNumber, searchQuery));
-      dispatch({ type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER, payload: _id });
-      toastSuccess("İşçi silindi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          await API.delete(`/${_id}`);
-          dispatch(getWorkersPaginationAction(pageNumber, searchQuery));
-          dispatch({
-            type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER,
-            payload: _id,
-          });
-          toastSuccess("İşçi silindi");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+export const deleteWorkerAction = (id) => async (dispatch) => {
+  try {
+    const { data } = await API.delete(`/${id}`);
+
+    dispatch({
+      type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER,
+      payload: data._id,
+    });
+
+    toastSuccess("İşçi silindi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        const { data } = await API.delete(`/${id}`);
+
+        dispatch({
+          type: WORKER_ALL_ACTIONS_TYPE.DELETE_WORKER,
+          payload: data._id,
+        });
+        toastSuccess("İşçi silindi");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan əməkdaş silinə bilməz");
-      }
-      // console.log(error);
-      toastError(error?.response?.data.message);
     }
-  };
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan əməkdaş silinə bilməz");
+    }
+    // console.log(error);
+    toastError(error?.response?.data.message);
+  }
+};
+
+

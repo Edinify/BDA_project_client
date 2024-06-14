@@ -6,7 +6,6 @@ import WhereHeard from "./components/WhereHeard/WhereHeard";
 import StudentsAmount from "./components/StudentsAmount/StudentsAmount";
 import FinanceStatistics from "./components/FinanceStatistics/FinanceStatistics";
 import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
-import { useCustomHook } from "../../globalComponents/GlobalFunctions/globalFunctions";
 import {
   getDashboarLeadboarddAction,
   getDashboardAdvertisingAction,
@@ -23,7 +22,6 @@ import { Table } from "../../globalComponents/Table/Table";
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
-  const [dashboardKeys, setDashboardKeys] = useState({});
 
   useEffect(() => {
     dispatch(getDashboardConsultationsDataAction());
@@ -47,13 +45,13 @@ export const Dashboard = () => {
           <div className="left">
             <LessonsAmount />
             <LessonStatistics />
-            <WhereHeard dashboardKeys={dashboardKeys} />
+            <WhereHeard  />
           </div>
 
           <div className="right">
             <div className="top">
               <StudentsAmount />
-              <FinanceStatistics dashboardKeys={dashboardKeys} />
+              <FinanceStatistics  />
             </div>
 
             <div className="bottom">
@@ -64,16 +62,17 @@ export const Dashboard = () => {
 
         <div className="dashboard-main tablet">
           <LessonsAmount />
-          <FinanceStatistics dashboardKeys={dashboardKeys} />
+          <FinanceStatistics  />
         </div>
 
         <div className="dashboard-main mobile">
           <LessonsAmount />
-          <FinanceStatistics dashboardKeys={dashboardKeys} />
+          <FinanceStatistics  />
           <StudentsAmount />
           <LessonStatistics type="mobile" />
-          <WhereHeard dashboardKeys={dashboardKeys} />
+          <WhereHeard  type="mobile"  />
           <LeaderBoard type="mobile" />
+          <Table/>
 
         </div>
       </div>

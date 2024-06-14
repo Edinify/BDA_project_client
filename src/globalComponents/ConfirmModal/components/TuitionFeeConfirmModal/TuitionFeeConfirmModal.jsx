@@ -41,6 +41,13 @@ const TuitionFeeConfirmModal = () => {
     );
   };
 
+  const confirmHead = [
+    { id: 1, name: "Tarix" },
+    { id: 2, name: "Status" },
+    { id: 3, name: "Qalıq" },
+    { id: 4, name: "Məbləğ" },
+  ];
+
   const togglePaymentStatus = (data) => {
     const newPayments = tuitionFeeModalData.payments.map((item) =>
       item._id == data._id ? data : item
@@ -86,7 +93,7 @@ const TuitionFeeConfirmModal = () => {
     const currDate = new Date();
     currDate.setHours(23, 59, 59, 999);
 
-    console.log(currDate, "mmmmmmmmmmmmmmm");
+    // console.log(currDate, "mmmmmmmmmmmmmmm");
     const calcedPayments = tuitionFeeModalData?.payments.map(
       (item, index, array) => {
         const totalPayment = array
@@ -122,93 +129,86 @@ const TuitionFeeConfirmModal = () => {
       0
     );
 
-    const currPayment = totalBeforePayment - totalConfirmedPayment;
+    const currPayment = +(totalBeforePayment - totalConfirmedPayment).toFixed(
+      2
+    );
 
     setCurrentPayment(currPayment > 0 ? currPayment : 0);
 
     setPayments(calcedPayments);
 
-    setPaidAmount(totalConfirmedPayment);
+    setPaidAmount(totalConfirmedPayment.toFixed(2));
   }, [tuitionFeeModalData.paids]);
+
+  const confirmInformationData = [
+    {
+      id: 1,
+      title: "Yekun məbləğ:",
+      value: `${tuitionFeeModalData?.totalAmount.toFixed(2)}AZN`,
+    },
+    { id: 2, title: "Ödənilən məbləğ:", value: `${paidAmount}AZN` },
+    {
+      id: 3,
+      title: "Qalıq:",
+      value: `${(tuitionFeeModalData?.totalAmount - paidAmount).toFixed(2)}AZN`,
+    },
+    { id: 4, title: "Cari ödəniş:", value: `${currentPayment}AZN` },
+  ];
 
   // console.log(payments, "ssssssssssssssssssssss");
   return (
     <div style={{ marginTop: "30px" }}>
-      <div>
-        <div style={{ display: "flex" }}>
-          <h2>Yekun məbləğ:</h2>
-          <h2>{tuitionFeeModalData?.totalAmount} AZN</h2>
+      {confirmInformationData?.map((data) => (
+        <div className="confirm-information-container" key={data.id}>
+          <h2>{data.title}</h2>
+          <h2>{data.value}</h2>
         </div>
-        <div style={{ display: "flex" }}>
-          <h2>Ödənilən məbləğ:</h2>
-          <h2>
-            {paidAmount}
-            AZN
-          </h2>
-        </div>
-        <div style={{ display: "flex" }}>
-          <h2>Qalıq: </h2>
-          <h2>{tuitionFeeModalData?.totalAmount - paidAmount} AZN</h2>
-        </div>
-        <div style={{ display: "flex" }}>
-          <h2>Cari ödəniş: </h2>
-          <h2>{currentPayment} AZN</h2>
-        </div>
-      </div>
+      ))}
+
       <h2 style={{ marginTop: "20px" }}>Ödəniş cədvəli:</h2>
-      {payments?.map((item) => {
-        return (
-          <div
-            key={item._id}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: "20px",
-              borderBottom: "1px solid gray",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%",
-              }}
-            >
-              <h2>
-                {item?.paymentDate
-                  ? moment(item.paymentDate).locale("az").format("DD.MM.YYYY")
-                  : ""}
-              </h2>
-
-              <h2>{item.paid ? "ödənildi" : "ödənilməyib"}</h2>
-              <h2>{(item.rest > item.payment && item.payment) || item.rest}</h2>
-
-              <h2>{item.payment} AZN</h2>
-            </div>
-            {/* <div style={{ display: "flex" }}>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
+      {payments.length ? (
+        <table className="confirm-table">
+          <thead>
+            <tr>
+              {confirmHead.map((item) => (
+                <th key={item.id}>{item.name}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody style={{ width: "100%" }}>
+            {payments?.map((item) => (
+              <tr
+                className={`payment-container ${
+                  item.paid ? "payment-green" : "payment-red"
+                }`}
+                key={item._id}
               >
-                <FormControlLabel
-                  value="wait"
-                  control={<Radio checked={item?.status === "wait"} />}
-                  label="Ödənilməyib"
-                  disabled
-                />
-                <FormControlLabel
-                  value="paid"
-                  control={<Radio checked={item?.status === "paid"} />}
-                  label="Ödənildi"
-                  disabled
-                />
-              </RadioGroup>
-            </div> */}
-          </div>
-        );
-      })}
+                <td>
+                  <h2>
+                    {item?.paymentDate
+                      ? moment(item.paymentDate)
+                          .locale("az")
+                          .format("DD.MM.YYYY")
+                      : ""}
+                  </h2>
+                </td>
+                <td>
+                  <h2>{item?.paid ? "ödənildi" : "ödənilməyib"}</h2>
+                </td>
+                <td>
+                  <h2>
+                    {(item.rest > item.payment && item.payment) ||
+                      item.rest.toFixed(2)}
+                  </h2>
+                </td>
+                <td>
+                  <h2>{item.payment.toFixed(2)} AZN</h2>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : null}
 
       <div style={{ marginTop: "40px" }} className="tution-fee-confirm-modal">
         <h2 style={{ marginBottom: "40px" }}>Ödənişlər:</h2>
@@ -290,7 +290,13 @@ const TuitionFeeConfirmModal = () => {
         </div>
         <div className="confirm-btns">
           <span></span>
-          <button className="confirm" onClick={updateTuitionPayments}>
+          <button
+            disabled={paidData.payment || paidData.paymentDate}
+            className={`confirm ${
+              paidData.payment || paidData.paymentDate ? "disabled" : ""
+            } `}
+            onClick={updateTuitionPayments}
+          >
             Yenilə
           </button>
         </div>

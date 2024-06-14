@@ -16,12 +16,17 @@ const NotFoundPage = ({setNotFound}) => {
       navigate("/")
     }
     else if (user.role==="teacher"){
-      navigate("/teacher-panel/home")
+      navigate("/teacher-panel")
+    }
+    else if (user.role==="mentor"){
+      navigate("/teacher-panel")
     }
     else if (user.role==="worker"){
       navigate("/consultation/appointed")
     }
   }
+
+
 
 
   

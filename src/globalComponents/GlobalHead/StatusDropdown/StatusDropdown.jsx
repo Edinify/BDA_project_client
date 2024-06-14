@@ -89,25 +89,6 @@ export const StatusDropdown = ({ statusType, deviceType = "" }) => {
       </div>
 
       <div className="dropdown-body">
-        {/* {statusType === "teacher" &&(
-          <ul>
-            {StatusFilter.map((item) => (
-              <li key={item.key} onClick={() => getCategory(item)}>
-                {teacherStatus === item.id && <CheckIcon />}
-                {item.name}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <ul>
-            {StatusFilter.map((item) => (
-              <li key={item.key} onClick={() => getCategory(item)}>
-                {studentStatus === item.id && <CheckIcon />}
-                {item.name}
-              </li>
-            ))}
-          </ul>
-        )} */}
         <ul>
           {filterItems.map((item) => (
             <li key={item.key} onClick={() => handleClick(item)}>

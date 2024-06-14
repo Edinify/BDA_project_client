@@ -3,23 +3,35 @@ import { TextField } from "@mui/material";
 import DropdownIcon from "../../../components/DropdownIcon/DropdownIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSyllabusAction } from "../../../../../redux/actions/syllabusActions";
+import { SYLLABUS_ALL_ACTIONS_TYPE } from "../../../../../redux/actions-type";
 
 const Topic = ({ formik, modalData, updateModalState }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const { syllabusData: dataList } = useSelector(
     (state) => state.syllabusPagination
   );
-  const inputValue =  modalData.topic ? `${modalData.topic.orderNumber}. ${modalData.topic.name}` : ''
+  const { user } = useSelector((state) => state.user);
+  let inputValue = modalData.topic
+    ? `${modalData?.topic?.orderNumber || ""}${
+        modalData.topic.name === "Praktika" ? "" : "."
+      } ${
+        modalData.topic.name === "Praktika" ? "Lab Day" : modalData.topic.name
+      }`
+    : "";
+
   const [openDropdown, setOpenDropdown] = useState(false);
   const addData = (item) => {
-    updateModalState("topic", item)
-    setOpenDropdown(false)
+    updateModalState("topic", item);
+    setOpenDropdown(false);
   };
 
   useEffect(() => {
-    dispatch(getAllSyllabusAction(selectedGroup.course))
-  }, [])
+    dispatch(getAllSyllabusAction(selectedGroup.course));
+
+    return () =>
+      dispatch({ type: SYLLABUS_ALL_ACTIONS_TYPE.RESET_SYLLABUS_PAGINATION });
+  }, []);
 
   return (
     <>
@@ -45,10 +57,17 @@ const Topic = ({ formik, modalData, updateModalState }) => {
               value={inputValue}
               onBlur={() => formik.setFieldTouched("topic", true)}
             />
-           <DropdownIcon
-              setOpenDropdown={setOpenDropdown}
-              openDropdown={openDropdown}
-            />
+
+            {!(
+              user?.role === "teacher" ||
+              user?.role === "mentor" ||
+              user?.role === "student"
+            ) && (
+              <DropdownIcon
+                setOpenDropdown={setOpenDropdown}
+                openDropdown={openDropdown}
+              />
+            )}
           </div>
 
           <ul
@@ -56,18 +75,21 @@ const Topic = ({ formik, modalData, updateModalState }) => {
               openDropdown ? "active" : ""
             }`}
           >
+            <li onClick={() => addData({ name: "Praktika" })}>
+              <h4>Lab Day</h4>
+            </li>
             {dataList.map((item) => (
               <li key={item._id} onClick={() => addData(item)}>
-                <h4>{item.orderNumber}. {item.name}</h4>
+                <h4>
+                  {item.orderNumber}. {item.name}
+                </h4>
               </li>
             ))}
           </ul>
         </div>
       </div>
       {formik.errors.topic && formik.touched.topic && (
-        <small className="validation-err-message">
-          {formik.errors.topic}
-        </small>
+        <small className="validation-err-message">{formik.errors.topic}</small>
       )}
     </>
   );

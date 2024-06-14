@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NavbarProfile from "./components/NavbarProfile";
 import { ReactComponent as MenuMobileIcon } from "../../assets/icons/mobile-menu.svg";
 import { SIDEBAR_ACTION_TYPE } from "../../redux/actions-type";
@@ -7,9 +7,11 @@ import { SIDEBAR_ACTION_TYPE } from "../../redux/actions-type";
 export const Header = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const openSidebar = () => {
+  const openSidebarFunc = () => {
     dispatch({ type: SIDEBAR_ACTION_TYPE.SIDEBAR_OPEN_MODAL, payload: true });
   };
+  const { openSidebar } = useSelector((state) => state.openSidebar);
+
   const getPageTitle = (pathname) => {
     switch (pathname) {
       case "/groups/current":
@@ -39,12 +41,18 @@ export const Header = () => {
       case "/sales":
         return "Satış";
       case "/":
-      case "/lessonTable":
+      case "/lesson":
         return "Dərs cədvəli";
       case "/event":
         return "Tədbirlər";
       case "/dashboard":
         return "İdarəetmə paneli";
+      case "/teacher-panel":
+        return "Dərs cədvəli";
+      case "/student-panel":
+        return "Dərs cədvəli";
+        case "/diploma":
+          return "Diplom Cədvəli"
       default:
         return "";
     }
@@ -53,12 +61,12 @@ export const Header = () => {
 
   return (
     <>
-      <header className="main-header">
+      <header className={`main-header ${openSidebar ? "open" : ""} `}>
         <div className="container">
           <div className="header-content">
             <div className="header-content-container">
               <div className="header-context">
-                <MenuMobileIcon onClick={openSidebar} />
+                <MenuMobileIcon onClick={openSidebarFunc} />
                 <h2>{pageTitle}</h2>
               </div>
               <div className="header-icons">

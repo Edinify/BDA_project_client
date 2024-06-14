@@ -1,10 +1,9 @@
-import { useEffect, useState, useCallback } from "react";
+import {  useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import moment from "moment";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
 import { Box } from "@mui/material";
-import { ValidationSchema } from "./components/ValidationSchema/ValidationSchema";
 import { STUDENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import SubmitBtn from "./components/Buttons/SubmitBtn";
 import InputField from "./components/Inputs/InputField";
@@ -12,13 +11,16 @@ import WhereComing from "./components/SelectCollection/WhereComing";
 import CoursesList from "./components/SelectCollection/CoursesList/CoursesList";
 import GroupList from "./components/Groups/GroupList";
 import WhereSend from "./components/SelectCollection/WhereSend";
+import { useValidationSchema } from "./components/ValidationSchema/useValidationSchema";
 
 export const StudentModal = () => {
   const dispatch = useDispatch();
   const { studentsModalData: modalData } = useSelector(
     (state) => state.studentsModal
   );
-  const inputNameArr1 = ["fin", "seria", "birthday", "phone"];
+  const inputNameArr1 = ["fin", "seria", "email", "password"];
+
+  const inputNameArr2 = ["birthday", "phone"];
 
   // console.log(modalData,"studentModal")
   // formik
@@ -26,7 +28,7 @@ export const StudentModal = () => {
     initialValues: {
       fullName: modalData.fullName ? modalData.fullName : "",
     },
-    validationSchema: ValidationSchema,
+    validationSchema: useValidationSchema(),
   });
   const setInputValue = useCallback(
     (key, value) =>
@@ -58,7 +60,6 @@ export const StudentModal = () => {
     });
   };
 
-  console.log(modalData, "ajsfkajsfkasjfasfjakfakslfjskdjfkjsadfkasf");
   return (
     <div className="create-update-modal-con student-modal">
       <div className="create-update-modal">
@@ -97,6 +98,19 @@ export const StudentModal = () => {
                 />
               ))}
             </div>
+            <div className="input-couples birthday ">
+              {inputNameArr2.map((name, index) => (
+                <InputField
+                  key={index}
+                  inputName={name}
+                  formik={formik}
+                  setInputValue={setInputValue}
+                  modalData={modalData}
+                  updateModalState={updateModalState}
+                />
+              ))}
+            </div>
+
             <WhereSend
               modalData={modalData}
               updateModalState={updateModalState}

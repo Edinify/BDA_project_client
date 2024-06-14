@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  DOWNLOAD_EXCEL_ACTION_TYPE,
   TUITION_FEE_ALL_ACTIONS_TYPE,
   TUITION_FEE_MODAL_ACTION_TYPE,
 } from "../actions-type";
@@ -53,6 +54,12 @@ const modalLoading = (loadingValue) => ({
   type: TUITION_FEE_MODAL_ACTION_TYPE.TUITION_FEE_MODAL_LOADING,
   payload: loadingValue,
 });
+
+const downloadExcelLoading = (value) => ({
+  type: DOWNLOAD_EXCEL_ACTION_TYPE.LOADING,
+  payload: value,
+});
+
 const toastSuccess = (message) => {
   toast.success(message, {
     position: "top-right",
@@ -80,21 +87,16 @@ const toastError = (message) => {
 };
 
 export const getTuitionFeePaginationAction =
-  (pageNumber, searchQuery, courseId, groupId, paymentStatus) =>
+  (length, searchQuery, courseId, groupId, paymentStatus) =>
   async (dispatch) => {
-    // console.log(courseId,groupId)
     dispatch(pageLoading(true));
     try {
       const { data } = await API.get(
-        `/?page=${pageNumber}&searchQuery=${searchQuery}&courseId=${
+        `/?length=${length}&searchQuery=${searchQuery}&courseId=${
           courseId || ""
         }&groupId=${groupId || ""}&paymentStatus=${paymentStatus || "all"}`
       );
-      console.log(data, "salam get tuition fee actionnnnnn");
-      dispatch({
-        type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_LAST_PAGE,
-        payload: pageNumber,
-      });
+
       dispatch({
         type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_PAGINATION,
         payload: data,
@@ -114,12 +116,8 @@ export const getTuitionFeePaginationAction =
           );
 
           const { data } = await API.get(
-            `/?page=${pageNumber}&searchQuery=${searchQuery}`
+            `/?length=${length}&searchQuery=${searchQuery}`
           );
-          dispatch({
-            type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_LAST_PAGE,
-            payload: pageNumber,
-          });
           dispatch({
             type: TUITION_FEE_ALL_ACTIONS_TYPE.GET_TUITION_FEE_PAGINATION,
             payload: data,
@@ -136,53 +134,77 @@ export const getTuitionFeePaginationAction =
     }
   };
 
-export const updateTuitionFeeAction =
-  (newData, page = 1, searchValue = "") =>
-  async (dispatch) => {
-    dispatch(modalLoading(true));
-    try {
-      const { data } = await API.patch(`/payment`, newData);
+export const updateTuitionFeeAction = (newData) => async (dispatch) => {
+  dispatch(modalLoading(true));
+  try {
+    const { data } = await API.patch(`/payment`, newData);
 
-      // console.log(data, "salam tuition fee action");
-      dispatch({ type: TUITION_FEE_MODAL_ACTION_TYPE.CLOSE_CONFIRM_MODAL });
-      dispatch(getTuitionFeePaginationAction(page, searchValue));
+    dispatch({
+      type: TUITION_FEE_ALL_ACTIONS_TYPE.UPDATE_TUITION_FEE,
+      payload: data,
+    });
+    dispatch({ type: TUITION_FEE_MODAL_ACTION_TYPE.CLOSE_CONFIRM_MODAL });
 
-      toastSuccess("Təhsil haqqı yeniləndi");
-    } catch (error) {
-      const originalRequest = error.config;
-      if (error?.response?.status === 403 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const token = await refreshApi.get("/");
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              AccessToken: token.data.accesstoken,
-            })
-          );
-          // const { data } = await API.patch(`/${_id}`, teacherData);
-          // dispatch({
-          //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
-          //   payload: data,
-          // });
-          // dispatch({
-          //   type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
-          //   payload: false,
-          // });
-          toastSuccess("Xəta baş verdi!");
-        } catch (error) {
-          if (error?.response?.status === 401) {
-            return dispatch(logoutAction());
-          }
+    toastSuccess("Təhsil haqqı yeniləndi");
+  } catch (error) {
+    const originalRequest = error.config;
+    if (error?.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshApi.get("/");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            AccessToken: token.data.accesstoken,
+          })
+        );
+        // const { data } = await API.patch(`/${_id}`, teacherData);
+        // dispatch({
+        //   type: TEACHER_ALL_ACTIONS_TYPE.UPDATE_TEACHER,
+        //   payload: data,
+        // });
+        // dispatch({
+        //   type: TEACHERS_MODAL_ACTION_TYPE.TEACHER_OPEN_MODAL,
+        //   payload: false,
+        // });
+        toastSuccess("Xəta baş verdi!");
+      } catch (error) {
+        if (error?.response?.status === 401) {
+          return dispatch(logoutAction());
         }
       }
-      if (error?.response?.data?.key === "email-already-exist") {
-        toastError("Bu email ilə istifadəçi mövcuddur");
-      }
-      if (error?.response?.data?.key === "has-current-week-lessons") {
-        toastError("Cari həftədə  dərsi olan təlimçi yenilənə bilməz");
-      }
-    } finally {
-      dispatch(modalLoading(false));
     }
-  };
+    if (error?.response?.data?.key === "email-already-exist") {
+      toastError("Bu email ilə istifadəçi mövcuddur");
+    }
+    if (error?.response?.data?.key === "has-current-week-lessons") {
+      toastError("Cari həftədə  dərsi olan təlimçi yenilənə bilməz");
+    }
+  } finally {
+    dispatch(modalLoading(false));
+  }
+};
+
+export const downloadTuitionFeeExcelAction = () => async (dispatch) => {
+  dispatch(downloadExcelLoading(true));
+  try {
+    const response = await API.get(`/excel`, {
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "tuitionfee.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+
+    dispatch(downloadExcelLoading(false));
+  } catch (error) {
+    dispatch(downloadExcelLoading(false));
+    toastError("Xəta baş verdi!");
+    console.log(error.message);
+  }
+};

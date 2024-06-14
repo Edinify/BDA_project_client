@@ -2,6 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { STUDENTS_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { deleteStudentAction } from "../../../redux/actions/studentsActions";
+import moment from "moment";
+import "moment/locale/az";
+import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
+import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
+import { useState } from "react";
 
 const StudentCard = ({
   data,
@@ -12,52 +17,53 @@ const StudentCard = ({
   student,
 }) => {
   const dispatch = useDispatch();
-  const { students, lastPage } = useSelector(
-    (state) => state.studentsPagination
-  );
-  const { studentSearchValues } = useSelector((state) => state.searchValues);
-  const { studentStatus } = useSelector((state) => state.studentStatus);
+
+  const { whereComingList, whereSendList } = useCustomHook();
+  const whereComingName = whereComingList.find(
+    (item) => item.key === data?.whereComing
+  )?.name;
+  const whereSendName = whereSendList.find(
+    (item) => item.key === data?.whereSend
+  )?.name;
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   let courses =
-    Array.isArray(data.courses) && data.courses.length > 0
+    Array.isArray(data?.courses) && data?.courses.length > 0
       ? data.courses
           .map((course) => {
             return `${course.name}`;
           })
           .join(", ")
-      : "boş";
+      : "";
   const listData = [
     { key: "İxtisas", value: courses },
     {
       key: "Mobil nömrə",
-      value: data.phone ? data.phone : "boş",
+      value: data?.phone ? data?.phone : "",
     },
   ];
 
   let groupName =
-    Array.isArray(data.groups) && data.groups.length > 0
+    Array.isArray(data?.groups) && data?.groups.length > 0
       ? data.groups
           .map((group) => {
-            return `${group.group.name}`;
+            return `${group?.group?.name}`;
           })
           .join(",")
-      : "boş";
+      : "";
 
   const updateItem = (modalType) => {
     dispatch({
       type: STUDENTS_MODAL_ACTION_TYPE.GET_STUDENTS_MODAL,
       payload: {
-        data: data,
+        data: JSON.parse(JSON.stringify(data)),
         openModal: modalType !== "more" ? true : false,
       },
     });
   };
   const deleteItem = () => {
-    const pageNumber =
-      lastPage > 1 ? (students.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data._id;
-    const searchQuery = studentSearchValues;
-    const status = studentStatus ? studentStatus : "all";
-    dispatch(deleteStudentAction({ _id, pageNumber, searchQuery, status }));
+    dispatch(deleteStudentAction(data._id));
   };
 
   const openMoreModal = () => {
@@ -76,31 +82,76 @@ const StudentCard = ({
     });
   };
 
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick}>
           <td>
             <div className="td-con">
               <div className="cell-number">{cellNumber}.</div>
-              <div className="table-scroll-text">{data.fullName}</div>
+              <div className="table-scroll-text">{data?.fullName || ""}</div>
               <div className="right-fade"></div>
             </div>
           </td>
           <td>
             <div className="td-con">
+              <div className="table-scroll-text">{data?.fin || ""}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data?.seria || ""}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "150px" }}>
+              <div className="table-scroll-text">
+                {data?.birthday
+                  ? moment(data.birthday).locale("az").format("DD MMMM YYYY ")
+                  : "" || ""}
+              </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <div className="table-scroll-text">{data?.phone || ""}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text">{whereSendName || ""}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text">{whereComingName || ""}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text">{courses}</div>
               <div className="right-fade"></div>
             </div>
           </td>
+
           <td>
-            <div className="td-con">
-              <div className="table-scroll-text">{data.phone}</div>
-              <div className="right-fade"></div>
-            </div>
-          </td>
-          <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="table-scroll-text">
                 {groupName}
                 {/* {data.groups.map((item) => (
@@ -114,7 +165,9 @@ const StudentCard = ({
           </td>
           <td>
             <div className="td-con">
-              <div className="table-scroll-text">{data.qbCount}</div>
+              <div className="table-scroll-text">
+                Lab:{data?.practicsQbCount || 0} / Əsas:{data.mainQbCount || 0}
+              </div>
               <div className="right-fade"></div>
             </div>
           </td>
@@ -129,6 +182,7 @@ const StudentCard = ({
               openConfirmModal={openConfirmModal}
               openMoreModal={openMoreModal}
               profil="students"
+              setShowDeleteModal={setShowDeleteModal}
             />
           </td>
         </tr>
@@ -147,11 +201,11 @@ const StudentCard = ({
             <div className="groups-list">
               <h2>Qruplar</h2>
               <ul>
-                {data.groups.map((groupsData) => (
+                {data?.groups?.map((groupsData) => (
                   <li key={groupsData.group._id}>
-                    <span>Qrup adı: {groupsData.group.name}</span>
-                    Qrup İxtisası: {groupsData.group.course.name} <br />
-                    Ümumi ödəniş: {groupsData.totalAmount} <br />
+                    <span>Qrup adı: {groupsData?.group?.name}</span>
+                    Qrup İxtisası: {groupsData?.group?.course?.name} <br />
+                    Ümumi ödəniş: {groupsData?.totalAmount} <br />
                   </li>
                 ))}
               </ul>
@@ -163,7 +217,7 @@ const StudentCard = ({
             </div>
           ) : (
             <div className="right">
-              <UpdateDeleteModal
+              {/* <UpdateDeleteModal
                 updateItem={updateItem}
                 deleteItem={deleteItem}
                 data={data}
@@ -172,7 +226,7 @@ const StudentCard = ({
                 openConfirmModal={openConfirmModal}
                 openMoreModal={openMoreModal}
                 profil={"students"}
-              />
+              /> */}
             </div>
           )}
         </div>

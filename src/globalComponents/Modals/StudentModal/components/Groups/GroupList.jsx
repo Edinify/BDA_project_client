@@ -12,7 +12,6 @@ import LoadingBtn from "../../../../Loading/components/LoadingBtn/LoadingBtn";
 import GroupInput from "./GroupInput";
 import {
   GROUP_ALL_ACTIONS_TYPE,
-  STUDENTS_MODAL_ACTION_TYPE,
 } from "../../../../../redux/actions-type";
 import DropdownIcon from "../../../components/DropdownIcon/DropdownIcon";
 

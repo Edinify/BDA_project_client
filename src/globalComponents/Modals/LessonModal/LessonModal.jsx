@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { ReactComponent as CloseBtn } from "../../../assets/icons/Icon.svg";
-import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import 'moment/locale/az';
 import ContentCon from "./components/ContentCon/ContentCon";

@@ -1,21 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./lessonStatistics.css";
 import { useDispatch, useSelector } from "react-redux";
 import Chart from "react-apexcharts";
-import DateDropdown from "../../../../globalComponents/DateDropdown/DateDropdown"
-import DateRangeModal from "../../../../globalComponents/Modals/DateRangeModal/DateRangeModal";
 import { getDashboardCourseStatisticAction } from "../../../../redux/actions/dashboardAction";
 
 const LessonStatistics = ({ type }) => {
   const dispatch = useDispatch();
   const { courseStatistic } = useSelector((state) => state.dashboardData);
-  const colors = ["#FBB216", "#462AFF", "#9A9A9A", "#00BC85", "#0AB3F9", '#85DAFB', '#FF462A', '#8F70FF', '#FFCA28', '#F06292', '#FFCA28']
+  const colors = [
+    "#FBB216",
+    "#462AFF",
+    "#9A9A9A",
+    "#00BC85",
+    "#0AB3F9",
+    "#85DAFB",
+    "#FF462A",
+    "#8F70FF",
+    "#FFCA28",
+    "#F06292",
+    "#FFCA28",
+  ];
   const labels =
     courseStatistic && courseStatistic.length > 0
       ? courseStatistic?.map((item) => {
           return item.courseName;
         })
-      : ['Fənn'];
+      : ["Fənn"];
   const values =
     courseStatistic && courseStatistic.length > 0
       ? courseStatistic?.map((item) => {
@@ -24,7 +34,9 @@ const LessonStatistics = ({ type }) => {
       : [1];
   const [openCalendar, setOpenCalendar] = useState(false);
   const [openDateDropdown, setOpenDateDropdown] = useState(false);
-  const series = values.find((item) => item !== 0) ? [...values] : [...new Array(values.length).fill(1)];
+  const series = values.find((item) => item !== 0)
+    ? [...values]
+    : [...new Array(values.length).fill(1)];
   const options = {
     colors: [...colors],
     labels: [...labels],
@@ -42,7 +54,7 @@ const LessonStatistics = ({ type }) => {
           },
           legend: {
             position: "left",
-            with: '100%'
+            with: "100%",
             // offsetY: 38,
           },
         },
@@ -71,8 +83,8 @@ const LessonStatistics = ({ type }) => {
       horizontalAlign: "left",
       itemMargin: {
         horizontal: 10,
-        vertical: 5
-    },
+        vertical: 5,
+      },
     },
   };
 
@@ -85,14 +97,13 @@ const LessonStatistics = ({ type }) => {
     dispatch(getDashboardCourseStatisticAction("", "", option.key));
   };
 
- 
   return (
     <>
       <section className="lesson-statistics">
         <div className="content-box">
           <div className="top">
             <h2 className="title">Fənlərin statistikası</h2>
-            {type !== "mobile" ? (
+            {/* {type !== "mobile" ? (
               <DateDropdown
                 optionType={"date"}
                 calendar={true}
@@ -111,7 +122,7 @@ const LessonStatistics = ({ type }) => {
                 setOpenDropdown={setOpenDateDropdown}
                 applyMonthsFilter={applyMonthsFilter}
               />
-            )}
+            )} */}
           </div>
 
           <div className="bottom">
@@ -122,7 +133,7 @@ const LessonStatistics = ({ type }) => {
               width="100%"
               height="400px"
             />
-{/* 
+            {/* 
             <div className="labels-con">
               {labels.map((label, index) => index < 6 && (
                 <div key={index} className="label-box">
@@ -135,12 +146,12 @@ const LessonStatistics = ({ type }) => {
         </div>
       </section>
 
-      {openCalendar && (
+      {/* {openCalendar && (
         <DateRangeModal
           applyFilter={applyFilter}
           setOpenCalendar={setOpenCalendar}
         />
-      )}
+      )} */}
     </>
   );
 };

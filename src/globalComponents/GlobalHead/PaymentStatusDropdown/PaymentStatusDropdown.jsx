@@ -63,7 +63,6 @@ export const PaymentStatusDropdown = ({ statusType, deviceType = "" }) => {
         <ul>
           {filterData.map((item) => (
             <li key={item.key} onClick={() => getCategory(item)}>
-              {console.log(item)}
               {paymentStatus === item.id && <CheckIcon />}
               {item.name}
             </li>

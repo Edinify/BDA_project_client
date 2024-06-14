@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WORKER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteWorkerAction } from "../../../redux/actions/workersActions";
-import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
+import moment from "moment";
+import WorkerProfileDropdown from "./WorkerProfileDropdown";
+import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
+import { useState } from "react";
 const WorkerCard = ({
   data,
   mode,
@@ -13,8 +15,7 @@ const WorkerCard = ({
   setOpenMoreModal,
 }) => {
   const dispatch = useDispatch();
-  const { workers, lastPage } = useSelector((state) => state.workersPagination);
-  const { workersSearchValues } = useSelector((state) => state.searchValues);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const updateItem = (modalType) => {
     dispatch({
@@ -25,12 +26,9 @@ const WorkerCard = ({
       },
     });
   };
+
   const deleteItem = () => {
-    const pageNumber =
-      lastPage > 1 ? (workers.length > 1 ? lastPage : lastPage - 1) : 1;
-    const _id = data._id;
-    const searchQuery = workersSearchValues;
-    dispatch(deleteWorkerAction({ _id, pageNumber, searchQuery }));
+    dispatch(deleteWorkerAction(data._id));
   };
 
   const openConfirmModal = () => {
@@ -43,13 +41,22 @@ const WorkerCard = ({
     setOpenMoreModal(true);
   };
 
-  // // console.log(worker)
+  const doubleClick = () => {
+    updateItem("");
+  };
+
   return (
     <>
+      {showDeleteModal && (
+        <DeleteItemModal
+          setShowDeleteModal={setShowDeleteModal}
+          deleteItem={deleteItem}
+        />
+      )}
       {mode === "desktop" ? (
-        <tr>
+        <tr onDoubleClick={doubleClick} >
           <td>
-            <div className="td-con">
+            <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>
               <div className="table-scroll-text">{data.fullName}</div>
               <div className="right-fade"></div>
@@ -79,12 +86,21 @@ const WorkerCard = ({
               <div className="right-fade"></div>
             </div>
           </td>
-          {/* <td>
-            <div className="td-con">
-              <div className="table-scroll-text profiles">{profiles}</div>
+          <td>
+            <div className="td-con" style={{ width: "200px" }}>
+              <div className="table-scroll-text profiles">
+                {data?.birthday
+                  ? moment(data?.birthday).locale("az").format("DD MMMM YYYY")
+                  : ""}
+              </div>
               <div className="right-fade"></div>
             </div>
-          </td> */}
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "400px" }}>
+              <WorkerProfileDropdown data={data} />
+            </div>
+          </td>
 
           <td>
             <UpdateDeleteModal
@@ -94,6 +110,7 @@ const WorkerCard = ({
               openConfirmModal={openConfirmModal}
               state={worker}
               openMoreModal={openMoreModal}
+              setShowDeleteModal={setShowDeleteModal}
             />
           </td>
         </tr>
@@ -107,7 +124,7 @@ const WorkerCard = ({
                 <p>{data.email ? data.email : "boş"}</p>
               </li>
               <li>
-                <span>Telefon nömrəsi:</span>
+                <span>Mobil nömrə:</span>
                 <p>{data.phone ? data.phone : "boş"}</p>
               </li>
               <li>
@@ -120,18 +137,18 @@ const WorkerCard = ({
               </li> */}
             </ul>
           </div>
-          
-            <div className="right">
-              <UpdateDeleteModal
-                updateItem={updateItem}
-                deleteItem={deleteItem}
-                data={data}
-                openConfirmModal={openConfirmModal}
-                state={worker}
-                openMoreModal={openMoreModal}
-              />
-            </div>
-          
+
+          <div className="right">
+            <UpdateDeleteModal
+              updateItem={updateItem}
+              deleteItem={deleteItem}
+              data={data}
+              openConfirmModal={openConfirmModal}
+              state={worker}
+              openMoreModal={openMoreModal}
+              setShowDeleteModal={setShowDeleteModal}
+            />
+          </div>
         </div>
       )}
     </>

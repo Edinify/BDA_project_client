@@ -32,12 +32,15 @@
 .dashboard-main > .left section {
   margin-bottom: 12px;
 }
+.dashboard-main > .left .lessons-amount {
+  height: 402px;
+  overflow-y: auto;
+}
 
-.dashboard-main .where-heard{
+.dashboard-main .where-heard {
   height: 400px;
   overflow-y: scroll;
 }
-
 
 .dashboard-main > .left .content-box,
 .dashboard-main > .right > .top .content-box,
@@ -87,6 +90,17 @@
 .dashboard-main .lessons-amount .content-box > .left.grey {
   /* background-color: rgba(113, 113, 113, 0.1); */
   background-color: rgba(251, 160, 19, 0.1);
+}
+.dashboard-main .lessons-amount .content-box > .left.ended {
+  background-color: #ececec;
+}
+
+.dashboard-main .lessons-amount .content-box > .left.current {
+  background-color: rgba(0, 188, 133, 0.1);
+}
+
+.dashboard-main .lessons-amount .content-box > .left.waiting {
+  background-color: rgba(5, 165, 234, 0.1);
 }
 .dashboard-main .finance-statictics .content-box.finance > .left.blue {
   background-color: rgba(5, 165, 234, 0.1);
@@ -434,9 +448,6 @@
   background-color: var(--neutrals-900);
 }
 
-
-
-
 /* STUDENTS AMOUNT */
 .dashboard-main .students-amount {
   width: 65%;
@@ -462,7 +473,7 @@
   height: 85%;
 }
 
-@media screen and (min-width: 700px) and (max-width: 1280px) {
+/* @media screen and (min-width: 700px) and (max-width: 1280px) {
   .dashboard-main.desktop {
     display: none;
   }
@@ -470,7 +481,6 @@
     display: block;
   }
 
-  /* LESSON AMOUNT */
   .dashboard-main .lessons-amount {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -480,9 +490,7 @@
     margin-bottom: 0;
     margin-right: 8px;
   }
-  /* .dashboard-main .lessons-amount .content-box:last-child {
-    margin-right: 0;
-  } */
+ 
   .dashboard-main > .left .content-box,
   .dashboard-main > .right > .top .content-box,
   .dashboard-main .lessons-amount .content-box,
@@ -528,7 +536,6 @@
     margin: 8px 8px 0 0;
   }
 
-  /* FINANCE */
   .dashboard-main .finance-statictics {
     width: 100%;
   }
@@ -563,7 +570,6 @@
     margin-bottom: 12px;
   }
 
-  /* WHERE HEARD LESSON STATISTICS */
   .dashboard-main .finance-statictics .tablet-last-box .lesson-statistics {
     margin-bottom: 12px;
   }
@@ -612,9 +618,9 @@
   }
   
   
-}
+} */
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 880px) {
   .dashboard-main.desktop {
     display: none;
   }
@@ -665,7 +671,7 @@
   .dashboard-main .lessons-amount .content-box > .right .top svg {
     display: none;
   }
-  .dashboard-main .lessons-amount .content-box.events{
+  .dashboard-main .lessons-amount .content-box.events {
     margin-top: 8px;
   }
 
