@@ -21,16 +21,10 @@ const PaymentResult = () => {
     (state) => state.tuitionFeePayment
   );
 
-
-
-
-
-
-
   useEffect(() => {
     dispatch(getLatedPayment("", "", "", true));
     dispatch(getPaidPayment("", "", "", true));
-    dispatch(getWillPayPayment())
+    dispatch(getWillPayPayment("", "", "", true));
   }, [dispatch]);
 
   const applyLatedFilter = (startDate, endDate) => {
@@ -49,7 +43,7 @@ const PaymentResult = () => {
   };
 
   const applyWillPayFilter = (startDate, endDate) => {
-    dispatch(getWillPayPayment(startDate, endDate, ""));
+    dispatch(getWillPayPayment("", startDate, endDate, ""));
     setOpenCalendar(false);
     setOpenDropdownEntered(false);
     setOpenDropdownLated(false);
@@ -64,10 +58,9 @@ const PaymentResult = () => {
     dispatch(getPaidPayment(option.key, "", "", ""));
   };
 
-
-  const applyMonthsWillPayFilter=(option)=>{
-    dispatch(getWillPayPayment(option.key,"","",true))
-  }
+  const applyMonthsWillPayFilter = (option) => {
+    dispatch(getWillPayPayment(option.key, "", "", ""));
+  };
 
   const applyFilter = (startDate, endDate) => {
     if (openDropdownLated) {
@@ -147,7 +140,7 @@ const PaymentResult = () => {
                 openCalendar={openCalendar}
                 openDropdown={openDropdownEnter}
                 setOpenDropdown={setOpenDropdownEnter}
-                typeName=""
+                typeName="pay"
                 applyMonthsFilter={applyMonthsWillPayFilter}
               />
             </div>
