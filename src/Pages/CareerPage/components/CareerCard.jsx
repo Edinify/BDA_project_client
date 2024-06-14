@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CAREER_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
@@ -11,7 +10,18 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   const { careerData, lastPage } = useSelector(
     (state) => state.careerPagination
   );
-  const { whereComingList: dataList, whereSendList } = useCustomHook();
+  const { careerSearchValues } = useSelector((state) => state.searchValues);
+
+
+  const {
+    whereComingList: dataList,
+    whereSendList,
+    studentStatus,
+  } = useCustomHook();
+
+  const status = studentStatus.find(
+    (status) => status.key === data.status
+  ).value;
 
   const whereComingName =
     dataList.find((item) => item.key === data.whereComing)?.name || "";
@@ -27,7 +37,6 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           .join(",")
       : "";
 
-  const { careerSearchValues } = useSelector((state) => state.searchValues);
   const listData = [
     { key: "Qrup", value: data?.group?.name },
     { key: "İxtisas", value: data?.group?.course?.name },
@@ -79,7 +88,7 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
   return (
     <>
       {mode === "desktop" ? (
-        <tr onDoubleClick={doubleClick} >
+        <tr onDoubleClick={doubleClick}>
           <td>
             <div className="td-con" style={{ width: "200px" }}>
               <div className="cell-number">{cellNumber}.</div>
@@ -244,14 +253,18 @@ const CareerCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
           </td>
           <td
             style={
-              data.status
+              data.status === "graduate"
                 ? { backgroundColor: "#d4ffbf" }
-                : { backgroundColor: "#d2c3fe" }
+                : data.status === "continue"
+                ? { backgroundColor: "#d2c3fe" }
+                : data.status === "freeze"
+                ? { backgroundColor: "var(--tertiary-300)" }
+                : { backgroundColor: "var(--error-200)" }
             }
           >
             <div className="td-con student-status ">
               <div className="table-scroll-text phone">
-                {data?.status ? "Məzun" : " Davam edir"}
+                {data?.status ? status : ""}
               </div>
               {/* <div className="right-fade"></div> */}
             </div>

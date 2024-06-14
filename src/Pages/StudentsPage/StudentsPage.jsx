@@ -4,6 +4,7 @@ import { getStudentsPaginationAction } from "../../redux/actions/studentsActions
 import {
   STUDENTS_ALL_ACTIONS_TYPE,
   STUDENTS_MODAL_ACTION_TYPE,
+  STUDENT_GROUP_STATUS_FILTER_ACTION_TYPE,
 } from "../../redux/actions-type";
 import StudentsData from "./components/StudentsData";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
@@ -153,6 +154,10 @@ const StudentsPage = () => {
     return () => {
       dispatch({
         type: STUDENTS_ALL_ACTIONS_TYPE.RESET_STUDENT_PAGINATION,
+      });
+      dispatch({
+        type: STUDENT_GROUP_STATUS_FILTER_ACTION_TYPE.GET_STUDENT_STATUS,
+        payload: "",
       });
     };
   }, [dispatch]);

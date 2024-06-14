@@ -49,6 +49,15 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
     dispatch(getSyllabusPaginationAction(0, "", course._id));
   };
 
+
+  const handleAllCourse=()=>{
+    dispatch({
+      type: STUDENT_STATUS_FILTER_ACTION_TYPE.GET_STUDENT_COURSEID,
+      payload: "",
+    });
+    setDropdownOpen(false)
+  }
+
   useEffect(() => {
     dispatch(getAllCoursesAction());
   }, [dispatch]);
@@ -76,6 +85,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
 
       <div className="dropdown-body">
         <ul>
+          <li onClick={handleAllCourse}  >Hamısı</li>
           {dataList.map((item) => (
             <li key={item._id} onClick={() => getCourse(item)}>
               {selectedCourse === item._id && <CheckIcon />}

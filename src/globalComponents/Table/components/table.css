@@ -10,16 +10,18 @@
 .table-container tbody tr {
   height: 98px;
   font-size: 16px;
+  background-color: white;
 }
 
 .table-container thead tr {
   height: 59px;
   font-size: 16px;
   color: var(--neutrals-900);
+  background-color: white;
 }
-.table-container tbody tr:nth-child(odd) {
+/* .table-container tbody tr:nth-child(odd) {
   background-color: var(--neutrals-200);
-}
+} */
 .table-container thead tr th {
   font-size: 16px;
   font-weight: 600;
@@ -153,7 +155,7 @@
 }
 
 .table-container tbody tr:nth-child(odd) td:nth-of-type(1) {
-  background-color: var(--neutrals-200);
+  /* background-color: var(--neutrals-200); */
 }
 .table-container tbody tr:nth-child(even) td:nth-of-type(1) {
   background-color: white;

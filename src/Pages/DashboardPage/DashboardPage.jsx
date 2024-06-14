@@ -6,7 +6,6 @@ import WhereHeard from "./components/WhereHeard/WhereHeard";
 import StudentsAmount from "./components/StudentsAmount/StudentsAmount";
 import FinanceStatistics from "./components/FinanceStatistics/FinanceStatistics";
 import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
-import { useCustomHook } from "../../globalComponents/GlobalFunctions/globalFunctions";
 import {
   getDashboarLeadboarddAction,
   getDashboardAdvertisingAction,

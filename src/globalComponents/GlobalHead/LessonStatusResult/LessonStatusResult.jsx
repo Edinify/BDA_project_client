@@ -2,8 +2,8 @@ import React from "react";
 import { ReactComponent as LatePayIcon } from "../../../assets/icons/payment/latePay.svg";
 import { ReactComponent as TodayPayIcon } from "../../../assets/icons/payment/todayPay.svg";
 import { ReactComponent as OtherPayIcon } from "../../../assets/icons/lessonStatus/otherPay.svg";
+import "./lessonResult.css"
 
-// import "../../paymentResult.css";
 import { useSelector } from "react-redux";
 const LessonStatusResult = () => {
   const { confirmedCount, cancelledCount, unviewedCount } = useSelector(
@@ -21,9 +21,9 @@ const LessonStatusResult = () => {
     { id: 3, name: "Ləğv edilib", count: cancelledCount, img: <LatePayIcon /> },
   ];
   return (
-    <div className="payment-result-container lesson-status ">
+    <div className="lesson-result-container lesson-status ">
       {paymentData?.map((item) => (
-        <div className="payment-res-content" key={item.id}>
+        <div className="lesson-res-content" key={item.id}>
           <h2>{item.name}</h2>
           <div className="circle-icon">
             <p className="filter-count">{item.count}</p>

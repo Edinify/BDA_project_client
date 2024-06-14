@@ -5,6 +5,8 @@ import Payments from "./components/Payments/Payments";
 import InputField from "./components/Inputs/InputField";
 import DiscountReason from "./components/DiscountReason/DiscountReason";
 import Status from "./components/Status/Status";
+import { useDispatch } from "react-redux";
+import { STUDENTS_MODAL_ACTION_TYPE } from "../../../../../redux/actions-type";
 
 const GroupInput = ({
   data,
@@ -20,13 +22,10 @@ const GroupInput = ({
     (item) => item.group._id === data.group._id
   );
 
-  // console.log(data, "dataaaaaaa");
-
   const addPaymentType = (item) => {
     groupData[foundIndex] = {
       ...groupData[foundIndex],
       payment: item,
-      amount: item.payment,
     };
     updateModalState("groups", groupData);
   };
@@ -46,18 +45,17 @@ const GroupInput = ({
       [key]: value,
     };
 
-    console.log(groupData);
+    // console.log(groupData,"dataaaaaa");
     updateModalState("groups", groupData);
   };
 
   useEffect(() => {
-    if (data.amount && data.payment) {
-      const payment = data.payment;
+    if (data.amount && data.paymentPart) {
       const amount = data.amount;
       const discount = data?.discount || 0;
 
       const totalAmount = amount - (amount * discount) / 100;
-      const part = payment.part;
+      const part = data.paymentPart;
       const onePartPayment = totalAmount / part;
       const paymentsDate = data?.paymentStartDate
         ? new Date(data.paymentStartDate)
@@ -85,7 +83,7 @@ const GroupInput = ({
       // console.log("helllooooooo");
       updateModalState("groups", groupData);
     }
-  }, [data.discount, data.amount, data.paymentStartDate]);
+  }, [data.discount, data.amount, data.paymentStartDate, data.paymentPart]);
 
   return (
     <li className="group-li">
@@ -162,6 +160,13 @@ const GroupInput = ({
         />
         <InputField
           inputName={"amount"}
+          formik={formik}
+          setInputValue={setInputValue}
+          data={data}
+          addGroupData={addGroupData}
+        />{" "}
+        <InputField
+          inputName={"paymentPart"}
           formik={formik}
           setInputValue={setInputValue}
           data={data}

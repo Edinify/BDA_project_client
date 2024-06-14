@@ -31,6 +31,9 @@ const LessonsAmount = () => {
   const [openDropdownCancelled, setOpenDropdownCancelled] = useState(false);
   const [openDropdownConfirmed, setOpenDropdownConfirmed] = useState(false);
 
+
+
+
   const applyConfirmedFilter = (startDate, endDate) => {
     dispatch(getAllEventsAction(startDate, endDate, ""));
     setOpenCalendar(false);

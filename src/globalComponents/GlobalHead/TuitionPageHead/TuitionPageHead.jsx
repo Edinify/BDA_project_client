@@ -1,10 +1,10 @@
 import React from "react";
-import PaymentResult from "../PaymentResult/PaymentResult";
 import Search from "../Search/Search";
 import { CoursesDropdown } from "../CoursesDropdown/CoursesDropdown";
 import { GroupsDropdown } from "../GroupsDropdown/GroupsDropdown";
 import { PaymentStatusDropdown } from "../PaymentStatusDropdown/PaymentStatusDropdown";
 import ExcelExportBtn from "../../ExcelExportBtn/ExcelExportBtn";
+import PaymentResult from "../PaymentResult/PaymentResult";
 
 const TuitionPageHead = ({
   search,
@@ -16,7 +16,7 @@ const TuitionPageHead = ({
   return (
     <div className="tuition-fee-container">
       <div className="tuition-fee-payment-container">
-        <PaymentResult />
+        <PaymentResult/>
       </div>
       <div className="tution-fee-filter-header">
         {search && (
