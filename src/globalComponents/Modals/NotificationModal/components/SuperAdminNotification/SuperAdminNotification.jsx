@@ -16,6 +16,13 @@ const SuperAdminNotification = ({
   const { loading } = useSelector((state) => state.notifications);
   const { user } = useSelector((state) => state.user);
 
+
+
+
+  const a = notifications.map(notif=>notif.recipients.find(a=>a._id===user._id));
+
+  console.log(a,"aaaa")
+
   const formatDate = (date) => {
     const options = {
       day: "2-digit",
@@ -29,7 +36,6 @@ const SuperAdminNotification = ({
 
     return new Intl.DateTimeFormat("az-AZ", options).format(new Date(date));
   };
-
 
   useEffect(() => {
     if (openNotModal && window.innerWidth <= 500) {
@@ -74,8 +80,8 @@ const SuperAdminNotification = ({
                 .sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt))
                 .map((notification) => {
                   if (
-                    notification?.isViewedAdmins?.find(
-                      (item) =>  item.admin === user._id
+                    notification?.recipients?.find(
+                      (item) => item._id === user._id
                     )?.viewed === false
                   ) {
                     return (
@@ -128,9 +134,9 @@ const SuperAdminNotification = ({
           <div className="prev-notification">
             <h2>Əvvəlkilər</h2>
             <div className="prev-content">
-              {notifications.map((notification) => {
+              {notifications?.map((notification) => {
                 if (
-                  notification?.isViewedAdmins.find(
+                  notification?.isViewedAdmins?.find(
                     (item) => item.admin === user._id
                   )?.viewed === true
                 ) {
