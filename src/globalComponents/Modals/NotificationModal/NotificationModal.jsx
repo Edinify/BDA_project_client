@@ -6,6 +6,7 @@ import {
   getNotificationsTeacherAction,
   getNotificationsStudentAction,
   viewedAllNotifications,
+  getNotifications,
 } from "../../../redux/actions/notificationsActions";
 import "moment/locale/az";
 import SuperAdminNotification from "./components/SuperAdminNotification/SuperAdminNotification";
@@ -16,6 +17,7 @@ const NotificationModal = ({
   openNotModal,
   setOpenNotModal,
   setChangeNotificationIcon,
+  setNewNotification,
 }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -23,28 +25,23 @@ const NotificationModal = ({
   useEffect(() => {
     const token = localStorage.getItem("auth");
     if (token && openNotModal) {
-      if (user.role === "admin") {
-        dispatch(getNotificationsAdminAction());
-      } else if (user.role === "super-admin") {
-        dispatch(getNotificationsAdminAction());
-      } else if (user.role === "teacher") {
-        dispatch(getNotificationsTeacherAction());
-      } else if (user.role === "student") {
-        dispatch(getNotificationsStudentAction());
-      }
+      dispatch(getNotifications());
       return () => {
         dispatch(viewedAllNotifications());
       };
     }
   }, [user, openNotModal, dispatch]);
 
+  useEffect(() => {
+    setNewNotification(false);
+  }, []);
   return (
     <>
       {user.role === "admin" && (
         <AdminNotification
-        openNotModal={openNotModal}
-        setOpenNotModal={setOpenNotModal}
-        setChangeNotificationIcon={setChangeNotificationIcon}
+          openNotModal={openNotModal}
+          setOpenNotModal={setOpenNotModal}
+          setChangeNotificationIcon={setChangeNotificationIcon}
         />
       )}
 

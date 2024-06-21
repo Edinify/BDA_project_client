@@ -13,12 +13,13 @@ import { ReactComponent as UserProfileChangeIcon } from "../../..//assets/icons/
 import { ReactComponent as StudentLessonIcon } from "../../..//assets/icons/student-home/book-open-01.svg";
 import { ReactComponent as StudentLessonBlueIcon } from "../../..//assets/icons/student-home/book-open-02.svg";
 import { logoutAction } from "../../..//redux/actions/auth";
-import {
-  profileUpdateImage,
-} from "../../..//redux/actions/profileImageAction";
+import { profileUpdateImage } from "../../..//redux/actions/profileImageAction";
 import { useDispatch } from "react-redux";
 import { ChangePasswordModal } from "../../..//globalComponents/Header/ChangePasswordModal/ChangePasswordModal";
 import HowToUse from "../../..//globalComponents/HowToUse/HowToUse";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:4000");
 
 const NavbarProfile = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const NavbarProfile = () => {
   const [howToUse, setHowToUse] = useState(false);
   const inputRef = useRef(null);
   const userData = JSON.parse(localStorage.getItem("userData"));
+  const [newNotification, setNewNotification] = useState(false);
 
   const navigateExit = () => {
     // window.location = "/login";
@@ -44,10 +46,6 @@ const NavbarProfile = () => {
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
-    // // console.log(file.size,"file")
-    // if(file?.size  >16){
-    //   // console.log("file's size is too large")
-    // }
 
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -106,6 +104,16 @@ const NavbarProfile = () => {
     }
   }, [openModal, howToUse]);
 
+  useEffect(() => {
+    socket.on("newEvent", (newEvent) => {
+      console.log("new event in notification", newEvent);
+
+      if (newEvent) {
+        setNewNotification(true);
+      }
+    });
+  }, []);
+
   return (
     <>
       <div className="main-nav-icons">
@@ -138,6 +146,19 @@ const NavbarProfile = () => {
             className="notification-icon"
             onClick={(e) => handleNotOpenModal(e)}
           >
+            {newNotification && (
+              <div
+                style={{
+                  width: "8px",
+                  height: "8px",
+                  borderRadius: "50%",
+                  backgroundColor: "blue",
+                  position: "absolute",
+                  left: "5px",
+                  top: "5px",
+                }}
+              ></div>
+            )}
             {changeNoficitaionIcon ? (
               <div className="change-notif-icon">
                 <NotificationBlueIcon />
@@ -151,6 +172,7 @@ const NavbarProfile = () => {
               setOpenNotModal={setOpenNotModal}
               openNotModal={openNotModal}
               setChangeNotificationIcon={setChangeNotificationIcon}
+              setNewNotification = {setNewNotification}
             />
           </div>
         </div>
