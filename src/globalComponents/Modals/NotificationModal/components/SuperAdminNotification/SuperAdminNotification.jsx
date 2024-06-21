@@ -11,17 +11,17 @@ const SuperAdminNotification = ({
   openNotModal,
   setOpenNotModal,
   setChangeNotificationIcon,
+  setNewNotification,
 }) => {
   const { notifications } = useSelector((state) => state.notifications);
   const { loading } = useSelector((state) => state.notifications);
   const { user } = useSelector((state) => state.user);
 
+  const a = notifications.map((notif) =>
+    notif.recipients.find((a) => a._id === user._id)
+  );
 
-
-
-  const a = notifications.map(notif=>notif.recipients.find(a=>a._id===user._id));
-
-  console.log(a,"aaaa")
+  console.log(a, "aaaa");
 
   const formatDate = (date) => {
     const options = {
@@ -45,6 +45,14 @@ const SuperAdminNotification = ({
     }
   }, [openNotModal]);
 
+  useEffect(() => {
+    console.log("tttttttttttttttt");
+    setNewNotification(false);
+  }, []);
+
+  console.log(notifications, "bbbbbbbbbbbbbbbbbb");
+
+  console.log(user);
   return (
     <div
       onClick={(e) => {
@@ -81,7 +89,7 @@ const SuperAdminNotification = ({
                 .map((notification) => {
                   if (
                     notification?.recipients?.find(
-                      (item) => item._id === user._id
+                      (item) => item.user === user._id
                     )?.viewed === false
                   ) {
                     return (
@@ -98,22 +106,18 @@ const SuperAdminNotification = ({
                             )}
                           </div>
                           <div className="new-not-content">
-                            <h4>{notification?.student?.fullName}</h4>
+                            <h4>Tədbir</h4>
+                            <span>{notification.message}</span>
                             <span>
-                              {notification?.student?.amount === 0
-                                ? "Dərs bitti"
-                                : ""}
-                            </span>
-                            <span>
-                              {notification.role === "birthday"
+                              {notification.role === "event"
                                 ? `Doğum günü: ${
-                                    notification?.student?.birthday
-                                      ? moment(notification.student.birthday)
+                                    notification?.createdAt
+                                      ? moment(notification.createdAt)
                                           .locale("az")
                                           .format("DD MMMM")
                                       : ""
                                   }`
-                                : "Dərs bitti"}
+                                : ""}
                             </span>
                           </div>
                         </div>
@@ -136,8 +140,8 @@ const SuperAdminNotification = ({
             <div className="prev-content">
               {notifications?.map((notification) => {
                 if (
-                  notification?.isViewedAdmins?.find(
-                    (item) => item.admin === user._id
+                  notification?.recipients.find(
+                    (item) => item.user === user._id
                   )?.viewed === true
                 ) {
                   return notification.student === null ? (
@@ -156,10 +160,8 @@ const SuperAdminNotification = ({
                           )}
                         </div>
                         <div className="prev-not-content">
-                          <h4>{notification?.student?.fullName}</h4>
-                          <span>
-                            {notification?.role === "count" ? "Dərs bitti" : ""}
-                          </span>
+                          <h4>Tədbir</h4>
+                          <span>{notification?.message}</span>
                           <span>
                             {notification.role === "birthday" &&
                               notification?.student?.birthday && (

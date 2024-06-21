@@ -28,13 +28,12 @@ const NotificationModal = ({
       dispatch(getNotifications());
       return () => {
         dispatch(viewedAllNotifications());
+        setNewNotification(false);
       };
     }
   }, [user, openNotModal, dispatch]);
 
-  useEffect(() => {
-    setNewNotification(false);
-  }, []);
+  console.log(user.role, "user roleeeeeeeeeee");
   return (
     <>
       {user.role === "admin" && (
@@ -42,6 +41,7 @@ const NotificationModal = ({
           openNotModal={openNotModal}
           setOpenNotModal={setOpenNotModal}
           setChangeNotificationIcon={setChangeNotificationIcon}
+          setNewNotification={setNewNotification}
         />
       )}
 
@@ -50,6 +50,7 @@ const NotificationModal = ({
           openNotModal={openNotModal}
           setOpenNotModal={setOpenNotModal}
           setChangeNotificationIcon={setChangeNotificationIcon}
+          setNewNotification={setNewNotification}
         />
       )}
       {user.role === "teacher" && (

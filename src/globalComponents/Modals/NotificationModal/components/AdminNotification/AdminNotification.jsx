@@ -11,6 +11,7 @@ const AdminNotification = ({
   openNotModal,
   setOpenNotModal,
   setChangeNotificationIcon,
+  setNewNotification,
 }) => {
   const { notifications } = useSelector((state) => state.notifications);
   const { loading } = useSelector((state) => state.notifications);
@@ -37,6 +38,11 @@ const AdminNotification = ({
       document.body.style.overflowY = "overlay";
     }
   }, [openNotModal]);
+
+  useEffect(() => {
+    console.log("tttttttttttttttt");
+    setNewNotification(false);
+  }, []);
   return (
     <div
       onClick={(e) => {
@@ -69,11 +75,7 @@ const AdminNotification = ({
             <h2>Yeni</h2>
             <div className="new-content">
               {notifications
-                .sort(
-                  (a, b) =>
-                    new Date(b?.createdAt) -
-                    new Date(a?.createdAt)
-                )
+                .sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt))
                 .map((notification) => {
                   if (
                     notification?.isViewedAdmins.find(
@@ -116,9 +118,7 @@ const AdminNotification = ({
                         <div className="new-time">
                           <span className="notif-time">
                             {notification?.student?.birthday
-                              ? formatDate(
-                                  new Date(notification?.createdAt)
-                                )
+                              ? formatDate(new Date(notification?.createdAt))
                               : ""}
                           </span>
                         </div>
