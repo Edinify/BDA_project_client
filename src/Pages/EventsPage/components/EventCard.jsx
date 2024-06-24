@@ -60,6 +60,7 @@ const EventCard = ({
   };
 
   const doubleClick = () => {
+    if (userData.role === "teacher") return;
     updateItem("");
   };
 
@@ -72,7 +73,7 @@ const EventCard = ({
         />
       )}
       {mode === "desktop" ? (
-        <tr onDoubleClick={doubleClick}  className="class-table">
+        <tr onDoubleClick={doubleClick} className="class-table">
           <td>
             <div
               className="td-con"

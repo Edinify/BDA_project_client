@@ -122,7 +122,6 @@ const LessonTableData = ({ getNextLessons }) => {
                         style={{
                           height: "100%",
                           background: "var(--tertiary-200)",
-                          // border: "1px solid red",
                         }}
                       ></div>
                     </td>

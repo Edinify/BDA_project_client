@@ -13,6 +13,7 @@ import SuperAdminNotification from "./components/SuperAdminNotification/SuperAdm
 import AdminNotification from "./components/AdminNotification/AdminNotification";
 import TeacherNotification from "./components/TeacherNotification/TeacherNotification";
 import StudentNotification from "./components/StudentNotification/StudentNotification";
+
 const NotificationModal = ({
   openNotModal,
   setOpenNotModal,
@@ -26,26 +27,27 @@ const NotificationModal = ({
     const token = localStorage.getItem("auth");
     if (token && openNotModal) {
       dispatch(getNotifications());
-      return () => {
-        dispatch(viewedAllNotifications());
-        setNewNotification(false);
-      };
     }
   }, [user, openNotModal, dispatch]);
+
+  useEffect(() => {
+    dispatch(viewedAllNotifications());
+    setNewNotification(false);
+  }, []);
 
   console.log(user.role, "user roleeeeeeeeeee");
   return (
     <>
-      {user.role === "admin" && (
+      {/* {user.role === "admin" && (
         <AdminNotification
           openNotModal={openNotModal}
           setOpenNotModal={setOpenNotModal}
           setChangeNotificationIcon={setChangeNotificationIcon}
           setNewNotification={setNewNotification}
         />
-      )}
+      )} */}
 
-      {user.role === "super-admin" && (
+      {user.role !== "student" && (
         <SuperAdminNotification
           openNotModal={openNotModal}
           setOpenNotModal={setOpenNotModal}
@@ -53,7 +55,7 @@ const NotificationModal = ({
           setNewNotification={setNewNotification}
         />
       )}
-      {user.role === "teacher" && (
+      {/* {user.role === "teacher" && (
         <TeacherNotification
           openNotModal={openNotModal}
           setOpenNotModal={setOpenNotModal}
@@ -67,7 +69,7 @@ const NotificationModal = ({
           setOpenNotModal={setOpenNotModal}
           setChangeNotificationIcon={setChangeNotificationIcon}
         />
-      )}
+      )} */}
     </>
   );
 };

@@ -14,12 +14,12 @@ import { ReactComponent as StudentLessonIcon } from "../../..//assets/icons/stud
 import { ReactComponent as StudentLessonBlueIcon } from "../../..//assets/icons/student-home/book-open-02.svg";
 import { logoutAction } from "../../..//redux/actions/auth";
 import { profileUpdateImage } from "../../..//redux/actions/profileImageAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ChangePasswordModal } from "../../..//globalComponents/Header/ChangePasswordModal/ChangePasswordModal";
 import HowToUse from "../../..//globalComponents/HowToUse/HowToUse";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:4000");
+let socket;
 
 const NavbarProfile = () => {
   const dispatch = useDispatch();
@@ -34,10 +34,9 @@ const NavbarProfile = () => {
   const inputRef = useRef(null);
   const userData = JSON.parse(localStorage.getItem("userData"));
   const [newNotification, setNewNotification] = useState(false);
+  const { user } = useSelector((state) => state.user);
 
   const navigateExit = () => {
-    // window.location = "/login";
-    // navigate("/login");
     dispatch(logoutAction());
   };
   const handleInputClick = () => {
@@ -61,10 +60,6 @@ const NavbarProfile = () => {
     setOpenNotModal(false);
     setChangeNotificationIcon(false);
     setChangeUserIcon(false);
-
-    if (openNotModal) {
-      dispatch(viewedAllNotifications());
-    }
   };
 
   const handleActive = (e) => {
@@ -83,9 +78,6 @@ const NavbarProfile = () => {
   };
 
   const handleNotOpenModal = (e) => {
-    if (openNotModal) {
-      dispatch(viewedAllNotifications());
-    }
     setOpenNotModal(!openNotModal);
     setIsOpen(false);
     setChangeNotificationIcon(!changeNoficitaionIcon);
@@ -105,43 +97,25 @@ const NavbarProfile = () => {
   }, [openModal, howToUse]);
 
   useEffect(() => {
-    socket.on("newEvent", (newEvent) => {
-      console.log("new event in notification", newEvent);
+    if (!socket) {
+      socket = io("http://localhost:4000");
 
-      if (newEvent) {
-        setNewNotification(true);
-      }
-    });
-  }, []);
+      socket.emit("checkNewEvent", user._id);
+
+      socket.on("newEvent", (newEvent) => {
+        console.log("new event in notification", newEvent);
+
+        if (newEvent) {
+          setNewNotification(true);
+        }
+      });
+    }
+  }, [user]);
 
   return (
     <>
       <div className="main-nav-icons">
-        {/* {userData?.role === "student" && (
-          <div
-            className="student-amount"
-            onClick={() => {
-              setChangeLessonAmountIcon(!changeLessonAmountIcon);
-              setOpenLessonModal(!openLessonModal);
-            }}
-          >
-            {changeLessonAmountIcon ? (
-              <div className="change-student-lesson-icon">
-                <StudentLessonBlueIcon />
-              </div>
-            ) : (
-              <div className="student-lesson-icon">
-                <StudentLessonIcon />
-              </div>
-            )}
-          </div>
-        )} */}
         <div className="notification-con">
-          {/* {userData?.role === "super-admin" && (
-            <div className="help-icon" onClick={() => setHowToUse(true)}>
-              <HelpIcon />
-            </div>
-          )} */}
           <div
             className="notification-icon"
             onClick={(e) => handleNotOpenModal(e)}
@@ -152,7 +126,7 @@ const NavbarProfile = () => {
                   width: "8px",
                   height: "8px",
                   borderRadius: "50%",
-                  backgroundColor: "blue",
+                  backgroundColor: "#462AFF",
                   position: "absolute",
                   left: "5px",
                   top: "5px",
@@ -168,12 +142,14 @@ const NavbarProfile = () => {
                 <NotificationIcon />
               </div>
             )}
-            <NotificationModal
-              setOpenNotModal={setOpenNotModal}
-              openNotModal={openNotModal}
-              setChangeNotificationIcon={setChangeNotificationIcon}
-              setNewNotification = {setNewNotification}
-            />
+            {changeNoficitaionIcon && (
+              <NotificationModal
+                setOpenNotModal={setOpenNotModal}
+                openNotModal={openNotModal}
+                setChangeNotificationIcon={setChangeNotificationIcon}
+                setNewNotification={setNewNotification}
+              />
+            )}
           </div>
         </div>
         <div className="profile-img-con">

@@ -46,13 +46,9 @@ const SuperAdminNotification = ({
   }, [openNotModal]);
 
   useEffect(() => {
-    console.log("tttttttttttttttt");
     setNewNotification(false);
   }, []);
 
-  console.log(notifications, "bbbbbbbbbbbbbbbbbb");
-
-  console.log(user);
   return (
     <div
       onClick={(e) => {
@@ -99,33 +95,16 @@ const SuperAdminNotification = ({
                       >
                         <div className="container-about">
                           <div className="new-not-img">
-                            {notification.role === "birthday" ? (
-                              <img src={birthdayNotImg} alt="/birthday" />
-                            ) : (
-                              <img src={timeNotImg} alt="/lessonAmount" />
-                            )}
+                            <img src={timeNotImg} alt="/lessonAmount" />
                           </div>
                           <div className="new-not-content">
                             <h4>Tədbir</h4>
                             <span>{notification.message}</span>
-                            <span>
-                              {notification.role === "event"
-                                ? `Doğum günü: ${
-                                    notification?.createdAt
-                                      ? moment(notification.createdAt)
-                                          .locale("az")
-                                          .format("DD MMMM")
-                                      : ""
-                                  }`
-                                : ""}
-                            </span>
                           </div>
                         </div>
                         <div className="new-time">
                           <span className="notif-time">
-                            {notification?.student?.birthday
-                              ? formatDate(new Date(notification?.createdAt))
-                              : ""}
+                            {formatDate(notification?.createdAt)}
                           </span>
                         </div>
                       </div>
@@ -153,26 +132,11 @@ const SuperAdminNotification = ({
                     >
                       <div className="container-about">
                         <div className="prev-not-img">
-                          {notification.role === "birthday" ? (
-                            <img src={birthdayNotImg} alt="/birthday" />
-                          ) : (
-                            <img src={timeNotImg} alt="/birthday" />
-                          )}
+                          <img src={timeNotImg} alt="/birthday" />
                         </div>
                         <div className="prev-not-content">
                           <h4>Tədbir</h4>
                           <span>{notification?.message}</span>
-                          <span>
-                            {notification.role === "birthday" &&
-                              notification?.student?.birthday && (
-                                <>
-                                  Doğum günü:{" "}
-                                  {moment(notification?.student?.birthday)
-                                    .locale("az")
-                                    .format("DD MMMM")}
-                                </>
-                              )}
-                          </span>
                         </div>
                       </div>
                       <div className="prev-time">

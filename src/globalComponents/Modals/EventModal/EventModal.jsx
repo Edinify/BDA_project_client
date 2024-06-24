@@ -18,12 +18,11 @@ export const EventModal = () => {
     (state) => state.eventModal
   );
 
-  // console.log(modalData, "ggggggggggggggggggggg");
-  // formik
   const formik = useFormik({
     initialValues: {},
     validationSchema: ValidationSchema,
   });
+  
   const setInputValue = useCallback(
     (key, value) =>
       formik.setValues({
@@ -76,7 +75,6 @@ export const EventModal = () => {
               modalData={modalData}
               formik={formik}
               inputName={"eventName"}
-              
             />{" "}
             <InputField
               setInputValue={setInputValue}
