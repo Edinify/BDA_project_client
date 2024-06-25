@@ -104,13 +104,30 @@ const LessonTableData = ({ getNextLessons }) => {
 
           <tbody>
             {lessonTableData?.map((lesson, i) => (
-              <LessonTableCard
-                key={lesson._id}
-                data={lesson}
-                mode="desktop"
-                cellNumber={i + 1}
-                setTargetLesson={setTargetLesson}
-              />
+              <>
+                <LessonTableCard
+                  key={lesson._id}
+                  data={lesson}
+                  mode="desktop"
+                  cellNumber={i + 1}
+                  setTargetLesson={setTargetLesson}
+                />
+                {(i + 1) % 8 === 0 && (
+                  <tr key={`spacer-${i}`}>
+                    <td
+                      colSpan={tableHead.length}
+                      style={{ height: "25px", padding: 0 }}
+                    >
+                      <div
+                        style={{
+                          height: "100%",
+                          background: "var(--tertiary-200)",
+                        }}
+                      ></div>
+                    </td>
+                  </tr>
+                )}
+              </>
             ))}
           </tbody>
         </table>

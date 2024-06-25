@@ -11,10 +11,17 @@ const SuperAdminNotification = ({
   openNotModal,
   setOpenNotModal,
   setChangeNotificationIcon,
+  setNewNotification,
 }) => {
   const { notifications } = useSelector((state) => state.notifications);
   const { loading } = useSelector((state) => state.notifications);
   const { user } = useSelector((state) => state.user);
+
+  const a = notifications.map((notif) =>
+    notif.recipients.find((a) => a._id === user._id)
+  );
+
+  console.log(a, "aaaa");
 
   const formatDate = (date) => {
     const options = {
@@ -30,7 +37,6 @@ const SuperAdminNotification = ({
     return new Intl.DateTimeFormat("az-AZ", options).format(new Date(date));
   };
 
-
   useEffect(() => {
     if (openNotModal && window.innerWidth <= 500) {
       document.body.style.overflowY = "hidden";
@@ -38,6 +44,10 @@ const SuperAdminNotification = ({
       document.body.style.overflowY = "overlay";
     }
   }, [openNotModal]);
+
+  useEffect(() => {
+    setNewNotification(false);
+  }, []);
 
   return (
     <div
@@ -74,8 +84,8 @@ const SuperAdminNotification = ({
                 .sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt))
                 .map((notification) => {
                   if (
-                    notification?.isViewedAdmins?.find(
-                      (item) =>  item.admin === user._id
+                    notification?.recipients?.find(
+                      (item) => item.user === user._id
                     )?.viewed === false
                   ) {
                     return (
@@ -85,37 +95,16 @@ const SuperAdminNotification = ({
                       >
                         <div className="container-about">
                           <div className="new-not-img">
-                            {notification.role === "birthday" ? (
-                              <img src={birthdayNotImg} alt="/birthday" />
-                            ) : (
-                              <img src={timeNotImg} alt="/lessonAmount" />
-                            )}
+                            <img src={timeNotImg} alt="/lessonAmount" />
                           </div>
                           <div className="new-not-content">
-                            <h4>{notification?.student?.fullName}</h4>
-                            <span>
-                              {notification?.student?.amount === 0
-                                ? "Dərs bitti"
-                                : ""}
-                            </span>
-                            <span>
-                              {notification.role === "birthday"
-                                ? `Doğum günü: ${
-                                    notification?.student?.birthday
-                                      ? moment(notification.student.birthday)
-                                          .locale("az")
-                                          .format("DD MMMM")
-                                      : ""
-                                  }`
-                                : "Dərs bitti"}
-                            </span>
+                            <h4>Tədbir</h4>
+                            <span>{notification.message}</span>
                           </div>
                         </div>
                         <div className="new-time">
                           <span className="notif-time">
-                            {notification?.student?.birthday
-                              ? formatDate(new Date(notification?.createdAt))
-                              : ""}
+                            {formatDate(notification?.createdAt)}
                           </span>
                         </div>
                       </div>
@@ -128,10 +117,10 @@ const SuperAdminNotification = ({
           <div className="prev-notification">
             <h2>Əvvəlkilər</h2>
             <div className="prev-content">
-              {notifications.map((notification) => {
+              {notifications?.map((notification) => {
                 if (
-                  notification?.isViewedAdmins.find(
-                    (item) => item.admin === user._id
+                  notification?.recipients.find(
+                    (item) => item.user === user._id
                   )?.viewed === true
                 ) {
                   return notification.student === null ? (
@@ -143,28 +132,11 @@ const SuperAdminNotification = ({
                     >
                       <div className="container-about">
                         <div className="prev-not-img">
-                          {notification.role === "birthday" ? (
-                            <img src={birthdayNotImg} alt="/birthday" />
-                          ) : (
-                            <img src={timeNotImg} alt="/birthday" />
-                          )}
+                          <img src={timeNotImg} alt="/birthday" />
                         </div>
                         <div className="prev-not-content">
-                          <h4>{notification?.student?.fullName}</h4>
-                          <span>
-                            {notification?.role === "count" ? "Dərs bitti" : ""}
-                          </span>
-                          <span>
-                            {notification.role === "birthday" &&
-                              notification?.student?.birthday && (
-                                <>
-                                  Doğum günü:{" "}
-                                  {moment(notification?.student?.birthday)
-                                    .locale("az")
-                                    .format("DD MMMM")}
-                                </>
-                              )}
-                          </span>
+                          <h4>Tədbir</h4>
+                          <span>{notification?.message}</span>
                         </div>
                       </div>
                       <div className="prev-time">

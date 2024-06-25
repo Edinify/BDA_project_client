@@ -1,4 +1,4 @@
-import React, {  useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./updateDeleteModal.css";
 import { useDispatch, useSelector } from "react-redux";
 import { FUNC_COMPONENT_ACTION_TYPE } from "../../../redux/actions-type";
@@ -115,8 +115,10 @@ const UpdateDeleteModal = ({
       if (power !== "only-show") {
         setUpdateBtn(true);
       }
-    } else if (user?.role === "teacher" && data?.topic?.name !== "Praktika") {
-      setUpdateBtn(true);
+    } else if (user?.role === "teacher") {
+      if (profil === "lessonTable" && data?.topic?.name !== "Praktika") {
+        setUpdateBtn(true);
+      }
     } else if (user?.role === "mentor") {
       setUpdateBtn(true);
     } else if (user?.role === "student") {
@@ -196,14 +198,19 @@ const UpdateDeleteModal = ({
             </h4>
           )}
 
-          {deleteBtn && profil !== "careers" && profil !== "tuitionFee" && profil!=="diploma" &&  (
-            <h4
-              className={`delete-func ${dataType === "branches" ? "only" : ""}`}
-              onClick={handleShowDeleteModal}
-            >
-              Sil
-            </h4>
-          )}
+          {deleteBtn &&
+            profil !== "careers" &&
+            profil !== "tuitionFee" &&
+            profil !== "diploma" && (
+              <h4
+                className={`delete-func ${
+                  dataType === "branches" ? "only" : ""
+                }`}
+                onClick={handleShowDeleteModal}
+              >
+                Sil
+              </h4>
+            )}
 
           {contractBtn && (
             <h4

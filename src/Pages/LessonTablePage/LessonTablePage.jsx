@@ -131,6 +131,7 @@ const LessonTablePage = () => {
         profile={"lessonTable"}
       />
 
+
       {selectedGroup && <LessonTableData getNextLessons={getNextLessons} />}
     </div>
   );

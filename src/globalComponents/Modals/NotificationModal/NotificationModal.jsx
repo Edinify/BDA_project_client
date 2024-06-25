@@ -6,16 +6,19 @@ import {
   getNotificationsTeacherAction,
   getNotificationsStudentAction,
   viewedAllNotifications,
+  getNotifications,
 } from "../../../redux/actions/notificationsActions";
 import "moment/locale/az";
 import SuperAdminNotification from "./components/SuperAdminNotification/SuperAdminNotification";
 import AdminNotification from "./components/AdminNotification/AdminNotification";
 import TeacherNotification from "./components/TeacherNotification/TeacherNotification";
 import StudentNotification from "./components/StudentNotification/StudentNotification";
+
 const NotificationModal = ({
   openNotModal,
   setOpenNotModal,
   setChangeNotificationIcon,
+  setNewNotification,
 }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -23,39 +26,36 @@ const NotificationModal = ({
   useEffect(() => {
     const token = localStorage.getItem("auth");
     if (token && openNotModal) {
-      if (user.role === "admin") {
-        dispatch(getNotificationsAdminAction());
-      } else if (user.role === "super-admin") {
-        dispatch(getNotificationsAdminAction());
-      } else if (user.role === "teacher") {
-        dispatch(getNotificationsTeacherAction());
-      } else if (user.role === "student") {
-        dispatch(getNotificationsStudentAction());
-      }
-      return () => {
-        dispatch(viewedAllNotifications());
-      };
+      dispatch(getNotifications());
     }
   }, [user, openNotModal, dispatch]);
 
+  useEffect(() => {
+    dispatch(viewedAllNotifications());
+    setNewNotification(false);
+  }, []);
+
+  console.log(user.role, "user roleeeeeeeeeee");
   return (
     <>
-      {user.role === "admin" && (
+      {/* {user.role === "admin" && (
         <AdminNotification
-        openNotModal={openNotModal}
-        setOpenNotModal={setOpenNotModal}
-        setChangeNotificationIcon={setChangeNotificationIcon}
+          openNotModal={openNotModal}
+          setOpenNotModal={setOpenNotModal}
+          setChangeNotificationIcon={setChangeNotificationIcon}
+          setNewNotification={setNewNotification}
         />
-      )}
+      )} */}
 
-      {user.role === "super-admin" && (
+      {user.role !== "student" && (
         <SuperAdminNotification
           openNotModal={openNotModal}
           setOpenNotModal={setOpenNotModal}
           setChangeNotificationIcon={setChangeNotificationIcon}
+          setNewNotification={setNewNotification}
         />
       )}
-      {user.role === "teacher" && (
+      {/* {user.role === "teacher" && (
         <TeacherNotification
           openNotModal={openNotModal}
           setOpenNotModal={setOpenNotModal}
@@ -69,7 +69,7 @@ const NotificationModal = ({
           setOpenNotModal={setOpenNotModal}
           setChangeNotificationIcon={setChangeNotificationIcon}
         />
-      )}
+      )} */}
     </>
   );
 };
