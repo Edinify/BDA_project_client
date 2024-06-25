@@ -1,0 +1,1 @@
+export const apiSocket = "https://bdadb.azurewebsites.net";

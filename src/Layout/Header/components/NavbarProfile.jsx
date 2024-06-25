@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChangePasswordModal } from "../../..//globalComponents/Header/ChangePasswordModal/ChangePasswordModal";
 import HowToUse from "../../..//globalComponents/HowToUse/HowToUse";
 import { io } from "socket.io-client";
-
+import { apiSocket } from "../../../apiRoot/socket";
 let socket;
 
 const NavbarProfile = () => {
@@ -98,7 +98,7 @@ const NavbarProfile = () => {
 
   useEffect(() => {
     if (!socket) {
-      socket = io("http://localhost:4000");
+      socket = io(`${apiSocket}`);
 
       socket.emit("checkNewEvent", user._id);
 
