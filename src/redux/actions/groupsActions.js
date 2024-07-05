@@ -368,6 +368,10 @@ export const createGroupAction = (groupData) => async (dispatch) => {
     if (error?.response?.data?.key === "email-already-exist") {
       toastError("Bu email ilə istifadəçi mövcuddur");
     }
+    if (error?.response?.data?.key === "waiting-group-exists") {
+      toastError("Bu ixtisas üçün yığılan qrup mövcuddur");
+    }
+
     // console.log(error);
   } finally {
     dispatch(modalLoading(false));
@@ -412,6 +416,9 @@ export const updateGroupAction = (_id, groupData) => async (dispatch) => {
           return dispatch(logoutAction());
         }
       }
+    }
+    if (error?.response?.data?.key === "waiting-group-exists") {
+      toastError("Bu ixtisas üçün yığılan qrup mövcuddur");
     }
   } finally {
     dispatch(modalLoading(false));
