@@ -121,7 +121,7 @@ export const GroupsDropdown = ({ deviceType = "", page }) => {
           </RadioGroup>
         )}
         <ul>
-          {location.pathname === "/career" && (
+          {location.pathname !== "/lesson" && (
             <li onClick={handleSelectAll}>Hamısı</li>
           )}
           {dataList.map((item) => (

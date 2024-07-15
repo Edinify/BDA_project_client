@@ -167,6 +167,7 @@ export const getSyllabusPaginationAction =
         type: SYLLABUS_ALL_ACTIONS_TYPE.GET_SYLLABUS_PAGINATION,
         payload: data,
       });
+
     } catch (error) {
       console.log(error);
       const originalRequest = error.config;
