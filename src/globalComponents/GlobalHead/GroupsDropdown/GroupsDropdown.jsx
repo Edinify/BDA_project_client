@@ -79,7 +79,7 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
 
       <div className="dropdown-body">
         <ul>
-          {location.pathname === "/career" && (
+          {location.pathname !== "/lesson" && (
             <li onClick={handleSelectAll}>Hamısı</li>
           )}
           {dataList.map((item) => (
