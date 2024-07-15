@@ -82,9 +82,9 @@ const modalLoading = (loadingValue) => ({
   payload: loadingValue,
 });
 
-export const getGroupsAction = () => async (dispatch) => {
+export const getGroupsAction = (groupStatus) => async (dispatch) => {
   try {
-    const { data } = await API.get("/all");
+    const { data } = await API.get(`/?status=${groupStatus}`);
     dispatch({ type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS, payload: data });
   } catch (error) {
     // console.log(error);
