@@ -82,48 +82,47 @@ export const GroupsDropdown = ({ deviceType = "", page }) => {
       </div>
 
       <div className="dropdown-body">
-        {page === "lesson-table" && (
-          <RadioGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
-            sx={{
-              "& .MuiSvgIcon-root": {
-                fontSize: 20,
-              },
-              "& .MuiFormControlLabel-label": {
-                fontSize: 12,
-              },
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              p: 1,
-              boxSizing: "border-box",
-              borderBottom: "1px solid #dddddd",
-            }}
-          >
-            <FormControlLabel
-              value="current"
-              control={<Radio checked={groupStatus === "current"} />}
-              label="Mövcud"
-              onClick={() => {
-                setGroupStatus("current");
+        {page === "lesson-table" &&
+          (user?.role === "super-admin" || user?.role === "worker") && (
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: 20,
+                },
+                "& .MuiFormControlLabel-label": {
+                  fontSize: 12,
+                },
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                p: 1,
+                boxSizing: "border-box",
+                borderBottom: "1px solid #dddddd",
               }}
-            />
-            <FormControlLabel
-              value="ended"
-              control={<Radio checked={groupStatus === "ended"} />}
-              label="Bitmiş"
-              onClick={() => {
-                setGroupStatus("ended");
-              }}
-            />
-          </RadioGroup>
-        )}
-        <ul>
-          {location.pathname !== "/lesson" && (
-            <li onClick={handleSelectAll}>Hamısı</li>
+            >
+              <FormControlLabel
+                value="current"
+                control={<Radio checked={groupStatus === "current"} />}
+                label="Mövcud"
+                onClick={() => {
+                  setGroupStatus("current");
+                }}
+              />
+              <FormControlLabel
+                value="ended"
+                control={<Radio checked={groupStatus === "ended"} />}
+                label="Bitmiş"
+                onClick={() => {
+                  setGroupStatus("ended");
+                }}
+              />
+            </RadioGroup>
           )}
+        <ul>
+          {page !== "lesson-table" && <li onClick={handleSelectAll}>Hamısı</li>}
           {dataList.map((item) => (
             <li key={item._id} onClick={() => getCourse(item)}>
               {selectedGroup === item._id && <CheckIcon />}
