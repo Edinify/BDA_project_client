@@ -7,30 +7,28 @@ const GroupStudentsDropdown = ({ data }) => {
 
   return (
     <div
-    className={`global-category-dropdown dropdown-name data-status  ${
-      dropdownOpen ? "active" : ""
-    }`}
-  >
-    <div
-      className="dropdown-head"
-      onClick={() => setDropdownOpen(!dropdownOpen)}
+      className={`global-category-dropdown dropdown-name data-status  ${
+        dropdownOpen ? "active" : ""
+      }`}
     >
-      <h2>Bütün Tələbələr</h2>
-      <div className="arrow-icon">
-        <ArrowIcon />
+      <div
+        className="dropdown-head"
+        onClick={() => setDropdownOpen(!dropdownOpen)}
+      >
+        <h2>Bütün Tələbələr ({data?.students?.length})</h2>
+        <div className="arrow-icon">
+          <ArrowIcon />
+        </div>
+      </div>
+
+      <div className="dropdown-body">
+        <ul>
+          {data?.students?.map((student) => (
+            <li key={student._id}>{student.fullName}</li>
+          ))}
+        </ul>
       </div>
     </div>
-
-    <div className="dropdown-body">
-      <ul>
-        {data?.students?.map((student) => (
-          <li key={student._id}>
-            {student.fullName}
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
   );
 };
 

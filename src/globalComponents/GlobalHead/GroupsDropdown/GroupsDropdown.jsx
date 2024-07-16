@@ -14,8 +14,9 @@ import {
 } from "../../../redux/actions/groupsActions";
 import { getLessonTablePaginationAction } from "../../../redux/actions/lessonTableActions";
 import { useLocation } from "react-router-dom";
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
-export const GroupsDropdown = ({ deviceType = "" }) => {
+export const GroupsDropdown = ({ deviceType = "", page }) => {
   const dispatch = useDispatch();
   const { groupData: dataList } = useSelector(
     (state) => state.groupsPagination
@@ -24,6 +25,10 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user } = useSelector((state) => state.user);
   const location = useLocation();
+  const [groupStatus, setGroupStatus] = useState(
+    page === "lesson-table" ? "current" : "all"
+  );
+
   const getCourse = (group) => {
     setDropdownOpen(false);
     dispatch({
@@ -38,12 +43,11 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
     } else if (user?.role === "mentor") {
       dispatch(getGroupsWithMentorAction(user._id));
     } else if (user?.role === "student") {
-      console.log('salam salam salam', user)
       dispatch(getGroupsWithStudentAction(user._id));
     } else {
-      dispatch(getGroupsAction());
+      dispatch(getGroupsAction(groupStatus));
     }
-  }, []);
+  }, [groupStatus]);
 
   useEffect(() => {
     return () => {
@@ -78,10 +82,47 @@ export const GroupsDropdown = ({ deviceType = "" }) => {
       </div>
 
       <div className="dropdown-body">
-        <ul>
-          {location.pathname === "/career" && (
-            <li onClick={handleSelectAll}>Hamısı</li>
+        {page === "lesson-table" &&
+          (user?.role === "super-admin" || user?.role === "worker") && (
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: 20,
+                },
+                "& .MuiFormControlLabel-label": {
+                  fontSize: 12,
+                },
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                p: 1,
+                boxSizing: "border-box",
+                borderBottom: "1px solid #dddddd",
+              }}
+            >
+              <FormControlLabel
+                value="current"
+                control={<Radio checked={groupStatus === "current"} />}
+                label="Mövcud"
+                onClick={() => {
+                  setGroupStatus("current");
+                }}
+              />
+              <FormControlLabel
+                value="ended"
+                control={<Radio checked={groupStatus === "ended"} />}
+                label="Bitmiş"
+                onClick={() => {
+                  setGroupStatus("ended");
+                }}
+              />
+            </RadioGroup>
           )}
+        <ul>
+          {page !== "lesson-table" && <li onClick={handleSelectAll}>Hamısı</li>}
           {dataList.map((item) => (
             <li key={item._id} onClick={() => getCourse(item)}>
               {selectedGroup === item._id && <CheckIcon />}

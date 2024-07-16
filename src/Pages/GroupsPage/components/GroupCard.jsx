@@ -91,7 +91,7 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
         />
       )}
       {mode === "desktop" ? (
-        <tr onDoubleClick={doubleClick} >
+        <tr onDoubleClick={doubleClick}>
           <td>
             <div className="td-con" style={{ width: "150px" }}>
               <div className="cell-number">{cellNumber}.</div>

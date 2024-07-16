@@ -153,7 +153,7 @@ const GlobalHead = ({
 
           {statusType === "syllabus" && <CoursesDropdown deviceType="mobile" />}
           {statusType === "lesson-table" && (
-            <GroupsDropdown deviceType="mobile" />
+            <GroupsDropdown deviceType="mobile" page="lesson-table" />
           )}
         </div>
       </div>

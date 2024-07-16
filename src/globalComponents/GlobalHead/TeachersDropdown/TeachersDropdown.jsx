@@ -20,6 +20,14 @@ export const TeachersDropdown = ({ deviceType = "" }) => {
     });
   };
 
+  const handleSelectAll = () => {
+    setDropdownOpen(false);
+    dispatch({
+      type: DROPDOWN_TEACHER_ACTIONS_TYPE.SELECT_TEACHER,
+      payload: "",
+    });
+  };
+
   useEffect(() => {
     dispatch(getAllTeachersAction());
   }, []);
@@ -42,6 +50,7 @@ export const TeachersDropdown = ({ deviceType = "" }) => {
 
       <div className="dropdown-body">
         <ul>
+          <li onClick={handleSelectAll}>Hamısı</li>
           {teachers.map((item) => (
             <li key={item._id} onClick={() => getTeacher(item)}>
               {selectedTeacher === item._id && <CheckIcon />}
