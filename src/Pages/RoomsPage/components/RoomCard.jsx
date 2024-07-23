@@ -4,11 +4,13 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
 import { useState } from "react";
 import { deleteRoomAction } from "../../../redux/actions/roomsActions";
+import RoomGroupDropdown from "./RoomGroupDrop";
 
-const RoomCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
+const RoomCard = ({ data, mode, cellNumber, setOpenMoreModal, tableHead }) => {
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { user } = useSelector((state) => state.user);
+  const groupData = data?.groups?.map((group) => group.group);
 
   const updateItem = (modalType) => {
     dispatch({
@@ -19,6 +21,18 @@ const RoomCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
       },
     });
   };
+
+  const getLessonsByDay = (day) => {
+    return groupData
+      .map((group) => {
+        const lessonOnDay = group?.lessonDate?.find(
+          (lesson) => lesson.day === day
+        );
+        return lessonOnDay ? { ...group, lessonDate: [lessonOnDay] } : null;
+      })
+      .filter(Boolean);
+  };
+
   const deleteItem = () => {
     dispatch(deleteRoomAction(data._id));
   };
@@ -58,6 +72,49 @@ const RoomCard = ({ data, mode, cellNumber, setOpenMoreModal }) => {
               <div className="table-scroll-text">
                 {cellNumber}. {data.name}
               </div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <RoomGroupDropdown data={getLessonsByDay(1)} />
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <RoomGroupDropdown data={getLessonsByDay(2)} />
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <RoomGroupDropdown data={getLessonsByDay(3)} />
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <RoomGroupDropdown data={getLessonsByDay(4)} />
+              <div className="right-fade"></div>
+            </div>
+          </td>
+
+          <td>
+            <div className="td-con">
+              <RoomGroupDropdown data={getLessonsByDay(5)} />
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <RoomGroupDropdown data={getLessonsByDay(6)} />
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con">
+              <RoomGroupDropdown data={getLessonsByDay(7)} />
               <div className="right-fade"></div>
             </div>
           </td>

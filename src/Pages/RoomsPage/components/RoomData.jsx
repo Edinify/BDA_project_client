@@ -18,6 +18,13 @@ const RoomData = ({ getNextRoom }) => {
 
   const tableHead = [
     { id: 1, label: "Otaq adı" },
+    { id: 2, key: 1, label: "B.E" },
+    { id: 3, key: 2, label: "Ç.A" },
+    { id: 2, key: 3, label: "Ç" },
+    { id: 3, key: 4, label: "C.A" },
+    { id: 2, key: 5, label: "C" },
+    { id: 3, key: 6, label: "Ş" },
+    { id: 2, key: 7, label: "B" },
     { id: 6, label: "" },
   ];
   useEffect(() => {
@@ -69,7 +76,7 @@ const RoomData = ({ getNextRoom }) => {
           height={scrollHeight}
         >
           <table
-            className={`details-table  courses-table ${
+            className={`details-table  events-table ${
               user?.power === "only-show" ? "only-show" : "update"
             } `}
           >
