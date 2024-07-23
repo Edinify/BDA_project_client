@@ -8,6 +8,7 @@ import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/De
 import { useEffect, useState } from "react";
 // import { ReactComponent as XIcon } from "../../../assets/icons/student-home/x-icon.svg";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/student-home/success.svg";
+import LessonStatus from "./LessonStatus";
 
 const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
@@ -123,7 +124,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
         />
       )}
       {mode === "desktop" ? (
-        <tr onDoubleClick={doubleClick} >
+        <tr onDoubleClick={doubleClick}>
           <td>
             <div className="td-con">
               <div className="table-scroll-text profiles">{lessonDay}</div>
@@ -182,8 +183,6 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
                     {studentData.studentSignature === 1 ? (
                       <SuccessIcon />
                     ) : studentData.studentSignature === -1 ? (
-                      // <IoMdClose />
-                      // <XIcon/>
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -242,7 +241,10 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               </div>
             </div>
           </td>
-          <td
+          <td>
+            <LessonStatus data={data} />
+          </td>
+          {/* <td
             style={
               data.status === "unviewed"
                 ? { backgroundColor: "#d2c3fe" }
@@ -257,7 +259,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
                   .name || ""}
               </div>
             </div>
-          </td>
+          </td> */}
 
           <td>
             <UpdateDeleteModal

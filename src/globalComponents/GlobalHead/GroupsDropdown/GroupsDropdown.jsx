@@ -4,7 +4,6 @@ import { ReactComponent as ArrowIcon } from "../../../assets/icons/arrow-down-dr
 import { ReactComponent as CheckIcon } from "../../../assets/icons/Checkbox.svg";
 import {
   DROPDOWN_GROUP_ACTIONS_TYPE,
-  LESSON_TABLE_ALL_ACTIONS_TYPE,
 } from "../../../redux/actions-type";
 import {
   getGroupsAction,
@@ -12,8 +11,8 @@ import {
   getGroupsWithStudentAction,
   getGroupsWithTeacherAction,
 } from "../../../redux/actions/groupsActions";
-import { getLessonTablePaginationAction } from "../../../redux/actions/lessonTableActions";
-import { useLocation } from "react-router-dom";
+// import { getLessonTablePaginationAction } from "../../../redux/actions/lessonTableActions";
+// import { useLocation } from "react-router-dom";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 export const GroupsDropdown = ({ deviceType = "", page }) => {
@@ -24,7 +23,7 @@ export const GroupsDropdown = ({ deviceType = "", page }) => {
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user } = useSelector((state) => state.user);
-  const location = useLocation();
+  // const location = useLocation();
   const [groupStatus, setGroupStatus] = useState(
     page === "lesson-table" ? "current" : "all"
   );

@@ -246,6 +246,11 @@
   color: var(--neutrals-900);
   cursor: pointer;
 }
+
+.details-page.lesson-page tr td:nth-last-child(2)
+{
+  padding: 0;
+}
 .details-table.bonus-table tr th:nth-last-child(2),
 .details-table.fine-table tr th:nth-last-child(2) {
   width: 118px;
