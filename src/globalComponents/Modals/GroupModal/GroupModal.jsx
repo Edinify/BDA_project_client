@@ -14,6 +14,7 @@ import Course from "./components/SelectCollection/Course";
 import MentorsList from "./components/SelectCollection/MentorsList/MentorsList";
 import LessonDateList from "./components/SelectCollection/LessonDateList/LessonDateList";
 import Status from "./components/Buttons/Status";
+import RoomList from "./components/SelectCollection/RoomList";
 
 const GroupModal = () => {
   const dispatch = useDispatch();
@@ -103,6 +104,11 @@ const GroupModal = () => {
               ))}
             </div>
             <Course
+              modalData={modalData}
+              updateModalState={updateModalState}
+              formik={formik}
+            />
+             <RoomList
               modalData={modalData}
               updateModalState={updateModalState}
               formik={formik}

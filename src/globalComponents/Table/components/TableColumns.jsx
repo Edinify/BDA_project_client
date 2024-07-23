@@ -10,7 +10,7 @@ export const TableColumns = ({ time }) => {
     <tr>
       {weeksArr.map((week, index) => {
         if (index === 0) {
-          return <TimeCells key={index} index={index} time={time.time} />;
+          return <TimeCells key={index} index={index} time={time} />;
         } else {
           return (
             <TeacherCells

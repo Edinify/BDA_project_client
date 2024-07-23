@@ -1,33 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import GroupCard from "./GroupCard";
-import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
+import { useDispatch, useSelector } from "react-redux";
+import CourseCard from "./RoomCard";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
+import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
+import RoomCard from "./RoomCard";
 
-const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
+const RoomData = ({ getNextRoom }) => {
+  const { rooms, hasMore } = useSelector((state) => state.roomsPagination);
   const [openMoreModal, setOpenMoreModal] = useState(false);
-  const { groupData, hasMore } = useSelector((state) => state.groupsPagination);
-  const { openConfirmModal } = useSelector((state) => state.groupModal);
+  const { openConfirmModal } = useSelector((state) => state.roomsModal);
+  const { user } = useSelector((state) => state.user);
+
   const [scrollHeight, setScrollHeight] = useState(1);
+  const dispatch = useDispatch();
 
   const tableHead = [
-    "Qrup adı",
-    "İxtisas",
-    "Otaq",
-    "Müəllimlər",
-    "Təlimçilər",
-    "Tələbələr",
-    "Dərs günləri",
-    "Başlama tarixi",
-    "Bitmə tarixi",
-    "Status",
-    "",
+    { id: 1, label: "Otaq adı" },
+    { id: 6, label: "" },
   ];
-
-  // console.log(groupData,"group data")
-
   useEffect(() => {
     if (openMoreModal) {
       document.body.style.overflowY = "hidden";
@@ -39,22 +31,17 @@ const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
   useEffect(() => {
     const mainHeader = document.querySelector(".main-header");
     const detailsHeader = document.querySelector(".details-header");
-    const globalHeads = document.querySelector(".global-head-tabs");
 
     const handleResize = () => {
       setScrollHeight(
         window.innerHeight -
           mainHeader.offsetHeight -
-          detailsHeader.offsetHeight -
-          globalHeads.offsetHeight
+          detailsHeader.offsetHeight
       );
     };
 
     setScrollHeight(
-      window.innerHeight -
-        mainHeader.offsetHeight -
-        detailsHeader.offsetHeight -
-        globalHeads.offsetHeight
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
     );
 
     window.addEventListener("resize", handleResize);
@@ -67,42 +54,38 @@ const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
     <>
       <>
         {openMoreModal && (
-          <MoreModal
-            setOpenMoreModal={setOpenMoreModal}
-            type="group"
-            userData={userData}
-          />
+          <MoreModal setOpenMoreModal={setOpenMoreModal} type="rooms" />
         )}
 
-        {openConfirmModal && <ConfirmModal type="groups" />}
+        {openConfirmModal && <ConfirmModal type="rooms" />}
         <InfiniteScroll
-          dataLength={groupData.length}
-          next={getNextTeachers}
+          style={{ overflowX: "none" }}
+          dataLength={rooms.length}
+          next={getNextRoom}
           hasMore={hasMore}
           loader={<SmallLoading />}
           endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
-          height={scrollHeight}
           scrollThreshold={0.7}
+          height={scrollHeight}
         >
           <table
-            className={`details-table  teacher-table ${
-              userData.power === "only-show" ? "only-show" : "update"
+            className={`details-table  courses-table ${
+              user?.power === "only-show" ? "only-show" : "update"
             } `}
           >
             <thead>
               <tr>
                 {tableHead.map((head, i) => (
-                  <th key={i}>{head}</th>
+                  <th key={i}>{head.label}</th>
                 ))}
               </tr>
             </thead>
 
             <tbody>
-              {groupData?.map((teacher, i) => (
-                <GroupCard
-                  key={i}
-                  data={teacher}
-                  group={userData}
+              {rooms?.map((room, i) => (
+                <RoomCard
+                  key={room._id}
+                  data={room}
                   mode="desktop"
                   cellNumber={i + 1}
                   setOpenMoreModal={setOpenMoreModal}
@@ -112,13 +95,13 @@ const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
           </table>
         </InfiniteScroll>
 
-        <div className="details-list-tablet">
-          {groupData?.map((teacher, i) => (
-            <GroupCard
-              key={i}
-              data={teacher}
-              group={userData}
-              mode="tablet"
+        <div className="details-list-tablet course-list-mobile">
+          <h3 className="details-list-title">Fənn adı</h3>
+          {rooms.map((room, i) => (
+            <RoomCard
+              key={room._id}
+              data={room}
+              mode="mobile"
               cellNumber={i + 1}
               setOpenMoreModal={setOpenMoreModal}
             />
@@ -129,4 +112,4 @@ const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
   );
 };
 
-export default GroupsData;
+export default RoomData;

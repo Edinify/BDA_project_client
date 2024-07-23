@@ -24,17 +24,17 @@ const LessonTableModal = () => {
   const { selectedGroup } = useSelector((state) => state.dropdownGroup);
   const { user } = useSelector((state) => state.user);
 
-  const inputNameArr1 = ["date", "time"];
+  const inputNameArr1 = ["startTime", "endTime"];
 
-
-  console.log(modalData,"modal dataaaa")
+  console.log(modalData, "modal dataaaa");
 
   // formik
   const formik = useFormik({
     initialValues: {
       group: modalData?.group || "",
       date: modalData?.date || "",
-      time: modalData?.time || "",
+      startTime: modalData?.startTime || "",
+      endTime: modalData?.endTime || "",
     },
     validationSchema: ValidationSchema,
   });
@@ -49,8 +49,6 @@ const LessonTableModal = () => {
   );
 
   const updateModalState = (keyName, value) => {
-    // console.log("keyname:", keyName);
-    // console.log("value:", value);
     if (keyName === "profiles") {
       const formikValue =
         value.length > 0
@@ -82,7 +80,6 @@ const LessonTableModal = () => {
     updateModalState("group", selectedGroup._id);
   }, []);
 
-
   return (
     <div className="create-update-modal-con teacher-modal">
       <div className="create-update-modal teacher-modal ">
@@ -109,7 +106,19 @@ const LessonTableModal = () => {
               modalData={modalData}
               updateModalState={updateModalState}
             />
-            <div className="input-couples birthday ">
+            <div
+              className="input-couples birthday"
+              style={{ gridTemplateColumns: "1fr" }}
+            >
+              <InputField
+                inputName="date"
+                formik={formik}
+                setInputValue={setInputValue}
+                modalData={modalData}
+                updateModalState={updateModalState}
+              />
+            </div>
+            <div className="input-couples birthday">
               {inputNameArr1.map((name, index) => (
                 <InputField
                   key={index}

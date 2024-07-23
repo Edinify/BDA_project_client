@@ -335,7 +335,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
       type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
       payload: false,
     });
-    toastSuccess("Yeni əməkdaş yaradıldı");
+    toastSuccess("Yeni qrup yaradıldı");
   } catch (error) {
     console.log(error);
     const originalRequest = error.config;
@@ -370,6 +370,9 @@ export const createGroupAction = (groupData) => async (dispatch) => {
     }
     if (error?.response?.data?.key === "waiting-group-exists") {
       toastError("Bu ixtisas üçün yığılan qrup mövcuddur");
+    }
+    if (error?.response?.data?.key === "room-full") {
+      toastError("Seçdiyiniz tarixdə otaq doludur!");
     }
 
     // console.log(error);
@@ -419,6 +422,9 @@ export const updateGroupAction = (_id, groupData) => async (dispatch) => {
     }
     if (error?.response?.data?.key === "waiting-group-exists") {
       toastError("Bu ixtisas üçün yığılan qrup mövcuddur");
+    }
+    if (error?.response?.data?.key === "room-full") {
+      toastError("Seçdiyiniz tarixdə otaq doludur!");
     }
   } finally {
     dispatch(modalLoading(false));

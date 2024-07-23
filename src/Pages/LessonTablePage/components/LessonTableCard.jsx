@@ -72,7 +72,8 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
           teacher: data?.teacher?._id,
           mentor: data?.mentor?._id,
           date: data?.date,
-          time: data?.time,
+          startTime: data?.startTime,
+          endTime: data?.endTime,
           topic: data?.topic,
           mentorHour: data?.mentorHour,
           status: data?.status,
@@ -123,7 +124,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
         />
       )}
       {mode === "desktop" ? (
-        <tr onDoubleClick={doubleClick} >
+        <tr onDoubleClick={doubleClick}>
           <td>
             <div className="td-con">
               <div className="table-scroll-text profiles">{lessonDay}</div>

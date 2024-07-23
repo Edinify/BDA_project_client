@@ -18,10 +18,14 @@ import LessonModal from "./globalComponents/Modals/LessonModal/LessonModal";
 import { userAction } from "./redux/actions/userAction";
 import { EventModal } from "./globalComponents/Modals/EventModal/EventModal";
 import DiplomaModal from "./globalComponents/Modals/DiplomaModal/DiplomaModal";
+import { RoomModal } from "./globalComponents/Modals/RoomModal/RoomModal";
 
 //
 function App() {
   const { coursesOpenModal } = useSelector((state) => state.coursesModal);
+  const { roomsOpenModal } = useSelector((state) => state.roomsModal);
+
+  console.log(roomsOpenModal, "room open modal");
   const { eventsOpenModal } = useSelector((state) => state.eventModal);
   const { studentsOpenModal } = useSelector((state) => state.studentsModal);
   const { tuitionFeeOpenModal } = useSelector((state) => state.tuitionFeeModal);
@@ -37,7 +41,7 @@ function App() {
   const { syllabusOpenModal } = useSelector((state) => state.syllabusModal);
   const { careerOpenModal } = useSelector((state) => state.careerModal);
   const { leadOpenModal } = useSelector((state) => state.leadModal);
-  const {diplomaOpenModal} = useSelector(state=>state.diplomaModal)
+  const { diplomaOpenModal } = useSelector((state) => state.diplomaModal);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -81,6 +85,7 @@ function App() {
     <div className="App">
       <Routing />
       {coursesOpenModal && <CourseModal />}
+      {roomsOpenModal && <RoomModal />}
       {eventsOpenModal && <EventModal />}
       {studentsOpenModal && <StudentModal />}
       {tuitionFeeOpenModal && <TuitionFeeModal />}
@@ -92,7 +97,7 @@ function App() {
       {lessonTableOpenModal && <LessonTableModal />}
       {groupOpenModal && <GroupModal />}
       {leadOpenModal && <LeadModal />}
-      {diplomaOpenModal && <DiplomaModal/>}
+      {diplomaOpenModal && <DiplomaModal />}
 
       {/* <LessonModal /> */}
       <ToastContainer />
