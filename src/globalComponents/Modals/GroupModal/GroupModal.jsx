@@ -28,6 +28,7 @@ const GroupModal = () => {
     initialValues: {
       name: modalData.name ? modalData.name : "",
       course: modalData.course,
+      room: modalData.room,
     },
     validationSchema: ValidationSchema,
   });
@@ -108,7 +109,7 @@ const GroupModal = () => {
               updateModalState={updateModalState}
               formik={formik}
             />
-             <RoomList
+            <RoomList
               modalData={modalData}
               updateModalState={updateModalState}
               formik={formik}

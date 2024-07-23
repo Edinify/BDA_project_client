@@ -23,14 +23,12 @@ const RoomCard = ({ data, mode, cellNumber, setOpenMoreModal, tableHead }) => {
   };
 
   const getLessonsByDay = (day) => {
-    return groupData
-      .map((group) => {
-        const lessonOnDay = group?.lessonDate?.find(
-          (lesson) => lesson.day === day
-        );
-        return lessonOnDay ? { ...group, lessonDate: [lessonOnDay] } : null;
-      })
-      .filter(Boolean);
+    return groupData.filter((group) => {
+      const lessonOnDay = group?.lessonDate?.find(
+        (lesson) => lesson.day === day
+      );
+      return lessonOnDay;
+    });
   };
 
   const deleteItem = () => {
@@ -77,45 +75,38 @@ const RoomCard = ({ data, mode, cellNumber, setOpenMoreModal, tableHead }) => {
           </td>
           <td>
             <div className="td-con">
-              <RoomGroupDropdown data={getLessonsByDay(1)} />
-              <div className="right-fade"></div>
+              <RoomGroupDropdown data={getLessonsByDay(1)} day={1} />
             </div>
           </td>
           <td>
             <div className="td-con">
-              <RoomGroupDropdown data={getLessonsByDay(2)} />
-              <div className="right-fade"></div>
+              <RoomGroupDropdown data={getLessonsByDay(2)} day={2} />
             </div>
           </td>
           <td>
             <div className="td-con">
-              <RoomGroupDropdown data={getLessonsByDay(3)} />
-              <div className="right-fade"></div>
+              <RoomGroupDropdown data={getLessonsByDay(3)} day={3} />
             </div>
           </td>
           <td>
             <div className="td-con">
-              <RoomGroupDropdown data={getLessonsByDay(4)} />
-              <div className="right-fade"></div>
+              <RoomGroupDropdown data={getLessonsByDay(4)} day={4} />
             </div>
           </td>
 
           <td>
             <div className="td-con">
-              <RoomGroupDropdown data={getLessonsByDay(5)} />
-              <div className="right-fade"></div>
+              <RoomGroupDropdown data={getLessonsByDay(5)} day={5} />
             </div>
           </td>
           <td>
             <div className="td-con">
-              <RoomGroupDropdown data={getLessonsByDay(6)} />
-              <div className="right-fade"></div>
+              <RoomGroupDropdown data={getLessonsByDay(6)} day={6} />
             </div>
           </td>
           <td>
             <div className="td-con">
-              <RoomGroupDropdown data={getLessonsByDay(7)} />
-              <div className="right-fade"></div>
+              <RoomGroupDropdown data={getLessonsByDay(7)} day={7} />
             </div>
           </td>
 

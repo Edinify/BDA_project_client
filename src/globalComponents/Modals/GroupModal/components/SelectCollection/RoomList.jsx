@@ -3,6 +3,7 @@ import { TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import DropdownIcon from "../../../components/DropdownIcon/DropdownIcon";
 import { getAllRoomsAction } from "../../../../../redux/actions/roomsActions";
+import { ROOMS_ALL_ACTIONS_TYPE } from "../../../../../redux/actions-type";
 
 const RoomList = ({ formik, modalData, updateModalState }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,12 @@ const RoomList = ({ formik, modalData, updateModalState }) => {
 
   useEffect(() => {
     dispatch(getAllRoomsAction());
+
+    return () => {
+      dispatch({
+        type: ROOMS_ALL_ACTIONS_TYPE.RESET_ROOMS_PAGINATION,
+      });
+    };
   }, []);
   return (
     <>

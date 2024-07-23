@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { GROUP_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteGroupAction } from "../../../redux/actions/groupsActions";
-import { useLocation } from "react-router-dom";
 import moment from "moment";
 import GroupStudentsDropdown from "./GroupStudentsDropdown";
 import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";

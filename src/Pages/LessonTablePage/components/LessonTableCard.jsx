@@ -242,7 +242,15 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               </div>
             </div>
           </td>
-          <td>
+          <td
+            style={
+              data.status === "unviewed"
+                ? { backgroundColor: "#d2c3fe" }
+                : data.status === "confirmed"
+                ? { backgroundColor: "#d4ffbf" }
+                : { backgroundColor: "#ffced1" }
+            }
+          >
             <LessonStatus data={data} />
           </td>
           {/* <td

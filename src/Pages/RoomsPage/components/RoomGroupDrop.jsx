@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ReactComponent as ArrowIcon } from "../../../assets/icons/arrow-down-dropdown.svg";
 
-const RoomGroupDropdown = ({ data }) => {
+const RoomGroupDropdown = ({ data, day }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
@@ -22,18 +22,22 @@ const RoomGroupDropdown = ({ data }) => {
 
       <div className="dropdown-body room">
         <ul>
-          {data?.map((group, i) => (
-            <li key={i}>
-              {group?.name} -
-              {group?.lessonDate?.map((item, index) => (
-                <div key={index}>
+          {data?.map((group, i) => {
+            const lessonTimeObj = group?.lessonDate?.find(
+              (item) => item.day == day
+            );
+
+            return (
+              <li key={`${day}${i}`}>
+                {group?.name} -
+                <div>
                   <span>
-                    {item.startTime} - {item.endTime}
+                    {lessonTimeObj.startTime} - {lessonTimeObj.endTime}
                   </span>
                 </div>
-              ))}
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

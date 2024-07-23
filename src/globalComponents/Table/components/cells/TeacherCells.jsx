@@ -28,7 +28,7 @@ const TeacherCells = ({ time, groups, index }) => {
                       fontWeight: "bold",
                     }) || { fontWeight: 600 }
                   }
-                  key={i}
+                  key={time.startTime + i}
                 >
                   {date && name}
                 </li>
