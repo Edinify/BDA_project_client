@@ -76,6 +76,9 @@ const GlobalHead = ({
                       {statusType === "course" && (
                         <ExcelExportBtn pageName={"course"} />
                       )}
+                      {statusType === "rooms" && (
+                        <ExcelExportBtn pageName={"room"} />
+                      )}
                     </>
                   )}
 

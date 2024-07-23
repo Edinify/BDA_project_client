@@ -16,6 +16,7 @@ import { teacherPaginationReducer } from "./reducers/teachersPaginationReducer";
 import { searchValuesReducer } from "./reducers/searchValuesReducer";
 import { StudentsPaginationReducer } from "./reducers/studentsPaginationReducer";
 import { coursesPaginationReducer } from "./reducers/coursesPaginationReducer";
+import { roomsPaginationReducer } from "./reducers/roomsPaginationReducer";
 import forgotPasswordReducer from "./reducers/forgetPasswordReducer";
 import { allCoursesReducer } from "./reducers/allCoursesReducer";
 import { funcComponentReducer } from "./reducers/funcComponentReducer";
@@ -66,12 +67,14 @@ import { diplomaPaginationReducer } from "./reducers/diplomaPaginationReducer";
 import { diplomaModalReducer } from "./reducers/diplomaModalReducer";
 import { studentGroupStatusReducer } from "./reducers/studentGroupStatusReducer";
 import { tuitionFeePaymentReducer } from "./reducers/tuitionFeePaymentReducer";
+import { roomsModalReducer } from "./reducers/roomsModalReducer";
 
 const initialState = {};
 const reducers = combineReducers({
   dashboardData: dashboardReducer,
   teachersPagination: teacherPaginationReducer,
   coursesPagination: coursesPaginationReducer,
+  roomsPagination: roomsPaginationReducer,
   eventsPagination: eventsPaginationReducer,
   studentsPagination: StudentsPaginationReducer,
   auth: authReducer,
@@ -87,6 +90,7 @@ const reducers = combineReducers({
   allCourses: allCoursesReducer,
   funcComponent: funcComponentReducer,
   coursesModal: coursesModalReducer,
+  roomsModal: roomsModalReducer,
   eventModal: eventModalReducer,
   studentsModal: studentsModalReducer,
   teachersModal: teachersModalReducer,
@@ -129,7 +133,7 @@ const reducers = combineReducers({
   downloadExcel: downloadExcelReducer,
   diplomaPagination: diplomaPaginationReducer,
   diplomaModal: diplomaModalReducer,
-  tuitionFeePayment:tuitionFeePaymentReducer
+  tuitionFeePayment: tuitionFeePaymentReducer,
 });
 // test
 

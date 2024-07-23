@@ -20,7 +20,7 @@ import WorkersMoreModal from "./components/WorkersMoreModal/WorkersMoreModal";
 import GroupMoreModal from "./components/GroupMoreModal/GroupMoreModal";
 import EventMoreModal from "./components/EventMoreModal/EventMoreModal";
 import CareerMoreModal from "./components/CareerMoreModal/CareerMoreModal";
-const MoreModal = ({ setOpenMoreModal, type, userData }) => {
+const MoreModal = ({ setOpenMoreModal, type }) => {
   const dispatch = useDispatch();
   const { teachersModalData } = useSelector((state) => state.teachersModal);
   const { studentsModalData } = useSelector((state) => state.studentsModal);
@@ -126,8 +126,7 @@ const MoreModal = ({ setOpenMoreModal, type, userData }) => {
             ""
           )}
           <div className="more-modal-header-icons">
-            {(user?.role === "super-admin" ||
-              userData?.power !== "only-show") &&
+            {(user?.role === "super-admin" || user?.power !== "only-show") &&
               type !== "tuitionFee" && (
                 <div className="header-icon-edit">
                   <EditIcon onClick={() => openUpdateModal()} />

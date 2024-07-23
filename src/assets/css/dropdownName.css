@@ -9,6 +9,11 @@
 .dropdown-name .dropdown-body ul li {
   padding-left: 34px;
 }
+
+.dropdown-name .dropdown-body.room ul li {
+  padding-left: 20px;
+  font-size: 14px;
+}
 .dropdown-name .err-message {
   top: 49px;
   font-size: 11px;

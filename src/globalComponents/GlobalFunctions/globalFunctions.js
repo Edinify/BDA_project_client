@@ -12,6 +12,7 @@ import { ReactComponent as IncomesIcon } from "../../assets/icons/incomesIcon.sv
 import { ReactComponent as FeedBacksIcon } from "../../assets/icons/sidebar/feedbacks-icon.svg";
 import { ReactComponent as AdminIcon } from "../../assets/icons/sidebar/users-01.svg";
 import { ReactComponent as GroupIcon } from "../../assets/icons/sidebar/group-svgrepo-com.svg";
+import { ReactComponent as RoomIcon } from "../../assets/icons/room-icon.svg";
 import { ReactComponent as CareerIcon } from "../../assets/icons/sidebar/work-case-filled-svgrepo-com (1).svg";
 import { ReactComponent as SyllabusIcon } from "../../assets/icons/sidebar/syllabus-svgrepo-com.svg";
 import { ReactComponent as DiplomaIcon } from "../../../src/assets/icons/sidebar/diploma.svg";
@@ -170,17 +171,18 @@ export function useCustomHook() {
     { id: 5, name: "Fənlər", key: "courses", icon: <CoursesIcon /> },
     { id: 6, name: "Sillabus", key: "syllabus", icon: <SyllabusIcon /> },
     { id: 7, name: "Qruplar", key: "groups", icon: <GroupIcon /> },
-    { id: 8, name: "Təhsil haqqı", key: "tuitionFee", icon: <ExpensesIcon /> },
-    { id: 9, name: "Karyera", key: "career", icon: <CareerIcon /> },
+    { id: 8, name: "Otaqlar", key: "room", icon: <RoomIcon /> },
+    { id: 9, name: "Təhsil haqqı", key: "tuitionFee", icon: <ExpensesIcon /> },
+    { id: 10, name: "Karyera", key: "career", icon: <CareerIcon /> },
     {
-      id: 10,
+      id: 11,
       name: "Konsultasiya",
       key: "consultation",
       icon: <MainPanelIcon />,
     },
-    { id: 11, name: "Tədbirlər", key: "events", icon: <EventIcon /> },
-    { id: 12, name: "Əməkdaşlar", key: "workers", icon: <AdminIcon /> },
-    { id: 12, name: "Diploma Cədvəli", key: "diploma", icon: <DiplomaIcon /> },
+    { id: 12, name: "Tədbirlər", key: "events", icon: <EventIcon /> },
+    { id: 13, name: "Əməkdaşlar", key: "workers", icon: <AdminIcon /> },
+    { id: 14, name: "Diploma Cədvəli", key: "diploma", icon: <DiplomaIcon /> },
   ];
 
   const generalProfilePowerList = [
