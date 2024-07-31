@@ -19,8 +19,8 @@ const ConsultationsPage = () => {
   const { consultationSearchValues } = useSelector(
     (state) => state.searchValues
   );
-  const status =
-    location.pathname === "/consultation/appointed" ? "appointed" : "completed";
+  // const status =
+  //   location.pathname === "/consultation/appointed" ? "appointed" : "completed";
 
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =
@@ -37,7 +37,8 @@ const ConsultationsPage = () => {
         getConsultationPaginationAction(
           consultationData?.length || 0,
           consultationSearchValues,
-          status
+          ""
+          // status
         )
       );
     } else {
@@ -45,7 +46,8 @@ const ConsultationsPage = () => {
         getConsultationPaginationAction(
           consultationData?.length || 0,
           "",
-          status
+          ""
+          // status
         )
       );
     }
@@ -67,7 +69,7 @@ const ConsultationsPage = () => {
     });
 
     dispatch(
-      getConsultationPaginationAction(0, consultationSearchValues, status)
+      getConsultationPaginationAction(0, consultationSearchValues, "")
     );
   };
 
@@ -77,13 +79,13 @@ const ConsultationsPage = () => {
         type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
       });
       dispatch(
-        getConsultationPaginationAction(0, consultationSearchValues, status)
+        getConsultationPaginationAction(0, consultationSearchValues, "")
       );
     } else {
       dispatch({
         type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
       });
-      dispatch(getConsultationPaginationAction(0, "", status));
+      dispatch(getConsultationPaginationAction(0, "", ""));
     }
     return () => {
       dispatch({
@@ -99,18 +101,18 @@ const ConsultationsPage = () => {
         openModal={openModal}
         DATA_SEARCH_VALUE={"CONSULTATION_SEARCH_VALUE"}
         dataSearchValues={consultationSearchValues}
-        addBtn={status === "appointed" ? true : false}
+        // addBtn={status === "appointed" ? true : false}
         statusType="consultation"
         profile={"consultation"}
         count={totalLength}
       />
 
-      <HeadTabs
+      {/* <HeadTabs
         firstRoute={"/consultation/appointed"}
         secondRoute={"/consultation/completed"}
         firstPathname={"Təyin olunmuş"}
         secondPathname={"Baş tutmuş"}
-      />
+      /> */}
 
       <ConsultationData
         getNextConsultation={getNextConsultation}

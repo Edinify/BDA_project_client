@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { CONSULTATION_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import moment from "moment";
 import { deleteConsultationAction } from "../../../redux/actions/consultationsActions";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
-import { useLocation } from "react-router-dom";
 import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
 
 const ConsultationCard = ({

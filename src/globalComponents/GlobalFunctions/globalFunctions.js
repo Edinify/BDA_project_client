@@ -108,10 +108,13 @@ export function useCustomHook() {
     { name: "Digər", key: "other" },
   ];
   const constStatusList = [
-    { name: "Təyin edildi", key: "appointed" },
+    { name: "Konsultasiya istəyir", key: "appointed" },
     { name: "Satıldı", key: "sold" },
-    { name: "Ləğv edildi", key: "cancelled" },
+    { name: "İmtina", key: "cancelled" },
     { name: "Düşünür", key: "thinks" },
+    { name: "Zəngi açmadı", key: "not-open-call" },
+    { name: "Zəng çatmır", key: "call-missing" },
+    { name: "Whatsappda məlumat", key: "whatsapp_info" },
   ];
   const cancelReasonList = [
     { name: "Maddi", key: "financial" },

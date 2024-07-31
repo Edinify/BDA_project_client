@@ -47,22 +47,20 @@ const ConsultationData = ({ getNextConsultation, userData }) => {
   useEffect(() => {
     const mainHeader = document.querySelector(".main-header");
     const detailsHeader = document.querySelector(".details-header");
-    const globalHeads = document.querySelector(".global-head-tabs");
+    // const globalHeads = document.querySelector(".global-head-tabs");
 
     const handleResize = () => {
       setScrollHeight(
         window.innerHeight -
           mainHeader.offsetHeight -
-          detailsHeader.offsetHeight -
-          globalHeads.offsetHeight
+          detailsHeader.offsetHeight 
       );
     };
 
     setScrollHeight(
       window.innerHeight -
         mainHeader.offsetHeight -
-        detailsHeader.offsetHeight -
-        globalHeads.offsetHeight
+        detailsHeader.offsetHeight 
     );
 
     window.addEventListener("resize", handleResize);

@@ -68,7 +68,7 @@ export const DatePick = ({ deviceType = "" }) => {
               dropdownMode="select"
               locale="az"
             />
-            <h4>-dan</h4>
+            <h4>-qədər</h4>
           </label>
         </div>
       </div>
