@@ -7,7 +7,7 @@ import {
 } from "../../redux/actions-type";
 import GlobalHead from "../../globalComponents/GlobalHead/GlobalHead";
 import ConsultationData from "./components/ConsultationData";
-import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
+// import HeadTabs from "../../globalComponents/HeadTabs/HeadTabs";
 import { useLocation } from "react-router-dom";
 
 const ConsultationsPage = () => {
@@ -19,6 +19,10 @@ const ConsultationsPage = () => {
   const { consultationSearchValues } = useSelector(
     (state) => state.searchValues
   );
+  const { consultationStatus, courseId, whereComing } = useSelector(
+    (state) => state.consultationStatus
+  );
+  const { startDate, endDate } = useSelector((state) => state.datepicker);
   // const status =
   //   location.pathname === "/consultation/appointed" ? "appointed" : "completed";
 
@@ -37,8 +41,11 @@ const ConsultationsPage = () => {
         getConsultationPaginationAction(
           consultationData?.length || 0,
           consultationSearchValues,
-          ""
-          // status
+          consultationStatus,
+          startDate,
+          endDate,
+          courseId,
+          whereComing
         )
       );
     } else {
@@ -46,8 +53,11 @@ const ConsultationsPage = () => {
         getConsultationPaginationAction(
           consultationData?.length || 0,
           "",
-          ""
-          // status
+          consultationStatus,
+          startDate,
+          endDate,
+          courseId,
+          whereComing
         )
       );
     }
@@ -69,7 +79,15 @@ const ConsultationsPage = () => {
     });
 
     dispatch(
-      getConsultationPaginationAction(0, consultationSearchValues, "")
+      getConsultationPaginationAction(
+        0,
+        consultationSearchValues,
+        consultationStatus,
+        "",
+        "",
+        "",
+        ""
+      )
     );
   };
 
@@ -79,13 +97,21 @@ const ConsultationsPage = () => {
         type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
       });
       dispatch(
-        getConsultationPaginationAction(0, consultationSearchValues, "")
+        getConsultationPaginationAction(
+          0,
+          consultationSearchValues,
+          consultationStatus,
+          "",
+          "",
+          "",
+          ""
+        )
       );
     } else {
       dispatch({
         type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
       });
-      dispatch(getConsultationPaginationAction(0, "", ""));
+      dispatch(getConsultationPaginationAction(0, "", "", "", "", "", ""));
     }
     return () => {
       dispatch({
@@ -94,6 +120,11 @@ const ConsultationsPage = () => {
     };
   }, [location.pathname]);
 
+  const consultationFilter=()=>{
+    dispatch({type:CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION})
+    dispatch(getConsultationPaginationAction(0,consultationSearchValues,consultationStatus,startDate,endDate,courseId,whereComing))
+  }
+
   return (
     <div className="details-page ">
       <GlobalHead
@@ -101,6 +132,7 @@ const ConsultationsPage = () => {
         openModal={openModal}
         DATA_SEARCH_VALUE={"CONSULTATION_SEARCH_VALUE"}
         dataSearchValues={consultationSearchValues}
+        filter={consultationFilter}
         // addBtn={status === "appointed" ? true : false}
         statusType="consultation"
         profile={"consultation"}

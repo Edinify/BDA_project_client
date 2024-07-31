@@ -15,6 +15,7 @@ import GroupsPageHead from "./GroupsPageHead/GroupsPageHead";
 import TuitionPageHead from "./TuitionPageHead/TuitionPageHead";
 import ExcelExportBtn from "../ExcelExportBtn/ExcelExportBtn";
 import DiplomaTableHead from "./DiplomaTableHead/DiplomaTableHead";
+import ConsultationPageHead from "./ConsultationPageHead/ConsultationPageHead";
 
 const GlobalHead = ({
   searchData,
@@ -63,7 +64,8 @@ const GlobalHead = ({
               location.pathname === "/teachers/mentors" ||
               location.pathname === "/tuition-fee" ||
               location.pathname === "/tuitionFee" ||
-              location.pathname === "/students"
+              location.pathname === "/students" ||
+              location.pathname === "/consultation/appointed"
                 ? null
                 : search && (
                     <>
@@ -111,6 +113,17 @@ const GlobalHead = ({
                   count={count}
                 />
               )}
+              {statusType === "consultation" && (
+                <ConsultationPageHead
+                  searchData={searchData}
+                  DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
+                  dataSearchValues={dataSearchValues}
+                  filter={filter}
+                  openModal={openModal}
+                  search={search}
+                  count={count}
+                />
+              )}
               {statusType === "career" && <CareerPageHead filter={filter} />}
               {statusType === "groups" && (
                 <GroupsPageHead filter={filter} count={count} />
@@ -139,8 +152,10 @@ const GlobalHead = ({
                 {statusType === "lesson-table" && null}
                 {statusType === "teacher" && null}
                 {statusType === "student" && null}
+                {statusType === "consultation" && null}
                 {statusType !== "lesson-table" &&
                   statusType !== "teacher" &&
+                  statusType !== "consultation" &&
                   statusType !== "student" && (
                     <button className="add-detail" onClick={openModal}>
                       <PlusIcon />

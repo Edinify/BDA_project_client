@@ -60,7 +60,8 @@ export const Routing = () => {
         if (location.pathname.startsWith("/login")) {
           navigate("/student-panel");
         }
-      } else if (user.role === "worker" && !notFound) {
+      }
+       else if (user.role === "worker" && !notFound) {
         let profile;
         for (let profileItem of generalProfileList) {
           const checkProfile = user?.profiles.find(
