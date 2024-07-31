@@ -45,9 +45,9 @@ const LessonModal = ({ showModal, handleClose }) => {
     setToggleIcon('')
   }
 
-  useEffect(()=>{
-    setUpdatedResultData({...lessonData[0]})
-  },[lessonData])
+  // useEffect(()=>{
+  //   setUpdatedResultData({...lessonData[0]})
+  // },[lessonData])
 
   useEffect(() => {
     if(updatedResultData) {

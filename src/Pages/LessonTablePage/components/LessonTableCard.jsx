@@ -253,23 +253,6 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
           >
             <LessonStatus data={data} />
           </td>
-          {/* <td
-            style={
-              data.status === "unviewed"
-                ? { backgroundColor: "#d2c3fe" }
-                : data.status === "confirmed"
-                ? { backgroundColor: "#d4ffbf" }
-                : { backgroundColor: "#ffced1" }
-            }
-          >
-            <div className="td-con">
-              <div className="table-scroll-text">
-                {lessonStatusList.find((item) => item.key === data.status)
-                  .name || ""}
-              </div>
-            </div>
-          </td> */}
-
           <td>
             <UpdateDeleteModal
               updateItem={updateItem}

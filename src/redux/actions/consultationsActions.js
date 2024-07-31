@@ -137,13 +137,14 @@ export const getActiveConsultationAction = (payload) => async (dispatch) => {
 };
 
 export const getConsultationPaginationAction =
-  (length, searchQuery, status = "appointed") =>
-  async (dispatch) => {
+  (length, searchQuery, status) => async (dispatch) => {
     dispatch(pageLoading(true));
     console.log(true);
     try {
       const { data } = await API.get(
-        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}`
+        `/pagination/?length=${length}&searchQuery=${
+          searchQuery || ""
+        }&status=${status || ""}`
       );
 
       dispatch({

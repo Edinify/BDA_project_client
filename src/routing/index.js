@@ -31,7 +31,6 @@ export const Routing = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const token = localStorage.getItem("auth");
 
-
   // console.log(userData,"user dataaaa")
 
   // console.log(user, "userrrrrrr");
@@ -89,7 +88,7 @@ export const Routing = () => {
               navigate("/teachers");
               break;
             case "consultation":
-              navigate("/consultation/appointed");
+              navigate("/consultation");
               break;
             case "groups":
               navigate("/groups/current");
