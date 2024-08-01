@@ -19,6 +19,16 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
     studentSignature: 0,
   });
 
+  const [checkMentorHour, setCheckMentorHour] = useState(
+    data.mentorHour || false
+  );
+
+
+
+  useEffect(() => {
+    setCheckMentorHour(data.mentorHour);
+  }, [data.mentorHour]);
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const lessonDay = data?.date
     ? `${moment(data.date).locale("az").format("DD.MM.YYYY")}, ${
@@ -234,10 +244,23 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               <div className="table-scroll-text">
                 {data?.topic?.name === "Praktika" ? (
                   ""
-                ) : data.mentorHour ? (
-                  <span style={{ color: "#07bc0c" }}>Keçirilib</span>
                 ) : (
-                  <span style={{ color: "#e74c3c" }}>Keçirilməyib</span>
+                  <>
+                    <input
+                      value={checkMentorHour}
+                      style={{ marginRight: "10px" }}
+                      type="checkbox"
+                      checked={checkMentorHour}
+                      onChange={() => {
+                        setCheckMentorHour(!checkMentorHour);
+                      }}
+                    />
+                    <span
+                      style={{ color: checkMentorHour ? "#07bc0c" : "#e74c3c" }}
+                    >
+                      {checkMentorHour ? "Keçirilib" : "Keçirilməyib"}
+                    </span>
+                  </>
                 )}
               </div>
             </div>

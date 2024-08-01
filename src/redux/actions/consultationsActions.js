@@ -148,7 +148,8 @@ export const getConsultationPaginationAction =
   ) =>
   async (dispatch) => {
     dispatch(pageLoading(true));
-    console.log(true);
+
+    console.log(status,"status")
     try {
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${
