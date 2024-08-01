@@ -4,8 +4,9 @@ import ExcelExportBtn from "../../../globalComponents/ExcelExportBtn/ExcelExport
 import { ReactComponent as PlusIcon } from "../../../assets/icons/Plus.svg";
 import Search from "../Search/Search";
 import ConsultationStatusDropdown from "./ConsultationStatusDropdown/ConsultationStatusDropdown";
-import { DatePick } from "../../DatePicker/DatePicker";
 import WhereComingDropdown from "./WhereComingDropdown/WhereComingDropdown";
+import { Dropdown } from "../FilterComponents/Dropdown";
+import { DatePick } from "../FilterComponents/DatePicker/DatePicker";
 
 const ConsultationPageHead = ({
   openModal,
@@ -34,15 +35,15 @@ const ConsultationPageHead = ({
               DATA_SEARCH_VALUE={DATA_SEARCH_VALUE}
             />
           )}
-          <CoursesDropdown deviceType="desktop" />
-          <ConsultationStatusDropdown deviceType="desktop" />
-          <WhereComingDropdown deviceType="desktop" />
+          <Dropdown type="course" />
+          <Dropdown type="status" />
+          <Dropdown type="whereComing" />
+          {/* <CoursesDropdown deviceType="desktop" /> */}
+          {/* <ConsultationStatusDropdown deviceType="desktop" /> */}
+          {/* <WhereComingDropdown deviceType="desktop" /> */}
         </div>
         <div className="consultation-bottom-filter">
-          
-            <DatePick deviceType="desktop" />
-          
-
+          <DatePick deviceType="desktop" />
           <div className="lesson-table-btn-container teacher ">
             <button className="add-detail" onClick={() => filter()}>
               Tətbiq et

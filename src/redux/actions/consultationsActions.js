@@ -144,7 +144,7 @@ export const getConsultationPaginationAction =
     startDate,
     endDate,
     courseId = "",
-    whereComing=""
+    whereComing = ""
   ) =>
   async (dispatch) => {
     dispatch(pageLoading(true));
@@ -152,7 +152,11 @@ export const getConsultationPaginationAction =
     console.log(status,"status")
     try {
       const { data } = await API.get(
-        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&startDate=${startDate}&endDate=${endDate}&courseId=${courseId}&whereComing=${whereComing}`
+        `/pagination/?length=${length}&searchQuery=${
+          searchQuery || ""
+        }&status=${status || ""}&startDate=${startDate || ""}&endDate=${
+          endDate || ""
+        }&courseId=${courseId || ""}&whereComing=${whereComing || ""}`
       );
 
       dispatch({

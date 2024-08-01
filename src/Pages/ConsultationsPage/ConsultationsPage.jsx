@@ -19,12 +19,10 @@ const ConsultationsPage = () => {
   const { consultationSearchValues } = useSelector(
     (state) => state.searchValues
   );
-  const { consultationStatus, courseId, whereComing } = useSelector(
-    (state) => state.consultationStatus
+
+  const { startDate, endDate, status, course, whereComing } = useSelector(
+    (state) => state.filter
   );
-  const { startDate, endDate } = useSelector((state) => state.datepicker);
-  // const status =
-  //   location.pathname === "/consultation/appointed" ? "appointed" : "completed";
 
   let userData = JSON.parse(localStorage.getItem("userData"));
   userData =
@@ -41,10 +39,10 @@ const ConsultationsPage = () => {
         getConsultationPaginationAction(
           consultationData?.length || 0,
           consultationSearchValues,
-          consultationStatus,
+          status,
           startDate,
           endDate,
-          courseId,
+          course?._id,
           whereComing
         )
       );
@@ -53,10 +51,10 @@ const ConsultationsPage = () => {
         getConsultationPaginationAction(
           consultationData?.length || 0,
           "",
-          consultationStatus,
+          status,
           startDate,
           endDate,
-          courseId,
+          course?._id || "",
           whereComing
         )
       );
@@ -82,11 +80,11 @@ const ConsultationsPage = () => {
       getConsultationPaginationAction(
         0,
         consultationSearchValues,
-        consultationStatus,
-        "",
-        "",
-        "",
-        ""
+        status,
+        startDate,
+        endDate,
+        course?._id || "",
+        whereComing
       )
     );
   };
@@ -100,11 +98,11 @@ const ConsultationsPage = () => {
         getConsultationPaginationAction(
           0,
           consultationSearchValues,
-          consultationStatus,
-          "",
-          "",
-          "",
-          ""
+          status,
+          startDate,
+          endDate,
+          course?._id || "",
+          whereComing
         )
       );
     } else {
@@ -120,10 +118,22 @@ const ConsultationsPage = () => {
     };
   }, [location.pathname]);
 
-  const consultationFilter=()=>{
-    dispatch({type:CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION})
-    dispatch(getConsultationPaginationAction(0,consultationSearchValues,consultationStatus,startDate,endDate,courseId,whereComing))
-  }
+  const consultationFilter = () => {
+    dispatch({
+      type: CONSULTATION_ALL_ACTIONS_TYPE.RESET_CONSULTATION_PAGINATION,
+    });
+    dispatch(
+      getConsultationPaginationAction(
+        0,
+        consultationSearchValues,
+        status,
+        startDate,
+        endDate,
+        course?._id,
+        whereComing
+      )
+    );
+  };
 
   return (
     <div className="details-page ">
@@ -133,18 +143,10 @@ const ConsultationsPage = () => {
         DATA_SEARCH_VALUE={"CONSULTATION_SEARCH_VALUE"}
         dataSearchValues={consultationSearchValues}
         filter={consultationFilter}
-        // addBtn={status === "appointed" ? true : false}
         statusType="consultation"
         profile={"consultation"}
         count={totalLength}
       />
-
-      {/* <HeadTabs
-        firstRoute={"/consultation/appointed"}
-        secondRoute={"/consultation/completed"}
-        firstPathname={"Təyin olunmuş"}
-        secondPathname={"Baş tutmuş"}
-      /> */}
 
       <ConsultationData
         getNextConsultation={getNextConsultation}

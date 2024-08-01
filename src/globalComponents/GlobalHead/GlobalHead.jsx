@@ -65,7 +65,7 @@ const GlobalHead = ({
               location.pathname === "/tuition-fee" ||
               location.pathname === "/tuitionFee" ||
               location.pathname === "/students" ||
-              location.pathname === "/consultation/appointed"
+              location.pathname === "/consultation"
                 ? null
                 : search && (
                     <>

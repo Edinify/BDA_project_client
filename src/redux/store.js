@@ -69,6 +69,7 @@ import { studentGroupStatusReducer } from "./reducers/studentGroupStatusReducer"
 import { tuitionFeePaymentReducer } from "./reducers/tuitionFeePaymentReducer";
 import { roomsModalReducer } from "./reducers/roomsModalReducer";
 import { consultationStatusReducer } from "./reducers/consultationStatusReducer";
+import { filterReducer } from "./reducers/filterReducer";
 
 const initialState = {};
 const reducers = combineReducers({
@@ -100,7 +101,7 @@ const reducers = combineReducers({
   tuitionFeeModal: tuitionFeeModalReducer,
   consultationPagination: consultationPaginationReducer,
   consultationModal: consultationModalReducer,
-  consultationStatus:consultationStatusReducer,
+  consultationStatus: consultationStatusReducer,
   workerModal: workerModalReducer,
   workersPagination: workersPaginationReducer,
   groupModal: groupModalReducer,
@@ -136,6 +137,7 @@ const reducers = combineReducers({
   diplomaPagination: diplomaPaginationReducer,
   diplomaModal: diplomaModalReducer,
   tuitionFeePayment: tuitionFeePaymentReducer,
+  filter: filterReducer,
 });
 // test
 

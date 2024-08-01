@@ -34,9 +34,7 @@ export const Header = () => {
         return "Təhsil haqqı";
       case "/career":
         return "Karyera";
-      case "/consultation/appointed":
-        return "Konsultasiya";
-      case "/consultation/completed":
+      case "/consultation":
         return "Konsultasiya";
       case "/syllabus":
         return "Sillabus";

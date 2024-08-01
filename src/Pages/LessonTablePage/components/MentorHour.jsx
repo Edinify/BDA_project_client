@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  updateLessonTableAction } from "../../../redux/actions/lessonTableActions";
+import { updateLessonTableAction } from "../../../redux/actions/lessonTableActions";
 
 const MentorHour = ({ data }) => {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -9,14 +9,17 @@ const MentorHour = ({ data }) => {
   const [checkMentorHour, setCheckMentorHour] = useState(
     data.mentorHour || false
   );
+
   const dispatch = useDispatch();
 
   const changeMentorHour = () => {
-    dispatch(
-      updateLessonTableAction(data._id, { mentorHour: data.mentorHour })
-    );
-    setCheckMentorHour(!checkMentorHour);
-
+    if (!isDisabled) {
+      const updatedMentorHour = !checkMentorHour;
+      dispatch(
+        updateLessonTableAction(data._id, { mentorHour: updatedMentorHour })
+      );
+      setCheckMentorHour(updatedMentorHour);
+    }
   };
 
   useEffect(() => {
@@ -49,7 +52,7 @@ const MentorHour = ({ data }) => {
   return (
     <form>
       <input
-      disabled={isDisabled}
+        disabled={isDisabled}
         value={checkMentorHour}
         style={{ marginRight: "10px" }}
         type="checkbox"

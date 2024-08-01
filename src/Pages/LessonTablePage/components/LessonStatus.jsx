@@ -2,11 +2,19 @@ import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LESSON_TABLE_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
+import { updateLessonTableAction } from "../../../redux/actions/lessonTableActions";
+import LoadingBtn from "../../../globalComponents/Loading/components/LoadingBtn/LoadingBtn";
 
 const LessonStatus = ({ data }) => {
   const dispatch = useDispatch();
   const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useSelector((state) => state.user);
+  const { lessonTableModalLoading } = useSelector(
+    (state) => state.lessonTableModal
+  );
+  const [isTargetCard, setIsTargetCard] = useState(false);
+
+  console.log(lessonTableModalLoading, "lesson loading");
 
   const confirmedStatusList = [
     { status: "unviewed", label: "Gözləmədə" },
@@ -14,10 +22,12 @@ const LessonStatus = ({ data }) => {
     { status: "cancelled", label: "Ləğv edilib" },
   ];
 
-  const [selectedStatus, setSelectedStatus] = useState(data.status);
-  const { lessonTableModalData: modalData } = useSelector(
-    (state) => state.lessonTableModal
-  );
+  const updateStatus = (item) => {
+    if (!isDisabled) {
+      dispatch(updateLessonTableAction(data._id, { status: item.status }));
+      setIsTargetCard(true);
+    }
+  };
 
   useEffect(() => {
     if (user?.role === "super-admin") {
@@ -29,7 +39,7 @@ const LessonStatus = ({ data }) => {
         (item) => item.profile === "lessonTable"
       )?.power;
 
-      if (power === "all" || "update") {
+      if (power === "all" || power === "update") {
         setIsDisabled(false);
       }
     }
@@ -43,17 +53,12 @@ const LessonStatus = ({ data }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!lessonTableModalLoading) setIsTargetCard(false);
+  }, [lessonTableModalLoading]);
+
   return (
-    <form
-      className="lesson-page-status"
-      //   style={
-      //     data.status === "unviewed"
-      //       ? { backgroundColor: "#d2c3fe" }
-      //       : data.status === "confirmed"
-      //       ? { backgroundColor: "#d4ffbf" }
-      //       : { backgroundColor: "#ffced1" }
-      //   }
-    >
+    <form className="lesson-page-status">
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
@@ -64,30 +69,25 @@ const LessonStatus = ({ data }) => {
           flexWrap: "nowrap",
           alignItems: "center",
           justifyContent: "center",
-          //   backgroundColor:
-          //   data.status === "unviewed" ? "#d2c3fe" :
-          //   data.status === "confirmed" ? "#d4ffbf" :
-          //   "#ffced1"
         }}
       >
-        {confirmedStatusList?.map((item, i) => (
-          <FormControlLabel
-            disabled={isDisabled}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              width: "100%",
-              marginRight: 0,
-            }}
-            key={i}
-            value={item.status}
-            control={<Radio checked={selectedStatus === item.status} />}
-            label={item.label}
-            onClick={() => {
-              if (!isDisabled) setSelectedStatus(item.status);
-            }}
-          />
-        ))}
+        {(lessonTableModalLoading && isTargetCard && <LoadingBtn />) ||
+          confirmedStatusList?.map((item, i) => (
+            <FormControlLabel
+              disabled={isDisabled}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                marginRight: 0,
+              }}
+              key={i}
+              value={item.status}
+              control={<Radio checked={data.status === item.status} />}
+              label={item.label}
+              onClick={() => updateStatus(item)}
+            />
+          ))}
       </RadioGroup>
     </form>
   );

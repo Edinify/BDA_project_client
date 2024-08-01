@@ -44,16 +44,7 @@ const WorkersPanelRoute = (user) => {
       )}
 
       {profiles?.consultation && (
-        <>
-          <Route
-            path="/consultation/appointed"
-            element={<ConsultationsPage />}
-          />
-          <Route
-            path="/consultation/completed"
-            element={<ConsultationsPage />}
-          />
-        </>
+        <Route path="/consultation" element={<ConsultationsPage />} />
       )}
 
       {profiles?.groups && (
