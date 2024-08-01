@@ -53,14 +53,12 @@ const ConsultationData = ({ getNextConsultation, userData }) => {
       setScrollHeight(
         window.innerHeight -
           mainHeader.offsetHeight -
-          detailsHeader.offsetHeight 
+          detailsHeader.offsetHeight
       );
     };
 
     setScrollHeight(
-      window.innerHeight -
-        mainHeader.offsetHeight -
-        detailsHeader.offsetHeight 
+      window.innerHeight - mainHeader.offsetHeight - detailsHeader.offsetHeight
     );
 
     window.addEventListener("resize", handleResize);
@@ -104,16 +102,41 @@ const ConsultationData = ({ getNextConsultation, userData }) => {
                 </tr>
               </thead>
               <tbody>
-                {consultationData?.map((student, i) => (
-                  <ConsultationCard
-                    key={i}
-                    data={student}
-                    mode="desktop"
-                    consultation={userData}
-                    setOpenMoreModal={setOpenMoreModal}
-                    cellNumber={i + 1}
-                  />
-                ))}
+                {consultationData?.map((consultation, i) => {
+                  const currContactDate = new Date(consultation.contactDate);
+                  const beforeContactDate =
+                    i > 0 && new Date(consultationData[i - 1].contactDate);
+
+                  return (
+                    <>
+                      {i > 0 &&
+                        currContactDate.getDate() !==
+                          beforeContactDate.getDate() && (
+                          <tr key={`spacer-${i}`}>
+                            <td
+                              colSpan={tableHead.length}
+                              style={{ height: "25px", padding: 0 }}
+                            >
+                              <div
+                                style={{
+                                  height: "100%",
+                                  background: "var(--tertiary-200)",
+                                }}
+                              ></div>
+                            </td>
+                          </tr>
+                        )}
+                      <ConsultationCard
+                        key={i}
+                        data={consultation}
+                        mode="desktop"
+                        consultation={userData}
+                        setOpenMoreModal={setOpenMoreModal}
+                        cellNumber={i + 1}
+                      />
+                    </>
+                  );
+                })}
               </tbody>
             </table>
           </InfiniteScroll>

@@ -5,7 +5,7 @@ import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";
 
-const StudentsData = ({ studentPageNum, userData, getNextStudents }) => {
+const StudentsData = ({  userData, getNextStudents }) => {
   const { students, hasMore } = useSelector(
     (state) => state.studentsPagination
   );

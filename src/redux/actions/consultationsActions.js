@@ -137,14 +137,25 @@ export const getActiveConsultationAction = (payload) => async (dispatch) => {
 };
 
 export const getConsultationPaginationAction =
-  (length, searchQuery, status) => async (dispatch) => {
+  (
+    length,
+    searchQuery,
+    status = "",
+    startDate,
+    endDate,
+    courseId = "",
+    whereComing = ""
+  ) =>
+  async (dispatch) => {
     dispatch(pageLoading(true));
     console.log(true);
     try {
       const { data } = await API.get(
         `/pagination/?length=${length}&searchQuery=${
           searchQuery || ""
-        }&status=${status || ""}`
+        }&status=${status || ""}&startDate=${startDate || ""}&endDate=${
+          endDate || ""
+        }&courseId=${courseId || ""}&whereComing=${whereComing || ""}`
       );
 
       dispatch({
@@ -166,7 +177,7 @@ export const getConsultationPaginationAction =
           );
 
           const { data } = await API.get(
-            `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}`
+            `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&startDate=${startDate}&endDate=${endDate}&courseId=${courseId}&whereComing=${whereComing}`
           );
           dispatch({
             type: CONSULTATION_ALL_ACTIONS_TYPE.GET_CONSULTATION_PAGINATION,
