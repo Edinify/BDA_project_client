@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 // import { ReactComponent as XIcon } from "../../../assets/icons/student-home/x-icon.svg";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/student-home/success.svg";
 import LessonStatus from "./LessonStatus";
+import MentorHour from "./MentorHour";
 
 const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
@@ -19,15 +20,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
     studentSignature: 0,
   });
 
-  const [checkMentorHour, setCheckMentorHour] = useState(
-    data.mentorHour || false
-  );
-
-
-
-  useEffect(() => {
-    setCheckMentorHour(data.mentorHour);
-  }, [data.mentorHour]);
+ 
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const lessonDay = data?.date
@@ -245,22 +238,8 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
                 {data?.topic?.name === "Praktika" ? (
                   ""
                 ) : (
-                  <>
-                    <input
-                      value={checkMentorHour}
-                      style={{ marginRight: "10px" }}
-                      type="checkbox"
-                      checked={checkMentorHour}
-                      onChange={() => {
-                        setCheckMentorHour(!checkMentorHour);
-                      }}
-                    />
-                    <span
-                      style={{ color: checkMentorHour ? "#07bc0c" : "#e74c3c" }}
-                    >
-                      {checkMentorHour ? "Keçirilib" : "Keçirilməyib"}
-                    </span>
-                  </>
+                  <MentorHour data={data} />
+               
                 )}
               </div>
             </div>
