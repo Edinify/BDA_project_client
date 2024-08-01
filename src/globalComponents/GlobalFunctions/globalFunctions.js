@@ -108,10 +108,13 @@ export function useCustomHook() {
     { name: "Digər", key: "other" },
   ];
   const constStatusList = [
-    { name: "Təyin edildi", key: "appointed" },
+    { name: "Konsultasiya istəyir", key: "appointed" },
     { name: "Satıldı", key: "sold" },
-    { name: "Ləğv edildi", key: "cancelled" },
+    { name: "İmtina", key: "cancelled" },
     { name: "Düşünür", key: "thinks" },
+    { name: "Zəngi açmadı", key: "not-open-call" },
+    { name: "Zəng çatmır", key: "call-missing" },
+    { name: "Whatsappda məlumat", key: "whatsapp_info" },
   ];
   const cancelReasonList = [
     { name: "Maddi", key: "financial" },
@@ -205,10 +208,11 @@ export function useCustomHook() {
   ];
 
   const diplomaStatus = [
-    { name: "Müdafiə olunmayıb", key: "noneDefensed" },
-    { name: "Müdafiə olunub", key: "defensed" },
+    { name: "Yoxdur", key: "none" },
+    { name: "Dizayna göndərilib", key: "send-design" },
     { name: "Dizayn olunub", key: "designed" },
-    { name: "Diplom hazırdır", key: "done" },
+    { name: "Çapa göndərildi", key: "send-print" },
+    { name: "Akademiyadadır", key: "in-academy" },
     { name: "Diplom verilib", key: "awarded" },
   ];
 

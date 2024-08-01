@@ -31,7 +31,6 @@ export const Routing = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const token = localStorage.getItem("auth");
 
-
   // console.log(userData,"user dataaaa")
 
   // console.log(user, "userrrrrrr");
@@ -60,7 +59,8 @@ export const Routing = () => {
         if (location.pathname.startsWith("/login")) {
           navigate("/student-panel");
         }
-      } else if (user.role === "worker" && !notFound) {
+      }
+       else if (user.role === "worker" && !notFound) {
         let profile;
         for (let profileItem of generalProfileList) {
           const checkProfile = user?.profiles.find(
@@ -89,7 +89,7 @@ export const Routing = () => {
               navigate("/teachers");
               break;
             case "consultation":
-              navigate("/consultation/appointed");
+              navigate("/consultation");
               break;
             case "groups":
               navigate("/groups/current");

@@ -21,10 +21,6 @@ import { ReactComponent as RoomIcon } from "../../../../assets/icons/room-icon.s
 
 const SidebarSuperAdmin = ({ closeSidebar }) => {
   const location = useLocation();
-  const consultationNav = [
-    "/consultation/appointed",
-    "/consultation/completed",
-  ];
   const groupsNav = ["/groups/current", "/groups/waiting", "/groups/ended"];
 
   return (
@@ -94,13 +90,7 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
-        <NavLink
-          className={
-            consultationNav.includes(location.pathname) ? "active" : ""
-          }
-          to="/consultation/appointed"
-          onClick={closeSidebar}
-        >
+        <NavLink to="/consultation" onClick={closeSidebar}>
           <MainPanelIcon />
           Konsultasiya
         </NavLink>

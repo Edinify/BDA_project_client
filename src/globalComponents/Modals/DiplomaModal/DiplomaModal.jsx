@@ -22,10 +22,11 @@ const DiplomaModal = () => {
   const [degreeOpen, setDegreeOpen] = useState(false);
 
   const statusList = [
-    { status: "Müdafiə olunmayıb", label: "noneDefensed" },
-    { status: "Müdafiə olunub", label: "defensed" },
+    { status: "Yoxdur", label: "none" },
+    { status: "Dizayna göndərilib", label: "send-design" },
     { status: "Dizayn olunub", label: "designed" },
-    { status: "Diplom hazırdır", label: "done" },
+    { status: "Çapa göndərildi", label: "send-print" },
+    { status: "Akademiyadadır", label: "in-academy" },
     { status: "Diplom verilib", label: "awarded" },
   ];
 

@@ -4,6 +4,7 @@ import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModa
 import { useDispatch } from "react-redux";
 import { DIPLOMA_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import { useCustomHook } from "../../../globalComponents/GlobalFunctions/globalFunctions";
+import DiplomaStatus from "./DiplomaStatus";
 
 const DiplomaCard = ({ data, mode }) => {
   const dispatch = useDispatch();
@@ -12,9 +13,9 @@ const DiplomaCard = ({ data, mode }) => {
   const diplomaDegree = diplomaDegrees.find(
     (diploma) => diploma.key === data.diplomaDegree
   ).name;
-  const status = diplomaStatus.find(
-    (diploma) => diploma.key === data.diplomaStatus
-  ).name;
+  const status =
+    diplomaStatus.find((diploma) => diploma.key === data.diplomaStatus)?.name ||
+    "";
 
   const updateItem = () => {
     dispatch({
@@ -68,11 +69,14 @@ const DiplomaCard = ({ data, mode }) => {
             <div className="right-fade"></div>
           </div>
         </td>
-        <td>
-          <div className="td-con" style={{ width: "150px" }}>
-            <div className="table-scroll-text">{status}</div>
-            <div className="right-fade"></div>
-          </div>
+        <td
+          style={
+            data.diplomaStatus !== "awarded"
+              ? { backgroundColor: "#d2c3fe" }
+              : { backgroundColor: "#d4ffbf" }
+          }
+        >
+          <DiplomaStatus data={data} />
         </td>
 
         <td>

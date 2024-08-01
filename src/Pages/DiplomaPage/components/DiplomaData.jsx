@@ -1,5 +1,5 @@
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import DiplomaCard from "./DiplomaCard";
 import { useEffect, useState } from "react";
 import SmallLoading from "../../../globalComponents/Loading/components/SmallLoading/SmallLoading";

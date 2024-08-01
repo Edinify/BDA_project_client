@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 // import { ReactComponent as XIcon } from "../../../assets/icons/student-home/x-icon.svg";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/student-home/success.svg";
 import LessonStatus from "./LessonStatus";
+import MentorHour from "./MentorHour";
 
 const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
@@ -229,15 +230,13 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               </div>
             </td>
           )}
-          <td>
+          <td style={{ backgroundColor: "lightgray" }}>
             <div className="td-con">
               <div className="table-scroll-text">
                 {data?.topic?.name === "Praktika" ? (
                   ""
-                ) : data.mentorHour ? (
-                  <span style={{ color: "#07bc0c" }}>Keçirilib</span>
                 ) : (
-                  <span style={{ color: "#e74c3c" }}>Keçirilməyib</span>
+                  <MentorHour data={data} />
                 )}
               </div>
             </div>
@@ -253,23 +252,6 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
           >
             <LessonStatus data={data} />
           </td>
-          {/* <td
-            style={
-              data.status === "unviewed"
-                ? { backgroundColor: "#d2c3fe" }
-                : data.status === "confirmed"
-                ? { backgroundColor: "#d4ffbf" }
-                : { backgroundColor: "#ffced1" }
-            }
-          >
-            <div className="td-con">
-              <div className="table-scroll-text">
-                {lessonStatusList.find((item) => item.key === data.status)
-                  .name || ""}
-              </div>
-            </div>
-          </td> */}
-
           <td>
             <UpdateDeleteModal
               updateItem={updateItem}

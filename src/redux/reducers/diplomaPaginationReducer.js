@@ -30,12 +30,11 @@ export const diplomaPaginationReducer = (state = initialState, action) => {
         currentLength: 0,
       };
     case DIPLOMA_ALL_ACTIONS_TYPE.UPDATE_DIPLOMA:
-
-    console.log(action.payload)
       return {
         ...state,
         diplomasData: state.diplomasData.map((diploma) =>
-          diploma._id.toString() === action.payload._id.toString()
+          diploma._id.toString() === action.payload._id.toString() &&
+          diploma.group._id.toString() === action.payload.group._id.toString()
             ? action.payload
             : diploma
         ),

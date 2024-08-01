@@ -1,6 +1,7 @@
 import "moment/locale/az";
 
 const TeacherCells = ({ time, groups, index }) => {
+  console.log(groups);
   return (
     <td
       className={`lesson-name teacher-cell`}
@@ -28,7 +29,7 @@ const TeacherCells = ({ time, groups, index }) => {
                       fontWeight: "bold",
                     }) || { fontWeight: 600 }
                   }
-                  key={time.startTime + i}
+                  key={time.startTime + i + i}
                 >
                   {date && name}
                 </li>

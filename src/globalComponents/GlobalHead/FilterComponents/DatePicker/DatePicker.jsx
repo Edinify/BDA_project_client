@@ -4,25 +4,25 @@ import { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import az from "date-fns/locale/az";
 import "./datePicker.css";
-import { ReactComponent as CalendarIcon } from "../../assets/icons/calendar.svg";
+import { ReactComponent as CalendarIcon } from "../../../../assets/icons/calendar.svg";
 import { useDispatch } from "react-redux";
-import { DATEPICKER_ACTION_TYPE } from "../../redux/actions-type";
 import "react-datepicker/dist/react-datepicker.css";
+import { FILTER_ACTION_TYPE } from "../../../../redux/actions-type";
 
 export const DatePick = ({ deviceType = "" }) => {
   registerLocale("az", az);
   const dispatch = useDispatch();
-  const [selectedStartDate, setSelectedStartDate] = useState(null);
-  const [selectedEndDate, setSelectedEndDate] = useState(null);
+  const [selectedStartDate, setSelectedStartDate] = useState("");
+  const [selectedEndDate, setSelectedEndDate] = useState("");
 
   useEffect(() => {
     dispatch({
-      type: DATEPICKER_ACTION_TYPE.START_DATE,
-      payload: selectedStartDate,
+      type: FILTER_ACTION_TYPE.GET_FILTER_DATA,
+      payload: { startDate: selectedStartDate || "" },
     });
     dispatch({
-      type: DATEPICKER_ACTION_TYPE.END_DATE,
-      payload: selectedEndDate,
+      type: FILTER_ACTION_TYPE.GET_FILTER_DATA,
+      payload: { endDate: selectedEndDate || "" },
     });
   }, [selectedStartDate, selectedEndDate, dispatch]);
 
