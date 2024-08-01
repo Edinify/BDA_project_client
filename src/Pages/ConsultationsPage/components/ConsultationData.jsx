@@ -108,11 +108,11 @@ const ConsultationData = ({ getNextConsultation, userData }) => {
                     i > 0 && new Date(consultationData[i - 1].contactDate);
 
                   return (
-                    <>
+                    <React.Fragment key={consultation._id}>
                       {i > 0 &&
                         currContactDate.getDate() !==
                           beforeContactDate.getDate() && (
-                          <tr key={`spacer-${i}`}>
+                          <tr>
                             <td
                               colSpan={tableHead.length}
                               style={{ height: "25px", padding: 0 }}
@@ -127,14 +127,13 @@ const ConsultationData = ({ getNextConsultation, userData }) => {
                           </tr>
                         )}
                       <ConsultationCard
-                        key={i}
                         data={consultation}
                         mode="desktop"
                         consultation={userData}
                         setOpenMoreModal={setOpenMoreModal}
                         cellNumber={i + 1}
                       />
-                    </>
+                    </React.Fragment>
                   );
                 })}
               </tbody>

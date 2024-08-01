@@ -104,16 +104,15 @@ const LessonTableData = ({ getNextLessons }) => {
 
           <tbody>
             {lessonTableData?.map((lesson, i) => (
-              <>
+              <React.Fragment key={lesson._id}>
                 <LessonTableCard
-                  key={lesson._id}
                   data={lesson}
                   mode="desktop"
                   cellNumber={i + 1}
                   setTargetLesson={setTargetLesson}
                 />
                 {(i + 1) % 8 === 0 && (
-                  <tr key={`spacer-${i}`}>
+                  <tr>
                     <td
                       colSpan={tableHead.length}
                       style={{ height: "25px", padding: 0 }}
@@ -127,7 +126,7 @@ const LessonTableData = ({ getNextLessons }) => {
                     </td>
                   </tr>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </tbody>
         </table>
