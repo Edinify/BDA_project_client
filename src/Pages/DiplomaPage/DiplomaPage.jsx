@@ -51,12 +51,17 @@ const DiplomaPage = () => {
   };
 
   useEffect(() => {
-    if (selectedGroup) {
+    dispatch({ type: DIPLOMA_ALL_ACTIONS_TYPE.RESET_DIPLOMA_PAGINATION });
+    dispatch(
+      getDiplomaPaginationAction(
+        0,
+        diplomaSearchValues,
+        selectedGroup?._id || ""
+      )
+    );
+
+    return () =>
       dispatch({ type: DIPLOMA_ALL_ACTIONS_TYPE.RESET_DIPLOMA_PAGINATION });
-      dispatch(
-        getDiplomaPaginationAction(0, diplomaSearchValues, selectedGroup._id)
-      );
-    }
   }, [selectedGroup]);
 
   return (
@@ -70,7 +75,7 @@ const DiplomaPage = () => {
         profile="diploma"
         statusType="diploma"
       />
-      {selectedGroup && <DiplomaData getNextDiplomas={getNextDiplomas} />}
+      <DiplomaData getNextDiplomas={getNextDiplomas} />
     </div>
   );
 };

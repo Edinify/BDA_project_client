@@ -20,8 +20,6 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
     studentSignature: 0,
   });
 
- 
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const lessonDay = data?.date
     ? `${moment(data.date).locale("az").format("DD.MM.YYYY")}, ${
@@ -232,14 +230,13 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               </div>
             </td>
           )}
-          <td>
+          <td style={{ backgroundColor: "lightgray" }}>
             <div className="td-con">
               <div className="table-scroll-text">
                 {data?.topic?.name === "Praktika" ? (
                   ""
                 ) : (
                   <MentorHour data={data} />
-               
                 )}
               </div>
             </div>

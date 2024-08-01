@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLessonTableAction } from "../../../redux/actions/lessonTableActions";
+import LoadingBtn from "../../../globalComponents/Loading/components/LoadingBtn/LoadingBtn";
 
 const MentorHour = ({ data }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useSelector((state) => state.user);
-
-  const [checkMentorHour, setCheckMentorHour] = useState(
-    data.mentorHour || false
+  const { lessonTableModalLoading } = useSelector(
+    (state) => state.lessonTableModal
   );
+  const [isTargetCard, setIsTargetCard] = useState(false);
 
   const dispatch = useDispatch();
 
-  const changeMentorHour = () => {
+  const changeMentorHour = (currentValue) => {
+    console.log(currentValue, "current1 valueeeeeeeeeeeee");
+    console.log(!currentValue, "current2 valueeeeeeeeeeeee");
     if (!isDisabled) {
-      const updatedMentorHour = !checkMentorHour;
       dispatch(
-        updateLessonTableAction(data._id, { mentorHour: updatedMentorHour })
+        updateLessonTableAction(data._id, { mentorHour: !currentValue })
       );
-      setCheckMentorHour(updatedMentorHour);
+      setIsTargetCard(true);
     }
   };
 
@@ -37,32 +39,36 @@ const MentorHour = ({ data }) => {
       }
     }
 
-    if (user?.role === "teacher") {
-      setIsDisabled(true);
-    }
-
-    if (user?.role === "mentor" && data?.topic?.name === "Praktika") {
+    if (user?.role === "mentor" && data?.topic?.name !== "Praktika") {
       setIsDisabled(false);
     }
   }, []);
 
   useEffect(() => {
-    setCheckMentorHour(data.mentorHour);
-  }, [data.mentorHour]);
+    if (!lessonTableModalLoading) setIsTargetCard(false);
+  }, [lessonTableModalLoading]);
+
+  // console.log(data.mentorHour, "llllllllllllllllllllllllllllllllll");
   return (
-    <form>
-      <input
-        disabled={isDisabled}
-        value={checkMentorHour}
-        style={{ marginRight: "10px" }}
-        type="checkbox"
-        checked={checkMentorHour}
-        onChange={changeMentorHour}
-      />
-      <span style={{ color: checkMentorHour ? "#07bc0c" : "#e74c3c" }}>
-        {checkMentorHour ? "Keçirilib" : "Keçirilməyib"}
-      </span>
-    </form>
+    <>
+      {(lessonTableModalLoading && isTargetCard && <LoadingBtn />) || (
+        <form>
+          <input
+            disabled={isDisabled}
+            value={data.mentorHour}
+            style={{ marginRight: "10px" }}
+            type="checkbox"
+            checked={data.mentorHour}
+            onChange={(e) =>
+              changeMentorHour(e.target.value === "true" ? true : false)
+            }
+          />
+          <span style={{ color: data.mentorHour ? "#07bc0c" : "#e74c3c" }}>
+            {data.mentorHour ? "Keçirilib" : "Keçirilməyib"}
+          </span>
+        </form>
+      )}
+    </>
   );
 };
 

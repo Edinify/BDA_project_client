@@ -208,10 +208,11 @@ export function useCustomHook() {
   ];
 
   const diplomaStatus = [
-    { name: "Müdafiə olunmayıb", key: "noneDefensed" },
-    { name: "Müdafiə olunub", key: "defensed" },
+    { name: "Yoxdur", key: "none" },
+    { name: "Dizayna göndərilib", key: "send-design" },
     { name: "Dizayn olunub", key: "designed" },
-    { name: "Diplom hazırdır", key: "done" },
+    { name: "Çapa göndərildi", key: "send-print" },
+    { name: "Akademiyadadır", key: "in-academy" },
     { name: "Diplom verilib", key: "awarded" },
   ];
 
