@@ -40,7 +40,6 @@ const WorkersPage = () => {
     });
   };
 
-  // test
   const searchData = (e) => {
     e.preventDefault();
 
