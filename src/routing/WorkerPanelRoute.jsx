@@ -62,7 +62,10 @@ const WorkersPanelRoute = (user) => {
         <Route path="/syllabus" element={<SyllabusPage />} />
       )}
       {profiles?.lessonTable && (
-        <Route path="/lessonTable" element={<LessonTablePage />} />
+        <>
+          <Route path="/lessonTable" element={<LessonTablePage />} />
+          <Route path="/" element={<LessonTablePage />} />
+        </>
       )}
       {profiles?.events && <Route path="/events" element={<EventsPage />} />}
       {profiles?.dashboard && (
