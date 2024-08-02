@@ -270,7 +270,11 @@ export const getStudentsPaginationAction =
     // console.log(searchQuery, "ssssssssssssssssssssss");
     try {
       const { data } = await API.get(
-        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${status}&courseId=${courseId}&groupId=${groupId}&studentGroupStatus=${studentGroupStatus}`
+        `/pagination/?length=${length}&searchQuery=${searchQuery}&status=${
+          status || ""
+        }&courseId=${courseId || ""}&groupId=${
+          groupId || ""
+        }&studentGroupStatus=${studentGroupStatus || ""}`
       );
 
       dispatch({
@@ -345,7 +349,7 @@ export const createStudentsAction = (studentData) => async (dispatch) => {
           })
         );
 
-         await REGISTERAPI.post("/student/sign", studentData);
+        await REGISTERAPI.post("/student/sign", studentData);
 
         dispatch({
           type: STUDENTS_MODAL_ACTION_TYPE.STUDENT_OPEN_MODAL,

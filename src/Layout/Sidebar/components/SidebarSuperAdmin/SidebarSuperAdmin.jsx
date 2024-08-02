@@ -17,13 +17,10 @@ import { ReactComponent as CareerIcon } from "../../../../assets/icons/sidebar/w
 import { ReactComponent as EventsIcon } from "../../../../assets/icons/sidebar/events.svg";
 import { ReactComponent as SyllabusIcon } from "../../../../assets/icons/sidebar/syllabus-svgrepo-com.svg";
 import { ReactComponent as DiplomaIcon } from "../../../../assets/icons/sidebar/diploma.svg";
+import { ReactComponent as RoomIcon } from "../../../../assets/icons/room-icon.svg";
 
 const SidebarSuperAdmin = ({ closeSidebar }) => {
   const location = useLocation();
-  const consultationNav = [
-    "/consultation/appointed",
-    "/consultation/completed",
-  ];
   const groupsNav = ["/groups/current", "/groups/waiting", "/groups/ended"];
 
   return (
@@ -75,6 +72,12 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
+        <NavLink to="/room" onClick={closeSidebar}>
+          <RoomIcon />
+          Otaqlar
+        </NavLink>
+      </li>
+      <li>
         <NavLink to="/tuition-fee" onClick={closeSidebar}>
           <ExpensesIcon />
           Təhsil haqqı
@@ -87,13 +90,7 @@ const SidebarSuperAdmin = ({ closeSidebar }) => {
         </NavLink>
       </li>
       <li>
-        <NavLink
-          className={
-            consultationNav.includes(location.pathname) ? "active" : ""
-          }
-          to="/consultation/appointed"
-          onClick={closeSidebar}
-        >
+        <NavLink to="/consultation" onClick={closeSidebar}>
           <MainPanelIcon />
           Konsultasiya
         </NavLink>

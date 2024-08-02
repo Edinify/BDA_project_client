@@ -22,6 +22,8 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
   const dataCreate = () => {
     const courseId = modalData?.course?._id;
 
+    const roomId = modalData?.room?._id;
+
     const teachersId = modalData?.teachers?.map((item) => {
       return item._id;
     });
@@ -40,6 +42,7 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
       teachers: teachersId,
       students: studentsId,
       mentors: mentorsId,
+      room: roomId,
     };
 
     dispatch({
@@ -73,7 +76,12 @@ const SubmitBtn = ({ formik, modalData, funcType }) => {
         // console.log(formik);
         // console.log(formik.errors, "formik errroors");
         // console.log(modalData);
-        if (formik.isValid && modalData?.name && modalData.course) {
+        if (
+          formik.isValid &&
+          modalData?.name &&
+          modalData.course &&
+          modalData.room
+        ) {
           return false;
         } else {
           return true;

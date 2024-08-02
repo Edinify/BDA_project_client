@@ -8,9 +8,9 @@ const LessonInput = ({
   modalData,
   updateModalState,
 }) => {
-  const addTime = (selectedTime) => {
+  const addTime = (selectedTime, name) => {
     const lessonDateData = [...modalData.lessonDate];
-    lessonDateData[index] = { ...lessonDateData[index], time: selectedTime };
+    lessonDateData[index] = { ...lessonDateData[index], [name]: selectedTime };
     updateModalState("lessonDate", lessonDateData);
   };
 
@@ -22,9 +22,6 @@ const LessonInput = ({
     };
     updateModalState("lessonDate", lessonDateData);
   };
-
-  // console.log(data);
-  // console.log(modalData, "modal dataaaaaaaaa");
 
   return (
     <li>
@@ -48,22 +45,40 @@ const LessonInput = ({
           }}
         />
       </div>
-      <div className="input-box">
+      <div className="input-couples">
         <TextField
           sx={{
             "& input": { fontSize: "12px" },
             marginTop: "16px",
           }}
+          name="startTime"
           InputLabelProps={{
             style: { fontSize: "12px", color: "#3F3F3F" },
             shrink: true,
           }}
           fullWidth
-          label="Dərs saatı"
+          label="Dərs başlama saatı"
           autoComplete="off"
           type="time"
-          value={data.time ? data.time : ""}
-          onChange={(e) => addTime(e.target.value)}
+          value={data.startTime ? data.startTime : ""}
+          onChange={(e) => addTime(e.target.value, e.target.name)}
+        />{" "}
+        <TextField
+          sx={{
+            "& input": { fontSize: "12px" },
+            marginTop: "16px",
+          }}
+          name="endTime"
+          InputLabelProps={{
+            style: { fontSize: "12px", color: "#3F3F3F" },
+            shrink: true,
+          }}
+          fullWidth
+          label="Dərs bitmə saatı"
+          autoComplete="off"
+          type="time"
+          value={data.endTime ? data.endTime : ""}
+          onChange={(e) => addTime(e.target.value, e.target.name)}
         />
       </div>
     </li>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import GroupCard from "./GroupCard";
 import MoreModal from "../../../globalComponents/MoreModal/MoreModal";
 import ConfirmModal from "../../../globalComponents/ConfirmModal/ConfirmModal";
@@ -8,16 +8,14 @@ import SmallLoading from "../../../globalComponents/Loading/components/SmallLoad
 
 const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
   const [openMoreModal, setOpenMoreModal] = useState(false);
-  const { groupData, hasMore } = useSelector(
-    (state) => state.groupsPagination
-  );
+  const { groupData, hasMore } = useSelector((state) => state.groupsPagination);
   const { openConfirmModal } = useSelector((state) => state.groupModal);
   const [scrollHeight, setScrollHeight] = useState(1);
-
 
   const tableHead = [
     "Qrup adı",
     "İxtisas",
+    "Otaq",
     "Müəllimlər",
     "Təlimçilər",
     "Tələbələr",
@@ -67,68 +65,66 @@ const GroupsData = ({ pageNum, getNextTeachers, userData }) => {
 
   return (
     <>
-        <>
-          {openMoreModal && (
-            <MoreModal
-              setOpenMoreModal={setOpenMoreModal}
-              type="group"
-              userData={userData}
-            />
-          )}
+      <>
+        {openMoreModal && (
+          <MoreModal
+            setOpenMoreModal={setOpenMoreModal}
+            type="group"
+            userData={userData}
+          />
+        )}
 
-          {openConfirmModal && <ConfirmModal type="groups" />}
-          <InfiniteScroll
-            dataLength={groupData.length}
-            next={getNextTeachers}
-            hasMore={hasMore}
-            loader={<SmallLoading />}
-            endMessage={
-              <p style={{ textAlign: "center", fontSize: "20px" }}></p>
-            }
-            height={scrollHeight}
-            scrollThreshold={0.7}
+        {openConfirmModal && <ConfirmModal type="groups" />}
+        <InfiniteScroll
+          dataLength={groupData.length}
+          next={getNextTeachers}
+          hasMore={hasMore}
+          loader={<SmallLoading />}
+          endMessage={<p style={{ textAlign: "center", fontSize: "20px" }}></p>}
+          height={scrollHeight}
+          scrollThreshold={0.7}
+        >
+          <table
+            className={`details-table  teacher-table ${
+              userData.power === "only-show" ? "only-show" : "update"
+            } `}
           >
-            <table
-              className={`details-table  teacher-table ${
-                userData.power === "only-show" ? "only-show" : "update"
-              } `}
-            >
-              <thead>
-                <tr>
-                  {tableHead.map((head, i) => (
-                    <th key={i}>{head}</th>
-                  ))}
-                </tr>
-              </thead>
-
-              <tbody>
-                {groupData?.map((teacher, i) => (
-                  <GroupCard
-                    key={i}
-                    data={teacher}
-                    group={userData}
-                    mode="desktop"
-                    cellNumber={i + 1}
-                    setOpenMoreModal={setOpenMoreModal}
-                  />
+            <thead>
+              <tr>
+                {tableHead.map((head, i) => (
+                  <th key={i}>{head}</th>
                 ))}
-              </tbody>
-            </table>
-          </InfiniteScroll>
+              </tr>
+            </thead>
 
-          <div className="details-list-tablet">
-            {groupData?.map((teacher, i) => (
-              <GroupCard
-                key={i}
-                data={teacher}
-                group={userData}
-                mode="tablet"
-                cellNumber={i + 1}
-                setOpenMoreModal={setOpenMoreModal}
-              />
-            ))}
-          </div>
-        </>
+            <tbody>
+              {groupData?.map((teacher, i) => (
+                <GroupCard
+                  key={i}
+                  data={teacher}
+                  group={userData}
+                  mode="desktop"
+                  cellNumber={i + 1}
+                  setOpenMoreModal={setOpenMoreModal}
+                />
+              ))}
+            </tbody>
+          </table>
+        </InfiniteScroll>
+
+        <div className="details-list-tablet">
+          {groupData?.map((teacher, i) => (
+            <GroupCard
+              key={i}
+              data={teacher}
+              group={userData}
+              mode="tablet"
+              cellNumber={i + 1}
+              setOpenMoreModal={setOpenMoreModal}
+            />
+          ))}
+        </div>
+      </>
     </>
   );
 };

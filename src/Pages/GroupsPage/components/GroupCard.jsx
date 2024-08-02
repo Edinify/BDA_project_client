@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { GROUP_MODAL_ACTION_TYPE } from "../../../redux/actions-type";
 import UpdateDeleteModal from "../../../globalComponents/Modals/UpdateDeleteModal/UpdateDeleteModal";
 import { deleteGroupAction } from "../../../redux/actions/groupsActions";
-import { useLocation } from "react-router-dom";
 import moment from "moment";
 import GroupStudentsDropdown from "./GroupStudentsDropdown";
 import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/DeleteItemModal";
@@ -30,14 +29,15 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
 
   let lessonDates = data.lessonDate.map((item, index) => (
     <span className="lesson-date" key={index}>
-      gün: {item.day}, saat: {item.time} {item.practical ? "(Lab day)" : ""}{" "}
-      <br />
+      gün: {item.day}, saat: {item.startTime}-{item.endTime}
+      {item.practical ? "(Lab day)" : ""} <br />
     </span>
   ));
 
   const listData = [
     { key: "Qrup adı", value: data?.name },
     { key: "İxtisas", value: data?.course?.name },
+    { key: "Otaq", value: data?.room?.name },
     { key: "Təlimçilər", value: teachers },
     {
       key: "Başlama tarixi",
@@ -91,7 +91,7 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
         />
       )}
       {mode === "desktop" ? (
-        <tr onDoubleClick={doubleClick} >
+        <tr onDoubleClick={doubleClick}>
           <td>
             <div className="td-con" style={{ width: "150px" }}>
               <div className="cell-number">{cellNumber}.</div>
@@ -102,6 +102,12 @@ const GroupCard = ({ data, mode, cellNumber, group, setOpenMoreModal }) => {
           <td>
             <div className="td-con" style={{ width: "150px" }}>
               <div className="table-scroll-text">{data?.course?.name}</div>
+              <div className="right-fade"></div>
+            </div>
+          </td>
+          <td>
+            <div className="td-con" style={{ width: "150px" }}>
+              <div className="table-scroll-text">{data?.room?.name}</div>
               <div className="right-fade"></div>
             </div>
           </td>

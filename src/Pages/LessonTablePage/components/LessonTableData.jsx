@@ -104,23 +104,39 @@ const LessonTableData = ({ getNextLessons }) => {
 
           <tbody>
             {lessonTableData?.map((lesson, i) => (
-              <LessonTableCard
-                key={lesson._id}
-                data={lesson}
-                mode="desktop"
-                cellNumber={i + 1}
-                setTargetLesson={setTargetLesson}
-              />
+              <React.Fragment key={lesson._id}>
+                <LessonTableCard
+                  data={lesson}
+                  mode="desktop"
+                  cellNumber={i + 1}
+                  setTargetLesson={setTargetLesson}
+                />
+                {(i + 1) % 8 === 0 && (
+                  <tr>
+                    <td
+                      colSpan={tableHead.length}
+                      style={{ height: "25px", padding: 0 }}
+                    >
+                      <div
+                        style={{
+                          height: "100%",
+                          background: "var(--tertiary-200)",
+                        }}
+                      ></div>
+                    </td>
+                  </tr>
+                )}
+              </React.Fragment>
             ))}
           </tbody>
         </table>
       </InfiniteScroll>
 
       <div className="details-list-tablet">
-        {lessonTableData?.map((teacher, i) => (
+        {lessonTableData?.map((lesson, i) => (
           <LessonTableCard
-            key={i}
-            data={teacher}
+            key={lesson._id}
+            data={lesson}
             mode="tablet"
             cellNumber={i + 1}
           />

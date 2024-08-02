@@ -3,7 +3,7 @@
   padding-bottom: 16px;
   position: sticky;
   top: 86px;
-  z-index: 100;
+  z-index: 99;
 }
 .details-header.open{
   z-index: 10;
@@ -144,6 +144,7 @@
   white-space: nowrap;
 }
 
+
 /* student -page */
 
 .details-page.students-page .student-filter-header,
@@ -156,11 +157,32 @@
 
 .details-page.teachers-page .teacher-header-filter,
 .details-page.students-page .student-header-filter
+
  {
   width: 100%;
   display: flex;
   margin-top: 8px;
 }
+
+.details-page .consultation-header-filter{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.details-page .consultation-header-filter .consultation-top-filter{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.details-page .consultation-header-filter .consultation-bottom-filter{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .lesson-table-btn-container.teacher,
 .lesson-table-btn-container.student,
 .lesson-table-btn-container.groups,
@@ -169,7 +191,8 @@
 }
 
 .details-page .teacher-header-filter-container ,
-.details-page .student-header-filter-container
+.details-page .student-header-filter-container,
+.details-page .consultation-header-filter-container
 {
   width: 100%;
 }

@@ -7,7 +7,7 @@
 .main-header .header-content {
   display: flex;
 }
-.main-header.open{
+.main-header.open {
   z-index: 1;
   position: relative;
 }
@@ -161,6 +161,7 @@
   background-color: rgba(70, 42, 255, 0.1);
   /* margin-right: 16px; */
   display: flex;
+  position: relative;
 }
 .main-nav-icons .student-amount .student-lesson-icon {
   display: flex;

@@ -20,6 +20,8 @@ export const Header = () => {
         return "Qruplar";
       case "/workers":
         return "Əməkdaşlar";
+      case "/room":
+        return "Otaqlar";
       case "/students":
         return "Tələbələr";
       case "/teachers":
@@ -32,9 +34,7 @@ export const Header = () => {
         return "Təhsil haqqı";
       case "/career":
         return "Karyera";
-      case "/consultation/appointed":
-        return "Konsultasiya";
-      case "/consultation/completed":
+      case "/consultation":
         return "Konsultasiya";
       case "/syllabus":
         return "Sillabus";
@@ -51,8 +51,8 @@ export const Header = () => {
         return "Dərs cədvəli";
       case "/student-panel":
         return "Dərs cədvəli";
-        case "/diploma":
-          return "Diplom Cədvəli"
+      case "/diploma":
+        return "Diplom Cədvəli";
       default:
         return "";
     }

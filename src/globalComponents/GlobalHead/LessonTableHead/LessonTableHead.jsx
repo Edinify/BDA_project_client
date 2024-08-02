@@ -25,7 +25,7 @@ const LessonTableHead = ({ showAddBtn, filter, openModal }) => {
         <div className="lesson-page-filter-container">
           <div className="lesson-table-header-content">
             <div className="lesson-table-status">
-              <GroupsDropdown deviceType="desktop" />
+              <GroupsDropdown deviceType="desktop" page="lesson-table" />
               <StatusDropdown statusType="lesson-table" deviceType="desktop" />
             </div>
             <div className="lesson-table-datepick">

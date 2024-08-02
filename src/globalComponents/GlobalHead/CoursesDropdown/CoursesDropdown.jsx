@@ -8,6 +8,7 @@ import {
 } from "../../../redux/actions-type";
 import { getAllCoursesAction } from "../../../redux/actions/coursesActions";
 import { getSyllabusPaginationAction } from "../../../redux/actions/syllabusActions";
+import { getStudentsPaginationAction } from "../../../redux/actions/studentsActions";
 // import { useLocation } from "react-router-dom";
 
 export const CoursesDropdown = ({ deviceType = "" }) => {
@@ -30,6 +31,9 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
     };
   }, [dispatch]);
 
+
+
+
   const getCourse = (course) => {
     // console.log(course)
     setDropdownOpen(false);
@@ -49,23 +53,25 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
     dispatch(getSyllabusPaginationAction(0, "", course._id));
   };
 
-
-  const handleAllCourse=()=>{
+  const handleAllCourse = () => {
     dispatch({
       type: STUDENT_STATUS_FILTER_ACTION_TYPE.GET_STUDENT_COURSEID,
       payload: "",
     });
-    setDropdownOpen(false)
-  }
+    dispatch({
+      type: SYLLABUS_ALL_ACTIONS_TYPE.SELECT_COURSE_FOR_SYLLABUS,
+      payload: null,
+    });
+    setDropdownOpen(false);
+  };
 
   useEffect(() => {
     dispatch(getAllCoursesAction());
   }, [dispatch]);
 
-
-  const handleChangeDrop=()=>{
-    setDropdownOpen(!dropdownOpen)
-  }
+  const handleChangeDrop = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
 
   return (
     <div
@@ -73,10 +79,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
         dropdownOpen ? "active" : ""
       }`}
     >
-      <div
-        className="dropdown-head"
-        onClick={handleChangeDrop}
-      >
+      <div className="dropdown-head" onClick={handleChangeDrop}>
         <h2>{selectedCourse ? selectedCourse.name : "İxtisaslar"}</h2>
         <div className="arrow-icon">
           <ArrowIcon />
@@ -85,7 +88,7 @@ export const CoursesDropdown = ({ deviceType = "" }) => {
 
       <div className="dropdown-body">
         <ul>
-          <li onClick={handleAllCourse}  >Hamısı</li>
+          <li onClick={handleAllCourse}>Hamısı</li>
           {dataList.map((item) => (
             <li key={item._id} onClick={() => getCourse(item)}>
               {selectedCourse === item._id && <CheckIcon />}

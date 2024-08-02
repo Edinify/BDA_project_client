@@ -8,6 +8,8 @@ import DeleteItemModal from "../../../globalComponents/Modals/DeleteItemModal/De
 import { useEffect, useState } from "react";
 // import { ReactComponent as XIcon } from "../../../assets/icons/student-home/x-icon.svg";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/student-home/success.svg";
+import LessonStatus from "./LessonStatus";
+import MentorHour from "./MentorHour";
 
 const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
   const { weeksArrFullName, lessonStatusList } = useCustomHook();
@@ -72,7 +74,8 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
           teacher: data?.teacher?._id,
           mentor: data?.mentor?._id,
           date: data?.date,
-          time: data?.time,
+          startTime: data?.startTime,
+          endTime: data?.endTime,
           topic: data?.topic,
           mentorHour: data?.mentorHour,
           status: data?.status,
@@ -123,7 +126,7 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
         />
       )}
       {mode === "desktop" ? (
-        <tr onDoubleClick={doubleClick} >
+        <tr onDoubleClick={doubleClick}>
           <td>
             <div className="td-con">
               <div className="table-scroll-text profiles">{lessonDay}</div>
@@ -182,8 +185,6 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
                     {studentData.studentSignature === 1 ? (
                       <SuccessIcon />
                     ) : studentData.studentSignature === -1 ? (
-                      // <IoMdClose />
-                      // <XIcon/>
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -229,15 +230,13 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
               </div>
             </td>
           )}
-          <td>
+          <td style={{ backgroundColor: "lightgray" }}>
             <div className="td-con">
               <div className="table-scroll-text">
                 {data?.topic?.name === "Praktika" ? (
                   ""
-                ) : data.mentorHour ? (
-                  <span style={{ color: "#07bc0c" }}>Keçirilib</span>
                 ) : (
-                  <span style={{ color: "#e74c3c" }}>Keçirilməyib</span>
+                  <MentorHour data={data} />
                 )}
               </div>
             </div>
@@ -251,14 +250,8 @@ const LessonTableCard = ({ data, mode = "desktop", setTargetLesson }) => {
                 : { backgroundColor: "#ffced1" }
             }
           >
-            <div className="td-con">
-              <div className="table-scroll-text">
-                {lessonStatusList.find((item) => item.key === data.status)
-                  .name || ""}
-              </div>
-            </div>
+            <LessonStatus data={data} />
           </td>
-
           <td>
             <UpdateDeleteModal
               updateItem={updateItem}

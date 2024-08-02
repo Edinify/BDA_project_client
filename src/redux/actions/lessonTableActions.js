@@ -88,7 +88,7 @@ export const getLessonTablePaginationAction =
         }&endDate=${endDate || ""}&status=${status || ""}`
       );
       console.log(length);
-      console.log(data);
+      console.log(data,"lesson paginationnnn");
 
       dispatch({
         type: LESSON_TABLE_ALL_ACTIONS_TYPE.GET_LESSON_TABLE_PAGINATION,
@@ -183,6 +183,7 @@ export const updateLessonTableAction =
 
     try {
       const { data } = await API.patch(`/${_id}`, lessonTableData);
+
 
       dispatch({
         type: LESSON_TABLE_ALL_ACTIONS_TYPE.UPDATE_LESSON_TABLE,

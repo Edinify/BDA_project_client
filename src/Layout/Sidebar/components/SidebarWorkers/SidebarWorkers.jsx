@@ -6,16 +6,10 @@ const SidebarWorker = ({ closeSidebar, profiles }) => {
   const location = useLocation();
   const { generalProfileList } = useCustomHook();
 
-  const consultationNav = [
-    "/consultation/appointed",
-    "/consultation/completed",
-  ];
   const groupsNav = ["/groups/current", "/groups/waiting", "/groups/ended"];
 
   const isActive = (profile) => {
-    if (profile === "consultation") {
-      return consultationNav.includes(location.pathname) ? "active" : "";
-    } else if (profile === "groups") {
+    if (profile === "groups") {
       return groupsNav.includes(location.pathname) ? "active" : "";
     } else {
       return "";
@@ -34,14 +28,7 @@ const SidebarWorker = ({ closeSidebar, profiles }) => {
             <li key={id}>
               <NavLink
                 className={isActive(key)}
-                // className={profile==="consultation" ? (consultationNav.includes(location.pathname) )? "active" : "" : profile==="groups" ? groupsNav.includes(location.pathname) ? "active" : "" :""}
-                to={
-                  key === "consultation"
-                    ? `/${key}/appointed`
-                    : key === "groups"
-                    ? `/${key}/current`
-                    : key
-                }
+                to={(key === key) === "groups" ? `/${key}/current` : key}
                 onClick={closeSidebar}
               >
                 <span key={id}>

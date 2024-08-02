@@ -14,6 +14,7 @@ import FinancePage from "../Pages/SalesPage/FinancePage";
 import EventsPage from "../Pages/EventsPage/EventsPage";
 import { Dashboard } from "../Pages/DashboardPage/DashboardPage";
 import DiplomaPage from "../Pages/DiplomaPage/DiplomaPage";
+import RoomsPage from "../Pages/RoomsPage/RoomsPage";
 
 const SuperAdminPanelRoute = () => {
   return (
@@ -23,11 +24,10 @@ const SuperAdminPanelRoute = () => {
       <Route path="/teachers" element={<TeachersPage />} />
       <Route path="/teachers/mentors" element={<TeachersPage />} />
       <Route path="/tuition-fee" element={<TuitionFeePage />} />
-      <Route path="/consultation/appointed" element={<ConsultationsPage />} />
-      <Route path="/consultation/completed" element={<ConsultationsPage />} />
+      <Route path="/consultation" element={<ConsultationsPage />} />
       <Route path="/groups/current" element={<GroupsPage />} />
       <Route path="/groups/waiting" element={<GroupsPage />} />
-      <Route path="/groups/ended" element={<GroupsPage/>} />
+      <Route path="/groups/ended" element={<GroupsPage />} />
       <Route path="/workers" element={<WorkersPage />} />
       <Route path="/career" element={<CareerPage />} />
       <Route path="/syllabus" element={<SyllabusPage />} />
@@ -35,7 +35,8 @@ const SuperAdminPanelRoute = () => {
       <Route path="/event" element={<EventsPage />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/lesson" element={<LessonTablePage />} />
-      <Route path="/diploma" element={<DiplomaPage/>} />
+      <Route path="/diploma" element={<DiplomaPage />} />
+      <Route path="/room" element={<RoomsPage />} />
     </>
   );
 };

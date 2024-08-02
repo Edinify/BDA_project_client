@@ -82,9 +82,9 @@ const modalLoading = (loadingValue) => ({
   payload: loadingValue,
 });
 
-export const getGroupsAction = () => async (dispatch) => {
+export const getGroupsAction = (groupStatus) => async (dispatch) => {
   try {
-    const { data } = await API.get("/all");
+    const { data } = await API.get(`/?status=${groupStatus}`);
     dispatch({ type: GROUP_ALL_ACTIONS_TYPE.GET_ALL_GROUPS, payload: data });
   } catch (error) {
     // console.log(error);
@@ -335,7 +335,7 @@ export const createGroupAction = (groupData) => async (dispatch) => {
       type: GROUP_MODAL_ACTION_TYPE.GROUP_OPEN_MODAL,
       payload: false,
     });
-    toastSuccess("Yeni əməkdaş yaradıldı");
+    toastSuccess("Yeni qrup yaradıldı");
   } catch (error) {
     console.log(error);
     const originalRequest = error.config;
@@ -368,6 +368,13 @@ export const createGroupAction = (groupData) => async (dispatch) => {
     if (error?.response?.data?.key === "email-already-exist") {
       toastError("Bu email ilə istifadəçi mövcuddur");
     }
+    if (error?.response?.data?.key === "waiting-group-exists") {
+      toastError("Bu ixtisas üçün yığılan qrup mövcuddur");
+    }
+    if (error?.response?.data?.key === "room-full") {
+      toastError("Seçdiyiniz tarixdə otaq doludur!");
+    }
+
     // console.log(error);
   } finally {
     dispatch(modalLoading(false));
@@ -412,6 +419,12 @@ export const updateGroupAction = (_id, groupData) => async (dispatch) => {
           return dispatch(logoutAction());
         }
       }
+    }
+    if (error?.response?.data?.key === "waiting-group-exists") {
+      toastError("Bu ixtisas üçün yığılan qrup mövcuddur");
+    }
+    if (error?.response?.data?.key === "room-full") {
+      toastError("Seçdiyiniz tarixdə otaq doludur!");
     }
   } finally {
     dispatch(modalLoading(false));

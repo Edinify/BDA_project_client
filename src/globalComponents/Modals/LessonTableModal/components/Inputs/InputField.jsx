@@ -68,10 +68,18 @@ export default function InputField({
           : "",
       className: "birthday-input",
     },
+    {
+      inputName: "startTime",
+      label: "Dərs başlama saatı",
+      type: "time",
+      // marginTop: "24px",
+      marginBottom: "0",
+      inputValue: modalData[inputName] || "",
+    },
 
     {
-      inputName: "time",
-      label: "Dərs saat",
+      inputName: "endTime",
+      label: "Dərs bitmə saatı",
       type: "time",
       // marginTop: "24px",
       marginBottom: "0",
@@ -105,13 +113,13 @@ export default function InputField({
               )?.paddingRight,
             },
             marginTop: inputData.find((item) => item.inputName === inputName)
-              .marginTop,
+              ?.marginTop,
             marginBottom: inputData.find((item) => item.inputName === inputName)
               ?.marginBottom,
           }}
           InputLabelProps={{
             shrink:
-              inputName === "time"
+              inputName === "startTime" || inputName === "endTime"
                 ? true
                 : inputData.find((item) => item.inputName === inputName)
                     .inputValue
@@ -122,7 +130,7 @@ export default function InputField({
               color: "#3F3F3F",
               marginBottom: inputData.find(
                 (item) => item.inputName === inputName
-              ).marginBottom,
+              )?.marginBottom,
             },
           }}
           fullWidth

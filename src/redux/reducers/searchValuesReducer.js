@@ -18,7 +18,8 @@ const initialState = {
   fineSearchValues: "",
   feedbackSearchValues: "",
   studentFeedbackSearchValues: "",
-  diplomaSearchValues:""
+  diplomaSearchValues: "",
+  roomsSearchValues: "",
 };
 
 export const searchValuesReducer = (state = initialState, action) => {
@@ -108,11 +109,16 @@ export const searchValuesReducer = (state = initialState, action) => {
         ...state,
         adminsSearchValues: action.payload,
       };
-      case SEARCH_VALUES_ACTION_TYPES.DIPLOMA_SEARCH_VALUE:
-        return{
-          ...state,
-          diplomaSearchValues:action.payload
-        }
+    case SEARCH_VALUES_ACTION_TYPES.DIPLOMA_SEARCH_VALUE:
+      return {
+        ...state,
+        diplomaSearchValues: action.payload,
+      };
+    case SEARCH_VALUES_ACTION_TYPES.ROOMS_SEARCH_VALUE:
+      return {
+        ...state,
+        roomsSearchValues: action.payload,
+      };
     default:
       return state;
   }

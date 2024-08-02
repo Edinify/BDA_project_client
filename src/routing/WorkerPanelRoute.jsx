@@ -12,6 +12,8 @@ import SyllabusPage from "../Pages/SyllabusPage/SyllabusPage";
 import LessonTablePage from "../Pages/LessonTablePage/LessonTablePage";
 import EventsPage from "../Pages/EventsPage/EventsPage";
 import { Dashboard } from "../Pages/DashboardPage/DashboardPage";
+import RoomsPage from "../Pages/RoomsPage/RoomsPage";
+import DiplomaPage from "../Pages/DiplomaPage/DiplomaPage";
 
 const WorkersPanelRoute = (user) => {
   // const { user } = useSelector((state) => state.user);
@@ -20,9 +22,13 @@ const WorkersPanelRoute = (user) => {
     {}
   );
 
+  console.log(profiles);
+
   return (
     <>
       {profiles?.courses && <Route path="/courses" element={<CoursesPage />} />}
+
+      {profiles?.room && <Route path="/room" element={<RoomsPage />} />}
 
       {profiles?.students && (
         <Route path="/students" element={<StudentsPage />} />
@@ -39,16 +45,7 @@ const WorkersPanelRoute = (user) => {
       )}
 
       {profiles?.consultation && (
-        <>
-          <Route
-            path="/consultation/appointed"
-            element={<ConsultationsPage />}
-          />
-          <Route
-            path="/consultation/completed"
-            element={<ConsultationsPage />}
-          />
-        </>
+        <Route path="/consultation" element={<ConsultationsPage />} />
       )}
 
       {profiles?.groups && (
@@ -71,6 +68,7 @@ const WorkersPanelRoute = (user) => {
       {profiles?.dashboard && (
         <Route path="/dashboard" element={<Dashboard />} />
       )}
+      {profiles?.diploma && <Route path="/diploma" element={<DiplomaPage />} />}
     </>
   );
 };
