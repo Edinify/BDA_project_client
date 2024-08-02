@@ -4,7 +4,4 @@ export const apiRoot = "https://bdadb.azurewebsites.net/api";
 // 'https://bdadb.azurewebsites.net/api'
 
 
-// https://bdaserverdev.azurewebsites.net/api
-
-
 
