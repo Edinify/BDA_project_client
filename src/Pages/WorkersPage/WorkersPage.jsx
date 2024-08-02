@@ -39,7 +39,6 @@ const WorkersPage = () => {
       payload: { data: {}, openModal: true },
     });
   };
-
   const searchData = (e) => {
     e.preventDefault();
 
