@@ -97,7 +97,7 @@ const NavbarProfile = () => {
   }, [openModal, howToUse]);
 
   useEffect(() => {
-    if (!socket) {
+    if (!socket && user?._id) {
       socket = io("http://localhost:4000");
 
       socket.emit("checkNewEvent", user._id);
