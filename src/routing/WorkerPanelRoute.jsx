@@ -13,6 +13,7 @@ import LessonTablePage from "../Pages/LessonTablePage/LessonTablePage";
 import EventsPage from "../Pages/EventsPage/EventsPage";
 import { Dashboard } from "../Pages/DashboardPage/DashboardPage";
 import RoomsPage from "../Pages/RoomsPage/RoomsPage";
+import DiplomaPage from "../Pages/DiplomaPage/DiplomaPage";
 
 const WorkersPanelRoute = (user) => {
   // const { user } = useSelector((state) => state.user);
@@ -67,6 +68,7 @@ const WorkersPanelRoute = (user) => {
       {profiles?.dashboard && (
         <Route path="/dashboard" element={<Dashboard />} />
       )}
+      {profiles?.diploma && <Route path="/diploma" element={<DiplomaPage />} />}
     </>
   );
 };
