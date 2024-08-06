@@ -115,7 +115,7 @@ const ConsultationData = ({ getNextConsultation, userData }) => {
                           <tr>
                             <td
                               colSpan={tableHead.length}
-                              style={{ height: "25px", padding: 0 }}
+                              style={{ height: "25px", padding: 0, zIndex: -1 }}
                             >
                               <div
                                 style={{
