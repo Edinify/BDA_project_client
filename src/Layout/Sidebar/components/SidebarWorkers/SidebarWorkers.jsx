@@ -28,7 +28,7 @@ const SidebarWorker = ({ closeSidebar, profiles }) => {
             <li key={id}>
               <NavLink
                 className={isActive(key)}
-                to={(key === key) === "groups" ? `/${key}/current` : key}
+                to={key === "groups" ? `/${key}/waiting` : key}
                 onClick={closeSidebar}
               >
                 <span key={id}>
